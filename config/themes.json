@@ -1,0 +1,86 @@
+[
+  {
+    "id": "romantic-wine",
+    "name": "Romántico vino",
+    "description": "Marfil, vino y dorado suave. Elegante y cálido.",
+    "className": "theme-romantic-wine",
+    "preview": "🍷"
+  },
+  {
+    "id": "botanical-ivory",
+    "name": "Botánico marfil",
+    "description": "Verdes naturales, flores claras y sensación de jardín.",
+    "className": "theme-botanical-ivory",
+    "preview": "🌿"
+  },
+  {
+    "id": "midnight-gold",
+    "name": "Noche dorada",
+    "description": "Azul profundo, negro y dorado para una boda nocturna.",
+    "className": "theme-midnight-gold",
+    "preview": "✨"
+  },
+  {
+    "id": "terracotta-sunset",
+    "name": "Terracota atardecer",
+    "description": "Terracota, arena y tonos cálidos de atardecer.",
+    "className": "theme-terracotta-sunset",
+    "preview": "🌅"
+  },
+  {
+    "id": "minimal-pearl",
+    "name": "Perla minimalista",
+    "description": "Blanco perla, gris cálido y diseño limpio.",
+    "className": "theme-minimal-pearl",
+    "preview": "🤍"
+  },
+  {
+    "id": "mayan-elegance",
+    "name": "Elegancia maya",
+    "description": "Verde jade, piedra y detalles inspirados en Comalcalco.",
+    "className": "theme-mayan-elegance",
+    "preview": "𓂀"
+  },
+  {
+    "id": "rose-garden",
+    "name": "Jardín de rosas",
+    "description": "Rosas empolvadas, crema y detalles suaves. Romántica y luminosa.",
+    "className": "theme-rose-garden",
+    "preview": "🌹"
+  },
+  {
+    "id": "ocean-silk",
+    "name": "Seda oceánica",
+    "description": "Azul petróleo, arena y marfil para una presentación serena.",
+    "className": "theme-ocean-silk",
+    "preview": "🌊"
+  },
+  {
+    "id": "lavender-dream",
+    "name": "Sueño lavanda",
+    "description": "Lavanda, gris perla y blanco para un estilo delicado.",
+    "className": "theme-lavender-dream",
+    "preview": "🪻"
+  },
+  {
+    "id": "black-tie",
+    "name": "Black tie",
+    "description": "Negro, champaña y blanco para una invitación formal y editorial.",
+    "className": "theme-black-tie",
+    "preview": "♟"
+  },
+  {
+    "id": "mexican-bougainvillea",
+    "name": "Bugambilia mexicana",
+    "description": "Bugambilia, terracota y marfil con energía elegante.",
+    "className": "theme-mexican-bougainvillea",
+    "preview": "🌺"
+  },
+  {
+    "id": "forest-candlelight",
+    "name": "Bosque a la luz de velas",
+    "description": "Verde bosque, ámbar y crema para una boda íntima.",
+    "className": "theme-forest-candlelight",
+    "preview": "🕯️"
+  }
+]

@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Álbum de la boda</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body class="simple-page">
+  <main class="section upload-card centered">
+    <p class="eyebrow">Álbum colaborativo</p>
+    <h1 class="page-title">Comparte tus fotos</h1>
+    <p>Ayúdanos a conservar este día desde tu mirada.</p>
+    <p id="tableLabel" class="table-badge"></p>
+    <p class="muted">Puedes seleccionar hasta 20 fotografías por envío. Guardamos los archivos originales para conservar su calidad.</p>
+
+    <form id="photoForm" class="form-grid">
+      <label class="wide">
+        Tu nombre
+        <input id="uploadedBy" name="uploadedBy" maxlength="120" placeholder="Opcional">
+      </label>
+      <label class="wide dropzone">
+        Seleccionar fotografías
+        <input id="photos" name="photos" type="file" accept="image/*" multiple required>
+      </label>
+      <button class="primary-btn wide" type="submit">Subir fotografías</button>
+    </form>
+
+    <p id="photoStatus" class="status-message"></p>
+  </main>
+  <script src="/album.js"></script>
+</body>
+</html>

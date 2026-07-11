@@ -1,0 +1,24 @@
+{
+  "name": "invitacion-boda-escalable",
+  "version": "6.3.2",
+  "private": true,
+  "description": "Corrección de rutas administrativas, carga segura del espacio de trabajo y manejo consistente de respuestas JSON.",
+  "main": "src/server.js",
+  "scripts": {
+    "dev": "node src/server.js",
+    "start": "node src/server.js",
+    "seed": "node src/seed.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.8.1",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "helmet": "^8.0.0",
+    "multer": "^2.0.2",
+    "qrcode": "^1.5.4",
+    "sanitize-filename": "^1.6.3",
+    "xlsx": "^0.18.5",
+    "pdfkit": "^0.15.0",
+    "bcryptjs": "^2.4.3"
+  }
+}

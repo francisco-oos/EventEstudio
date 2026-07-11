@@ -1,0 +1,103 @@
+{
+  "couple": {
+    "partner1": "Francisco",
+    "partner2": "Ariana",
+    "displayName": "Francisco & Ariana"
+  },
+  "event": {
+    "dateTime": "2026-12-14T17:00:00-06:00",
+    "dateLabel": "14 de diciembre de 2026",
+    "heroMessage": "Después de elegirnos una y otra vez, queremos compartir con ustedes el comienzo de esta nueva etapa.",
+    "closingMessage": "Gracias por acompañarnos en uno de los días más importantes de nuestra vida."
+  },
+  "venue": {
+    "title": "Ceremonia y celebración",
+    "name": "Restaurante El Balcón Sabor Y Tradición",
+    "ceremonyTime": "17:00",
+    "receptionTime": "19:00",
+    "address": "Comalcalco, Tabasco",
+    "mapsUrl": "https://maps.app.goo.gl/FTdg2WMGHkbP8kzw6",
+    "notes": "La ceremonia y la celebración se realizarán en el mismo lugar."
+  },
+  "dressCode": {
+    "title": "Código de vestimenta",
+    "description": "Formal",
+    "referenceImages": []
+  },
+  "story": {
+    "title": "Nuestra historia",
+    "text": "Un día comenzamos a caminar juntos. En Comalcalco dijimos sí a un futuro compartido. Ahora queremos celebrar el siguiente capítulo con ustedes."
+  },
+  "gifts": {
+    "mode": "cash-envelopes",
+    "title": "Lluvia de sobres",
+    "message": "Su presencia es lo más importante para nosotros.",
+    "description": "Si desean tener un detalle con nosotros, durante la celebración encontrarán sobres en las mesas y un buzón especial donde podrán depositarlos.",
+    "link": "",
+    "linkLabel": "Ver mesa de regalos",
+    "bankInfo": ""
+  },
+  "menus": {
+    "adultOptions": [
+      "Menú adulto"
+    ],
+    "childOptions": [
+      "Menú infantil"
+    ],
+    "selectionEnabled": false,
+    "instructions": "El lugar preparará la cantidad de menús con base en adultos, niños y restricciones alimentarias confirmadas."
+  },
+  "media": {
+    "heroImage": "",
+    "music": "",
+    "gallery": [],
+    "spotifyUrl": "",
+    "spotifyEmbed": ""
+  },
+  "themeId": "romantic-wine",
+  "developer": {
+    "mode": "development",
+    "showBanner": true,
+    "ownerOnly": true
+  },
+  "typography": {
+    "heading": "georgia",
+    "body": "system",
+    "scale": "comfortable"
+  },
+  "venues": {
+    "samePlace": true,
+    "ceremony": {
+      "title": "Ceremonia",
+      "name": "Restaurante El Balcón Sabor Y Tradición",
+      "time": "17:00",
+      "address": "Comalcalco, Tabasco",
+      "mapsUrl": "https://maps.app.goo.gl/FTdg2WMGHkbP8kzw6",
+      "lat": "",
+      "lng": "",
+      "notes": ""
+    },
+    "reception": {
+      "title": "Celebración",
+      "name": "Restaurante El Balcón Sabor Y Tradición",
+      "time": "19:00",
+      "address": "Comalcalco, Tabasco",
+      "mapsUrl": "https://maps.app.goo.gl/FTdg2WMGHkbP8kzw6",
+      "lat": "",
+      "lng": "",
+      "notes": ""
+    }
+  },
+  "accessibility": {
+    "enabled": true,
+    "options": [
+      "Acceso para silla de ruedas",
+      "Asiento con respaldo especial",
+      "Silla alta para niño",
+      "Espacio para carriola",
+      "Apoyo para movilidad",
+      "Otro"
+    ],
+    "helpText": "Selecciona únicamente si alguien de tu familia necesita una consideración especial."
+  }
+}
