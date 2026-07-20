@@ -1,131 +1,74 @@
-# SystemInvitaciones V6.3
+# EventStudio 6.13.0 RC1
 
-## Separación correcta de cuentas
+Versión candidata a producción para la boda real y primera validación comercial de EventStudio. Esta revisión exporta el plano planeado o confirmado a PDF, incorpora cuatro plantillas dinámicas nuevas y conserva las correcciones de mesas rectangulares de hasta 70%.
 
-### Propietario / desarrollador
+## Estado
 
-`leyva2636@gmail.com`
+- Funcional y verificada localmente con `npm test`.
+- Lista para una prueba real controlada después de configurar HTTPS, volumen persistente, propietario inicial y un respaldo descargado.
+- WhatsApp automático permanece oculto para clientes hasta conectar una cuenta de Meta, una plantilla aprobada y un webhook público.
+- Los pagos reales y la restauración en caliente no están habilitados. El pago demo no puede acreditar compras en producción.
 
-Es el superusuario de la plataforma. Puede:
+## Desarrollo local
 
-- ver ventas, clientes, pagos y eventos globales;
-- abrir cualquier evento en modo soporte;
-- usar herramientas de desarrollo;
-- crear y asignar clientes;
-- revisar métricas globales.
-
-Seleccionar un evento desde esta cuenta **no significa que sea su boda**. Sólo lo abre para soporte o supervisión.
-
-### Cliente de la boda
-
-`ariana@evento.local`
-
-Es la cuenta que administra la boda Francisco & Ariana. Puede:
-
-- modificar su invitación;
-- importar invitados;
-- ver confirmaciones;
-- generar QR por mesa;
-- descargar reportes;
-- administrar fotografías;
-- crear eventos adicionales si su plan lo permite.
-
-No puede ver ni modificar el modo desarrollador.
-
-## Cuenta, pago y alojamiento
-
-Crear una cuenta no significa automáticamente que el cliente haya pagado.
-
-Los estados posibles son:
-
-- `trial`: periodo de prueba;
-- `active`: plan pagado o activado;
-- `past_due`: pago pendiente;
-- `cancelled`: cancelado;
-- `expired`: vencido.
-
-El registro público crea una cuenta con prueba. El pago activa o renueva la suscripción.
-
-Para la demostración, el seed deja la cuenta de Ariana con plan Premium activo y un pago de demostración registrado.
-
-## Planes y varios eventos
-
-Cada plan tiene `max_events`.
-
-- Esencial: 1 evento.
-- Premium: 3 eventos.
-- Studio: 20 eventos.
-
-Un cliente puede crear varios eventos mientras:
-
-1. su prueba o suscripción siga vigente;
-2. no haya alcanzado el límite de su plan.
-
-## Modo desarrollador
-
-- Sólo aparece para `owner` y `developer`.
-- Nunca aparece en el panel cliente.
-- El aviso público de desarrollo sólo debe mostrarse al abrir una invitación con `?preview=1`.
-- Una invitación normal no muestra el aviso.
-
-## QR por mesa
-
-Las mesas se obtienen de los invitados del **evento activo**. Esta versión corrige un problema de sesión: al cambiar de propietario a cliente ya no reutiliza un `eventId` perteneciente a otra cuenta.
-
-Por ello, al entrar como Ariana deben aparecer:
-
-- Mesa 1
-- Mesa 2
-- Mesa 3
-- Mesa demo
-
-La mesa demo corresponde a la invitación de prueba.
-
-## Acceso inicial
-
-```text
-Superusuario:
-leyva2636@gmail.com
-Cambiar123!
-
-Cliente boda:
-ariana@evento.local
-Cambiar123!
-```
-
-## Prueba
-
-```powershell
-npm install
-copy .env.example .env
+```bash
+npm ci
+cp .env.example .env
 npm run seed
-npm run dev
+npm start
 ```
 
-Después abre:
+Abre `http://localhost:3000/admin.html`. Las credenciales de demostración están separadas en `docs/DEVELOPMENT_DEMO.md` y nunca deben usarse en producción.
 
-```text
-http://localhost:3000/admin.html
+Se requiere Node.js 20 o superior. Si aparece `Cannot find module 'compression'`, ejecuta `npm ci` dentro de la carpeta que contiene `package.json`; no es un fallo del front.
+
+## Producción
+
+1. No ejecutes `npm run seed`.
+2. Configura `NODE_ENV=production`, `SITE_URL=https://...`, `SESSION_SECRET`, `INITIAL_OWNER_EMAIL`, `INITIAL_OWNER_PASSWORD` y un `STORAGE_ROOT` persistente.
+3. Inicia una sola réplica mientras se use SQLite.
+4. Accede como propietario, cambia la contraseña inicial y crea un respaldo completo.
+5. Crea el evento o importa el respaldo validado; publica sólo después de ejecutar los checklist.
+
+El contenedor se detiene limpiamente ante `SIGTERM`, usa WAL, espera ante bloqueos de SQLite y conserva base, archivos y respaldos bajo el volumen persistente.
+
+## Verificación
+
+```bash
+npm test
 ```
 
+La prueba cubre sesiones y logout, registro de clientes, límites de intentos, aislamiento por evento, feature flags en backend, códigos automáticos, importación parcial, creación de mesas desde invitados, RSVP flexible, límites de menús, plano sin pista obligatoria, PDF planeado y confirmado, QR/PDF, aperturas dinámicas, invitación física automática, transferencia a cliente, plan de cortesía, música, Spotify, Excel, fotos, mensajería, respaldo, reinicio y ausencia de seed automático en producción.
 
-## Corrección V6.3.2
+## Documentos de entrega
 
-Se restauraron las rutas que el panel necesitaba:
+- `AUDITORIA_RC1.md`
+- `PLAN_PRODUCCION_RC1.md`
+- `GUIA_RESPALDO_RESTAURACION.md`
+- `GUIA_ACTUALIZACION.md`
+- `GUIA_WHATSAPP_BUSINESS.md`
+- `GUIA_WHATSAPP_PRODUCCION_V6_14.md`
+- `GUIA_PUBLICACION_RAILWAY_V6_14.md`
+- `GUIA_PLANTILLA_WHATSAPP.md`
+- `GUIA_WEBHOOKS_WHATSAPP.md`
+- `GUIA_REINTENTOS_WHATSAPP.md`
+- `GUIA_DESPLIEGUE_ECONOMICO.md`
+- `CHECKLIST_PUBLICACION_BODA.md`
+- `CHECKLIST_QR_IMPRENTA.md`
+- `CHECKLIST_FOTOS_MENSAJES.md`
+- `ANALISIS_PLANTILLAS_VIDEOS_V6_13.md`
+- `RELEASE_NOTES_V6_11_RC1.md`
+- `RELEASE_NOTES_V6_12_RC1.md`
+- `RELEASE_NOTES_V6_12_1_RC1.md`
+- `RELEASE_NOTES_V6_13_RC1.md`
+- `RELEASE_NOTES_V6_14_RC1.md`
+- `RELEASE_NOTES_V6_14_1_RC1.md`
+- `ESTADO_MODULOS_RC1.md`
+- `VALIDACION_RC1.md`
 
-- `GET /api/admin/settings`
-- `PUT /api/admin/settings`
-- `GET /api/admin/themes`
-- carga de portada;
-- carga de música;
-- carga y eliminación de galería;
-- carga y eliminación de referencias de vestimenta.
+## Datos y privacidad
 
-También se corrigió el cargador del panel para:
-
-- verificar el tipo de contenido antes de ejecutar `response.json()`;
-- mostrar qué sección falló;
-- evitar que una página HTML 404 provoque `Unexpected token '<'`;
-- detener el mensaje permanente “Cargando espacio de trabajo”.
-
-Después de instalar, abre DevTools y recarga con `Ctrl + F5` para evitar que el navegador use un `admin.js` anterior.
+- No se publican tokens, notas privadas ni archivos pendientes de moderación.
+- Las fotos de invitados se sirven únicamente mediante una ruta administrativa autenticada.
+- Las contraseñas se almacenan con bcrypt y las sesiones como HMAC; en producción la sesión viaja en cookie `HttpOnly`, `Secure` y `SameSite=Lax`.
+- Las operaciones sensibles generan auditoría estructurada sin contraseñas, tokens ni datos bancarios.

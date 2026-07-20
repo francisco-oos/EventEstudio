@@ -6,11 +6,14 @@
   <title>Álbum de la boda</title>
   <link rel="stylesheet" href="/styles.css">
 </head>
-<body class="simple-page">
-  <main class="section upload-card centered">
+<body class="simple-page album-page">
+  <header id="albumHero" class="album-hero">
+    <div><p class="eyebrow">Álbum colaborativo</p><h1 id="albumEventName">Nuestro evento</h1><p id="albumDate"></p></div>
+  </header>
+  <main class="section upload-card centered album-upload-card">
     <p class="eyebrow">Álbum colaborativo</p>
     <h1 class="page-title">Comparte tus fotos</h1>
-    <p>Ayúdanos a conservar este día desde tu mirada.</p>
+    <p id="albumWelcome">Ayúdanos a conservar este día desde tu mirada.</p>
     <p id="tableLabel" class="table-badge"></p>
     <p class="muted">Puedes seleccionar hasta 20 fotografías por envío. Guardamos los archivos originales para conservar su calidad.</p>
 
@@ -19,14 +22,23 @@
         Tu nombre
         <input id="uploadedBy" name="uploadedBy" maxlength="120" placeholder="Opcional">
       </label>
+      <label class="wide">
+        Mensaje para los anfitriones
+        <textarea id="photoMessage" name="message" maxlength="500" rows="4" placeholder="Opcional: comparte un deseo o el recuerdo detrás de estas fotos"></textarea>
+        <small>Se publicará en el álbum sólo si los anfitriones lo aprueban.</small>
+      </label>
       <label class="wide dropzone">
         Seleccionar fotografías
-        <input id="photos" name="photos" type="file" accept="image/*" multiple required>
+        <input id="photos" name="photos" type="file" accept="image/jpeg,image/png,image/webp,image/heic,image/heif" multiple required>
+        <span>Elige hasta 20 imágenes desde tu cámara o galería.</span>
       </label>
-      <button class="primary-btn wide" type="submit">Subir fotografías</button>
+      <div id="selectedPhotoPreview" class="selected-photo-preview wide" aria-live="polite"></div>
+      <button id="photoSubmit" class="primary-btn wide" type="submit">Subir fotografías</button>
     </form>
 
+    <progress id="photoProgress" class="wide" max="100" value="0" hidden></progress>
     <p id="photoStatus" class="status-message"></p>
+    <button id="uploadMorePhotos" class="secondary-btn hidden" type="button">Agregar otras fotografías</button>
   </main>
   <script src="/album.js"></script>
 </body>

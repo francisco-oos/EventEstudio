@@ -1,0 +1,11 @@
+node_modules
+.env
+.git
+data
+uploads/guest-photos
+uploads/site-media
+test-output
+tmp
+output
+*.zip
+*.mp4

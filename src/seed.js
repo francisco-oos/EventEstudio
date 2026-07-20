@@ -2,6 +2,10 @@ const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 const db = require("./db");
 
+if(process.env.NODE_ENV==="production"){
+  throw new Error("El seed de demostración está bloqueado en NODE_ENV=production.");
+}
+
 const makeToken = () => crypto.randomBytes(16).toString("hex");
 
 const wedding = db.prepare("SELECT id FROM events WHERE slug='francisco-ariana'").get()
@@ -15,8 +19,8 @@ const wedding = db.prepare("SELECT id FROM events WHERE slug='francisco-ariana'"
   })();
 
 const accounts = [
-  { email:"leyva2636@gmail.com", name:"Francisco Alvarado", role:"owner", password:"Cambiar123!" },
-  { email:"ariana@evento.local", name:"Ariana", role:"client", password:"Cambiar123!" }
+  { email:"owner@eventstudio.local", name:"Propietario Demo", role:"owner", password:"Cambiar123!" },
+  { email:"client@eventstudio.local", name:"Cliente Demo", role:"client", password:"Cambiar123!" }
 ];
 
 for (const account of accounts) {
@@ -33,20 +37,20 @@ for (const account of accounts) {
   `).run(account.email,hash,account.name,account.role,account.email.toLowerCase(),"local");
 }
 
-const owner = db.prepare("SELECT id FROM users WHERE email='leyva2636@gmail.com'").get();
-const ariana = db.prepare("SELECT id FROM users WHERE email='ariana@evento.local'").get();
+const owner = db.prepare("SELECT id FROM users WHERE email='owner@eventstudio.local'").get();
+const ariana = db.prepare("SELECT id FROM users WHERE email='client@eventstudio.local'").get();
 
 /* El propietario es superusuario: no necesita estar vinculado como cliente al evento. */
 db.prepare("DELETE FROM user_events WHERE user_id=?").run(owner.id);
 
-/* Ariana es la cliente administradora de la boda. */
+/* La cuenta cliente administra el evento de demostración. */
 db.prepare(`
   INSERT INTO user_events(user_id,event_id,permission)
   VALUES(?,?,'manage')
   ON CONFLICT(user_id,event_id) DO UPDATE SET permission='manage'
 `).run(ariana.id,wedding.id);
 
-db.prepare("UPDATE events SET owner_user_id=?,event_type='wedding',archived=0 WHERE id=?")
+db.prepare("UPDATE events SET owner_user_id=?,event_type='wedding',archived=0,published=1,protected=1 WHERE id=?")
   .run(ariana.id,wedding.id);
 
 /* Cuenta propietaria interna. */
@@ -98,6 +102,6 @@ const insertGuest = db.prepare(`
 });
 
 console.log("Datos creados con separación propietario/cliente.");
-console.log("Superusuario: leyva2636@gmail.com / Cambiar123!");
-console.log("Cliente boda: ariana@evento.local / Cambiar123!");
-console.log("La cuenta de Ariana se simuló con plan Premium pagado.");
+console.log("Superusuario demo: owner@eventstudio.local / Cambiar123!");
+console.log("Cliente demo: client@eventstudio.local / Cambiar123!");
+console.log("La cuenta cliente se simuló con plan Premium pagado.");

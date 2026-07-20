@@ -1,0 +1,122 @@
+[
+  {
+    "id": "wedding",
+    "name": "Boda",
+    "icon": "♡",
+    "defaults": {
+      "heroEyebrow": "Nuestra boda",
+      "openButton": "Abrir invitación",
+      "countdownEyebrow": "Faltan",
+      "storyEyebrow": "Nuestra historia",
+      "galleryEyebrow": "Momentos nuestros",
+      "galleryTitle": "Nuestro álbum",
+      "dressEyebrow": "Código de vestimenta",
+      "rsvpEyebrow": "Confirmación",
+      "rsvpTitle": "Nos encantará contar contigo",
+      "giftEyebrow": "Regalos",
+      "agendaEyebrow": "Programa",
+      "agendaTitle": "Momentos del evento",
+      "guestLabel": "Familia o invitado"
+    }
+  },
+  {
+    "id": "xv",
+    "name": "XV años",
+    "icon": "✦",
+    "defaults": {
+      "heroEyebrow": "Mis XV años",
+      "openButton": "Abrir invitación",
+      "countdownEyebrow": "Faltan",
+      "storyEyebrow": "Una etapa especial",
+      "galleryEyebrow": "Momentos",
+      "galleryTitle": "Mi álbum",
+      "dressEyebrow": "Código de vestimenta",
+      "rsvpEyebrow": "Confirmación",
+      "rsvpTitle": "Será muy especial contar contigo",
+      "giftEyebrow": "Obsequios",
+      "agendaEyebrow": "Programa",
+      "agendaTitle": "Momentos de la celebración",
+      "guestLabel": "Familia o invitado"
+    }
+  },
+  {
+    "id": "birthday",
+    "name": "Cumpleaños",
+    "icon": "◉",
+    "defaults": {
+      "heroEyebrow": "Celebración",
+      "openButton": "Ver invitación",
+      "countdownEyebrow": "Faltan",
+      "storyEyebrow": "Celebremos juntos",
+      "galleryEyebrow": "Recuerdos",
+      "galleryTitle": "Galería",
+      "dressEyebrow": "Vestimenta",
+      "rsvpEyebrow": "Asistencia",
+      "rsvpTitle": "Confirma si podrás acompañarnos",
+      "giftEyebrow": "Obsequios",
+      "agendaEyebrow": "Programa",
+      "agendaTitle": "Actividades",
+      "guestLabel": "Invitado"
+    }
+  },
+  {
+    "id": "corporate",
+    "name": "Evento empresarial",
+    "icon": "◆",
+    "defaults": {
+      "heroEyebrow": "Evento especial",
+      "openButton": "Consultar información",
+      "countdownEyebrow": "Comienza en",
+      "storyEyebrow": "Acerca del evento",
+      "galleryEyebrow": "Experiencia",
+      "galleryTitle": "Galería",
+      "dressEyebrow": "Código de vestimenta",
+      "rsvpEyebrow": "Registro",
+      "rsvpTitle": "Confirma tu participación",
+      "giftEyebrow": "Información adicional",
+      "agendaEyebrow": "Agenda",
+      "agendaTitle": "Programa del evento",
+      "guestLabel": "Participante"
+    }
+  },
+  {
+    "id": "graduation",
+    "name": "Graduación",
+    "icon": "◇",
+    "defaults": {
+      "heroEyebrow": "Graduación",
+      "openButton": "Abrir invitación",
+      "countdownEyebrow": "Faltan",
+      "storyEyebrow": "El camino recorrido",
+      "galleryEyebrow": "Recuerdos",
+      "galleryTitle": "Galería",
+      "dressEyebrow": "Código de vestimenta",
+      "rsvpEyebrow": "Confirmación",
+      "rsvpTitle": "Confirma si podrás acompañarnos",
+      "giftEyebrow": "Obsequios",
+      "agendaEyebrow": "Programa",
+      "agendaTitle": "Momentos de la celebración",
+      "guestLabel": "Familia o invitado"
+    }
+  },
+  {
+    "id": "custom",
+    "name": "Evento personalizado",
+    "icon": "＋",
+    "defaults": {
+      "heroEyebrow": "Evento especial",
+      "openButton": "Abrir invitación",
+      "countdownEyebrow": "Faltan",
+      "storyEyebrow": "Nuestra historia",
+      "galleryEyebrow": "Momentos",
+      "galleryTitle": "Galería",
+      "dressEyebrow": "Código de vestimenta",
+      "rsvpEyebrow": "Confirmación",
+      "rsvpTitle": "Confirma tu asistencia",
+      "giftEyebrow": "Obsequios",
+      "agendaEyebrow": "Programa",
+      "agendaTitle": "Actividades",
+      "guestLabel": "Invitado"
+    }
+  }
+]

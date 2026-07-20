@@ -1,0 +1,74 @@
+[
+  {
+    "id": "classic-holder",
+    "name": "Tarjeta vertical con base",
+    "description": "Tarjeta 5 x 7 pulgadas para base de madera, acrílico o portarretrato.",
+    "format": "5x7",
+    "mockup": "holder",
+    "icon": "▯",
+    "printNote": "Imprimir en opalina de 250-300 g y colocar en una base."
+  },
+  {
+    "id": "folded-tent",
+    "name": "Caballetito plegable",
+    "description": "Diseño doble cara que se dobla y se mantiene de pie sin soporte.",
+    "format": "letter-fold",
+    "mockup": "tent",
+    "icon": "△",
+    "printNote": "Imprimir en cartulina, recortar y doblar por la línea central."
+  },
+  {
+    "id": "acrylic-arch",
+    "name": "Arco de acrílico",
+    "description": "Composición de arco para imprimir en vinil o usar como guía para acrílico.",
+    "format": "5x7",
+    "mockup": "arch",
+    "icon": "⌒",
+    "printNote": "Ideal para acrílico transparente, esmerilado o cartulina recortada."
+  },
+  {
+    "id": "square-minimal",
+    "name": "Cuadrado minimalista",
+    "description": "Tarjeta cuadrada compacta para base pequeña o mini caballete.",
+    "format": "square",
+    "mockup": "square",
+    "icon": "□",
+    "printNote": "Formato 5 x 5 pulgadas, fácil de distribuir en cada mesa."
+  },
+  {
+    "id": "table-number-combo",
+    "name": "Mesa + álbum",
+    "description": "Combina el número o nombre de mesa con el QR para ahorrar señalización.",
+    "format": "5x7",
+    "mockup": "number",
+    "icon": "№",
+    "printNote": "Sustituye el letrero de número de mesa y el QR por una sola pieza."
+  },
+  {
+    "id": "photo-frame",
+    "name": "Marco con fotografía",
+    "description": "Incluye una fotografía de la pareja y el QR en una composición editorial.",
+    "format": "5x7",
+    "mockup": "photo",
+    "icon": "▣",
+    "printNote": "Recomendado para portarretrato transparente o marco dorado."
+  },
+  {
+    "id": "menu-strip",
+    "name": "Tarjeta angosta",
+    "description": "Formato estrecho para integrarse junto al menú, servilleta o centro de mesa.",
+    "format": "4x9",
+    "mockup": "strip",
+    "icon": "▥",
+    "printNote": "Puede imprimirse dos o tres veces por hoja carta."
+  },
+  {
+    "id": "double-sided-premium",
+    "name": "Doble cara premium",
+    "description": "Frente decorativo y reverso con instrucciones y QR grande.",
+    "format": "letter-fold",
+    "mockup": "double",
+    "icon": "◇",
+    "printNote": "Diseñado para impresión dúplex y doblez tipo tent card."
+  }
+]

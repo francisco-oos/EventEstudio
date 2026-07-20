@@ -44,7 +44,10 @@
     "childOptions": [
       "Menú infantil"
     ],
+    "serviceMode": "fixed",
     "selectionEnabled": false,
+    "showAdultSelection": false,
+    "showChildSelection": false,
     "instructions": "El lugar preparará la cantidad de menús con base en adultos, niños y restricciones alimentarias confirmadas."
   },
   "media": {
@@ -52,7 +55,14 @@
     "music": "",
     "gallery": [],
     "spotifyUrl": "",
-    "spotifyEmbed": ""
+    "spotifyEmbed": "",
+    "musicSource": "none",
+    "musicStartSeconds": 0,
+    "spotifyUri": "",
+    "spotifyTrackName": "",
+    "spotifyArtists": "",
+    "spotifyDurationMs": 0,
+    "spotifyStartSeconds": 0
   },
   "themeId": "romantic-wine",
   "developer": {
@@ -99,5 +109,140 @@
       "Otro"
     ],
     "helpText": "Selecciona únicamente si alguien de tu familia necesita una consideración especial."
+  },
+  "qrDesign": {
+    "templateId": "classic-holder",
+    "title": "Captura nuestros recuerdos",
+    "message": "Escanea el código y comparte las fotografías que tomes durante la celebración.",
+    "instruction": "No necesitas instalar ninguna aplicación.",
+    "showTableName": true,
+    "showFamilies": false,
+    "useInvitationColors": true
+  },
+  "physicalInvitation": {
+    "templateId": "auto-theme"
+  },
+  "agenda": {
+    "enabled": true,
+    "items": [
+      {
+        "id": "ceremony",
+        "type": "ceremony",
+        "title": "Ceremonia",
+        "enabled": true,
+        "date": "2026-12-14",
+        "time": "17:00",
+        "venue": "Restaurante El Balcón Sabor Y Tradición",
+        "address": "Comalcalco, Tabasco",
+        "mapsUrl": "https://maps.app.goo.gl/FTdg2WMGHkbP8kzw6",
+        "dressCode": "",
+        "audience": "all",
+        "notes": ""
+      },
+      {
+        "id": "reception",
+        "type": "reception",
+        "title": "Celebración",
+        "enabled": true,
+        "date": "2026-12-14",
+        "time": "19:00",
+        "venue": "Restaurante El Balcón Sabor Y Tradición",
+        "address": "Comalcalco, Tabasco",
+        "mapsUrl": "https://maps.app.goo.gl/FTdg2WMGHkbP8kzw6",
+        "dressCode": "",
+        "audience": "all",
+        "notes": ""
+      }
+    ],
+    "sameLocation": true
+  },
+  "presentation": {
+    "openingStyle": "wax-envelope",
+    "openingEyebrow": "Una invitación para ti",
+    "heroEyebrow": "Nuestra boda",
+    "openButton": "Abrir invitación",
+    "countdownEyebrow": "Faltan",
+    "storyEyebrow": "Nuestra historia",
+    "galleryEyebrow": "Momentos nuestros",
+    "galleryTitle": "Nuestro álbum",
+    "dressEyebrow": "Código de vestimenta",
+    "rsvpEyebrow": "Confirmación",
+    "rsvpTitle": "Nos encantará contar contigo",
+    "giftEyebrow": "Regalos",
+    "agendaEyebrow": "Programa",
+    "agendaTitle": "Momentos del evento",
+    "guestLabel": "Familia o invitado",
+    "dashboardTitle": "Resumen del evento",
+    "dashboardDescription": "Consulta asistencia, necesidades y recursos del evento activo.",
+    "reportTitle": "Resumen operativo del evento",
+    "reportDescription": "Genera un archivo con asistentes, adultos, niños, menús, restricciones y necesidades especiales para compartir con el lugar u organizador."
+  },
+  "storagePolicy": {
+    "warningPercent": 80,
+    "criticalPercent": 95,
+    "graceDays": 15,
+    "guestMessage": "El álbum está temporalmente en mantenimiento. Puedes intentarlo nuevamente más tarde."
+  },
+  "rsvp": {
+    "closeAt": "",
+    "allowChanges": true,
+    "allowFlexibleComposition": false
+  },
+  "photoPolicy": {
+    "messageMaxLength": 500,
+    "defaultStatus": "pending",
+    "publishApprovedMessages": true
+  },
+  "lifecycle": {
+    "protected": true,
+    "automaticPurge": false
+  },
+  "features": {
+    "invitation": true,
+    "rsvp": true,
+    "guests": true,
+    "whatsappManual": true,
+    "whatsappBusiness": true,
+    "music": true,
+    "program": true,
+    "locations": true,
+    "dressCode": true,
+    "gallery": true,
+    "guestPhotoUpload": true,
+    "guestPhotoMessages": true,
+    "qrCards": true,
+    "physicalInvitations": true,
+    "seating": true,
+    "reports": true,
+    "templates": true,
+    "gifts": true,
+    "menus": true,
+    "billing": false,
+    "customDomains": false,
+    "developerTools": false
+  },
+  "featureStates": {
+    "invitation": "available",
+    "rsvp": "available",
+    "guests": "available",
+    "whatsappManual": "available",
+    "whatsappBusiness": "hidden",
+    "music": "available",
+    "program": "available",
+    "locations": "available",
+    "dressCode": "available",
+    "gifts": "available",
+    "gallery": "available",
+    "guestPhotoUpload": "available",
+    "guestPhotoMessages": "available",
+    "qrCards": "available",
+    "physicalInvitations": "available",
+    "seating": "available",
+    "reports": "available",
+    "menus": "available",
+    "templates": "available",
+    "billing": "hidden",
+    "customDomains": "hidden",
+    "developerTools": "hidden"
   }
 }

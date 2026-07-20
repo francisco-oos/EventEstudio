@@ -82,5 +82,40 @@
     "description": "Verde bosque, ámbar y crema para una boda íntima.",
     "className": "theme-forest-candlelight",
     "preview": "🕯️"
+  },
+  {
+    "id": "editorial-arch",
+    "name": "Arco editorial",
+    "description": "Marfil, dorado y fotografías protagonistas con arcos y tarjetas tipo recuerdo.",
+    "className": "theme-editorial-arch",
+    "preview": "◠"
+  },
+  {
+    "id": "lavender-couture",
+    "name": "Lavanda couture",
+    "description": "Retrato protagonista, transparencias lilas, cuenta regresiva delicada y entrada suave.",
+    "className": "theme-lavender-couture",
+    "preview": "✦"
+  },
+  {
+    "id": "cinematic-vows",
+    "name": "Votos cinematográficos",
+    "description": "Fotografía a pantalla completa, contraste oscuro, oro cálido y tarjetas tipo película.",
+    "className": "theme-cinematic-vows",
+    "preview": "◉"
+  },
+  {
+    "id": "storybook-seal",
+    "name": "Sobre y sello",
+    "description": "Papel marfil, marco clásico y una apertura inspirada en sobre con sello de cera.",
+    "className": "theme-storybook-seal",
+    "preview": "✉"
+  },
+  {
+    "id": "botanical-scroll",
+    "name": "Recorrido botánico",
+    "description": "Composición vertical ligera, verdes naturales y detalles de hojas en cada momento.",
+    "className": "theme-botanical-scroll",
+    "preview": "❧"
   }
 ]
