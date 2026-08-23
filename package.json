@@ -1,24 +1,48 @@
 {
-  "name": "invitacion-boda-escalable",
-  "version": "6.3.2",
+  "name": "eventstudio",
+  "version": "6.14.2-rc.21",
   "private": true,
-  "description": "Corrección de rutas administrativas, carga segura del espacio de trabajo y manejo consistente de respuestas JSON.",
+  "description": "Plataforma multi-evento para invitaciones, confirmaciones, organización, música, fotografías, impresión y reportes.",
   "main": "src/server.js",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "dev": "node src/server.js",
     "start": "node src/server.js",
-    "seed": "node src/seed.js"
+    "local": "node scripts/iniciar-local.js",
+    "seed": "node src/seed.js",
+    "test": "node tests/project-integrity.js && node tests/source-references.js && node tests/mobile-ui.js && node tests/local-network.js && node tests/rc14-regressions.js && node tests/data-safety.js && node tests/commerce-migration.js && node tests/origin-policy.js && node tests/security-headers.js && node tests/commerce-journeys.js && node tests/smoke.js && node tests/restore.js && npm run test:rc15 && npm run test:rc15.1 && npm run test:rc17 && npm run test:rc19 && npm run test:animations && npm run test:rc20 && npm run test:rc21",
+    "test:rc15": "node tests/rc15-regressions.js",
+    "test:rc15.1": "node tests/rc15-1-login-hotfix.js",
+    "audit": "node scripts/audit-project.js",
+    "test:rc17": "node tests/rc17-regressions.js",
+    "test:rc19": "node tests/rc19-regressions.js",
+    "test:animations": "node tests/animation-contracts.js",
+    "test:rc20": "node tests/rc20-regressions.js && node tests/rc20-permissions.js && node tests/qr-photo-matrix.js && node tests/payments-mercadopago.js && node tests/localization-provider.js && node tests/whatsapp-readiness.js && node tests/scale-1200-users.js",
+    "test:rc21": "node tests/rc21-visual-contracts.js && node tests/rc21-invitation-journeys.js"
   },
   "dependencies": {
-    "better-sqlite3": "^11.8.1",
+    "adm-zip": "^0.6.0",
+    "archiver": "^8.0.0",
+    "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^12.11.1",
+    "compression": "^1.8.1",
     "dotenv": "^16.4.7",
+    "exceljs": "^4.4.0",
     "express": "^4.21.2",
     "helmet": "^8.0.0",
     "multer": "^2.0.2",
-    "qrcode": "^1.5.4",
-    "sanitize-filename": "^1.6.3",
-    "xlsx": "^0.18.5",
     "pdfkit": "^0.15.0",
-    "bcryptjs": "^2.4.3"
+    "qrcode": "^1.5.4",
+    "sanitize-filename": "^1.6.3"
+  },
+  "overrides": {
+    "uuid": "^11.1.1",
+    "brace-expansion": "^5.0.9",
+    "exceljs": {
+      "archiver": "$archiver",
+      "unzipper": "^0.12.5"
+    }
   }
 }

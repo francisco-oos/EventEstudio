@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,viewport-fit=cover">
+  <meta name="description" content="Muestra animada de una invitación temática EventStudio.">
+  <title>Muestra animada · EventStudio</title>
+  <link rel="stylesheet" href="/styles.css?v=6.14.2-rc.21">
+</head>
+<body class="sample-page">
+  <header class="sample-toolbar">
+    <a class="catalog-brand" href="/catalogo.html"><span>ES</span><strong>EventStudio</strong></a>
+    <div>
+      <label>Idioma
+        <select id="sampleLanguage"><option value="es">ES</option><option value="en">EN</option><option value="pt">PT</option></select>
+      </label>
+      <a class="secondary-btn" href="/catalogo.html#plantillas">Todas las plantillas</a>
+    </div>
+  </header>
+
+  <main class="sample-shell">
+    <section class="sample-copy">
+      <p class="eyebrow">Muestra funcional</p>
+      <h1 id="sampleThemeName">Cargando diseño…</h1>
+      <p id="sampleThemeDescription">La muestra usa datos ficticios y la misma estructura adaptable de una invitación real.</p>
+      <div id="sampleStructure" class="theme-structure-list"></div>
+      <p class="sample-disclaimer">No es un video pregrabado: es una página web ligera. Los datos, colores, fotos y música del evento se sustituyen sin editar cada escena.</p>
+      <a id="sampleCta" class="primary-btn" href="/admin.html?register=1">Usar este diseño</a>
+    </section>
+
+    <section class="sample-phone-stage" aria-label="Demostración de invitación animada">
+      <div id="samplePhone" class="sample-phone">
+        <div id="sampleAtmosphere" class="sample-atmosphere" aria-hidden="true"></div>
+        <article class="sample-scene is-active" data-scene="0">
+          <p id="sampleOpeningLabel" class="eyebrow">Una invitación para ti</p>
+          <span class="sample-character" aria-hidden="true">✦</span>
+          <h2 id="sampleName"></h2>
+          <p id="sampleMilestone"></p>
+        </article>
+        <article class="sample-scene" data-scene="1">
+          <p id="samplePhotoLabel" class="eyebrow">Protagonista</p>
+          <div class="sample-photo-placeholder" aria-label="Espacio para fotografía"><span>Foto</span></div>
+          <h2 id="samplePhotoName"></h2>
+        </article>
+        <article class="sample-scene" data-scene="2">
+          <p id="sampleDateLabel" class="eyebrow">Reserva la fecha</p>
+          <strong id="sampleDate" class="sample-big-date"></strong>
+          <p id="sampleTime">4:00 PM</p>
+        </article>
+        <article class="sample-scene" data-scene="3">
+          <p id="samplePlaceLabel" class="eyebrow">Te esperamos</p>
+          <span class="sample-map-pin" aria-hidden="true">⌖</span>
+          <h2 id="samplePlace">Lugar del evento</h2>
+          <p id="samplePlaceNote">Consulta la ubicación desde tu invitación.</p>
+        </article>
+        <article class="sample-scene" data-scene="4">
+          <p id="sampleClosingLabel" class="eyebrow">Comparte este momento</p>
+          <h2 id="sampleClosingName"></h2>
+          <p id="sampleClosingText">Tu presencia hará especial esta celebración.</p>
+          <span class="sample-music-note" aria-label="La invitación puede incluir música">♫</span>
+        </article>
+        <div id="sampleProgress" class="sample-progress" aria-label="Progreso de la muestra"></div>
+        <div class="sample-controls">
+          <button id="samplePrevious" type="button" aria-label="Escena anterior">‹</button>
+          <button id="samplePlay" type="button">Pausar</button>
+          <button id="sampleNext" type="button" aria-label="Escena siguiente">›</button>
+        </div>
+      </div>
+    </section>
+  </main>
+  <script src="/muestra.js?v=6.14.2-rc.21"></script>
+</body>
+</html>

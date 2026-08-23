@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1600" role="img" aria-label="Prado original de margaritas">
+ <defs><linearGradient id="fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffffff" stop-opacity="0"/><stop offset="1" stop-color="#f4f1e9" stop-opacity=".92"/></linearGradient></defs>
+ <rect width="1200" height="1600" fill="url(#fade)"/>
+ <g stroke="#70806c" stroke-width="4" stroke-linecap="round" fill="none" opacity=".72">
+  <path d="M90 1600 Q120 1375 115 1220"/><path d="M190 1600 Q230 1320 250 1110"/><path d="M315 1600 Q310 1270 350 1010"/><path d="M430 1600 Q510 1260 485 1080"/><path d="M550 1600 Q620 1190 625 930"/><path d="M685 1600 Q690 1320 735 1125"/><path d="M805 1600 Q820 1190 870 1010"/><path d="M930 1600 Q970 1320 995 1130"/><path d="M1080 1600 Q1090 1230 1140 1030"/>
+ </g>
+ <g fill="#fffdf9" stroke="#ece8df" stroke-width="1.5">
+  <g transform="translate(115 1215) scale(.65)"><path d="M0-55C23-55 30-24 12-5C38-22 62-3 49 20C36 43 7 34 1 13C-4 40-35 48-49 24C-63 0-39-21-13-7C-33-29-21-57 0-55Z"/><circle r="15" fill="#e8b632" stroke="none"/></g>
+  <g transform="translate(250 1105) scale(.88)"><path d="M0-55C23-55 30-24 12-5C38-22 62-3 49 20C36 43 7 34 1 13C-4 40-35 48-49 24C-63 0-39-21-13-7C-33-29-21-57 0-55Z"/><circle r="15" fill="#e8b632" stroke="none"/></g>
+  <g transform="translate(350 1005) scale(1.02)"><path d="M0-55C23-55 30-24 12-5C38-22 62-3 49 20C36 43 7 34 1 13C-4 40-35 48-49 24C-63 0-39-21-13-7C-33-29-21-57 0-55Z"/><circle r="15" fill="#e8b632" stroke="none"/></g>
+  <g transform="translate(485 1075) scale(.72)"><path d="M0-55C23-55 30-24 12-5C38-22 62-3 49 20C36 43 7 34 1 13C-4 40-35 48-49 24C-63 0-39-21-13-7C-33-29-21-57 0-55Z"/><circle r="15" fill="#e8b632" stroke="none"/></g>
+  <g transform="translate(625 925) scale(1.14)"><path d="M0-55C23-55 30-24 12-5C38-22 62-3 49 20C36 43 7 34 1 13C-4 40-35 48-49 24C-63 0-39-21-13-7C-33-29-21-57 0-55Z"/><circle r="15" fill="#e8b632" stroke="none"/></g>
+  <g transform="translate(735 1120) scale(.75)"><path d="M0-55C23-55 30-24 12-5C38-22 62-3 49 20C36 43 7 34 1 13C-4 40-35 48-49 24C-63 0-39-21-13-7C-33-29-21-57 0-55Z"/><circle r="15" fill="#e8b632" stroke="none"/></g>
+  <g transform="translate(870 1005) scale(.96)"><path d="M0-55C23-55 30-24 12-5C38-22 62-3 49 20C36 43 7 34 1 13C-4 40-35 48-49 24C-63 0-39-21-13-7C-33-29-21-57 0-55Z"/><circle r="15" fill="#e8b632" stroke="none"/></g>
+  <g transform="translate(995 1126) scale(.72)"><path d="M0-55C23-55 30-24 12-5C38-22 62-3 49 20C36 43 7 34 1 13C-4 40-35 48-49 24C-63 0-39-21-13-7C-33-29-21-57 0-55Z"/><circle r="15" fill="#e8b632" stroke="none"/></g>
+  <g transform="translate(1140 1025) scale(.84)"><path d="M0-55C23-55 30-24 12-5C38-22 62-3 49 20C36 43 7 34 1 13C-4 40-35 48-49 24C-63 0-39-21-13-7C-33-29-21-57 0-55Z"/><circle r="15" fill="#e8b632" stroke="none"/></g>
+ </g>
+</svg>

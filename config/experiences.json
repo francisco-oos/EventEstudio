@@ -1,0 +1,32 @@
+{
+  "openings": [
+    {"id":"wax-envelope","label":"Sobre con sello de cera","renderer":"css","commercial":false},
+    {"id":"floral-envelope","label":"Sobre floral","renderer":"css","commercial":false},
+    {"id":"minimal-envelope","label":"Sobre minimalista","renderer":"css","commercial":false},
+    {"id":"cinematic-fold","label":"Apertura cinematográfica","renderer":"css","commercial":false},
+    {"id":"ivory-seal","label":"Sello marfil ceremonial","renderer":"css","commercial":true,"productCode":"experience:ivory-seal","grant":"opening:ivory-seal"},
+    {"id":"rose-bloom","label":"Rosa eterna","renderer":"RoseBloomScene","commercial":true,"productCode":"experience:rose-bloom","grant":"opening:rose-bloom","colorControl":"rosePetalColor"},
+    {"id":"daisy-bloom","label":"Margarita / manzanilla","renderer":"DaisyBloomScene","commercial":true,"productCode":"experience:daisy-bloom","grant":"opening:daisy-bloom","colorControl":"floralPetalColor"},
+    {"id":"luminous-garden","label":"Jardín luminoso","renderer":"LuminousGardenScene","commercial":true,"productCode":"experience:luminous-garden","grant":"opening:luminous-garden","colorControl":"floralPetalColor"},
+    {"id":"night-flower-original","label":"Flor nocturna original","renderer":"OriginalNightFlowerScene","commercial":true,"productCode":"experience:night-flower-original","grant":"opening:night-flower-original","colorControl":"floralPetalColor"},
+    {"id":"particle-heart","label":"Corazón de partículas","renderer":"ParticleTraceScene","commercial":true,"productCode":"experience:particle-heart","grant":"opening:particle-heart"},
+    {"id":"none","label":"Sin apertura","renderer":"none","commercial":false}
+  ],
+  "galleries": [
+    {"id":"classic","label":"Clásico editorial","commercial":false},
+    {"id":"coverflow","label":"Coverflow elegante","commercial":false},
+    {"id":"stack","label":"Tarjetas apiladas","commercial":false},
+    {"id":"masonry","label":"Mosaico masonry","commercial":false},
+    {"id":"soft-focus","label":"Enfoque suave","commercial":false},
+    {"id":"cinematic-depth","label":"Historia cinemática","commercial":true,"productCode":"experience:cinematic-depth","grant":"galleryStyle:cinematic-depth"},
+    {"id":"focus-strip","label":"Tira de enfoque","commercial":true,"productCode":"experience:focus-strip","grant":"galleryStyle:focus-strip"},
+    {"id":"editorial-masonry","label":"Mural editorial","commercial":true,"productCode":"experience:editorial-masonry","grant":"galleryStyle:editorial-masonry"},
+    {"id":"memories-orbit","label":"Órbita de recuerdos","commercial":true,"productCode":"experience:memories-orbit","grant":"galleryStyle:memories-orbit"}
+  ],
+  "motionLevels": [
+    {"id":"still","label":"Sin movimiento"},
+    {"id":"subtle","label":"Suave"},
+    {"id":"balanced","label":"Equilibrado"},
+    {"id":"dynamic","label":"Dinámico"}
+  ]
+}

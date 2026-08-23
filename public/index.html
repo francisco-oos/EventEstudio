@@ -1,16 +1,72 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Nuestra boda</title><link rel="stylesheet" href="/styles.css"></head><body>
+<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><title>Invitación</title><link rel="stylesheet" href="/styles.css?v=6.14.2-rc.21"></head><body>
+<label id="languageSwitcher" class="public-language-switcher hidden"><span>Idioma</span><select id="publicLanguageSelect" aria-label="Idioma de la invitación"></select></label>
+<section id="invitationOpening" class="invitation-opening hidden" aria-label="Apertura de la invitación">
+  <button id="skipOpeningButton" class="opening-skip-button" type="button">Omitir animación</button>
+  <canvas id="particleOpeningCanvas" class="particle-opening-canvas" hidden aria-hidden="true"></canvas>
+  <div class="opening-glow"></div>
+  <div class="opening-copy"><p id="openingEyebrow" class="eyebrow">Una invitación para ti</p><h1 id="openingCouple"></h1><p id="openingGuest"></p></div>
+  <button id="openingEnvelopeButton" class="opening-envelope-button" type="button" aria-label="Abrir invitación">
+    <span class="opening-envelope" aria-hidden="true"><span class="opening-envelope-back"></span><span class="opening-card"><small id="openingDate"></small></span><span class="opening-flap"></span><span class="opening-envelope-front"></span><span class="opening-seal"></span></span>
+    <strong>Abrir invitación</strong>
+  </button>
+</section>
+<div id="themeAtmosphere" class="theme-atmosphere" aria-hidden="true"></div>
 <div id="devBanner" class="dev-banner hidden">MODO DESARROLLADOR · Invitación de prueba</div>
-<audio id="backgroundMusic" loop></audio><button id="musicBtn" class="music-btn hidden">♫</button>
-<header id="hero" class="hero"><div class="overlay"></div><div class="hero-content"><p class="eyebrow">Nuestra boda</p><h1 id="coupleName"></h1><p id="dateLabel"></p><p id="heroMessage" class="hero-message"></p><button id="openInvitationBtn" class="primary-btn">Abrir invitación</button></div></header>
+<audio id="backgroundMusic" preload="metadata"></audio><button id="musicBtn" class="music-btn hidden" type="button" aria-label="Reproducir música">♫</button><button id="spotifyMusicBtn" class="music-btn hidden" type="button" aria-label="Reproducir música de Spotify">♫</button><div id="musicPlaybackStatus" class="music-playback-status hidden" role="status" aria-live="polite"></div>
+<header id="hero" class="hero"><div class="overlay"></div><div class="hero-content"><p id="heroEyebrow" class="eyebrow">Evento especial</p><h1 id="coupleName"></h1><p id="dateLabel"></p><p id="heroMessage" class="hero-message"></p><button id="openInvitationBtn" class="primary-btn"><span id="openInvitationText">Abrir invitación</span></button></div></header>
 <main id="invitation">
-<section id="personalWelcome" class="section personal-card hidden"><p class="eyebrow">Con mucho cariño</p><h2 id="guestName"></h2><p id="reservedPlaces"></p><p id="customMessage"></p></section>
-<section class="section centered"><p class="eyebrow">Faltan</p><div class="countdown"><div><strong id="days">0</strong><span>Días</span></div><div><strong id="hours">0</strong><span>Horas</span></div><div><strong id="minutes">0</strong><span>Minutos</span></div><div><strong id="seconds">0</strong><span>Segundos</span></div></div></section>
-<section class="section story-card centered"><p class="eyebrow">Nuestra historia</p><h2 id="storyTitle"></h2><p id="storyText"></p></section>
-<section id="venuesSection" class="section"><div id="venuesContainer"><article class="event-card centered"><p id="venueTitle" class="eyebrow"></p><h2 id="venueName"></h2><p><strong>Ceremonia:</strong> <span id="ceremonyTime"></span></p><p><strong>Celebración:</strong> <span id="receptionTime"></span></p><p id="venueAddress"></p><p id="venueNotes" class="muted"></p><a id="venueMaps" class="secondary-btn" target="_blank">Cómo llegar</a></article></div></section>
-<section id="gallerySection" class="section centered hidden"><p class="eyebrow">Momentos nuestros</p><h2>Nuestro álbum</h2><div class="gallery-stage"><button id="galleryPrev" class="gallery-arrow" type="button">‹</button><div id="gallery" class="public-gallery"></div><button id="galleryNext" class="gallery-arrow" type="button">›</button></div><p class="muted">Pulsa una fotografía para verla completa.</p></section>
-<section class="section centered"><p class="eyebrow">Código de vestimenta</p><h2 id="dressTitle"></h2><p id="dressDescription"></p><div id="dressGallery" class="dress-gallery"></div></section>
-<section id="rsvpSection" class="section rsvp-card"><p class="eyebrow">Confirmación</p><h2>Nos encantará contar contigo</h2><p id="guestGreeting">Abre el enlace personalizado que recibiste para confirmar.</p><form id="rsvpForm" class="form-grid hidden"><label class="wide">¿Podrán acompañarnos?<select id="attending"><option value="yes">Sí, asistiremos</option><option value="no">No podremos asistir</option></select></label><label id="adultCountField">Adultos<input id="adults" type="number" min="0"></label><label id="childCountField">Niños<input id="children" type="number" min="0"></label><label class="wide">Nombres de quienes asistirán<textarea id="attendeeNames" placeholder="Ej. Ana López, Carlos Pérez y Mateo Pérez"></textarea></label><div id="menuInfo" class="wide info-box"></div><div id="adultMenuFields" class="wide menu-fields"></div><div id="childMenuFields" class="wide menu-fields"></div><label class="wide">Restricciones alimentarias<textarea id="dietary" placeholder="Alergias, intolerancias o alimentación especial"></textarea></label><label class="wide">Necesidades especiales<textarea id="specialNeeds" placeholder="Accesibilidad, silla alta u otra necesidad"></textarea></label><div id="accessibilityField" class="wide hidden"><label>Consideraciones especiales</label><div id="accessibilityOptions" class="choice-grid"></div><label>Otra consideración<textarea id="accessibilityOther" placeholder="Describe solamente lo que el lugar deba preparar o considerar"></textarea></label></div><label>Teléfono<input id="contactPhone" placeholder="Número para aclaraciones sobre la reservación"></label><label class="wide">Mensaje<textarea id="message" placeholder="Opcional: deja un mensaje para los novios"></textarea></label><button class="primary-btn wide">Guardar confirmación</button></form><p id="rsvpStatus"></p></section>
-<section id="spotifySection" class="section centered hidden"><p class="eyebrow">Nuestra música</p><div id="spotifyPlayer"></div></section><section id="giftSection" class="section gift-card centered"><p class="eyebrow">Regalos</p><h2 id="giftTitle"></h2><p id="giftMessage"></p><p id="giftDescription"></p><a id="giftLink" class="secondary-btn hidden" target="_blank"></a><p id="bankInfo" class="muted"></p></section>
-</main><footer><h2 id="footerCouple"></h2><p id="closingMessage"></p></footer>
+<section id="personalWelcome" class="section personal-card hidden"><p id="personalWelcomeEyebrow" class="eyebrow">Con mucho cariño</p><h2 id="guestName"></h2><p id="reservedPlaces"></p><p id="guestTable" class="guest-table-badge hidden"></p><p id="customMessage"></p></section>
+<section class="section centered"><p id="countdownEyebrow" class="eyebrow">Faltan</p><div class="countdown"><div><strong id="days">0</strong><span>Días</span></div><div><strong id="hours">0</strong><span>Horas</span></div><div><strong id="minutes">0</strong><span>Minutos</span></div><div><strong id="seconds">0</strong><span>Segundos</span></div></div><a id="calendarLink" class="secondary-btn calendar-link hidden" target="_blank" rel="noopener noreferrer">Agregar al calendario</a></section>
+<section class="section story-card centered"><p id="storyEyebrow" class="eyebrow">Historia</p><h2 id="storyTitle"></h2><p id="storyText"></p></section>
+<section id="venuesSection" class="section"><div id="venuesContainer"><article class="event-card centered"><p id="venueTitle" class="eyebrow"></p><h2 id="venueName"></h2><p><strong id="ceremonyLabel">Ceremonia:</strong> <span id="ceremonyTime"></span></p><p><strong id="receptionLabel">Celebración:</strong> <span id="receptionTime"></span></p><p id="venueAddress"></p><p id="venueNotes" class="muted"></p><div class="location-actions"><a id="venueMaps" class="secondary-btn" target="_blank">Cómo llegar</a><a id="venueWaze" class="secondary-btn hidden" target="_blank" rel="noopener noreferrer">Waze</a></div></article></div></section>
+<section id="agendaSection" class="section hidden">
+  <div class="centered">
+    <p id="agendaEyebrow" class="eyebrow">Programa</p>
+    <h2 id="agendaTitle">Momentos del evento</h2>
+  </div>
+  <div id="agendaPublicGrid" class="agenda-public-grid"></div>
+</section>
+<section id="gallerySection" class="section centered hidden"><p id="galleryEyebrow" class="eyebrow">Momentos</p><h2 id="galleryTitle">Galería</h2><div class="gallery-stage"><button id="galleryPrev" class="gallery-arrow" type="button">‹</button><div id="gallery" class="public-gallery"></div><button id="galleryNext" class="gallery-arrow" type="button">›</button></div><p class="muted">Pulsa una fotografía para verla completa.</p></section>
+<section id="photoMessagesSection" class="section centered hidden"><p class="eyebrow">Recuerdos compartidos</p><h2>Mensajes de nuestros invitados</h2><div id="photoMessages" class="card-grid"></div></section>
+<section id="dressSection" class="section centered"><p id="dressEyebrow" class="eyebrow">Código de vestimenta</p><h2 id="dressTitle"></h2><p id="dressDescription"></p><div id="dressGallery" class="dress-gallery"></div></section>
+<section id="rsvpSection" class="section rsvp-card">
+  <p id="rsvpEyebrow" class="eyebrow">Confirmación</p>
+  <h2 id="rsvpTitle">Confirma tu asistencia</h2>
+  <p id="guestGreeting">Abre el enlace personalizado que recibiste para confirmar.</p>
+  <form id="rsvpForm" class="form-grid hidden">
+    <label class="wide">¿Podrán acompañarnos?
+      <select id="attending"><option value="yes">Sí, asistiremos</option><option value="no">No podremos asistir</option></select>
+    </label>
+    <label id="adultCountField">Adultos<input id="adults" type="number" min="0" inputmode="numeric"></label>
+    <label id="childCountField">Niños<input id="children" type="number" min="0" inputmode="numeric"></label>
+    <p id="rsvpCountValidation" class="wide rsvp-inline-validation" role="alert" aria-live="polite"></p>
+    <label class="wide attendance-details">Nombres de quienes asistirán
+      <textarea id="attendeeNames" placeholder="Ej. Ana López, Carlos Pérez y Mateo Pérez"></textarea>
+    </label>
+    <div id="menuInfo" class="wide info-box attendance-details"></div>
+    <div id="adultMenuFields" class="wide menu-fields attendance-details"></div>
+    <div id="childMenuFields" class="wide menu-fields attendance-details"></div>
+    <div class="wide attendance-details conditional-rsvp"><label class="checkbox-line"><input id="hasDietary" type="checkbox"> Tengo una alergia o restricción alimentaria</label><label id="dietaryField" class="hidden">¿Cuál?<textarea id="dietary" placeholder="Alergias, intolerancias o alimentación especial"></textarea></label></div>
+    <div class="wide attendance-details conditional-rsvp"><label class="checkbox-line"><input id="hasSpecialNeeds" type="checkbox"> Necesito que el lugar considere algo especial</label><label id="specialNeedsField" class="hidden">¿Qué debemos considerar?<textarea id="specialNeeds" placeholder="Accesibilidad, silla alta u otra necesidad"></textarea></label></div>
+    <div id="accessibilityField" class="wide attendance-details hidden">
+      <label>Consideraciones especiales</label>
+      <div id="accessibilityOptions" class="choice-grid"></div>
+      <label>Otra consideración<textarea id="accessibilityOther" placeholder="Describe solamente lo que el lugar deba preparar o considerar"></textarea></label>
+    </div>
+    <label>Teléfono<input id="contactPhone" type="tel" placeholder="Número para aclaraciones sobre la reservación"></label>
+    <label>Persona responsable<input id="responsibleName" maxlength="160" placeholder="Quién está realizando la confirmación"></label>
+    <label class="wide">Mensaje<textarea id="message" placeholder="Opcional: deja un mensaje para los anfitriones"></textarea></label>
+    <button id="rsvpSubmitBtn" class="primary-btn wide" type="submit">Guardar confirmación</button>
+  </form>
+  <p id="rsvpStatus" aria-live="polite"></p>
+  <div id="rsvpSavedSummary" class="rsvp-saved-summary hidden" aria-live="polite"></div>
+</section>
+<section id="spotifySection" class="section centered hidden">
+  <p class="eyebrow">Música del evento</p>
+  <div id="spotifyPlayer"></div>
+  <p id="spotifyPublicStatus" class="muted">Pulsa reproducir en el reproductor oficial para escuchar la selección de los anfitriones.</p>
+  <button id="spotifyPlayInlineBtn" class="secondary-btn" type="button">Reproducir selección</button>
+</section><section id="giftSection" class="section gift-card centered"><p id="giftEyebrow" class="eyebrow">Obsequios</p><h2 id="giftTitle"></h2><p id="giftMessage"></p><p id="giftDescription"></p><a id="giftLink" class="secondary-btn hidden" target="_blank"></a><p id="bankInfo" class="muted"></p></section>
+</main><footer><h2 id="footerCouple"></h2><p id="closingMessage"></p><a id="eventStudioAttribution" class="eventstudio-attribution hidden" href="/catalogo.html" target="_blank" rel="noopener">Creado con EventStudio</a></footer>
 <div id="lightbox" class="lightbox hidden"><button id="lightboxClose" class="lightbox-close">×</button><button id="lightboxPrev" class="lightbox-nav prev">‹</button><img id="lightboxImage"><button id="lightboxNext" class="lightbox-nav next">›</button></div>
-<script src="/app.js"></script></body></html>
+<script src="/experience-renderers.js?v=6.14.2-rc.21"></script><script src="/app.js?v=6.14.2-rc.21"></script></body></html>

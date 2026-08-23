@@ -1,10 +1,49 @@
+# Dependencias y cachés
 node_modules/
+.npm/
+.npm-cache/
+coverage/
+test-output/
+tmp/
+output/
+
+# Configuración local y secretos
 .env
-data/*.db
-data/*.db-*
+.env.*
+!.env.example
+*.pem
+*.key
+
+# Datos persistentes de EventStudio
+storage/
+backups/
+eventstudio-backup-*.zip
+*.db
+*.db-shm
+*.db-wal
+data/*
+!data/temp/
 data/temp/*
 !data/temp/.gitkeep
+uploads/*
+!uploads/.gitkeep
+!uploads/guest-photos/
 uploads/guest-photos/*
 !uploads/guest-photos/.gitkeep
+!uploads/site-media/
 uploads/site-media/*
 !uploads/site-media/.gitkeep
+
+# Paquetes y archivos locales
+*.zip
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Editores y sistema operativo
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+Desktop.ini

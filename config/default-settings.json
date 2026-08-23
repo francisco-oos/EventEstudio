@@ -1,23 +1,23 @@
 {
   "couple": {
-    "partner1": "Francisco",
-    "partner2": "Ariana",
-    "displayName": "Francisco & Ariana"
+    "partner1": "",
+    "partner2": "",
+    "displayName": "Nombre del evento"
   },
   "event": {
-    "dateTime": "2026-12-14T17:00:00-06:00",
-    "dateLabel": "14 de diciembre de 2026",
-    "heroMessage": "Después de elegirnos una y otra vez, queremos compartir con ustedes el comienzo de esta nueva etapa.",
-    "closingMessage": "Gracias por acompañarnos en uno de los días más importantes de nuestra vida."
+    "dateTime": "",
+    "dateLabel": "Fecha por confirmar",
+    "heroMessage": "",
+    "closingMessage": "Gracias por acompañarnos en esta celebración."
   },
   "venue": {
-    "title": "Ceremonia y celebración",
-    "name": "Restaurante El Balcón Sabor Y Tradición",
-    "ceremonyTime": "17:00",
-    "receptionTime": "19:00",
-    "address": "Comalcalco, Tabasco",
-    "mapsUrl": "https://maps.app.goo.gl/FTdg2WMGHkbP8kzw6",
-    "notes": "La ceremonia y la celebración se realizarán en el mismo lugar."
+    "title": "Lugar del evento",
+    "name": "",
+    "ceremonyTime": "",
+    "receptionTime": "",
+    "address": "",
+    "mapsUrl": "",
+    "notes": ""
   },
   "dressCode": {
     "title": "Código de vestimenta",
@@ -25,8 +25,8 @@
     "referenceImages": []
   },
   "story": {
-    "title": "Nuestra historia",
-    "text": "Un día comenzamos a caminar juntos. En Comalcalco dijimos sí a un futuro compartido. Ahora queremos celebrar el siguiente capítulo con ustedes."
+    "title": "Acerca del evento",
+    "text": ""
   },
   "gifts": {
     "mode": "cash-envelopes",
@@ -44,7 +44,10 @@
     "childOptions": [
       "Menú infantil"
     ],
+    "serviceMode": "fixed",
     "selectionEnabled": false,
+    "showAdultSelection": false,
+    "showChildSelection": false,
     "instructions": "El lugar preparará la cantidad de menús con base en adultos, niños y restricciones alimentarias confirmadas."
   },
   "media": {
@@ -52,37 +55,45 @@
     "music": "",
     "gallery": [],
     "spotifyUrl": "",
-    "spotifyEmbed": ""
+    "spotifyEmbed": "",
+    "musicSource": "none",
+    "musicStartSeconds": 0,
+    "spotifyUri": "",
+    "spotifyTrackName": "",
+    "spotifyArtists": "",
+    "spotifyDurationMs": 0,
+    "spotifyStartSeconds": 0
   },
   "themeId": "romantic-wine",
   "developer": {
-    "mode": "development",
-    "showBanner": true,
+    "mode": "production",
+    "showBanner": false,
     "ownerOnly": true
   },
   "typography": {
     "heading": "georgia",
     "body": "system",
-    "scale": "comfortable"
+    "scale": "comfortable",
+    "nameCase": "title"
   },
   "venues": {
     "samePlace": true,
     "ceremony": {
-      "title": "Ceremonia",
-      "name": "Restaurante El Balcón Sabor Y Tradición",
-      "time": "17:00",
-      "address": "Comalcalco, Tabasco",
-      "mapsUrl": "https://maps.app.goo.gl/FTdg2WMGHkbP8kzw6",
+      "title": "Actividad principal",
+      "name": "",
+      "time": "",
+      "address": "",
+      "mapsUrl": "",
       "lat": "",
       "lng": "",
       "notes": ""
     },
     "reception": {
       "title": "Celebración",
-      "name": "Restaurante El Balcón Sabor Y Tradición",
-      "time": "19:00",
-      "address": "Comalcalco, Tabasco",
-      "mapsUrl": "https://maps.app.goo.gl/FTdg2WMGHkbP8kzw6",
+      "name": "",
+      "time": "",
+      "address": "",
+      "mapsUrl": "",
       "lat": "",
       "lng": "",
       "notes": ""
@@ -99,5 +110,127 @@
       "Otro"
     ],
     "helpText": "Selecciona únicamente si alguien de tu familia necesita una consideración especial."
+  },
+  "qrDesign": {
+    "templateId": "classic-holder",
+    "title": "Comparte recuerdos del evento",
+    "message": "Escanea el código y comparte las fotografías que tomes durante la celebración.",
+    "instruction": "No necesitas instalar ninguna aplicación.",
+    "showTableName": true,
+    "showFamilies": false,
+    "useInvitationColors": true
+  },
+  "physicalInvitation": {
+    "templateId": "auto-theme"
+  },
+  "agenda": {
+    "enabled": true,
+    "items": [],
+    "sameLocation": true
+  },
+  "presentation": {
+    "openingStyle": "wax-envelope",
+    "experienceMode": "auto",
+    "motionLevel": "balanced",
+    "galleryStyle": "classic",
+    "openingEyebrow": "Una invitación para ti",
+    "heroEyebrow": "Evento especial",
+    "openButton": "Abrir invitación",
+    "countdownEyebrow": "Faltan",
+    "storyEyebrow": "Acerca del evento",
+    "galleryEyebrow": "Momentos",
+    "galleryTitle": "Galería",
+    "dressEyebrow": "Código de vestimenta",
+    "rsvpEyebrow": "Confirmación",
+    "rsvpTitle": "Confirma tu asistencia",
+    "giftEyebrow": "Obsequios",
+    "agendaEyebrow": "Programa",
+    "agendaTitle": "Momentos del evento",
+    "guestLabel": "Familia o invitado",
+    "dashboardTitle": "Resumen del evento",
+    "dashboardDescription": "Consulta asistencia, necesidades y recursos del evento activo.",
+    "reportTitle": "Resumen operativo del evento",
+    "reportDescription": "Genera un archivo con asistentes, adultos, niños, menús, restricciones y necesidades especiales para compartir con el lugar u organizador.",
+    "rosePetalColor": "#b70f36",
+    "floralPetalColor": "#f7f3de",
+    "floralCenterColor": "#d8ad61"
+  },
+  "creativeBrief": {
+    "protagonist": "",
+    "milestone": "",
+    "theme": "",
+    "tone": "joyful",
+    "visualNotes": "",
+    "assetRightsConfirmed": false
+  },
+  "storagePolicy": {
+    "warningPercent": 80,
+    "criticalPercent": 95,
+    "graceDays": 15,
+    "guestMessage": "El álbum está temporalmente en mantenimiento. Puedes intentarlo nuevamente más tarde."
+  },
+  "rsvp": {
+    "closeAt": "",
+    "allowChanges": true,
+    "allowFlexibleComposition": false
+  },
+  "photoPolicy": {
+    "messageMaxLength": 500,
+    "defaultStatus": "pending",
+    "publishApprovedMessages": true
+  },
+  "lifecycle": {
+    "protected": false,
+    "automaticPurge": false
+  },
+  "features": {
+    "invitation": true,
+    "rsvp": true,
+    "guests": true,
+    "whatsappManual": true,
+    "whatsappBusiness": true,
+    "music": true,
+    "program": true,
+    "locations": true,
+    "dressCode": true,
+    "gallery": true,
+    "guestPhotoUpload": true,
+    "guestPhotoMessages": true,
+    "qrCards": true,
+    "physicalInvitations": true,
+    "seating": true,
+    "reports": true,
+    "templates": true,
+    "thematicExperience": true,
+    "gifts": true,
+    "menus": true,
+    "billing": false,
+    "customDomains": false,
+    "developerTools": false
+  },
+  "featureStates": {
+    "invitation": "available",
+    "rsvp": "available",
+    "guests": "available",
+    "whatsappManual": "available",
+    "whatsappBusiness": "hidden",
+    "music": "available",
+    "program": "available",
+    "locations": "available",
+    "dressCode": "available",
+    "gifts": "available",
+    "gallery": "available",
+    "guestPhotoUpload": "available",
+    "guestPhotoMessages": "available",
+    "qrCards": "available",
+    "physicalInvitations": "available",
+    "seating": "available",
+    "reports": "available",
+    "menus": "available",
+    "templates": "available",
+    "thematicExperience": "available",
+    "billing": "hidden",
+    "customDomains": "hidden",
+    "developerTools": "hidden"
   }
 }

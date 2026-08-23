@@ -1,0 +1,30 @@
+name: Verificación EventStudio
+
+on:
+  push:
+    branches: [main, "release/**"]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Descargar código
+        uses: actions/checkout@v4
+      - name: Preparar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - name: Instalar dependencias exactas
+        run: npm ci
+      - name: Ejecutar pruebas funcionales y restauración
+        run: npm test
+      - name: Auditar dependencias
+        run: npm audit --audit-level=moderate
+      - name: Construir imagen de producción
+        run: docker build --tag eventstudio-ci .

@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,viewport-fit=cover">
+  <meta name="description" content="Plantillas y paquetes de invitaciones digitales EventStudio para bodas, XV años, cumpleaños, baby shower y revelación de género.">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Diseña, prueba y organiza tu evento · EventStudio">
+  <meta property="og:description" content="Explora invitaciones animadas, prueba diseños antes de registrarte y agrega sólo las herramientas que necesites.">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Diseña, prueba y organiza tu evento · EventStudio">
+  <meta name="twitter:description" content="Plantillas, RSVP, fotografías, QR, mesas y experiencias en una sola plataforma para eventos.">
+  <title>Plantillas y paquetes · EventStudio</title>
+  <link rel="stylesheet" href="/styles.css?v=6.14.2-rc.21">
+</head>
+<body class="catalog-page">
+  <header class="catalog-nav">
+    <a class="catalog-brand" href="/catalogo.html"><span>ES</span><strong>EventStudio</strong></a>
+    <nav aria-label="Navegación principal">
+      <a href="#plantillas">Plantillas</a><a href="/showcase.html">Showcase</a>
+      <a href="#paquetes">Paquetes</a>
+      <a href="#complementos">Arma el tuyo</a>
+      <a class="secondary-btn" href="/admin.html">Ingresar</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="catalog-hero">
+      <div>
+        <p class="eyebrow">Invitaciones que también organizan</p>
+        <h1>Tu temática convertida en una invitación que cobra vida.</h1>
+        <p>Empieza con un enlace animado, fotos, datos y música desde $199 MXN. Agrega RSVP, invitados, programa, álbum o mesas únicamente cuando los necesites.</p>
+        <div class="catalog-hero-actions">
+          <a id="heroTrialCta" class="primary-btn" href="/sandbox.html">Crea tu diseño ahora</a>
+          <a class="secondary-btn" href="/muestra.html?theme=paw-parade&event=kids-party">Ver una muestra</a>
+        </div>
+        <p id="registrationNotice" class="catalog-notice hidden"></p>
+      </div>
+      <div class="catalog-hero-cards" aria-label="Ejemplos de celebraciones">
+        <article class="hero-sample theme-cinematic-vows"><span>Boda</span><strong>Nuestra historia</strong><small>Una noche para recordar</small></article>
+        <article class="hero-sample theme-welcome-clouds"><span>Baby shower</span><strong>Una dulce espera</strong><small>Bienvenida con amor</small></article>
+        <article class="hero-sample theme-festive-confetti"><span>Cumpleaños</span><strong>¡Celebremos!</strong><small>Color, música y alegría</small></article>
+      </div>
+    </section>
+
+    <section class="catalog-proof" aria-label="Ventajas principales">
+      <span>✓ <strong id="catalogThemeCount">—</strong> diseños estructurales</span>
+      <span>✓ <strong id="catalogEventCount">—</strong> tipos de celebración</span>
+      <span>✓ Sin editor complicado</span>
+      <span>✓ Español · English · Português</span>
+    </section>
+
+    <section class="catalog-section express-product-section">
+      <div class="catalog-section-heading">
+        <div><p class="eyebrow">Producto mínimo</p><h2>Temática Express: sólo lo indispensable</h2></div>
+        <p>El cliente entrega contexto, fotografías y música. EventStudio aplica una estructura segura y adaptable; no necesita editar cada pantalla ni esperar una generación de IA.</p>
+      </div>
+      <div class="express-flow" aria-label="Cómo funciona Temática Express">
+        <article><span>1</span><strong>Describe</strong><p>Protagonista, ocasión, temática, tono y datos.</p></article>
+        <article><span>2</span><strong>Selecciona</strong><p>Una estructura visual, fotos y música propia o enlace.</p></article>
+        <article><span>3</span><strong>Comparte</strong><p>Un enlace animado listo para teléfono y computadora.</p></article>
+      </div>
+      <p class="express-note">RSVP no es obligatorio en Express. El propietario puede habilitarlo después como complemento o promoción sin crear otra invitación.</p>
+    </section>
+
+    <section id="plantillas" class="catalog-section">
+      <div class="catalog-section-heading">
+        <div><p class="eyebrow">Biblioteca visual</p><h2>Encuentra el diseño por celebración y estilo</h2></div>
+        <p>La plantilla cambia la presentación; tus datos, invitados y confirmaciones permanecen intactos.</p>
+      </div>
+      <div id="catalogEventChips" class="catalog-event-chips" aria-label="Filtrar por celebración"></div>
+      <div class="catalog-filters">
+        <label>Buscar diseño<input id="catalogSearch" type="search" placeholder="Floral, moderna, noche, baby shower…"></label>
+        <label>Nivel<select id="catalogPlanFilter"><option value="">Todos</option><option value="express">Express</option><option value="starter">Esencial</option><option value="basic">Plus</option><option value="premium">Premium</option></select></label>
+      </div>
+      <div id="catalogThemeGrid" class="catalog-theme-grid" aria-live="polite"></div>
+    </section>
+
+    <section id="paquetes" class="catalog-section catalog-plans-section">
+      <div class="catalog-section-heading">
+        <div><p class="eyebrow">Precios claros</p><h2>Empieza con lo indispensable</h2></div>
+        <p>Premium muestra todo lo que el propietario mantenga disponible. Los otros planes pueden crecer con complementos.</p>
+      </div>
+      <div id="catalogPlanGrid" class="catalog-plan-grid"></div>
+    </section>
+
+    <section id="complementos" class="catalog-section addon-builder-section">
+      <div class="catalog-section-heading">
+        <div><p class="eyebrow">Paquete a la medida</p><h2>Arma una combinación sin pagar por módulos que no usarás</h2></div>
+        <p>El cálculo es informativo. La activación la confirma EventStudio desde el panel del propietario; no hay cargos automáticos.</p>
+      </div>
+      <div class="addon-builder">
+        <div>
+          <label>Paquete base<select id="builderPlan"></select></label>
+          <div id="builderAddons" class="builder-addons"></div>
+        </div>
+        <aside class="builder-summary">
+          <span>Total de referencia</span>
+          <strong id="builderTotal">$0 MXN</strong>
+          <p id="builderDescription"></p>
+          <a id="builderCta" class="primary-btn" href="/sandbox.html">Probar sin cuenta</a>
+          <small id="builderTrialNote">Evento privado y sin cobro automático.</small>
+        </aside>
+      </div>
+    </section>
+
+    <section class="catalog-section catalog-languages">
+      <div><p class="eyebrow">Invitados internacionales</p><h2>La misma invitación, en tres idiomas</h2><p>Los controles, las fechas y los textos automáticos pueden mostrarse en español, inglés o portugués. Tus mensajes personalizados se conservan tal como los escribiste.</p></div>
+      <div class="language-cards"><article><strong>ES</strong><span>Español</span></article><article><strong>EN</strong><span>English</span></article><article><strong>PT</strong><span>Português</span></article></div>
+    </section>
+  </main>
+
+  <footer class="catalog-footer"><strong>EventStudio</strong><span>Invitaciones, confirmaciones y operación del evento en un solo lugar.</span><a href="/admin.html">Acceso de clientes</a></footer>
+  <script src="/catalogo.js?v=6.14.2-rc.21"></script>
+</body>
+</html>

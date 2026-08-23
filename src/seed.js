@@ -2,21 +2,42 @@ const crypto = require("crypto");
 const bcrypt = require("bcryptjs");
 const db = require("./db");
 
+if(process.env.NODE_ENV==="production"){
+  throw new Error("El seed de demostración está bloqueado en NODE_ENV=production.");
+}
+
+const existingUsers=db.prepare("SELECT COUNT(*) total FROM users").get().total;
+const existingEvents=db.prepare("SELECT COUNT(*) total FROM events").get().total;
+if(existingUsers||existingEvents){
+  throw new Error(
+    `Seed cancelado: la base ya contiene ${existingUsers} usuario(s) y ${existingEvents} evento(s). `
+    +"EventStudio nunca mezcla la demostración con una base existente."
+  );
+}
+
 const makeToken = () => crypto.randomBytes(16).toString("hex");
 
-const wedding = db.prepare("SELECT id FROM events WHERE slug='francisco-ariana'").get()
+const wedding = db.prepare("SELECT id FROM events WHERE slug='boda-demostracion'").get()
   || (() => {
-    const defaults = require("../config/default-settings.json");
+    const defaults = JSON.parse(JSON.stringify(require("../config/default-settings.json")));
+    const weddingProfile=require("../config/event-types.json").find(item=>item.id==="wedding");
+    const {storyTitle:_storyTitle,...weddingPresentation}=weddingProfile?.defaults||{};
+    defaults.couple={partner1:"Sofía",partner2:"Daniel",displayName:"Sofía & Daniel"};
+    defaults.event={dateTime:"2027-06-12T17:00:00-06:00",dateLabel:"12 de junio de 2027",heroMessage:"Queremos compartir esta celebración con las personas que forman parte de nuestra historia.",closingMessage:"Gracias por acompañarnos en este día especial."};
+    defaults.story={title:"Nuestra historia",text:"Esta información pertenece únicamente al entorno local de demostración."};
+    defaults.presentation={...(defaults.presentation||{}),...weddingPresentation};
+    defaults.developer={mode:"development",showBanner:true,ownerOnly:true};
+    defaults.lifecycle={protected:true,automaticPurge:false};
     const info = db.prepare(`
       INSERT INTO events(slug,name,settings_json,event_type,published)
       VALUES(?,?,?,?,?)
-    `).run("francisco-ariana","Boda Francisco & Ariana",JSON.stringify(defaults),"wedding",0);
+    `).run("boda-demostracion","Boda de demostración",JSON.stringify(defaults),"wedding",0);
     return { id: info.lastInsertRowid };
   })();
 
 const accounts = [
-  { email:"leyva2636@gmail.com", name:"Francisco Alvarado", role:"owner", password:"Cambiar123!" },
-  { email:"ariana@evento.local", name:"Ariana", role:"client", password:"Cambiar123!" }
+  { email:"owner@eventstudio.local", name:"Propietario Demo", role:"owner", password:"Cambiar123!" },
+  { email:"client@eventstudio.local", name:"Cliente Demo", role:"client", password:"Cambiar123!" }
 ];
 
 for (const account of accounts) {
@@ -33,21 +54,21 @@ for (const account of accounts) {
   `).run(account.email,hash,account.name,account.role,account.email.toLowerCase(),"local");
 }
 
-const owner = db.prepare("SELECT id FROM users WHERE email='leyva2636@gmail.com'").get();
-const ariana = db.prepare("SELECT id FROM users WHERE email='ariana@evento.local'").get();
+const owner = db.prepare("SELECT id FROM users WHERE email='owner@eventstudio.local'").get();
+const client = db.prepare("SELECT id FROM users WHERE email='client@eventstudio.local'").get();
 
 /* El propietario es superusuario: no necesita estar vinculado como cliente al evento. */
 db.prepare("DELETE FROM user_events WHERE user_id=?").run(owner.id);
 
-/* Ariana es la cliente administradora de la boda. */
+/* La cuenta cliente administra el evento de demostración. */
 db.prepare(`
   INSERT INTO user_events(user_id,event_id,permission)
   VALUES(?,?,'manage')
   ON CONFLICT(user_id,event_id) DO UPDATE SET permission='manage'
-`).run(ariana.id,wedding.id);
+`).run(client.id,wedding.id);
 
-db.prepare("UPDATE events SET owner_user_id=?,event_type='wedding',archived=0 WHERE id=?")
-  .run(ariana.id,wedding.id);
+db.prepare("UPDATE events SET owner_user_id=?,event_type='wedding',archived=0,published=1,protected=1 WHERE id=?")
+  .run(client.id,wedding.id);
 
 /* Cuenta propietaria interna. */
 const studioPlan = db.prepare("SELECT id FROM plans WHERE code='studio'").get();
@@ -61,12 +82,12 @@ if (!db.prepare("SELECT id FROM subscriptions WHERE user_id=? LIMIT 1").get(owne
 /* La boda se simula como cliente que ya pagó Premium. Tener cuenta no implica pago;
    este seed activa la boda expresamente para hacer la prueba comercial. */
 const premiumPlan = db.prepare("SELECT * FROM plans WHERE code='premium'").get();
-let subscription = db.prepare("SELECT id FROM subscriptions WHERE user_id=? ORDER BY id DESC LIMIT 1").get(ariana.id);
+let subscription = db.prepare("SELECT id FROM subscriptions WHERE user_id=? ORDER BY id DESC LIMIT 1").get(client.id);
 if (!subscription) {
   const info = db.prepare(`
     INSERT INTO subscriptions(user_id,plan_id,status,ends_at)
     VALUES(?,?, 'active', datetime('now', ?))
-  `).run(ariana.id,premiumPlan.id,`+${premiumPlan.duration_days} days`);
+  `).run(client.id,premiumPlan.id,`+${premiumPlan.duration_days} days`);
   subscription = {id:info.lastInsertRowid};
 } else {
   db.prepare(`
@@ -75,11 +96,11 @@ if (!subscription) {
   `).run(premiumPlan.id,`+${premiumPlan.duration_days} days`,subscription.id);
 }
 
-if (!db.prepare("SELECT id FROM payments WHERE user_id=? AND provider_reference='SEED-BODA-PAGADA'").get(ariana.id)) {
+if (!db.prepare("SELECT id FROM payments WHERE user_id=? AND provider_reference='SEED-BODA-PAGADA'").get(client.id)) {
   db.prepare(`
     INSERT INTO payments(user_id,plan_id,provider,provider_reference,amount_cents,currency,status,paid_at)
     VALUES(?,?, 'demo','SEED-BODA-PAGADA',?,?,'paid',CURRENT_TIMESTAMP)
-  `).run(ariana.id,premiumPlan.id,premiumPlan.price_cents,premiumPlan.currency);
+  `).run(client.id,premiumPlan.id,premiumPlan.price_cents,premiumPlan.currency);
 }
 
 const insertGuest = db.prepare(`
@@ -98,6 +119,6 @@ const insertGuest = db.prepare(`
 });
 
 console.log("Datos creados con separación propietario/cliente.");
-console.log("Superusuario: leyva2636@gmail.com / Cambiar123!");
-console.log("Cliente boda: ariana@evento.local / Cambiar123!");
-console.log("La cuenta de Ariana se simuló con plan Premium pagado.");
+console.log("Superusuario demo: owner@eventstudio.local / Cambiar123!");
+console.log("Cliente demo: client@eventstudio.local / Cambiar123!");
+console.log("La cuenta cliente se simuló con plan Premium pagado.");

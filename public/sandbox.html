@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,viewport-fit=cover">
+  <meta name="description" content="Prueba EventStudio sin crear una cuenta y personaliza una muestra de tu evento.">
+  <title>Crea tu diseño · EventStudio</title>
+  <link rel="stylesheet" href="/styles.css?v=6.14.2-rc.21">
+</head>
+<body class="sandbox-page">
+<header class="catalog-nav"><a class="catalog-brand" href="/catalogo.html"><span>ES</span><strong>EventStudio</strong></a><nav><a href="/showcase.html">Inspiración</a><a href="/catalogo.html">Precios</a><a href="/admin.html">Ingresar</a></nav></header>
+<main class="sandbox-shell">
+  <section class="sandbox-editor">
+    <div><p class="eyebrow">Empieza sin registro</p><h1>Crea una primera versión de tu invitación.</h1><p>Prueba nombre, fecha y estilo. Esta sesión vive sólo en tu navegador hasta que decidas guardarla en una cuenta.</p></div>
+    <div class="sandbox-fields">
+      <label>Tipo de evento<select id="sandboxEventType"></select></label>
+      <label>Nombre del evento<input id="sandboxEventName" maxlength="160" placeholder="Ej. Ana & Luis"></label>
+      <label>Fecha<input id="sandboxEventDate" type="date"></label>
+      <label>Buscar diseño<input id="sandboxThemeSearch" type="search" placeholder="Floral, elegante, editorial…"></label>
+    </div>
+    <div id="sandboxThemeGrid" class="sandbox-theme-grid"></div>
+    <div class="sandbox-actions"><button id="sandboxSaveBtn" class="primary-btn" type="button">Guardar mi diseño</button><button id="sandboxResetBtn" class="secondary-btn" type="button">Empezar de nuevo</button></div>
+    <p class="muted">Guardar crea la cuenta y conserva el tipo de evento, nombre, fecha y plantilla seleccionada. Publicar, enviar por WhatsApp o descargar salidas finales depende del plan y los derechos activos.</p>
+  </section>
+  <aside class="sandbox-preview"><div class="row-between"><div><small>Vista en contexto</small><strong id="sandboxPreviewTitle">Tu invitación</strong></div><a id="sandboxOpenPreview" class="mini-btn" target="_blank" rel="noopener">Abrir</a></div><div class="sandbox-phone"><iframe id="sandboxPreviewFrame" title="Vista previa"></iframe></div><p class="muted">La versión final se adapta a móvil y escritorio; esta vista simula un teléfono.</p></aside>
+</main>
+<script src="/sandbox.js?v=6.14.2-rc.21"></script>
+</body>
+</html>

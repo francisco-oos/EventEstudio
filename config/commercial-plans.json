@@ -1,0 +1,193 @@
+{
+  "currency": "MXN",
+  "plans": [
+    {
+      "code": "trial",
+      "name": "Prueba completa 7 días",
+      "tagline": "Explora todas las funciones con espacio limitado para fotografías",
+      "priceCents": 0,
+      "durationDays": 7,
+      "retentionDays": 7,
+      "maxEvents": 1,
+      "maxGuests": 60,
+      "maxStorageMB": 100,
+      "public": false,
+      "featured": false,
+      "includesAllAvailable": true,
+      "included": [],
+      "maxPublishedEvents": 1,
+      "publicationPolicy": "manual_owner"
+    },
+    {
+      "code": "express",
+      "name": "Temática Express",
+      "tagline": "Un enlace animado con temática, fotos, datos y música",
+      "priceCents": 19900,
+      "durationDays": 90,
+      "retentionDays": 30,
+      "maxEvents": 1,
+      "maxGuests": 0,
+      "maxStorageMB": 1024,
+      "public": true,
+      "featured": false,
+      "included": [
+        "invitation",
+        "locations",
+        "templates",
+        "music",
+        "gallery",
+        "thematicExperience"
+      ],
+      "maxPublishedEvents": 1,
+      "publicationPolicy": "manual_owner"
+    },
+    {
+      "code": "starter",
+      "name": "Invitación Esencial",
+      "tagline": "Invitación, invitados y confirmaciones seguras",
+      "priceCents": 29900,
+      "durationDays": 180,
+      "retentionDays": 30,
+      "maxEvents": 1,
+      "maxGuests": 150,
+      "maxStorageMB": 512,
+      "public": true,
+      "featured": false,
+      "included": [
+        "invitation",
+        "rsvp",
+        "guests",
+        "whatsappManual",
+        "locations",
+        "templates",
+        "music",
+        "gallery",
+        "thematicExperience"
+      ],
+      "maxPublishedEvents": 1,
+      "publicationPolicy": "manual_owner"
+    },
+    {
+      "code": "basic",
+      "name": "Celebración Plus",
+      "tagline": "La experiencia completa para informar y emocionar",
+      "priceCents": 49900,
+      "durationDays": 240,
+      "retentionDays": 45,
+      "maxEvents": 1,
+      "maxGuests": 300,
+      "maxStorageMB": 2048,
+      "public": true,
+      "featured": true,
+      "included": [
+        "invitation",
+        "rsvp",
+        "guests",
+        "whatsappManual",
+        "locations",
+        "templates",
+        "music",
+        "program",
+        "dressCode",
+        "gifts",
+        "gallery",
+        "reports",
+        "thematicExperience"
+      ],
+      "maxPublishedEvents": 1,
+      "publicationPolicy": "manual_owner"
+    },
+    {
+      "code": "premium",
+      "name": "Experiencia Premium",
+      "tagline": "Todo lo disponible para el evento, sin menús incompletos",
+      "priceCents": 99900,
+      "durationDays": 365,
+      "retentionDays": 60,
+      "maxEvents": 1,
+      "maxGuests": 600,
+      "maxStorageMB": 8192,
+      "public": true,
+      "featured": false,
+      "includesAllAvailable": true,
+      "included": [],
+      "maxPublishedEvents": 1,
+      "publicationPolicy": "manual_owner"
+    },
+    {
+      "code": "studio",
+      "name": "EventStudio Agencia",
+      "tagline": "Operación interna para múltiples clientes",
+      "priceCents": 249900,
+      "durationDays": 365,
+      "retentionDays": 90,
+      "maxEvents": 20,
+      "maxGuests": 2000,
+      "maxStorageMB": 20480,
+      "public": false,
+      "featured": false,
+      "includesAllAvailable": true,
+      "included": [],
+      "maxPublishedEvents": 20,
+      "publicationPolicy": "manual_owner"
+    }
+  ],
+  "addons": [
+    {
+      "key": "program",
+      "name": "Programa del evento",
+      "description": "Itinerario, ubicaciones y navegación.",
+      "priceCents": 9900
+    },
+    {
+      "key": "dressCode",
+      "name": "Vestimenta",
+      "description": "Código, descripción e inspiración visual.",
+      "priceCents": 7900
+    },
+    {
+      "key": "gifts",
+      "name": "Regalos",
+      "description": "Mesa de regalos, sobres o transferencia.",
+      "priceCents": 7900
+    },
+    {
+      "key": "guestPhotoUpload",
+      "name": "Álbum colaborativo",
+      "description": "QR para fotos y mensajes de invitados.",
+      "priceCents": 14900,
+      "grants": [
+        "guestPhotoUpload",
+        "guestPhotoMessages"
+      ]
+    },
+    {
+      "key": "qrCards",
+      "name": "QR e impresión",
+      "description": "Material por mesa e invitación física.",
+      "priceCents": 12900,
+      "grants": [
+        "qrCards",
+        "physicalInvitations"
+      ]
+    },
+    {
+      "key": "seating",
+      "name": "Plano y mesas",
+      "description": "Distribución, asignación y PDF operativo.",
+      "priceCents": 14900
+    },
+    {
+      "key": "menus",
+      "name": "Menús y restricciones",
+      "description": "Opciones, alergias y necesidades especiales.",
+      "priceCents": 9900
+    },
+    {
+      "key": "premiumTemplates",
+      "name": "Colección de plantillas Premium",
+      "description": "Diseños cinematográficos, editoriales y temáticos.",
+      "priceCents": 14900
+    }
+  ]
+}

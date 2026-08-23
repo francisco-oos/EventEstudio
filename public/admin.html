@@ -1,81 +1,833 @@
-<!doctype html><html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Event Studio</title><link rel="stylesheet" href="/styles.css"></head><body class="admin-page">
-<section id="loginScreen" class="login-screen">
-      <div class="login-visual">
-        <div class="login-brand-mark">ES</div>
-        <p class="eyebrow">Event Studio</p>
-        <h1>Eventos que se sienten personales.</h1>
-        <p>Administra invitaciones, confirmaciones, menús, accesibilidad, fotografías y reportes desde un solo lugar.</p>
-      </div>
-      <div class="login-card">
-        <p class="eyebrow">Acceso seguro</p>
-        <h2>Bienvenido</h2>
-        
-        <label>Correo o teléfono<input id="loginEmail" type="text" placeholder="correo@ejemplo.com o 993..." autocomplete="username"></label><label>Contraseña<div class="password-field"><input id="adminPassword" type="password" placeholder="••••••••••••" autocomplete="current-password"><button id="toggleLoginPassword" type="button" class="password-toggle">Ver</button></div></label>
-        <button id="loginBtn" class="primary-btn">Ingresar al panel</button><button id="showRegisterBtn" class="secondary-btn" type="button">Crear cuenta</button><button id="googleLoginBtn" class="google-btn" type="button">Continuar con Google</button>
-        <p id="loginStatus" class="status-message"></p>
-        <small>Los permisos dependen de tu perfil y de los eventos asignados.</small><form id="registerForm" class="register-form hidden"><h3>Crear cuenta de cliente</h3><label>Nombre<input id="registerName" required placeholder="Tu nombre o negocio"></label><label>Correo<input id="registerEmail" type="email" placeholder="Opcional si usas teléfono"></label><label>Teléfono<input id="registerPhone" placeholder="10 dígitos"></label><label>Contraseña<div class="password-field"><input id="registerPassword" type="password" minlength="8" required placeholder="Mínimo 8 caracteres"><button id="toggleRegisterPassword" type="button" class="password-toggle">Ver</button></div></label><label>Plan<select id="registerPlan"></select></label><button class="primary-btn">Registrarme y comenzar prueba</button><button id="cancelRegisterBtn" class="ghost-btn" type="button">Volver al acceso</button><p id="registerStatus" class="status-message"></p></form>
-      </div>
-    </section>
-    <main id="adminApp" class="admin-layout hidden"><aside class="admin-sidebar"><div class="sidebar-brand"><span>ES</span><div><strong>Event Studio</strong><small>Panel profesional</small><small id="workspaceLabel" class="workspace-label">Cargando espacio…</small></div></div><nav class="sidebar-nav"><button id="dashboardTabBtn" data-tab="dashboard" class="tab-btn active">⌂ <span>Resumen</span></button><button data-tab="settings" class="tab-btn">⚙ <span>Configuración</span></button><button data-tab="templates" class="tab-btn">◈ <span>Plantillas</span></button><button id="ownerTabBtn" data-tab="owner" class="tab-btn">▣ <span>Mi negocio</span></button><button id="usersTabBtn" data-tab="users" class="tab-btn">♙ <span>Usuarios</span></button><button data-tab="billing" class="tab-btn">$ <span>Plan y pagos</span></button><button data-tab="guests" class="tab-btn">♧ <span>Invitados</span></button><button data-tab="qr" class="tab-btn">▦ <span>QR e impresión</span></button><button data-tab="photos" class="tab-btn">▧ <span>Fotografías</span></button></nav><div class="sidebar-footer"><span id="modeBadge" class="mode-badge">Desarrollo</span><button id="logoutBtn" class="ghost-btn">Cerrar sesión</button></div></aside>
-<section class="admin-main"><header class="admin-topbar"><div><p class="eyebrow">Gestión de eventos</p><h1 id="panelEventName">Panel de control</h1></div><div class="topbar-actions">
-  <div class="event-switcher">
-    <label class="event-switcher-label">Evento activo<select id="eventSelect"></select></label>
-    <button id="newEventBtn" class="secondary-btn">＋ Nuevo evento</button>
-  </div>
-  <div class="account-menu">
-    <div><strong id="sessionUserName">Mi cuenta</strong><small id="sessionUserRole"></small></div>
-    <button id="topLogoutBtn" class="danger-outline-btn" type="button">Cerrar sesión</button>
-  </div>
-</div></header><section id="accountContextBanner" class="account-context-banner">
-  <div><span id="accountContextIcon">◆</span><div><strong id="accountContextTitle">Cargando espacio de trabajo…</strong><p id="accountContextText"></p></div></div>
-  <span id="subscriptionBadge" class="subscription-badge"></span>
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,minimum-scale=1,viewport-fit=cover,interactive-widget=resizes-content" name="viewport"/><title>EventStudio</title><link href="/styles.css?v=6.14.2-rc.21" rel="stylesheet"/></head><body class="admin-page">
+<section class="login-screen" id="loginScreen">
+<div class="login-visual">
+<div class="login-brand-mark">ES</div>
+<p class="eyebrow">EventStudio</p>
+<h1>Eventos que se sienten personales.</h1>
+<p>Administra invitaciones, confirmaciones, menús, accesibilidad, fotografías y reportes desde un solo lugar.</p>
+</div>
+<div class="login-card">
+<p class="eyebrow">Acceso seguro</p>
+<h2>Bienvenido</h2>
+<label>Correo o teléfono<input autocomplete="username" id="loginEmail" placeholder="correo@ejemplo.com o 993..." type="text"/></label><label>Contraseña<div class="password-field"><input autocomplete="current-password" id="adminPassword" placeholder="••••••••••••" type="password"/><button class="password-toggle" id="toggleLoginPassword" type="button">Ver</button></div></label>
+<button class="primary-btn" id="loginBtn">Ingresar al panel</button><button class="secondary-btn" id="showRegisterBtn" type="button">Crear cuenta</button><button class="google-btn hidden" id="googleLoginBtn" type="button">Continuar con Google</button>
+<p class="status-message" id="loginStatus"></p>
+<small>Los permisos dependen de tu perfil y de los eventos asignados.</small><a class="catalog-login-link" href="/catalogo.html">Explorar plantillas y paquetes</a><form class="register-form hidden" id="registerForm"><div class="register-progress"><span>1 · Evento</span><span>2 · Plan</span><span>3 · Cuenta</span></div><h3 id="registerTrialTitle">Comienza tu prueba</h3><p class="muted">El evento permanecerá privado mientras lo preparas.</p><label>¿Qué vas a celebrar?<select id="registerEventType"></select></label><label class="hidden">Plantilla elegida<input id="registerTheme" type="hidden"/></label><div class="register-theme-choice hidden" id="registerThemeChoice"></div><input id="registerPlan" type="hidden" value="basic"/><div class="register-plan-cards" id="registerPlanCards"></div><label>Nombre<input id="registerName" maxlength="120" placeholder="Tu nombre o negocio" required=""/></label><label>Correo<input id="registerEmail" placeholder="Opcional si usas teléfono" type="email"/></label><label>Teléfono<input id="registerPhone" inputmode="tel" placeholder="10 dígitos"/></label><label>Idioma de mi panel<select id="registerLocale"><option value="es">Español</option><option value="en">English</option><option value="pt">Português</option></select></label><label>Contraseña<div class="password-field"><input id="registerPassword" minlength="12" placeholder="Mínimo 12 caracteres" required="" type="password"/><button class="password-toggle" id="toggleRegisterPassword" type="button">Ver</button></div></label><label>Repite la contraseña<input id="registerPasswordConfirm" minlength="12" required="" type="password"/></label><label class="checkbox-line"><input id="registerTrialAcknowledgement" required="" type="checkbox"/> <span id="registerTrialAcknowledgementText">Entiendo que la prueba comienza privada y no realiza ningún cobro automático.</span></label><button class="primary-btn">Crear prueba privada</button><button class="ghost-btn" id="cancelRegisterBtn" type="button">Volver al acceso</button><p class="status-message" id="registerStatus"></p></form>
+</div>
 </section>
-<p id="adminStatus" class="status-message"></p>
-<section id="tab-dashboard" class="tab-panel"><section id="clientPlanCard" class="admin-card client-plan-card hidden">
-  <div><p class="eyebrow">Cuenta cliente</p><h2 id="clientPlanTitle">Plan</h2><p id="clientPlanText"></p></div>
-  <button id="createClientEventBtn" class="secondary-btn" type="button">Crear otro evento</button>
-</section><div class="dashboard-hero"><div><p class="eyebrow">Evento activo</p><h2>Resumen de este evento.</h2><p>Estas cifras corresponden únicamente al evento seleccionado; no representan toda tu plataforma ni todos tus clientes.</p></div><a id="publicEventBtn" class="primary-btn" target="_blank">Ver invitación</a></div><div class="stats-grid"><article><span>Invitaciones</span><strong id="sInvitations">0</strong></article><article><span>Confirmadas</span><strong id="sConfirmed">0</strong></article><article><span>Adultos</span><strong id="sAdults">0</strong></article><article><span>Niños</span><strong id="sChildren">0</strong></article><article><span>Total</span><strong id="sTotal">0</strong></article><article><span>Pendientes</span><strong id="sPending">0</strong></article><article><span>Restricciones</span><strong id="sDietary">0</strong></article><article><span>Fotos</span><strong id="sPhotos">0</strong></article></div><section class="admin-card"><div class="section-heading"><div><p class="eyebrow">Operación</p><h2>Documentos y pruebas</h2></div></div><div class="action-grid"><button id="venueReportBtn" class="primary-btn">Descargar reporte para el lugar</button><button id="testInviteBtn" class="secondary-btn">Crear invitación de prueba</button></div><div id="testInviteResult" class="test-result hidden"></div></section></section>
-<section id="tab-settings" class="tab-panel hidden"><div class="settings-grid"><section class="admin-card"><div class="section-heading"><div><p class="eyebrow">Publicación</p><h2>Modo del evento</h2></div></div><label id="developerModeContainer" class="mode-switch"><input id="developerMode" type="checkbox"><span></span><div><strong>Modo desarrollador</strong><small>Permite generar pruebas y muestra una cinta de aviso. Desactívalo al publicar.</small></div></label><label class="checkbox-line"><input id="showDevBanner" type="checkbox"> Mostrar aviso en la invitación</label></section><section class="admin-card"><div class="section-heading"><div><p class="eyebrow">Tipografía</p><h2>Fuentes y lectura</h2></div></div><div class="form-grid"><label>Fuente de títulos<div class="font-preview-card"><span id="headingFontPreview">Francisco & Ariana</span><small id="bodyFontPreview">Así se verá un texto de ejemplo en la invitación.</small></div><select id="headingFont"><option value="georgia">Georgia elegante</option><option value="baskerville">Baskerville clásica</option><option value="garamond">Garamond romántica</option><option value="didot">Didot editorial</option><option value="classic">Palatino ceremonial</option></select></label><label>Fuente de texto<select id="bodyFont"><option value="system">Sistema limpia</option><option value="humanist">Humanista amable</option><option value="classic">Clásica legible</option></select></label></div></section></div>
-<section class="admin-card"><div class="section-heading"><div><p class="eyebrow">Contenido</p><h2>Información del evento</h2></div></div><form id="settingsForm" class="form-grid"><label>Nombre 1<input id="partner1"></label><label>Nombre 2<input id="partner2"></label><label class="wide">Nombre mostrado<input id="displayName"></label><label>Fecha y hora<input id="dateTime" type="datetime-local"></label><label>Fecha escrita<input id="dateLabel"></label><label class="wide">Mensaje portada<textarea id="heroMessage"></textarea></label><label class="wide">Mensaje final<textarea id="closingMessage"></textarea></label><label class="wide">Nombre del lugar<input id="venueName"></label><label>Hora ceremonia<input id="ceremonyTime" type="time"></label><label>Hora celebración<input id="receptionTime" type="time"></label><label class="wide">Dirección<input id="venueAddress"></label><label class="wide">Google Maps<input id="mapsUrl"></label><label class="wide">Notas<textarea id="venueNotes"></textarea></label><label class="wide">Historia<textarea id="storyText"></textarea></label><label>Código de vestimenta<input id="dressTitle"></label><label>Descripción<input id="dressDescription"></label><label class="wide checkbox-line"><input id="menuSelectionEnabled" type="checkbox"> Permitir que cada invitado distribuya sus platillos entre varias opciones</label><label class="wide">Menús adulto, uno por línea<textarea id="adultMenus"></textarea></label><label class="wide">Menús infantil, uno por línea<textarea id="childMenus"></textarea></label><label class="wide">Explicación de menú<textarea id="menuInstructions"></textarea></label><button class="primary-btn wide">Guardar configuración</button></form></section>
-<section class="admin-card"><div class="section-heading"><div><p class="eyebrow">Obsequios</p><h2>Modalidad de regalos</h2></div></div><div class="gift-presets" id="giftPresetGrid"></div><div class="form-grid"><label>Tipo<select id="giftMode"><option value="cash-envelopes">Sobres y buzón</option><option value="registry">Mesa de regalos</option><option value="bank-transfer">Transferencia</option><option value="mixed">Opciones combinadas</option><option value="no-gifts">Sin regalos</option></select></label><label>Título<input id="giftTitle"></label><label class="wide">Mensaje principal<textarea id="giftMessage"></textarea></label><label class="wide">Descripción<textarea id="giftDescription"></textarea></label><label class="wide">Enlace de mesa de regalos<input id="giftLink" placeholder="https://..."></label><label>Texto del botón<input id="giftLinkLabel"></label><label class="wide">Datos de transferencia<input id="giftBankInfo"></label><button id="saveGiftBtn" class="primary-btn wide" type="button">Guardar modalidad de regalos</button></div></section>
-<section class="admin-card"><div class="section-heading"><div><p class="eyebrow">Multimedia</p><h2>Portada, música y galerías</h2></div></div><div class="media-upload-grid"><form id="heroForm"><label>Portada<input id="heroFile" type="file" accept="image/*" required></label><button class="secondary-btn">Subir portada</button></form><form id="musicForm"><label>Música<input id="musicFile" type="file" accept="audio/*" required></label><button class="secondary-btn">Subir música</button></form><form id="galleryForm"><label>Álbum<input id="galleryFiles" type="file" accept="image/*" multiple required></label><button class="secondary-btn">Agregar fotos</button></form><form id="dressForm"><label>Referencias de vestimenta<input id="dressFiles" type="file" accept="image/*" multiple required></label><button class="secondary-btn">Agregar referencias</button></form></div><h3>Álbum de la invitación</h3><div id="heroPreview" class="media-preview"></div><div id="musicPreview" class="media-preview"></div><div id="settingsGallery" class="photo-grid"></div><h3>Referencias de vestimenta</h3><div id="dressSettingsGallery" class="photo-grid"></div></section></section>
-<section id="tab-templates" class="tab-panel hidden"><section class="admin-card"><div class="section-heading"><div><p class="eyebrow">Diseño</p><h2>Biblioteca de plantillas</h2><p>La información y los invitados permanecen intactos; sólo cambia la presentación.</p></div></div><div id="themeGrid" class="theme-grid"></div></section></section>
-
-<section id="tab-owner" class="tab-panel hidden"><section class="admin-card platform-summary-card">
-  <div class="section-heading"><div><p class="eyebrow">Plataforma completa</p><h2>Resumen como propietario</h2></div></div>
-  <p class="muted">Estas cifras son globales y están separadas del evento que tengas seleccionado.</p>
-  <div class="stats-grid compact-stats">
-    <article><span>Clientes activos</span><strong id="pBusinessClients">0</strong></article>
-    <article><span>Eventos activos</span><strong id="pBusinessEvents">0</strong></article>
-    <article><span>Bodas</span><strong id="pBusinessWeddings">0</strong></article>
-    <article><span>Invitados reales</span><strong id="pBusinessGuests">0</strong></article>
-    <article><span>Fotos recibidas</span><strong id="pBusinessPhotos">0</strong></article>
-  </div>
-</section><div class="stats-grid"><article><span>Clientes</span><strong id="oClients">0</strong></article><article><span>Clientes activos</span><strong id="oActive">0</strong></article><article><span>Pruebas activas</span><strong id="oTrials">0</strong></article><article><span>Eventos</span><strong id="oEvents">0</strong></article><article><span>Ingresos registrados</span><strong id="oRevenue">$0</strong></article></div><section class="admin-card"><div class="section-heading"><div><p class="eyebrow">Propietario</p><h2>Resumen de clientes</h2></div></div><p class="muted">Por seguridad las contraseñas nunca se muestran: sólo se almacenan hashes. Desde aquí puedes ver estado, plan, último acceso, eventos y pagos.</p><div class="table-wrap"><table><thead><tr><th>Cliente</th><th>Contacto</th><th>Plan</th><th>Estado</th><th>Eventos</th><th>Último acceso</th><th>Pagado</th></tr></thead><tbody id="clientRows"></tbody></table></div></section></section>
-<section id="tab-billing" class="tab-panel hidden"><section class="admin-card"><div class="section-heading"><div><p class="eyebrow">Suscripción</p><h2>Plan y pagos</h2></div></div><div id="subscriptionSummary"></div><div id="billingPlans" class="plan-grid"></div><div id="paymentHistory"></div><p class="muted">Durante desarrollo el proveedor es DEMO. No se realizan cobros reales. Antes de producción se conectará un proveedor con checkout y webhooks.</p></section></section><section id="tab-users" class="tab-panel hidden">
-  <section class="admin-card">
-    <div class="section-heading"><div><p class="eyebrow">Propietario</p><h2>Usuarios y permisos</h2></div></div>
-    <p class="muted">Crea perfiles para clientes y asígnales únicamente sus eventos. El modo desarrollador permanece reservado para propietario o desarrollador.</p>
-    <form id="userForm" class="form-grid">
-      <label>Nombre<input id="uName" placeholder="Ej. Ariana"></label>
-      <label>Correo<input id="uEmail" type="email" placeholder="cliente@correo.com"></label>
-      <label>Contraseña temporal<input id="uPassword" type="password" placeholder="Mínimo 8 caracteres"></label>
-      <label>Rol<select id="uRole"><option value="client">Cliente</option><option value="developer">Desarrollador</option></select></label>
-      <label class="wide">Eventos asignados<select id="uEvents" multiple size="5"></select></label>
-      <button class="primary-btn wide">Crear usuario</button>
-    </form>
-    <div class="bulk-toolbar">
-      <label><input id="selectAllGuests" type="checkbox"> Seleccionar visibles</label>
-      <button id="sendSelectedBtn" class="primary-btn">Preparar WhatsApp seleccionados</button>
-      <button id="sendPendingBtn" class="secondary-btn">Seleccionar pendientes</button><button id="deleteSelectedGuestsBtn" class="danger-outline-btn" type="button">Eliminar seleccionados</button>
-      <span id="selectedCount" class="muted">0 seleccionados</span>
-    </div>
-    <div id="whatsappQueue" class="admin-card hidden"></div>
-    <div class="table-wrap"><table><thead><tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Estado</th></tr></thead><tbody id="userRows"></tbody></table></div>
-  </section>
+<main class="admin-layout hidden" id="adminApp"><button aria-controls="adminSidebar" aria-expanded="false" aria-label="Abrir menú de administración" class="mobile-menu-btn" id="mobileMenuBtn" type="button">☰ <span>Menú</span></button><div class="mobile-nav-backdrop" hidden="" id="mobileNavBackdrop"></div><aside class="admin-sidebar" id="adminSidebar"><div class="sidebar-brand"><span>ES</span><div><strong>EventStudio</strong><small>Panel profesional</small><small class="workspace-label" id="workspaceLabel">Cargando espacio…</small></div></div><nav class="sidebar-nav">
+<div class="nav-group"><small>EVENTO ACTIVO</small>
+<button class="tab-btn active" data-tab="dashboard" id="dashboardTabBtn">⌂ <span>Resumen</span></button>
+<button class="tab-btn" data-tab="settings">⚙ <span>Configuración</span></button>
+<button class="tab-btn" data-tab="templates" id="templatesTabBtn">◈ <span>Plantillas</span></button>
+<button class="tab-btn" data-tab="guests" id="guestsTabBtn">♧ <span>Invitados</span></button>
+<button class="tab-btn" data-tab="qr" id="qrTabBtn">▦ <span>QR e impresión</span></button>
+<button class="tab-btn" data-tab="tables-lab" id="tablesLabTabBtn">◉ <span>Plano y mesas</span></button>
+<button class="tab-btn" data-tab="photos" id="photosTabBtn">▧ <span>Fotografías</span></button>
+</div>
+<div class="nav-group" id="developerNavGroup">
+<small>PLATAFORMA</small>
+<button class="tab-btn" data-tab="owner" id="ownerTabBtn">▣ <span>Mi negocio</span></button>
+<button class="tab-btn" data-tab="users" id="usersTabBtn">♙ <span>Usuarios</span></button>
+</div>
+<div class="nav-group" id="accountNavGroup">
+<small>MI CUENTA</small>
+<button class="tab-btn" data-tab="billing" id="billingTabBtn">$ <span>Plan y extras</span></button>
+</div>
+</nav><div class="sidebar-footer"><span class="mode-badge" id="modeBadge">Desarrollo</span><button class="ghost-btn" id="logoutBtn">Cerrar sesión</button></div></aside>
+<section class="admin-main"><header class="admin-topbar"><div><p class="eyebrow" id="topbarEyebrow">Administración del evento</p><h1 id="panelEventName">Panel de control</h1></div><div class="topbar-actions">
+<div class="event-switcher">
+<label class="event-switcher-label">Evento activo<select id="eventSelect"></select></label>
+<button class="secondary-btn" id="newEventBtn">＋ Nuevo evento</button>
+</div>
+<div class="account-menu">
+<div><strong id="sessionUserName">Mi cuenta</strong><small id="sessionUserRole"></small></div>
+<button aria-label="Ver notificaciones" class="notification-btn" id="notificationBtn" type="button">🔔 <span hidden="" id="notificationCount">0</span></button>
+<button class="danger-outline-btn" id="topLogoutBtn" type="button">Cerrar sesión</button>
+</div>
+</div></header><section class="account-context-banner" id="accountContextBanner">
+<div><span id="accountContextIcon">◆</span><div><strong id="accountContextTitle">Cargando espacio de trabajo…</strong><p id="accountContextText"></p></div></div>
+<div class="context-actions"><label class="support-view-switch hidden" id="supportClientViewControl"><input id="supportClientView" type="checkbox"/><span>Simular vista cliente</span></label><span class="subscription-badge" id="subscriptionBadge"></span></div>
 </section>
-
-<section id="tab-guests" class="tab-panel hidden"><section class="admin-card"><div class="row-between"><div><p class="eyebrow">Carga masiva</p><h2>Excel maestro</h2></div><button id="templateBtn" class="secondary-btn">Descargar plantilla</button></div><form id="importForm" class="inline-form"><input id="excelFile" type="file" accept=".xlsx,.xls,.csv" required><button class="primary-btn">Importar invitados</button></form></section><section class="admin-card"><h2>Agregar manualmente</h2><form id="guestForm" class="form-grid"><label>Código<input id="gCode" required></label><label>Familia<input id="gFamily" required></label><label>Teléfono<input id="gPhone"></label><label>Mesa<input id="gTable"></label><label>Adultos<input id="gAdults" type="number" value="2" min="0"></label><label>Niños<input id="gChildren" type="number" value="0" min="0"></label><label class="wide">Mensaje<textarea id="gMessage"></textarea></label><button class="primary-btn wide">Guardar invitación</button></form></section><section class="admin-card"><div class="row-between"><h2>Invitados</h2><input id="guestSearch" placeholder="Buscar familia, teléfono o mesa"></div><div class="table-wrap"><table><thead><tr><th></th><th>Familia</th><th>Teléfono</th><th>Mesa</th><th>Estado</th><th>Adultos</th><th>Niños</th><th>Restricciones</th><th>Acciones</th></tr></thead><tbody id="guestRows"></tbody></table></div></section></section>
-<section id="tab-qr" class="tab-panel hidden"><section class="admin-card centered"><p class="eyebrow">Recuerdos compartidos</p><h2>QR por mesa</h2><div class="inline-form centered-actions"><select id="tableSelect"></select><button id="generateQrBtn" class="primary-btn">Generar</button><button id="downloadQrBtn" class="secondary-btn">Descargar PNG</button></div><div class="qr-preview-card"><img id="qrImage" class="qr-image"><p id="qrUrl"></p></div><hr><h2>Set completo para imprenta</h2><p>Una página decorada por cada mesa, lista para enviar a imprimir.</p><button id="downloadQrSetBtn" class="primary-btn">Descargar PDF completo</button></section></section>
-<section id="tab-photos" class="tab-panel hidden"><section class="admin-card"><div class="row-between"><h2>Fotografías recibidas</h2><select id="photoTableFilter"></select></div><div id="photoGrid" class="photo-grid"></div></section></section>
-</section></main><script src="/admin.js"></script></body></html>
+<p class="status-message" id="adminStatus"></p>
+<section class="tab-panel" id="tab-dashboard"><section class="admin-card client-plan-card hidden" id="clientPlanCard">
+<div><p class="eyebrow">Cuenta cliente</p><h2 id="clientPlanTitle">Plan</h2><p id="clientPlanText"></p></div>
+<button class="secondary-btn" id="createClientEventBtn" type="button">Crear otro evento</button>
+</section><section class="admin-card workspace-tools-card" id="workspaceToolsCard"><div class="section-heading"><div><p class="eyebrow">Tu espacio</p><h2>Herramientas incluidas</h2><p class="muted">Sólo aparecen las funciones habilitadas para este evento.</p></div></div><div class="workspace-tools" id="workspaceTools"></div></section><div class="dashboard-hero"><div><p class="eyebrow">Evento activo</p><h2 id="dashboardDynamicTitle">Resumen del evento</h2><p id="dashboardDynamicDescription">Consulta asistencia, necesidades y recursos del evento activo.</p></div><a class="primary-btn" id="publicEventBtn" target="_blank">Ver invitación</a></div><div class="stats-grid"><article><span>Invitaciones</span><strong id="sInvitations">0</strong></article><article><span>Confirmadas</span><strong id="sConfirmed">0</strong></article><article><span>Adultos</span><strong id="sAdults">0</strong></article><article><span>Niños</span><strong id="sChildren">0</strong></article><article><span>Total</span><strong id="sTotal">0</strong></article><article><span>Pendientes</span><strong id="sPending">0</strong></article><article><span>Restricciones</span><strong id="sDietary">0</strong></article><article id="photosStatCard"><span>Fotos</span><strong id="sPhotos">0</strong></article></div><section class="admin-card"><div class="section-heading"><div><p class="eyebrow">Información y exportaciones</p><h2 id="operationsTitle">Herramientas del evento</h2></div></div><div class="action-grid"><div class="report-action"><button class="primary-btn" id="venueReportBtn">Descargar resumen operativo</button><p class="muted" id="venueReportHelp">Incluye asistentes, menús, restricciones y necesidades especiales para coordinar la operación del evento.</p></div><button class="secondary-btn" id="testInviteBtn">Crear invitación de prueba</button></div><div class="test-result hidden" id="testInviteResult"></div></section></section>
+<section class="tab-panel hidden" id="tab-settings"><div class="settings-grid"><section class="admin-card developer-compact-card" id="developerSettingsCard"><label class="mode-switch compact-mode-switch" id="developerModeContainer"><input id="developerMode" type="checkbox"/><span></span><div><strong>Modo desarrollador</strong><small>Pruebas internas</small></div></label><label class="checkbox-line compact-dev-banner"><input id="showDevBanner" type="checkbox"/> Aviso en vista previa</label>
+<p class="muted mode-feedback" id="developerModeFeedback"></p></section>
+<details class="admin-card settings-details settings-collapsible"><summary><div><p class="eyebrow">Tipografía</p><h2>Fuentes y uso de mayúsculas</h2></div><span class="details-action">Configurar</span></summary><div class="settings-details-body"><section class="admin-card typography-card" id="typographyCard">
+<div class="section-heading">
+<div>
+<p class="eyebrow">Tipografía</p>
+<h2>Fuentes y uso de mayúsculas</h2>
+</div>
+</div>
+<div class="font-preview-card">
+<span id="headingFontPreview">Cargando evento…</span>
+<small id="bodyFontPreview">Cargando el mensaje de este evento…</small>
+</div>
+<div class="form-grid typography-controls">
+<label>Fuente de títulos
+      <select id="headingFont">
+<option value="georgia">Georgia elegante</option>
+<option value="baskerville">Baskerville clásica</option>
+<option value="garamond">Garamond romántica</option>
+<option value="didot">Didot editorial</option>
+<option value="classic">Palatino ceremonial</option>
+<option value="great-vibes">Great Vibes caligráfica</option>
+<option value="cormorant">Cormorant romántica</option>
+<option value="playfair">Playfair editorial</option>
+<option value="cinzel">Cinzel ceremonial</option>
+</select>
+</label>
+<label>Fuente de texto
+      <select id="bodyFont">
+<option value="system">Sistema limpia</option>
+<option value="humanist">Humanista amable</option>
+<option value="classic">Clásica legible</option>
+<option value="lora">Lora cálida</option>
+<option value="montserrat">Montserrat moderna</option>
+<option value="cormorant">Cormorant elegante</option>
+</select>
+</label>
+<label>Presentación de nombres y títulos
+      <select id="nameCaseMode">
+<option value="preserve">Como fue capturado</option>
+<option value="title">Mayúsculas y minúsculas automáticas (recomendado)</option>
+<option value="uppercase">Todo en mayúsculas</option>
+<option value="small-caps">Versalitas</option>
+</select>
+<small>Se aplica a la invitación digital, vistas previas, QR e invitación física. Las fuentes caligráficas se leen mejor con mayúsculas y minúsculas combinadas.</small>
+</label>
+<button class="primary-btn wide" id="saveTypographyBtn" type="button">Guardar tipografía y mayúsculas</button>
+</div>
+<p class="typography-warning hidden" id="typographyWarning" role="status"></p>
+</section></div></details>
+<details class="admin-card settings-details settings-collapsible"><summary><div><p class="eyebrow">Kit de diseño global</p><h2>Colores, textura y estilo coordinados</h2></div><span class="details-action">Configurar</span></summary><div class="settings-details-body"><section class="admin-card design-kit-card" id="designKitCard">
+<div class="section-heading"><div><p class="eyebrow">Kit de diseño global</p><h2>Colores, textura y estilo coordinados</h2><p class="muted">La plantilla sigue siendo la base. Si activas este kit, EventStudio coordina colores y una textura superficial discreta entre invitación web, QR e impresos compatibles, manteniendo contraste legible.</p></div><label>Textura<select id="designKitTexture"><option value="none">Sin textura</option><option value="paper">Papel fino</option><option value="linen">Lino sutil</option><option value="soft-grain">Grano suave</option><option value="wash">Lavado acuarela</option></select></label></div>
+<label class="checkbox-line"><input id="designKitEnabled" type="checkbox"/> Personalizar paleta del evento</label>
+<div class="design-kit-colors">
+<label>Fondo<input id="designKitBg" type="color"/></label><label>Papel<input id="designKitPaper" type="color"/></label><label>Texto<input id="designKitInk" type="color"/></label><label>Secundario<input id="designKitMuted" type="color"/></label><label>Acento<input id="designKitAccent" type="color"/></label><label>Metal/detalle<input id="designKitGold" type="color"/></label><label>Línea<input id="designKitLine" type="color"/></label>
+</div>
+<div class="row-actions"><button class="primary-btn" id="saveDesignKitBtn" type="button">Guardar kit</button><button class="secondary-btn" id="resetDesignKitBtn" type="button">Usar colores de la plantilla</button></div>
+</section></div></details></div>
+<details class="admin-card settings-details settings-collapsible"><summary><div><p class="eyebrow">Identidad del evento</p><h2>Tipo y textos visibles</h2></div><span class="details-action">Configurar</span></summary><div class="settings-details-body"><section class="admin-card">
+<div class="section-heading">
+<div>
+<p class="eyebrow">Identidad del evento</p>
+<h2>Tipo y textos visibles</h2>
+<p class="muted">Usa una base sugerida y personaliza sólo los textos que necesites.</p>
+</div>
+</div>
+<div class="form-grid">
+<label>Tipo de evento
+      <select id="eventTypeSelect"></select>
+</label>
+<label>Texto superior de portada<input id="heroEyebrowText" placeholder="Ej. Mis XV años o Evento especial"/></label>
+<label>Botón principal<input id="openButtonText" placeholder="Abrir invitación"/></label>
+<label>Título de confirmación<input id="rsvpTitleText" placeholder="Confirma tu asistencia"/></label>
+<label>Encabezado de agenda<input id="agendaTitleText" placeholder="Momentos del evento"/></label>
+<label>Nombre para invitados<input id="guestLabelText" placeholder="Familia o invitado"/></label>
+<label class="wide">Título del resumen<input id="dashboardTitleText"/></label>
+<label class="wide">Descripción del resumen<textarea id="dashboardDescriptionText"></textarea></label>
+<button class="secondary-btn wide" id="applyEventTypePresetBtn" type="button">Aplicar textos sugeridos para este tipo</button>
+</div>
+</section></div></details>
+<details class="admin-card settings-details settings-collapsible"><summary><div><p class="eyebrow">Idiomas</p><h2>Invitación multilingüe</h2></div><span class="details-action">Configurar</span></summary><div class="settings-details-body"><section class="admin-card localization-card"><div class="section-heading"><div><p class="eyebrow">Idiomas</p><h2>Invitación multilingüe</h2><p class="muted">Traduce controles, fechas y también los mensajes personalizados del evento.</p></div></div><div class="form-grid"><label>Idioma principal<select id="defaultLocale"><option value="es">Español</option><option value="en">English</option><option value="pt">Português</option></select></label><fieldset class="wide settings-fieldset"><legend>Idiomas disponibles para el invitado</legend><label class="checkbox-line"><input id="localeEs" type="checkbox" value="es"/> Español</label><label class="checkbox-line"><input id="localeEn" type="checkbox" value="en"/> English</label><label class="checkbox-line"><input id="localePt" type="checkbox" value="pt"/> Português</label></fieldset><div class="wide localization-actions"><button class="secondary-btn" id="autoTranslateBtn" type="button" disabled>Generar traducciones</button><button class="primary-btn" id="saveLocalizationBtn" type="button">Guardar idiomas y textos</button></div><div class="wide translation-editor" id="translationEditor"></div><p class="wide muted" id="translationProviderHint">La traducción manual permanece disponible. La generación automática se habilita al configurar un proveedor seguro en el servidor.</p></div></section></div></details>
+<details class="admin-card settings-details settings-collapsible"><summary><div><p class="eyebrow">Contenido</p><h2>Información del evento</h2></div><span class="details-action">Configurar</span></summary><div class="settings-details-body"><section class="admin-card"><div class="section-heading"><div><p class="eyebrow">Contenido</p><h2>Información del evento</h2></div></div><form class="form-grid" id="settingsForm"><label>Nombre principal<input id="partner1" placeholder="Persona, festejado o marca"/></label><label>Segundo nombre, opcional<input id="partner2" placeholder="Opcional"/></label><label class="wide">Título público del evento<input id="displayName"/></label><label>Fecha principal del evento
+      <input id="eventDate" type="date"/>
+<small class="field-help">Los horarios se configuran únicamente en “Programa y ubicaciones”.</small>
+</label><label>Fecha escrita<div class="field-with-action"><input id="dateLabel"/><button class="mini-btn" id="restoreDateLabelBtn" type="button">Restaurar texto automático</button></div><small class="field-help">Se genera al cambiar la fecha; después puedes personalizar el texto.</small></label><label class="wide">Mensaje portada<textarea id="heroMessage"></textarea></label><label class="wide">Mensaje final<textarea id="closingMessage"></textarea></label><label class="wide">Historia<textarea id="storyText"></textarea></label><label id="dressTitleField">Código de vestimenta<input id="dressTitle"/></label><label id="dressDescriptionField">Descripción<input id="dressDescription"/></label><fieldset class="wide settings-fieldset"><legend>Confirmaciones</legend><label>Fecha y hora de cierre<input id="rsvpCloseAt" type="datetime-local"/><small>Vacío mantiene las confirmaciones abiertas.</small></label><label>Revisar lugares sin confirmar desde<input id="rsvpSeatReleaseAt" type="datetime-local"/><small>Después de esta fecha EventStudio sólo marcará lugares como candidatos para liberar. Nunca mueve, elimina ni sustituye invitados automáticamente.</small></label><label class="checkbox-line"><input id="rsvpAllowChanges" type="checkbox"/> Permitir que una familia modifique su respuesta</label><label class="checkbox-line wide"><input id="rsvpFlexibleComposition" type="checkbox"/> Permitir cambiar la combinación adulto/niño sin superar los lugares totales</label><label id="photoMessagePolicyField">Límite del mensaje en fotos<input id="photoMessageMaxLength" max="2000" min="0" type="number" value="500"/></label></fieldset><fieldset class="wide settings-fieldset" id="menuSettingsGroup"><legend>Menús</legend><label class="wide">Cómo se servirá el menú<select id="menuServiceMode"><option value="fixed">Menú fijo para adultos y menú fijo para niños</option><option value="guest-choice">Cada invitado distribuye sus platillos entre opciones</option></select><small>En modo fijo sólo se pedirán alergias o restricciones; en modo elección la suma se controla contra los asistentes confirmados.</small></label><label class="wide">Menús adulto, uno por línea<textarea id="adultMenus"></textarea></label><label class="wide">Menús infantil, uno por línea<textarea id="childMenus"></textarea></label><label class="wide">Explicación de menú<textarea id="menuInstructions"></textarea></label></fieldset><button class="primary-btn wide">Guardar configuración</button></form></section></div></details>
+<details class="admin-card settings-details settings-collapsible" id="agendaSettingsDetails">
+<summary>
+<div><p class="eyebrow">Programa y ubicaciones</p><h2>Momentos del evento</h2><p class="muted" id="agendaCompactSummary">Configura las partes y ubicaciones del evento.</p></div>
+<span class="details-action">Configurar</span>
+</summary>
+<div class="settings-details-body">
+<div class="section-heading">
+<div>
+<p class="eyebrow">Programa público</p>
+<h2>Momentos y ubicaciones</h2>
+<p>Activa únicamente las partes que tendrá este evento. Cada momento puede usar la misma ubicación o una diferente.</p>
+</div>
+</div>
+<div class="agenda-toolbar">
+<label class="mode-switch">
+<input id="agendaEnabled" type="checkbox"/>
+<span></span>
+<div><strong>Mostrar programa en la invitación</strong><small>Los momentos desactivados no se mostrarán.</small></div>
+</label>
+<label class="mode-switch">
+<input id="agendaSameLocation" type="checkbox"/>
+<span></span>
+<div><strong>Todos los momentos en la misma ubicación</strong><small>Al activarlo se reutilizan lugar, dirección y mapa del primer momento.</small></div>
+</label>
+</div>
+<div class="agenda-items-grid" id="agendaItemsGrid"></div>
+<div class="action-grid">
+<button class="secondary-btn" id="addCustomAgendaBtn" type="button">＋ Agregar momento personalizado</button>
+<button class="primary-btn" id="saveAgendaBtn" type="button">Guardar programa y ubicaciones</button>
+</div>
+</div>
+</details>
+<details class="admin-card settings-details settings-collapsible"><summary><div><p class="eyebrow">Obsequios</p><h2>Modalidad de regalos</h2></div><span class="details-action">Configurar</span></summary><div class="settings-details-body"><section class="admin-card" id="giftSettingsCard"><div class="section-heading"><div><p class="eyebrow">Obsequios</p><h2>Modalidad de regalos</h2></div></div><div class="gift-presets" id="giftPresetGrid"></div><div class="form-grid"><label>Tipo<select id="giftMode"><option value="cash-envelopes">Sobres y buzón</option><option value="registry">Mesa de regalos</option><option value="bank-transfer">Transferencia</option><option value="mixed">Opciones combinadas</option><option value="no-gifts">Sin regalos</option></select></label><label>Título<input id="giftTitle"/></label><label class="wide">Mensaje principal<textarea id="giftMessage"></textarea></label><label class="wide">Descripción<textarea id="giftDescription"></textarea></label><label class="wide" id="giftLinkField">Enlace de mesa de regalos<input id="giftLink" placeholder="https://..."/></label><label id="giftLinkLabelField">Texto del botón<input id="giftLinkLabel"/></label><label class="wide" id="giftBankField">Datos de transferencia<input id="giftBankInfo" placeholder="Banco, titular, CLABE o indicaciones"/></label><button class="primary-btn wide" id="saveGiftBtn" type="button">Guardar modalidad de regalos</button></div></section></div></details>
+<details class="admin-card settings-details settings-collapsible"><summary><div><p class="eyebrow">Multimedia</p><h2>Portada, música y galerías</h2></div><span class="details-action">Configurar</span></summary><div class="settings-details-body"><section class="admin-card" id="multimediaSettingsCard">
+<div class="section-heading">
+<div>
+<p class="eyebrow">Multimedia</p>
+<h2>Portada, música y galerías</h2>
+</div>
+</div>
+<div class="media-health-notice hidden" id="mediaHealthNotice" role="status"><div><strong>Referencias multimedia pendientes de restaurar</strong><p id="mediaHealthText" class="muted"></p></div><button class="secondary-btn" id="cleanMissingMediaBtn" type="button">Quitar referencias no disponibles</button></div>
+<div class="media-upload-grid">
+<form id="heroForm">
+<label>Portada<input accept="image/*" id="heroFile" required="" type="file"/></label>
+<button class="secondary-btn">Subir portada</button>
+</form>
+<form id="galleryForm">
+<label>Álbum<input accept="image/*" id="galleryFiles" multiple="" required="" type="file"/></label>
+<button class="secondary-btn">Agregar fotos</button>
+</form>
+<form id="dressForm">
+<label>Referencias de vestimenta<input accept="image/*" id="dressFiles" multiple="" required="" type="file"/></label>
+<button class="secondary-btn">Agregar referencias</button>
+</form>
+</div>
+<section class="music-studio" id="musicStudio">
+<div class="section-heading">
+<div>
+<p class="eyebrow">Música de la invitación</p>
+<h3>Selecciona una sola fuente</h3>
+<p class="muted">Puedes subir un archivo o elegir Spotify. Ambas opciones permiten guardar un punto de inicio.</p>
+</div>
+</div>
+<div class="music-source-selector">
+<label class="music-source-option">
+<input name="musicSource" type="radio" value="none"/>
+<span><strong>Sin música</strong><small>No se mostrará reproductor.</small></span>
+</label>
+<label class="music-source-option">
+<input name="musicSource" type="radio" value="upload"/>
+<span><strong>Subir archivo</strong><small>MP3, M4A, OGG u otro audio compatible.</small></span>
+</label>
+<label class="music-source-option" id="spotifySourceOption">
+<input name="musicSource" type="radio" value="spotify"/>
+<span><strong>Spotify</strong><small>Pega el enlace de una canción, álbum o playlist.</small></span>
+</label>
+</div>
+<div class="music-source-panel hidden" id="musicUploadPanel">
+<form class="inline-form" id="musicForm">
+<input accept="audio/*" id="musicFile" type="file"/>
+<button class="secondary-btn" type="submit">Subir y seleccionar</button>
+</form>
+<div class="media-preview" id="musicPreview"></div>
+<button class="danger-outline-btn hidden" id="deleteUploadedMusicBtn" type="button">Eliminar archivo cargado</button>
+<div class="start-time-editor">
+<label>Iniciar desde <strong id="uploadStartLabel">00:00</strong>
+<input id="uploadStartSeconds" max="300" min="0" step="1" type="range" value="0"/>
+</label>
+<button class="secondary-btn" id="previewUploadFromStartBtn" type="button">Escuchar desde aquí</button>
+</div>
+</div>
+<div class="music-source-panel hidden" id="spotifyMusicPanel">
+<div class="spotify-methods">
+<label class="wide">Enlace de canción, álbum o playlist
+          <input id="spotifyUrl" placeholder="https://open.spotify.com/track/..."/>
+</label>
+<button class="secondary-btn" id="previewSpotifyLinkBtn" type="button">Cargar vista previa</button>
+</div>
+<div class="selected-track-card hidden" id="spotifySelectedTrack"></div>
+<div class="media-preview" id="spotifyPreview"></div>
+<p aria-live="polite" class="muted" id="spotifyConnectionStatus"></p>
+<div class="start-time-editor hidden" id="spotifyStartEditor">
+<label>Iniciar desde <strong id="spotifyStartLabel">00:00</strong>
+<input id="spotifyStartSeconds" max="600" min="0" step="1" type="range" value="0"/>
+</label>
+<button class="secondary-btn" id="previewSpotifyFromStartBtn" type="button">Escuchar desde aquí</button>
+<small class="wide muted">El punto se aplica con el reproductor oficial. La reproducción automática sigue dependiendo del navegador y de la conexión del invitado.</small>
+</div>
+<button class="danger-outline-btn hidden" id="deleteSpotifyMusicBtn" type="button">Eliminar enlace de Spotify</button>
+</div>
+<button class="primary-btn" id="saveMusicSelectionBtn" type="button">Guardar selección de música</button>
+<p class="muted" id="musicSelectionStatus"></p>
+</section>
+<div class="media-preview" id="heroPreview"></div>
+<div id="invitationGalleryManager"><h3>Álbum de la invitación</h3><div class="photo-grid" id="settingsGallery"></div></div>
+<div id="dressGalleryManager"><h3>Referencias de vestimenta</h3><div class="photo-grid" id="dressSettingsGallery"></div></div>
+</section></div></details></section>
+<section class="tab-panel hidden" id="tab-templates">
+<section class="admin-card template-experience-card">
+<div class="section-heading">
+<div><p class="eyebrow">Presentación</p><h2>Apertura y experiencia</h2><p class="muted">La vista completa de cada plantilla se abre en una ventana flotante con los datos del evento; no ocupa espacio permanente en el panel.</p></div>
+</div>
+<div class="opening-style-control">
+<div><strong>Apertura animada</strong><small>El sobre usa los nombres, fecha e invitado reales del enlace.</small></div>
+<select id="openingStyleSelect"></select><label class="hidden" id="rosePetalColorField">Color de pétalos<input id="rosePetalColor" type="color" value="#b70f36"/></label><label class="hidden" id="floralPetalColorField">Color de pétalos florales<input id="floralPetalColor" type="color" value="#f7f3de"/></label><label class="hidden" id="floralCenterColorField">Color del centro floral<input id="floralCenterColor" type="color" value="#d8ad61"/></label>
+<label>Recorrido<select id="experienceModeSelect"><option value="auto">Recomendado por la plantilla</option><option value="classic">Página clásica</option><option value="story">Escenas animadas</option><option value="poster">Cartel dinámico</option><option value="gallery">Galería fotográfica</option></select></label>
+<label>Movimiento<select id="motionLevelSelect"></select></label>
+<label>Estilo del álbum<select id="galleryStyleSelect"></select></label>
+<div class="opening-style-actions"><button class="secondary-btn" id="saveOpeningStyleBtn" type="button">Guardar configuración</button><button class="primary-btn" id="previewOpeningBtn" type="button">Probar apertura</button></div>
+</div>
+<p class="muted opening-motion-hint" id="openingMotionHint">La prueba se abre encima del panel y puede reproducirse sin guardar primero la selección.</p>
+</section>
+<section class="admin-card creative-brief-studio" id="creativeBriefStudio">
+<div class="section-heading">
+<div><p class="eyebrow">Temática Express</p><h2>Describe la celebración, no diseñes cada pantalla</h2>
+<p>Guarda lo indispensable para producir un recurso animado de este evento sencillo. No se envía a un proveedor hasta conectarlo.</p></div>
+</div>
+<div class="form-grid">
+<label>Protagonista<input id="creativeProtagonist" maxlength="160" placeholder="Ej. Sofía, Alex o nuestra familia"/></label>
+<label>Edad o momento<input id="creativeMilestone" maxlength="80" placeholder="Ej. Cumple 5, baby shower, 25 años"/></label>
+<label class="wide">Temática<input id="creativeTheme" maxlength="160" placeholder="Ej. fiesta de perritos exploradores, sin personajes de marcas"/></label>
+<label>Tono<select id="creativeTone"><option value="joyful">Alegre</option><option value="sweet">Tierno</option><option value="adventurous">Aventurero</option><option value="elegant">Elegante</option><option value="playful">Juguetón</option></select></label>
+<label class="wide">Detalles visuales<textarea id="creativeVisualNotes" maxlength="1200" placeholder="Colores, escenario, objetos importantes y cómo quieres presentar las fotos."></textarea></label>
+<label class="checkbox-line wide"><input id="creativeRightsConfirmed" type="checkbox"/> Confirmo que puedo usar las fotos, música, logotipos y personajes que entregue.</label>
+</div>
+<div class="creative-brief-actions">
+<button class="primary-btn" id="saveCreativeBriefBtn" type="button">Guardar contexto</button>
+<button class="secondary-btn" id="buildCreativePromptBtn" type="button">Preparar solicitud visual</button>
+<button class="secondary-btn hidden" id="copyCreativePromptBtn" type="button">Copiar prompt</button>
+</div>
+<label class="hidden" id="creativePromptField">Prompt revisable<textarea id="creativePromptOutput" readonly=""></textarea></label>
+<p class="muted">La invitación funciona sin IA. La generación automática quedará disponible cuando se conecte y valide un proveedor externo.</p>
+</section>
+<section class="admin-card">
+<div class="section-heading">
+<div><p class="eyebrow">Diseño</p><h2>Biblioteca de plantillas</h2>
+<p>La información y los invitados permanecen intactos; sólo cambia la presentación.</p></div>
+</div>
+<div class="template-context-row"><div><strong id="themeContextTitle">Diseños para este evento</strong><small id="themeContextHelp">Puedes probar cualquier diseño compatible. Los no incluidos muestran su precio antes de agregarlos.</small></div><label>Buscar por estilo<input id="themeSearch" placeholder="Ej. floral, elegante, perritos" type="search"/></label></div>
+<div class="theme-grid" id="themeGrid"></div>
+</section>
+</section>
+<section class="tab-panel hidden" id="tab-owner"><section class="admin-card platform-summary-card">
+<div class="section-heading"><div><p class="eyebrow">Plataforma completa</p><h2>Resumen como propietario</h2></div></div>
+<p class="muted">Estas cifras son globales y están separadas del evento que tengas seleccionado.</p>
+<div class="stats-grid compact-stats">
+<article><span>Clientes activos</span><strong id="pBusinessClients">0</strong></article>
+<article><span>Eventos activos</span><strong id="pBusinessEvents">0</strong></article><article><span>Sitios publicados</span><strong id="pBusinessPublished">0</strong></article>
+<article><span>Bodas</span><strong id="pBusinessWeddings">0</strong></article>
+<article><span>Invitados reales</span><strong id="pBusinessGuests">0</strong></article>
+<article><span>Fotos recibidas</span><strong id="pBusinessPhotos">0</strong></article>
+</div>
+</section>
+<details class="admin-card business-collapsible platform-control-center" open="">
+<summary><span><b>Gobierno comercial y publicación</b><small>Control global del propietario/desarrollador</small></span></summary>
+<div class="platform-control-grid">
+<form class="platform-control-panel" id="platformCommercialForm">
+<div><p class="eyebrow">Políticas</p><h3>Publicación y marca</h3><p class="muted">El modo manual sigue siendo el predeterminado. La automatización sólo se aplica cuando tú la habilitas globalmente y el plan/perfil la permite.</p></div>
+<label>Modo global<select id="platformPublicationMode"><option value="manual_owner">Manual por propietario</option><option value="plan_policy">Usar política del plan/perfil</option></select></label>
+<label class="checkbox-line"><input id="platformAttributionEnabled" type="checkbox"/> Mostrar referencia discreta a EventStudio</label>
+<label>Texto de referencia<input id="platformAttributionLabel" maxlength="80" placeholder="Creado con EventStudio"/></label>
+<label>Enlace de referencia<input id="platformAttributionUrl" placeholder="https://..." type="url"/></label>
+<div class="platform-channel-flags"><label><input id="platformAttributionInvitation" type="checkbox"/> Web</label><label><input id="platformAttributionPrint" type="checkbox"/> Impresos</label><label><input id="platformAttributionQr" type="checkbox"/> QR</label></div>
+<label class="checkbox-line"><input id="platformProofWatermark" type="checkbox"/> Marca de prueba para salidas no adquiridas</label>
+<button class="primary-btn" type="submit">Guardar política global</button>
+</form>
+<section class="platform-control-panel"><div class="row-between"><div><p class="eyebrow">Publicación</p><h3>Solicitudes pendientes</h3></div><button class="mini-btn" id="refreshPublicationRequests" type="button">Actualizar</button></div><div class="domain-list" id="publicationRequestRows"></div></section>
+</div>
+</details>
+<details class="admin-card business-collapsible analytics-workbench">
+<summary><span><b>Conversion Analytics</b><small>Qué atrae, qué se prueba y qué se compra</small></span></summary>
+<div class="section-heading"><div><p class="eyebrow">Embudo propio</p><h2>Conversión de EventStudio</h2><p class="muted">Analítica first-party en SQLite: sin dependencia de un servicio de pago y sin guardar texto privado de invitados.</p></div><label>Ventana<select id="analyticsDays"><option value="7">7 días</option><option selected="" value="30">30 días</option><option value="90">90 días</option><option value="365">1 año</option></select></label></div>
+<div class="analytics-funnel" id="analyticsFunnel"></div>
+<div class="analytics-insight-grid"><section><h3>Productos más vistos</h3><div id="analyticsTopProducts"></div></section><section><h3>Plantillas destacadas</h3><div id="analyticsTopThemes"></div></section><section><h3>Tipos de evento</h3><div id="analyticsEventTypes"></div></section></div>
+</details>
+<details class="admin-card business-collapsible showcase-workbench">
+<summary><span><b>Showcase Gallery</b><small>Demos editoriales y muestras autorizadas</small></span></summary>
+<div class="section-heading"><div><p class="eyebrow">Marketing visual</p><h2>Galería pública</h2><p class="muted">Los demos se identifican como demos. Ningún evento de cliente se publica aquí automáticamente.</p></div><a class="secondary-btn" href="/showcase.html" rel="noopener" target="_blank">Abrir galería pública</a></div>
+<div class="showcase-admin-grid" id="showcaseAdminRows"></div>
+</details>
+<details class="admin-card business-collapsible classification-workbench">
+<summary><span><b>Clasificación y perfiles</b><small>Categorías de Store y perfiles comerciales editables</small></span></summary>
+<div class="classification-grid">
+<section><div class="section-heading"><div><p class="eyebrow">Store</p><h3>Categorías</h3><p class="muted">Las categorías viven en datos. Puedes crear, renombrar, ordenar o desactivar sin editar JavaScript.</p></div></div>
+<form class="compact-form" id="createStoreCategoryForm"><input id="newStoreCategoryName" maxlength="80" placeholder="Nueva categoría" required=""/><input id="newStoreCategoryIcon" maxlength="12" placeholder="Icono"/><button class="secondary-btn" type="submit">Crear</button></form>
+<div class="classification-list" id="storeCategoryAdminRows"></div>
+</section>
+<section><div class="section-heading"><div><p class="eyebrow">Experiencia de cliente</p><h3>Perfiles comerciales</h3><p class="muted">Un perfil comercial cambia recomendaciones y UX; nunca concede permisos de seguridad.</p></div></div>
+<form class="compact-form" id="createCommercialProfileForm"><input id="newCommercialProfileName" maxlength="100" placeholder="Nuevo perfil" required=""/><button class="secondary-btn" type="submit">Crear</button></form>
+<div class="classification-list" id="commercialProfileAdminRows"></div>
+</section>
+</div>
+</details>
+<details class="admin-card business-collapsible commerce-workbench">
+<summary><span><b>Productos y disponibilidad</b><small>Estados globales, precios y miniaturas</small></span></summary>
+<div class="section-heading"><div><p class="eyebrow">Catálogo único</p><h2>Productos y disponibilidad</h2><p class="muted">Aquí decides qué está disponible, experimental, oculto o deshabilitado. Los regalos y promociones nunca cuentan como ingreso.</p></div><div class="row-actions"><button class="secondary-btn" id="newCommerceProductBtn" type="button">Nuevo producto</button><button class="mini-btn" id="refreshCommerceBtn" type="button">Actualizar</button></div></div>
+<div class="commerce-toolbar"><label>Buscar<input id="commerceSearch" placeholder="Módulo, plantilla o función" type="search"/></label><label>Tipo<select id="commerceKind"><option value="">Todos</option><option value="feature">Módulos</option><option value="bundle">Funciones y paquetes</option><option value="template_collection">Colecciones</option><option value="template">Plantillas individuales</option><option value="storage">Almacenamiento</option></select></label></div>
+<div class="commerce-product-grid" id="commerceProductGrid"></div>
+</details>
+<details class="admin-card business-collapsible plan-builder-card">
+<summary><span><b>Constructor de paquetes</b><small>Planes, límites, vigencia y funciones incluidas</small></span></summary>
+<div class="section-heading"><div><p class="eyebrow">Paquetes prefabricados</p><h2>Constructor de planes</h2><p class="muted">Pulsa un paquete para editar sus límites y marcar las funciones que incluye.</p></div></div>
+<form class="create-commerce-plan" id="createCommercePlanForm">
+<label>Nombre<input id="newPlanName" maxlength="120" placeholder="Ej. Experiencia VIP" required=""/></label>
+<label>Código<input id="newPlanCode" maxlength="40" placeholder="Se genera del nombre"/></label>
+<label>Precio MXN<input id="newPlanPrice" min="0" step="1" type="number" value="0"/></label>
+<label class="checkbox-line"><input id="newPlanPublic" type="checkbox"/> Mostrar al público</label>
+<button class="secondary-btn" type="submit">Crear plan vacío</button>
+</form>
+<div class="commerce-plan-grid" id="commercePlanGrid"></div>
+</details>
+<details class="admin-card business-collapsible promotion-builder-card">
+<summary><span><b>Promociones para grupos</b><small>Ofertas temporales sin saturar la vista principal</small></span></summary>
+<div class="section-heading"><div><p class="eyebrow">Ofertas y cortesías</p><h2>Promociones para grupos</h2><p class="muted">Una promoción puede dirigirse a todos, a un plan o a un tipo de evento. No crea pagos.</p></div></div>
+<form class="form-grid" id="promotionForm">
+<label>Nombre<input id="promotionName" maxlength="120" placeholder="Ej. Apertura Premium de bienvenida" required=""/></label>
+<label>Clientes del plan<select id="promotionPlan"><option value="">Todos los planes</option></select></label>
+<label>Tipo de evento<select id="promotionEventType"><option value="">Todos los eventos</option></select></label>
+<label>Estado<select id="promotionStatus"><option value="draft">Borrador</option><option value="active">Activa</option><option value="paused">Pausada</option></select></label>
+<label>Inicia<input id="promotionStarts" type="datetime-local"/></label>
+<label>Termina<input id="promotionEnds" type="datetime-local"/></label>
+<label class="wide">Productos<select id="promotionProducts" multiple="" size="7"></select></label>
+<label class="wide">Nota<textarea id="promotionNote" maxlength="500"></textarea></label>
+<button class="primary-btn wide" type="submit">Guardar promoción</button>
+</form>
+<div class="domain-list" id="promotionRows"></div>
+</details>
+<div class="stats-grid"><article><span>Clientes</span><strong id="oClients">0</strong></article><article><span>Clientes activos</span><strong id="oActive">0</strong></article><article><span>Pruebas activas</span><strong id="oTrials">0</strong></article><article><span>Eventos</span><strong id="oEvents">0</strong></article><article><span>Ingresos registrados</span><strong id="oRevenue">$0</strong></article></div><details class="admin-card business-collapsible client-management-workbench"><summary><span><b>Clientes</b><small>Cuentas, planes, cortesías y perfiles</small></span></summary>
+<section class="admin-card"><div class="section-heading"><div><p class="eyebrow">Propietario</p><h2>Clientes</h2></div><div class="client-list-tools"><input id="clientSearch" placeholder="Buscar nombre, contacto o plan" type="search"/><select id="clientStatusFilter"><option value="">Todos</option><option value="active">Activos</option><option value="trial">En prueba</option><option value="expired">Vencidos</option></select></div></div><p class="muted">Entra al perfil comercial para ver lo comprado, incluido o regalado, y visualizar el menú real del cliente.</p><div class="table-wrap"><table><thead><tr><th>Cliente</th><th>Contacto</th><th>Plan</th><th>Estado</th><th>Eventos</th><th>Último acceso</th><th>Pagado</th><th>Administrar</th></tr></thead><tbody id="clientRows"></tbody></table></div><div class="client-pagination"><button class="mini-btn" id="clientPrevPage" type="button">Anterior</button><span id="clientPageStatus">Página 1</span><button class="mini-btn" id="clientNextPage" type="button">Siguiente</button></div></section>
+</details>
+<details class="admin-card business-collapsible hosted-events-workbench"><summary><span><b>Eventos alojados</b><small>Publicación, archivo y ciclo de vida</small></span></summary>
+<section class="admin-card">
+<div class="section-heading">
+<div><p class="eyebrow">Ciclo de vida</p><h2>Eventos alojados</h2>
+<p class="muted">Archivar inicia un periodo de tolerancia. El borrado permanente libera archivos y datos del evento.</p></div>
+</div>
+<div class="table-wrap"><table>
+<thead><tr><th>Evento</th><th>Cliente</th><th>Tipo</th><th>Invitados</th><th>Fotos</th><th>Estado</th><th>Acciones</th></tr></thead>
+<tbody id="platformEventRows"></tbody>
+</table></div>
+</section>
+</details>
+<details class="admin-card business-collapsible backup-workbench"><summary><span><b>Respaldos y restauración</b><small>Continuidad y recuperación</small></span></summary>
+<section class="admin-card">
+<div class="section-heading"><div><p class="eyebrow">Continuidad</p><h2>Respaldos completos</h2><p class="muted">Incluyen snapshot SQLite, multimedia, fotografías y manifiesto. Descarga una copia fuera del servidor.</p></div><button class="primary-btn" id="createBackupBtn" type="button">Crear respaldo</button></div>
+<div class="domain-list" id="backupRows"><p class="muted">Cargando respaldos…</p></div>
+<details class="restore-backup-panel">
+<summary>Restaurar un respaldo ZIP</summary>
+<p class="muted">Primero se valida el manifiesto, la huella y la integridad SQLite. Antes de restaurar se crea automáticamente un punto de regreso.</p>
+<form class="inline-form" id="restoreBackupForm">
+<input accept=".zip,application/zip" id="restoreBackupFile" name="backup" required="" type="file"/>
+<button class="secondary-btn" id="inspectBackupBtn" type="submit">Validar contenido</button>
+</form>
+<div class="restore-backup-preview hidden" id="restoreBackupPreview">
+<div id="restoreBackupSummary"></div>
+<label>Confirmación<input autocomplete="off" id="restoreBackupConfirmation" placeholder="Escribe RESTAURAR"/></label>
+<button class="danger-outline-btn" id="applyBackupRestoreBtn" type="button">Crear rollback y restaurar</button>
+</div>
+</details>
+</section>
+</details></section>
+<section class="tab-panel hidden" id="tab-billing">
+<section class="admin-card account-preferences-card billing-order-preferences">
+<div class="section-heading"><div><p class="eyebrow">Mi cuenta</p><h2>Idioma del panel</h2><p class="muted">Tu interfaz se mostrará en este idioma. El propietario conserva su propio idioma cuando administra tu cuenta.</p></div><label>Idioma<select id="accountLocale"><option value="es">Español</option><option value="en">English</option><option value="pt">Português</option></select></label></div>
+</section>
+<details class="billing-collapsible active-plan-panel" open=""><summary><span><b>Tu plan activo</b><small>Vigencia, límites y pagos</small></span></summary>
+<section class="admin-card billing-order-subscription" id="subscriptionCard"><div class="section-heading"><div><p class="eyebrow">Suscripción</p><h2>Plan y pagos</h2></div></div><div id="subscriptionSummary"></div><div class="plan-grid" id="billingPlans"></div><div id="paymentHistory"></div><p class="muted">No se mostrará un cobro como real hasta conectar un proveedor con checkout y webhooks verificados.</p></section>
+</details>
+<details class="billing-collapsible event-extras-panel" open=""><summary><span><b>Extras para tu evento</b><small>Plantillas, experiencias y capacidades adicionales</small></span></summary>
+<section class="admin-card client-store-card billing-order-store" id="clientStoreCard">
+<div class="section-heading"><div><p class="eyebrow">Tienda contextual</p><h2>Extras para tu evento</h2><p class="muted" id="storeContextText">Aquí aparecen sólo opciones compatibles que todavía puedes adquirir. Lo que ya está incluido queda fuera de esta lista para que veas primero lo nuevo.</p></div><span class="subscription-badge" id="storePlanBadge"></span></div>
+<div class="store-client-toolbar"><label>Buscar en tu evento<input id="storeSearchInput" placeholder="Plantilla, apertura, fotos, mesas…" type="search"/></label><button class="secondary-btn" id="simulateCartBtn" type="button">Probar mi selección</button></div>
+<div class="store-layout"><div class="store-products-column"><div class="store-category-chips" id="storeCategoryChips"></div><div class="store-product-grid" id="storeProductGrid"></div></div><aside class="cart-card"><h3>Tu selección</h3><p class="muted">Activa o desactiva elementos dentro de la simulación sin quitarlos del carrito.</p><div id="cartItems"></div><div class="cart-total"><span>Total</span><strong id="cartTotal">$0 MXN</strong></div><div class="plan-comparison" id="planComparison"></div><div class="cart-actions"><button class="secondary-btn" id="clearCartBtn" type="button">Vaciar selección</button><button class="primary-btn" id="submitCartBtn" type="button">Continuar al pago</button></div><small>No se activará nada ni se registrará ingreso hasta que un proveedor confirme el pago.</small></aside></div>
+</section>
+</details>
+<details class="billing-collapsible"><summary><span><b>Publicación y dirección</b><small>Estado del sitio y dominio</small></span></summary>
+<section class="admin-card billing-order-domain" id="domainManagerCard">
+<div class="section-heading">
+<div>
+<p class="eyebrow">Publicación</p>
+<h2>Dirección de tu evento</h2>
+<p class="muted">Todos los eventos viven en la misma plataforma. No se contrata un hosting nuevo por cliente.</p>
+</div>
+</div>
+<div class="publication-client-panel" id="publicationClientPanel">
+<div><small>Estado de publicación</small><strong id="publicationStatusText">Consultando…</strong><p class="muted" id="publishedEventLimitText"></p></div>
+<button class="primary-btn" id="requestPublicationBtn" type="button">Solicitar publicación</button>
+</div>
+<div class="domain-summary-grid">
+<article>
+<span>Enlace incluido</span>
+<strong id="includedEventUrl">Cargando…</strong>
+<button class="secondary-btn" id="copyIncludedUrlBtn" type="button">Copiar enlace</button>
+</article>
+<article>
+<span>Dominio personalizado</span>
+<strong id="customDomainStatus">Sin configurar</strong>
+<p class="muted">Disponible para clientes que quieran usar su propio dominio.</p>
+</article>
+</div>
+<form class="inline-form domain-form" id="customDomainForm">
+<input id="customDomainInput" placeholder="boda.ejemplo.com o www.miboda.com"/>
+<button class="primary-btn" type="submit">Preparar dominio</button>
+</form>
+<div class="domain-instructions hidden" id="domainInstructions"></div>
+<div class="domain-list" id="domainRows"></div>
+</section>
+</details>
+<details class="billing-collapsible"><summary><span><b>Almacenamiento</b><small>Uso y conservación de archivos</small></span></summary>
+<section class="admin-card billing-order-storage" id="storageUsageCard">
+<div class="section-heading">
+<div><p class="eyebrow">Almacenamiento</p><h2>Espacio del evento</h2>
+<p class="muted">Las fotografías originales se conservan mientras el plan y su periodo de tolerancia estén vigentes.</p></div>
+</div>
+<div class="storage-meter"><div id="storageMeterBar"></div></div>
+<div class="row-between guest-tracking-heading">
+<strong id="storageUsageText">Calculando…</strong>
+<span class="status-pill" id="storageStatusBadge">Estado</span>
+</div>
+<p class="muted" id="storageLifecycleText"></p>
+</section>
+</details>
+</section><section class="tab-panel hidden" id="tab-users">
+<section class="admin-card">
+<div class="section-heading"><div><p class="eyebrow">Propietario</p><h2>Usuarios y permisos</h2></div></div>
+<p class="muted">Crea perfiles para clientes y asígnales únicamente sus eventos. El modo desarrollador permanece reservado para propietario o desarrollador.</p>
+<div class="client-list-tools user-list-tools"><input id="userSearch" placeholder="Buscar nombre o contacto" type="search"/><select id="userRoleFilter"><option value="">Todos los roles</option><option value="client">Clientes</option><option value="developer">Desarrolladores</option><option value="owner">Propietario</option></select><select id="userActiveFilter"><option value="">Todos los estados</option><option value="active">Activos</option><option value="inactive">Inactivos</option></select></div>
+<form class="form-grid" id="userForm">
+<label>Nombre<input id="uName" maxlength="120" placeholder="Ej. Nombre del cliente" required=""/></label>
+<label>Correo<input id="uEmail" maxlength="254" placeholder="cliente@correo.com" required="" type="email"/></label>
+<label>Contraseña temporal<input id="uPassword" autocomplete="new-password" minlength="12" placeholder="Mínimo 12 caracteres" required="" type="password"/><small>La persona deberá cambiarla al iniciar sesión.</small></label>
+<label>Rol<select id="uRole"><option value="client">Cliente</option><option value="developer">Desarrollador</option></select></label><label id="uPlanField">Plan inicial<select id="uPlan" required=""></select><small>El plan se activa al crear la cuenta; no hace falta un segundo paso.</small></label>
+<label class="wide">Eventos asignados<select id="uEvents" multiple="" size="5"></select></label>
+<button class="primary-btn wide">Crear usuario</button>
+</form>
+<div class="table-wrap"><table><thead><tr><th>Nombre</th><th>Contacto</th><th>Rol</th><th>Estado</th><th>Acciones</th></tr></thead><tbody id="userRows"></tbody></table></div>
+</section>
+</section>
+<section class="tab-panel hidden" id="tab-guests"><nav aria-label="Accesos rápidos de invitados" class="guest-mobile-jump"><button data-guest-jump="guestTrackingCard" type="button">Ver invitados</button><button data-guest-jump="addGuestCard" type="button">Agregar</button><button data-guest-jump="excelGuestCard" type="button">Importar</button></nav><section class="admin-card" id="whatsappReadinessCard">
+<div class="section-heading">
+<div>
+<p class="eyebrow">WhatsApp</p>
+<h2>Envío responsable</h2>
+<p class="muted">El modo actual prepara enlaces individuales y requiere confirmación humana. El envío automático se habilitará únicamente con WhatsApp Business Platform, consentimiento y plantillas aprobadas.</p>
+</div>
+<span class="status-pill pending" id="whatsappProviderBadge">Manual</span>
+</div>
+<div class="whatsapp-readiness-grid">
+<span>✓ Mensaje personalizado por familia</span>
+<span>✓ Cola seleccionada y reintentos</span>
+<span>✓ Confirmación humana en modo manual</span>
+<span id="whatsappApiRequirement">○ API oficial pendiente</span>
+</div>
+<div class="whatsapp-config-summary">
+<div><small>Perfil activo</small><strong id="whatsappActiveProfile">principal</strong></div>
+<div><small>Webhook para Meta</small><code id="whatsappWebhookUrl">Se mostrará al publicar</code></div>
+</div>
+<div class="integration-checklist" id="whatsappRequirementList"></div>
+<p class="muted">Las claves se guardan únicamente como secretos del servidor; nunca se escriben en este panel ni viajan al navegador.</p>
+</section>
+<section class="admin-card hidden" id="automaticMessagingCard">
+<div class="section-heading"><div><p class="eyebrow">Integración oficial</p><h2>Cola automática de WhatsApp</h2><p class="muted" id="automaticMessagingHelp">Permanece oculta hasta configurar proveedor y plantilla.</p></div></div>
+<div class="bulk-toolbar"><button class="secondary-btn" id="queueAutomaticBtn" type="button">Encolar seleccionados</button><button class="primary-btn" id="processAutomaticBtn" type="button">Procesar hasta 50</button><button class="mini-btn" id="refreshAutomaticBtn" type="button">Actualizar estados</button></div>
+<div class="domain-list" id="automaticMessageRows"></div>
+</section>
+<section class="admin-card guest-jump-target" id="excelGuestCard"><div class="row-between"><div><p class="eyebrow">Carga masiva</p><h2>Excel maestro</h2><p class="muted">El código es opcional y una mesa nueva se crea automáticamente en el plano.</p></div><div class="excel-actions"><button class="secondary-btn" id="templateBtn">Descargar plantilla vacía</button><button class="primary-btn" id="exportGuestsBtn">Exportar datos del evento</button></div></div><form class="inline-form" id="importForm"><input accept=".xlsx,.csv" id="excelFile" required="" type="file"/><button class="primary-btn">Importar invitados</button></form></section><section class="admin-card guest-jump-target" id="addGuestCard"><h2>Agregar manualmente</h2><form class="form-grid" id="guestForm"><label>Código (opcional)<input id="gCode" placeholder="Se genera automáticamente"/></label><label>Familia<input id="gFamily" required=""/></label><label>Teléfono<input id="gPhone"/></label><label>Mesa<input id="gTable" placeholder="Ej. Mesa 7"/></label><label>Adultos<input id="gAdults" min="0" type="number" value="2"/></label><label>Niños<input id="gChildren" min="0" type="number" value="0"/></label><label class="wide">Mensaje<textarea id="gMessage"></textarea></label><button class="primary-btn wide">Guardar invitación</button></form></section><section class="admin-card guest-jump-target" id="guestTrackingCard">
+<div class="row-between">
+<div>
+<p class="eyebrow">Seguimiento</p>
+<h2>Invitados y mensajes</h2>
+</div>
+<div class="guest-filters">
+<label>Buscar<input id="guestSearch" placeholder="Familia, teléfono o mesa" type="search"/></label>
+<label>Respuesta<select id="guestStatusFilter"><option value="">Todas</option><option value="pending">Pendientes</option><option value="confirmed">Confirmadas</option><option value="declined">No asistirán</option></select></label>
+</div>
+</div>
+<div class="invitation-flow-summary">
+<article><span>Save the Date enviado</span><strong id="flowSaveDate">0</strong></article>
+<article><span>Esperando RSVP</span><strong id="flowRsvpPending">0</strong></article>
+<article><span>Confirmados</span><strong id="flowConfirmed">0</strong></article>
+<article><span>No asistirán</span><strong id="flowDeclined">0</strong></article>
+</div><div class="bulk-toolbar">
+<label><input id="selectAllGuests" type="checkbox"/> Seleccionar visibles</label>
+<button class="primary-btn" id="sendSelectedBtn" type="button">Preparar WhatsApp seleccionados</button>
+<button class="secondary-btn" id="sendPendingBtn" type="button">Seleccionar pendientes</button>
+<button class="danger-outline-btn" id="deleteSelectedGuestsBtn" type="button">Eliminar seleccionados</button>
+<span class="muted" id="selectedCount">0 seleccionados</span>
+</div>
+<div class="admin-card hidden" id="whatsappQueue"></div><div class="table-wrap guest-table-wrap"><table><thead><tr><th></th><th class="guest-mobile-only"></th><th>Familia</th><th>Teléfono</th><th>Mesa</th><th>Seguimiento</th><th>Estado</th><th>Adultos</th><th>Niños</th><th>Restricciones</th><th>Acciones</th></tr></thead><tbody id="guestRows"></tbody></table></div><p class="empty-state hidden" id="guestEmptyState">No hay invitados que coincidan con estos filtros.</p></section></section>
+<section class="tab-panel hidden" id="tab-qr">
+<section class="admin-card">
+<div class="section-heading">
+<div>
+<p class="eyebrow">Papelería coordinada</p>
+<h2>Estudio de QR para mesas</h2>
+<p class="muted">El diseño utiliza automáticamente la paleta de la invitación activa.</p>
+</div>
+</div>
+<div class="form-grid qr-config-grid">
+<label>Texto principal
+        <input id="qrDesignTitle" placeholder="Captura nuestros recuerdos"/>
+</label>
+<label>Instrucción breve
+        <input id="qrDesignInstruction" placeholder="No necesitas instalar ninguna aplicación"/>
+</label>
+<label class="wide">Mensaje
+        <textarea id="qrDesignMessage" placeholder="Escanea el código y comparte las fotografías que tomes durante la celebración."></textarea>
+</label>
+<label class="checkbox-line">
+<input id="qrShowTableName" type="checkbox"/>
+        Mostrar nombre o número de mesa
+      </label>
+<label class="checkbox-line">
+<input id="qrShowFamilies" type="checkbox"/>
+        Incluir las familias planeadas en esa mesa
+      </label>
+<label class="checkbox-line">
+<input id="qrUseThemeColors" type="checkbox"/>
+        Combinar con los colores de la invitación
+      </label>
+<button class="primary-btn wide" id="saveQrDesignBtn" type="button">Guardar configuración QR</button>
+</div>
+</section>
+<section class="admin-card">
+<div class="section-heading">
+<div>
+<p class="eyebrow">Formatos físicos</p>
+<h2>Elige cómo se verá sobre la mesa</h2>
+</div>
+</div>
+<div class="qr-template-grid" id="qrTemplateGrid"></div>
+</section>
+<section class="admin-card">
+<div class="qr-workspace">
+<div>
+<p class="eyebrow">Vista previa realista</p>
+<h2 id="activeQrTemplateName">Tarjeta vertical con base</h2>
+<p class="muted" id="activeQrTemplateNote"></p>
+<div class="inline-form centered-actions">
+<select id="tableSelect"></select>
+<button class="primary-btn" id="generateQrBtn" type="button">Actualizar vista</button>
+</div>
+<div class="qr-download-actions">
+<button class="secondary-btn" id="downloadQrBtn" type="button">QR limpio PNG</button>
+<button class="secondary-btn" id="downloadQrCardBtn" type="button">Tarjeta actual PDF</button>
+<button class="primary-btn" id="downloadQrSetBtn" type="button">Set completo PDF</button>
+<button class="secondary-btn" id="openQrDestinationBtn" type="button">Probar QR y subir foto</button>
+</div>
+<p class="muted qr-url" data-url="" id="qrUrl"></p>
+<p class="muted" id="qrDestinationStatus">Al publicar, este enlace abrirá el álbum combinado con la invitación.</p>
+</div>
+<div class="qr-table-scene" id="qrTableScene">
+<div class="scene-wall"></div>
+<div class="scene-flower">✿</div>
+<div class="scene-glass"></div>
+<div class="scene-plate"></div>
+<div class="qr-physical-mockup qr-mockup-holder" id="qrPhysicalMockup">
+<div class="mockup-card">
+<div class="mockup-kicker">Comparte tus fotos</div>
+<div class="mockup-title" id="mockupTitle">Captura nuestros recuerdos</div>
+<img alt="Código QR" class="mockup-qr" id="qrImage"/>
+<div class="mockup-table" id="mockupTable">Mesa 1</div>
+<div class="mockup-couple" id="mockupCouple">Evento activo</div>
+</div>
+<div class="mockup-base"></div>
+</div>
+</div>
+</div>
+</section>
+<section class="admin-card physical-invite-studio">
+<div class="section-heading">
+<div><p class="eyebrow">Invitados especiales</p><h2>Invitación física combinada</h2><p class="muted">Genera una tarjeta 5 × 7 pulgadas con los datos y el enlace personalizado del invitado seleccionado.</p></div>
+<span class="print-safe-badge">LISTA PARA IMPRENTA</span>
+</div>
+<div class="physical-invite-actions">
+<label>Persona o familia<select id="physicalGuestSelect"></select></label>
+<label>Plantilla física<select id="physicalTemplateSelect"><option value="auto-theme">Combinar automáticamente con la plantilla digital</option><option value="coordinated-arch">Arco coordinado</option><option value="editorial-silk">Editorial seda</option><option value="classic-frame">Marco clásico</option></select></label>
+<div class="physical-invite-mini-preview template-coordinated-arch" id="physicalInvitePreview">
+<span id="physicalPreviewEyebrow">Invitación especial</span>
+<strong id="physicalPreviewEvent">Evento activo</strong>
+<small id="physicalPreviewGuest">Selecciona un invitado</small>
+</div>
+<button class="primary-btn" id="downloadPhysicalInviteBtn" type="button">Descargar PDF personalizado</button>
+</div>
+</section>
+</section>
+<section class="tab-panel hidden" id="tab-tables-lab">
+<section class="admin-card">
+<div class="section-heading"><div><p class="eyebrow">Organización del salón</p><h2>Plano y asignación de lugares</h2><p class="muted">Planea con todos los lugares reservados o revisa únicamente a quienes ya confirmaron.</p></div><span class="ready-badge">OPERATIVO</span></div>
+<div class="seating-toolbar">
+<label>Simulación<select id="seatingMode"><option value="planned">Todos los lugares planeados</option><option value="confirmed">Sólo personas confirmadas</option></select></label>
+<button class="secondary-btn" id="addRoundTableBtn" type="button">＋ Mesa redonda</button>
+<button class="secondary-btn" id="addRectTableBtn" type="button">＋ Mesa rectangular</button>
+<button class="secondary-btn" id="addDanceFloorBtn" type="button">＋ Pista / área</button>
+<button class="secondary-btn" id="autoArrangeTablesBtn" type="button">Ordenar alrededor de la pista</button>
+<button class="primary-btn" id="saveSeatingLayoutBtn" type="button">Guardar plano</button>
+<button class="secondary-btn" id="downloadSeatingPdfBtn" type="button">Exportar PDF de esta vista</button>
+</div>
+<details class="uniform-table-controls"><summary>Aplicar la misma medida a todas las mesas (opcional)</summary><div class="inline-form"><label>Ancho %<input id="uniformTableWidth" max="70" min="6" type="number" value="14"/></label><label>Alto %<input id="uniformTableHeight" max="70" min="6" type="number" value="18"/></label><label>Forma<select id="uniformTableShape"><option value="keep">Conservar cada forma</option><option value="round">Todas redondas</option><option value="rect">Todas rectangulares</option></select></label><button class="secondary-btn" id="applyUniformTablesBtn" type="button">Aplicar al plano</button></div></details>
+<div class="seating-stats">
+<article><span>Personas</span><strong id="seatingPeopleCount">0</strong></article>
+<article><span>Asignadas</span><strong id="seatingAssignedCount">0</strong></article>
+<article><span>Sin mesa</span><strong id="seatingUnassignedCount">0</strong></article>
+<article><span>Capacidad total</span><strong id="seatingCapacityCount">0</strong></article>
+<article><span>Lugares libres</span><strong id="seatingAvailableCount">0</strong></article>
+</div>
+<p aria-live="polite" class="seating-save-status" id="seatingSaveStatus"></p>
+<p class="seating-warnings" id="seatingWarnings"></p>
+<div class="seating-layout-workspace">
+<div aria-label="Plano editable del salón" class="seating-canvas" id="seatingCanvas">
+<div class="canvas-loading">Cargando plano del evento…</div>
+</div>
+<aside class="floor-inspector">
+<div id="floorInspectorEmpty"><p class="eyebrow">Editor</p><h3>Selecciona una mesa o área</h3><p class="muted">Después puedes arrastrarla y ajustar sus medidas, capacidad u orden.</p></div>
+<div class="hidden" id="floorInspectorFields">
+<p class="eyebrow">Elemento seleccionado</p>
+<label>Nombre<input id="floorItemName"/></label>
+<label id="floorItemShapeLabel">Forma<select id="floorItemShape"><option value="round">Redonda</option><option value="rect">Rectangular</option></select></label>
+<label class="hidden" id="floorZoneTypeLabel">Tipo de área<select id="floorZoneType"><option value="dance_floor">Pista de baile</option><option value="aisle">Pasillo</option><option value="stage">Escenario</option><option value="entrance">Entrada</option><option value="bar">Bar</option><option value="restrooms">Sanitarios</option><option value="other">Otra área</option></select></label>
+<label class="hidden" id="floorZoneShapeLabel">Trazo<select id="floorZoneShape"><option value="rect">Recto</option><option value="rounded">Redondeado</option><option value="arc">Curvo</option></select></label>
+<label id="floorItemCapacityLabel">Capacidad<input id="floorItemCapacity" max="30" min="1" type="number"/></label>
+<label>Orden<input id="floorItemOrder" min="1" type="number"/></label>
+<div class="inspector-dimensions"><label>Ancho %<input id="floorItemWidth" max="70" min="6" type="number"/></label><label>Alto %<input id="floorItemHeight" max="70" min="6" type="number"/></label></div>
+<button class="danger-outline-btn" id="deleteFloorItemBtn" type="button">Eliminar del plano</button>
+</div>
+</aside>
+</div>
+</section>
+<section class="admin-card">
+<div class="section-heading"><div><p class="eyebrow">Personas y asientos</p><h2>Quién se sentará en cada mesa</h2><p class="muted">Cada cambio respeta la capacidad y el siguiente asiento libre.</p></div><input id="seatingPeopleSearch" placeholder="Buscar persona o familia" type="search"/></div>
+<div class="seating-people-list" id="seatingPeopleList"></div>
+</section>
+<section class="admin-card seating-criteria">
+<div><strong>Ventaja</strong><p>La vista planeada reserva espacio antes de recibir todas las confirmaciones; la confirmada refleja la operación real del día.</p></div>
+<div><strong>Cuidado</strong><p>Los nombres escritos por la familia pueden cambiar; el sistema conserva el lugar mediante una clave estable y marca a quien todavía no tiene mesa.</p></div>
+<div><strong>Control</strong><p>Se advierten cruces físicos y sobrecupo. El plano usa proporciones para adaptarse a computadora, tableta e impresión futura.</p></div>
+</section>
+</section>
+<section class="tab-panel hidden" id="tab-photos"><section class="admin-card"><div class="row-between photo-moderation-head"><div><p class="eyebrow">Álbum del evento</p><h2>Fotografías recibidas</h2><p class="muted">Revisa lo pendiente, aprueba la selección final u oculta sin borrar. Puedes descargar por estado o mesa.</p></div><div class="photo-moderation-tools"><label>Estado<select id="photoStatusFilter"><option value="">Todas</option><option value="pending">Pendientes</option><option value="approved">Aprobadas</option><option value="hidden">No aprobadas / ocultas</option></select></label><label>Mesa<select id="photoTableFilter"></select></label><a class="secondary-btn" href="#" id="downloadPhotosZip">Descargar selección</a></div></div><div class="photo-moderation-counts" id="photoModerationCounts"></div><div class="photo-grid" id="photoGrid"></div></section></section>
+</section></main><dialog class="edit-dialog" id="userEditDialog">
+<form class="admin-card" id="userEditForm" method="dialog">
+<div class="row-between"><div><p class="eyebrow">Cuenta</p><h2>Editar usuario</h2></div><button class="mini-btn" id="closeUserEditBtn" type="button">Cerrar</button></div>
+<input id="editUserId" type="hidden"/>
+<div class="form-grid">
+<label>Nombre<input id="editUserName" maxlength="120" required=""/></label>
+<label>Correo<input id="editUserEmail" required="" type="email"/></label>
+<label>Rol<select id="editUserRole"><option value="client">Cliente</option><option value="developer">Desarrollador</option></select></label>
+<label class="wide">Eventos asignados<select id="editUserEvents" multiple="" size="6"></select></label>
+<button class="primary-btn wide" type="submit">Guardar cambios</button>
+</div>
+</form>
+</dialog><dialog class="edit-dialog" id="guestEditDialog">
+<form class="admin-card" id="guestEditForm" method="dialog">
+<div class="row-between">
+<div><p class="eyebrow">Invitado</p><h2>Modificar invitación</h2></div>
+<button class="mini-btn" id="closeGuestEditBtn" type="button">Cerrar</button>
+</div>
+<input id="editGuestId" type="hidden"/>
+<div class="form-grid">
+<label>Código<input id="editGuestCode"/><small>Si lo vacías, se conservará el código actual.</small></label>
+<label>Familia o invitado<input id="editGuestFamily" required=""/></label>
+<label>Teléfono<input id="editGuestPhone"/></label>
+<label>Mesa<input id="editGuestTable"/></label>
+<label>Adultos permitidos<input id="editGuestAdults" min="0" type="number"/></label>
+<label>Niños permitidos<input id="editGuestChildren" min="0" type="number"/></label>
+<label class="wide">Mensaje personalizado<textarea id="editGuestMessage"></textarea></label>
+<label class="wide">Notas privadas<textarea id="editGuestNotes"></textarea></label>
+<button class="primary-btn wide" type="submit">Guardar cambios</button>
+</div>
+</form>
+</dialog>
+<dialog class="edit-dialog commerce-client-dialog" id="clientCommerceDialog">
+<section class="admin-card">
+<div class="row-between"><div><p class="eyebrow">Perfil comercial</p><h2 id="clientCommerceTitle">Cliente</h2><p class="muted" id="clientCommerceSummary"></p></div><button class="mini-btn" id="closeClientCommerceBtn" type="button">Cerrar</button></div>
+<div class="client-commercial-controls" id="clientCommercialControls"></div><div class="client-commerce-events" id="clientCommerceEvents"></div>
+</section>
+</dialog>
+<dialog class="edit-dialog" id="commerceProductDialog">
+<form class="admin-card" id="commerceProductForm" method="dialog">
+<div class="row-between"><div><p class="eyebrow">Catálogo global</p><h2 id="commerceProductDialogTitle">Producto</h2></div><button class="mini-btn dialog-close" type="button">Cerrar</button></div>
+<input id="commerceProductId" type="hidden"/>
+<div class="commerce-product-preview" id="commerceProductPreview"></div>
+<div class="form-grid">
+<label>Código<input id="commerceProductCode" maxlength="80" placeholder="custom:mi-producto"/><small>Al editar un producto existente el código permanece estable.</small></label>
+<label>Tipo<select id="commerceProductKind"><option value="bundle">Función/paquete</option><option value="feature">Módulo</option><option value="template_collection">Colección</option><option value="template">Plantilla</option><option value="storage">Almacenamiento</option></select></label>
+<label class="wide">Nombre<input id="commerceProductName" maxlength="120" required=""/></label>
+<label class="wide">Descripción<textarea id="commerceProductDescription" maxlength="500"></textarea></label>
+<label>Precio MXN<input id="commerceProductPrice" min="0" step="1" type="number"/></label>
+<label>Estado comercial<select id="commerceProductState"><option value="available">Disponible</option><option value="experimental">Experimental</option><option value="hidden">Oculto</option><option value="disabled">Deshabilitado</option></select></label>
+<label>Estado técnico<select id="commerceProductReadiness"><option value="draft">Borrador</option><option value="lab">Laboratorio</option><option value="qa">QA</option><option value="approved">Aprobado</option><option value="retired">Retirado</option></select><small>Sólo un producto aprobado puede publicarse.</small></label>
+<label>Versión aprobada<input id="commerceProductRelease" maxlength="80" placeholder="Ej. 6.14.2-rc.21"/></label>
+<label>Ranura de presentación<select id="commerceProductSlot"><option value="feature">Función</option><option value="theme">Tema</option><option value="opening">Apertura</option><option value="gallery">Galería</option><option value="print">Impreso</option><option value="storage">Almacenamiento</option></select></label>
+<label>Estrategia de preview<select id="commerceProductPreviewStrategy"><option value="none">Sin preview</option><option value="theme">Tema</option><option value="experience">Experiencia</option><option value="feature">Función</option></select></label>
+<label>Almacenamiento MB<input id="commerceProductStorage" min="0" step="1" type="number" value="0"/></label>
+<label class="wide">Capacidades autorizadas<select id="commerceProductGrants" multiple="" size="8"></select><small>Sólo capacidades ya autorizadas por EventStudio. Un renderer nuevo sigue requiriendo código, QA y promoción técnica.</small></label>
+<label class="wide">Tipos de evento<select id="commerceProductEventTypes" multiple="" size="7"></select><small>Selecciona uno o varios. “Todos” usa *.</small></label>
+<fieldset class="wide commerce-category-picker"><legend>Categorías de tienda</legend><div id="commerceProductCategories"></div></fieldset>
+<label class="checkbox-line wide"><input id="commerceProductPublic" type="checkbox"/> Visible en tienda</label>
+<button class="primary-btn wide" type="submit">Guardar producto</button>
+</div>
+</form>
+</dialog>
+<dialog class="edit-dialog commerce-plan-dialog" id="commercePlanDialog">
+<form class="admin-card" id="commercePlanForm" method="dialog">
+<div class="row-between"><div><p class="eyebrow">Constructor de paquetes</p><h2 id="commercePlanDialogTitle">Paquete</h2><p class="muted" id="commercePlanValue"></p></div><button class="mini-btn dialog-close" type="button">Cerrar</button></div>
+<input id="commercePlanId" type="hidden"/>
+<div class="plan-fields plan-dialog-fields">
+<label>Nombre<input id="planDialogName" maxlength="120" required=""/></label>
+<label>Mensaje<input id="planDialogTagline" maxlength="240"/></label>
+<label>Precio MXN<input id="planDialogPrice" min="0" step="1" type="number"/></label>
+<label>Vigencia (días)<input id="planDialogDays" min="1" type="number"/></label>
+<label>Conservación al vencer (días)<input id="planDialogRetention" min="0" type="number"/></label>
+<label>Eventos permitidos<input id="planDialogEvents" min="1" type="number"/></label>
+<label>Sitios publicados simultáneos<input id="planDialogPublishedEvents" min="0" type="number"/></label>
+<label>Política de publicación<select id="planDialogPublicationPolicy"><option value="manual_owner">Manual por propietario</option><option value="auto_after_entitlement">Automática con derecho vigente</option><option value="disabled">Publicación deshabilitada</option></select></label>
+<label>Invitados<input id="planDialogGuests" min="0" type="number"/></label>
+<label>Almacenamiento base MB<input id="planDialogStorage" min="0" type="number"/></label>
+</div>
+<div class="plan-flags"><label class="checkbox-line"><input id="planDialogPublic" type="checkbox"/> Visible en tienda</label><label class="checkbox-line"><input id="planDialogFeatured" type="checkbox"/> Destacado</label></div>
+<div class="plan-product-picker"><div class="row-between"><div><strong>Funciones, módulos y plantillas incluidas</strong><small>Marca lo que recibe el cliente al activar este paquete.</small></div><input id="planProductSearch" placeholder="Buscar función o plantilla" type="search"/></div><div id="planProductOptions"></div></div>
+<div class="dialog-actions"><button class="danger-outline-btn" id="deleteCommercePlanBtn" type="button">Eliminar paquete</button><button class="primary-btn" type="submit">Guardar paquete</button></div>
+</form>
+</dialog>
+<dialog class="edit-dialog" id="newEventDialog">
+<form class="admin-card" id="newEventForm" method="dialog">
+<div class="row-between"><div><p class="eyebrow">Nuevo evento</p><h2>Crea el espacio inicial</h2></div><button class="mini-btn dialog-close" type="button">Cerrar</button></div>
+<label>Tipo de evento<select id="newEventType" required=""></select></label>
+<label>Nombre del evento<input id="newEventName" maxlength="160" placeholder="Ej. Ariana y Francisco" required=""/></label>
+<button class="primary-btn" type="submit">Crear evento</button>
+</form>
+</dialog>
+<dialog class="edit-dialog notification-dialog" id="notificationDialog">
+<section class="admin-card"><div class="row-between"><div><p class="eyebrow">Mi cuenta</p><h2>Notificaciones</h2></div><button class="mini-btn dialog-close" type="button">Cerrar</button></div><div class="notification-list" id="notificationList"></div></section>
+</dialog>
+<dialog class="edit-dialog notification-detail-dialog" id="notificationDetailDialog">
+<section class="admin-card"><div class="row-between"><div><p class="eyebrow">Detalle</p><h2 id="notificationDetailTitle">Notificación</h2></div><button class="mini-btn" id="closeNotificationDetailBtn" type="button">Cerrar</button></div>
+<p id="notificationDetailMessage"></p><p class="muted" id="notificationDetailDescription"></p><small class="notification-detail-meta" id="notificationDetailMeta"></small>
+<div class="dialog-actions"><button class="primary-btn" id="notificationDetailAction" type="button">Abrir la sección</button></div>
+</section>
+</dialog>
+<dialog class="edit-dialog client-menu-preview-dialog" id="clientMenuPreviewDialog">
+<section class="admin-card"><div class="row-between"><div><p class="eyebrow">Vista cliente</p><h2 id="clientMenuPreviewTitle">Menú del cliente</h2><p class="muted" id="clientMenuPreviewSummary"></p></div><button class="mini-btn" id="closeClientMenuPreviewBtn" type="button">Cerrar</button></div>
+<div class="client-menu-preview-body" id="clientMenuPreviewBody"></div>
+<p class="muted">Esta vista es de solo lectura: no cambia tu evento activo, tu rol ni los permisos del cliente.</p>
+</section>
+</dialog>
+<dialog class="experience-preview-dialog" id="themePreviewDialog">
+<div class="experience-preview-toolbar"><div><small>Vista previa de plantilla</small><strong id="themePreviewDialogTitle">Plantilla</strong></div><div class="preview-toolbar-actions"><a class="secondary-btn" id="openFullPreviewBtn" rel="noopener" target="_blank">Abrir aparte</a><button class="mini-btn" id="closeThemePreviewBtn" type="button">Cerrar</button></div></div>
+<div class="responsive-preview-stage phone" id="themePreviewStage"><iframe id="themePreviewFrame" title="Vista previa completa de la plantilla"></iframe></div>
+</dialog>
+<dialog class="experience-preview-dialog store-preview-dialog" id="storePreviewDialog">
+<div class="experience-preview-toolbar"><div><small>Simulación en contexto</small><strong id="storePreviewTitle">Tu invitación</strong></div><div class="preview-toolbar-actions"><button class="mini-btn" id="storePreviewReplay" type="button">Reproducir</button><button class="mini-btn" id="closeStorePreviewBtn" type="button">Cerrar</button></div></div>
+<div aria-label="Tamaño de simulación" class="preview-device-switch" role="group"><button class="secondary-btn active" id="previewPhoneModeBtn" type="button">Teléfono</button><button class="secondary-btn" id="previewDesktopModeBtn" type="button">Computadora</button><button class="secondary-btn" id="phonePreviewBtn" type="button">Abrir en otro dispositivo</button></div>
+<div class="responsive-preview-stage phone" id="storePreviewStage"><iframe id="storePreviewFrame" title="Vista previa de la invitación"></iframe></div>
+<p class="preview-focus-badge" id="storePreviewFocus">Vista previa del producto</p><p class="muted" id="storePreviewHint">La simulación no guarda cambios ni concede derechos comerciales.</p>
+<a class="secondary-btn" id="storePreviewOpen" rel="noopener" target="_blank">Abrir vista completa</a>
+</dialog>
+<dialog class="opening-preview-dialog" id="openingPreviewDialog">
+<div class="opening-preview-toolbar"><strong>Vista previa de apertura</strong><button class="mini-btn" id="closeOpeningPreviewBtn" type="button">Cerrar</button></div>
+<iframe id="openingPreviewFrame" title="Vista previa de la apertura de invitación"></iframe>
+</dialog>
+<dialog class="admin-photo-viewer" id="adminPhotoViewer">
+<div class="photo-viewer-shell">
+<button aria-label="Cerrar visor" class="photo-viewer-close" id="closeAdminPhotoViewer" type="button">×</button>
+<button aria-label="Fotografía anterior" class="photo-viewer-nav previous" id="previousAdminPhoto" type="button">‹</button>
+<img alt="Fotografía ampliada del evento" id="adminPhotoViewerImage"/>
+<button aria-label="Fotografía siguiente" class="photo-viewer-nav next" id="nextAdminPhoto" type="button">›</button>
+<div class="photo-viewer-caption"><strong id="adminPhotoViewerTitle"></strong><p id="adminPhotoViewerMessage"></p><small id="adminPhotoViewerCounter"></small></div>
+</div>
+</dialog>
+<script src="/admin.js?v=6.14.2-rc.21"></script></body></html>

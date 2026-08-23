@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1600" role="img" aria-label="Ramo de margaritas y sombra editorial">
+ <path d="M740 0 H1200 V520 L1010 780 H610 Z" fill="#c6b18d" opacity=".18"/>
+ <path d="M1010 0 H1200 V900 L875 570 Z" fill="#2a2a27" opacity=".10"/>
+ <g stroke="#3f5939" stroke-width="8" fill="none" stroke-linecap="round">
+  <path d="M-20 1600 Q160 1350 200 1090"/><path d="M80 1600 Q250 1330 345 910"/><path d="M170 1600 Q380 1300 480 1060"/><path d="M290 1600 Q500 1380 610 1210"/><path d="M-10 1510 Q130 1320 95 1210"/>
+ </g>
+ <g id="f"><g fill="#fffdfa" stroke="#deddd6" stroke-width="2"><ellipse cy="-72" rx="29" ry="70"/><ellipse cy="72" rx="29" ry="70"/><ellipse cx="-72" rx="70" ry="29"/><ellipse cx="72" rx="70" ry="29"/><ellipse cx="-51" cy="-51" rx="27" ry="67" transform="rotate(-45 -51 -51)"/><ellipse cx="51" cy="-51" rx="27" ry="67" transform="rotate(45 51 -51)"/><ellipse cx="-51" cy="51" rx="27" ry="67" transform="rotate(45 -51 51)"/><ellipse cx="51" cy="51" rx="27" ry="67" transform="rotate(-45 51 51)"/></g><circle r="41" fill="#d9a52a"/><circle r="22" fill="#bc8418" opacity=".45"/></g>
+ <g transform="translate(90 1200) scale(.95)"><use href="#f"/></g><g transform="translate(210 1080) scale(1.25)"><use href="#f"/></g><g transform="translate(340 900) scale(.82)"><use href="#f"/></g><g transform="translate(475 1050) scale(1.08)"><use href="#f"/></g><g transform="translate(610 1200) scale(.76)"><use href="#f"/></g><g transform="translate(330 1295) scale(.67)" opacity=".8"><use href="#f"/></g>
+ <g fill="#5c704b" opacity=".82"><ellipse cx="125" cy="1330" rx="32" ry="85" transform="rotate(52 125 1330)"/><ellipse cx="270" cy="1215" rx="31" ry="80" transform="rotate(-52 270 1215)"/><ellipse cx="440" cy="1230" rx="28" ry="76" transform="rotate(43 440 1230)"/></g>
+</svg>

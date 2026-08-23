@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1600" role="img" aria-label="Marco original de margaritas y hojas">
+  <defs>
+    <filter id="soft"><feGaussianBlur stdDeviation="0.7"/></filter>
+    <linearGradient id="leaf" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#789864"/><stop offset="1" stop-color="#b7ca91"/></linearGradient>
+  </defs>
+  <g opacity=".84" fill="none" stroke="#799367" stroke-width="7" stroke-linecap="round">
+    <path d="M-40 160 C180 210 210 470 400 520 C520 552 550 700 515 865"/>
+    <path d="M65 1160 C210 1080 265 1240 445 1270 C575 1290 620 1430 595 1610"/>
+  </g>
+  <g fill="url(#leaf)" opacity=".78">
+    <ellipse cx="120" cy="235" rx="26" ry="67" transform="rotate(-42 120 235)"/><ellipse cx="205" cy="330" rx="29" ry="76" transform="rotate(38 205 330)"/>
+    <ellipse cx="280" cy="444" rx="26" ry="70" transform="rotate(-38 280 444)"/><ellipse cx="390" cy="525" rx="27" ry="72" transform="rotate(44 390 525)"/>
+    <ellipse cx="122" cy="1176" rx="29" ry="77" transform="rotate(55 122 1176)"/><ellipse cx="265" cy="1200" rx="27" ry="74" transform="rotate(-48 265 1200)"/>
+    <ellipse cx="410" cy="1285" rx="28" ry="76" transform="rotate(42 410 1285)"/>
+  </g>
+  <g id="daisy">
+    <g fill="#fffdf8" stroke="#e4e0d5" stroke-width="2">
+      <ellipse cx="0" cy="-68" rx="25" ry="64"/><ellipse cx="0" cy="68" rx="25" ry="64"/><ellipse cx="-68" cy="0" rx="64" ry="25"/><ellipse cx="68" cy="0" rx="64" ry="25"/>
+      <ellipse cx="-48" cy="-48" rx="24" ry="61" transform="rotate(-45 -48 -48)"/><ellipse cx="48" cy="-48" rx="24" ry="61" transform="rotate(45 48 -48)"/>
+      <ellipse cx="-48" cy="48" rx="24" ry="61" transform="rotate(45 -48 48)"/><ellipse cx="48" cy="48" rx="24" ry="61" transform="rotate(-45 48 48)"/>
+    </g><circle r="37" fill="#e9b93e"/><circle r="23" fill="#d59f25" opacity=".55"/>
+  </g>
+  <g transform="translate(78 165) scale(1.18)"><use href="#daisy"/></g>
+  <g transform="translate(158 555) scale(.82)"><use href="#daisy"/></g>
+  <g transform="translate(50 920) scale(.7)" opacity=".78"><use href="#daisy"/></g>
+  <g transform="translate(190 1385) scale(1.02)"><use href="#daisy"/></g>
+  <g transform="translate(445 1480) scale(.56)" opacity=".72"><use href="#daisy"/></g>
+  <ellipse cx="700" cy="770" rx="385" ry="500" fill="#fffdf9" fill-opacity=".35" stroke="#c9c8bd" stroke-opacity=".35" stroke-width="4"/>
+</svg>

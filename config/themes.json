@@ -4,83 +4,1395 @@
     "name": "Romántico vino",
     "description": "Marfil, vino y dorado suave. Elegante y cálido.",
     "className": "theme-romantic-wine",
-    "preview": "🍷"
+    "preview": "🍷",
+    "tags": [
+      "romántica",
+      "clásica",
+      "cálida"
+    ],
+    "eventTypes": [
+      "wedding",
+      "xv",
+      "anniversary"
+    ],
+    "layoutFamily": "classic",
+    "layoutLabel": "Carta romántica",
+    "motionPreset": "subtle",
+    "motionLabel": "Entrada serena",
+    "photoStyle": "cards",
+    "photoStyleLabel": "Recuerdos en tarjetas",
+    "motif": "spark",
+    "defaultExperience": "classic",
+    "minPlan": "starter"
   },
   {
     "id": "botanical-ivory",
     "name": "Botánico marfil",
     "description": "Verdes naturales, flores claras y sensación de jardín.",
     "className": "theme-botanical-ivory",
-    "preview": "🌿"
+    "preview": "🌿",
+    "tags": [
+      "botánica",
+      "jardín",
+      "natural"
+    ],
+    "eventTypes": [
+      "wedding",
+      "baby-shower",
+      "birthday"
+    ],
+    "layoutFamily": "botanical",
+    "layoutLabel": "Jardín vertical",
+    "motionPreset": "subtle",
+    "motionLabel": "Hojas suaves",
+    "photoStyle": "organic",
+    "photoStyleLabel": "Fotos orgánicas",
+    "motif": "leaf",
+    "defaultExperience": "story",
+    "minPlan": "starter"
   },
   {
     "id": "midnight-gold",
     "name": "Noche dorada",
-    "description": "Azul profundo, negro y dorado para una boda nocturna.",
+    "description": "Azul profundo, negro y dorado para una celebración nocturna.",
     "className": "theme-midnight-gold",
-    "preview": "✨"
+    "preview": "✨",
+    "tags": [
+      "noche",
+      "formal",
+      "dorado"
+    ],
+    "eventTypes": [
+      "wedding",
+      "xv",
+      "birthday",
+      "corporate"
+    ],
+    "layoutFamily": "cinematic",
+    "layoutLabel": "Noche cinematográfica",
+    "motionPreset": "balanced",
+    "motionLabel": "Destellos dorados",
+    "photoStyle": "fullscreen",
+    "photoStyleLabel": "Fotografía inmersiva",
+    "motif": "light",
+    "defaultExperience": "poster",
+    "minPlan": "basic"
   },
   {
     "id": "terracotta-sunset",
     "name": "Terracota atardecer",
     "description": "Terracota, arena y tonos cálidos de atardecer.",
     "className": "theme-terracotta-sunset",
-    "preview": "🌅"
+    "preview": "🌅",
+    "tags": [
+      "bohemia",
+      "cálida",
+      "exterior"
+    ],
+    "eventTypes": [
+      "wedding",
+      "birthday",
+      "baby-shower"
+    ],
+    "layoutFamily": "layered",
+    "layoutLabel": "Capas de atardecer",
+    "motionPreset": "subtle",
+    "motionLabel": "Desplazamiento cálido",
+    "photoStyle": "collage",
+    "photoStyleLabel": "Collage cálido",
+    "motif": "sun",
+    "defaultExperience": "gallery",
+    "minPlan": "starter"
   },
   {
     "id": "minimal-pearl",
     "name": "Perla minimalista",
     "description": "Blanco perla, gris cálido y diseño limpio.",
     "className": "theme-minimal-pearl",
-    "preview": "🤍"
+    "preview": "🤍",
+    "tags": [
+      "minimalista",
+      "limpia",
+      "moderna"
+    ],
+    "eventTypes": [
+      "wedding",
+      "birthday",
+      "corporate",
+      "graduation"
+    ],
+    "layoutFamily": "minimal",
+    "layoutLabel": "Composición esencial",
+    "motionPreset": "still",
+    "motionLabel": "Presentación sin distracciones",
+    "photoStyle": "frames",
+    "photoStyleLabel": "Marcos limpios",
+    "motif": "frame",
+    "defaultExperience": "classic",
+    "minPlan": "starter"
   },
   {
     "id": "mayan-elegance",
     "name": "Elegancia maya",
-    "description": "Verde jade, piedra y detalles inspirados en Comalcalco.",
+    "description": "Verde jade, piedra y detalles inspirados en la naturaleza tropical.",
     "className": "theme-mayan-elegance",
-    "preview": "𓂀"
+    "preview": "𓂀",
+    "tags": [
+      "mexicana",
+      "tropical",
+      "jade"
+    ],
+    "eventTypes": [
+      "wedding",
+      "xv",
+      "birthday"
+    ],
+    "layoutFamily": "story-panels",
+    "layoutLabel": "Relato entre piedra y selva",
+    "motionPreset": "balanced",
+    "motionLabel": "Paneles de jade",
+    "photoStyle": "cutout",
+    "photoStyleLabel": "Fotografías recortadas",
+    "motif": "leaf",
+    "defaultExperience": "story",
+    "minPlan": "basic"
   },
   {
     "id": "rose-garden",
     "name": "Jardín de rosas",
     "description": "Rosas empolvadas, crema y detalles suaves. Romántica y luminosa.",
     "className": "theme-rose-garden",
-    "preview": "🌹"
+    "preview": "🌹",
+    "tags": [
+      "floral",
+      "romántica",
+      "rosa"
+    ],
+    "eventTypes": [
+      "wedding",
+      "xv",
+      "baby-shower"
+    ],
+    "layoutFamily": "botanical",
+    "layoutLabel": "Jardín de recuerdos",
+    "motionPreset": "subtle",
+    "motionLabel": "Pétalos y fundidos",
+    "photoStyle": "arches",
+    "photoStyleLabel": "Retratos entre rosas",
+    "motif": "garden",
+    "defaultExperience": "gallery",
+    "minPlan": "starter"
   },
   {
     "id": "ocean-silk",
     "name": "Seda oceánica",
     "description": "Azul petróleo, arena y marfil para una presentación serena.",
     "className": "theme-ocean-silk",
-    "preview": "🌊"
+    "preview": "🌊",
+    "tags": [
+      "mar",
+      "serena",
+      "azul"
+    ],
+    "eventTypes": [
+      "wedding",
+      "birthday",
+      "gender-reveal"
+    ],
+    "layoutFamily": "watercolor",
+    "layoutLabel": "Horizonte de seda",
+    "motionPreset": "subtle",
+    "motionLabel": "Oleaje sereno",
+    "photoStyle": "reveal",
+    "photoStyleLabel": "Fotografías entre olas",
+    "motif": "wave",
+    "defaultExperience": "story",
+    "minPlan": "basic"
   },
   {
     "id": "lavender-dream",
     "name": "Sueño lavanda",
     "description": "Lavanda, gris perla y blanco para un estilo delicado.",
     "className": "theme-lavender-dream",
-    "preview": "🪻"
+    "preview": "🪻",
+    "tags": [
+      "lavanda",
+      "delicada",
+      "infantil"
+    ],
+    "eventTypes": [
+      "xv",
+      "baby-shower",
+      "birthday"
+    ],
+    "layoutFamily": "portrait",
+    "layoutLabel": "Retrato lavanda",
+    "motionPreset": "subtle",
+    "motionLabel": "Niebla delicada",
+    "photoStyle": "portrait",
+    "photoStyleLabel": "Retrato protagonista",
+    "motif": "butterfly",
+    "defaultExperience": "gallery",
+    "minPlan": "starter"
   },
   {
     "id": "black-tie",
     "name": "Black tie",
     "description": "Negro, champaña y blanco para una invitación formal y editorial.",
     "className": "theme-black-tie",
-    "preview": "♟"
+    "preview": "♟",
+    "tags": [
+      "formal",
+      "editorial",
+      "negro"
+    ],
+    "eventTypes": [
+      "wedding",
+      "xv",
+      "corporate"
+    ],
+    "layoutFamily": "editorial",
+    "layoutLabel": "Editorial de gala",
+    "motionPreset": "balanced",
+    "motionLabel": "Titulares elegantes",
+    "photoStyle": "cover",
+    "photoStyleLabel": "Retrato de portada",
+    "motif": "light",
+    "defaultExperience": "poster",
+    "minPlan": "basic"
   },
   {
     "id": "mexican-bougainvillea",
     "name": "Bugambilia mexicana",
     "description": "Bugambilia, terracota y marfil con energía elegante.",
     "className": "theme-mexican-bougainvillea",
-    "preview": "🌺"
+    "preview": "🌺",
+    "tags": [
+      "mexicana",
+      "colorida",
+      "fiesta"
+    ],
+    "eventTypes": [
+      "wedding",
+      "xv",
+      "birthday"
+    ],
+    "layoutFamily": "reveal",
+    "layoutLabel": "Fiesta entre flores",
+    "motionPreset": "dynamic",
+    "motionLabel": "Bugambilias en movimiento",
+    "photoStyle": "burst",
+    "photoStyleLabel": "Fotos en estallido floral",
+    "motif": "garden",
+    "defaultExperience": "story",
+    "minPlan": "basic"
   },
   {
     "id": "forest-candlelight",
     "name": "Bosque a la luz de velas",
-    "description": "Verde bosque, ámbar y crema para una boda íntima.",
+    "description": "Verde bosque, ámbar y crema para una celebración íntima.",
     "className": "theme-forest-candlelight",
-    "preview": "🕯️"
+    "preview": "🕯️",
+    "tags": [
+      "bosque",
+      "íntima",
+      "nocturna"
+    ],
+    "eventTypes": [
+      "wedding",
+      "birthday"
+    ],
+    "layoutFamily": "storybook",
+    "layoutLabel": "Capítulos a la luz de velas",
+    "motionPreset": "subtle",
+    "motionLabel": "Luz entre árboles",
+    "photoStyle": "halo",
+    "photoStyleLabel": "Retratos iluminados",
+    "motif": "light",
+    "defaultExperience": "story",
+    "minPlan": "basic"
+  },
+  {
+    "id": "editorial-arch",
+    "name": "Arco editorial",
+    "description": "Marfil, dorado y fotografías protagonistas con arcos y tarjetas tipo recuerdo.",
+    "className": "theme-editorial-arch",
+    "preview": "◠",
+    "tags": [
+      "editorial",
+      "fotográfica",
+      "moderna"
+    ],
+    "eventTypes": [
+      "wedding",
+      "xv",
+      "graduation"
+    ],
+    "layoutFamily": "editorial",
+    "layoutLabel": "Portada editorial",
+    "motionPreset": "balanced",
+    "motionLabel": "Entrada por capas",
+    "photoStyle": "arches",
+    "photoStyleLabel": "Fotografías en arcos",
+    "motif": "frame",
+    "defaultExperience": "gallery",
+    "minPlan": "premium"
+  },
+  {
+    "id": "lavender-couture",
+    "name": "Lavanda couture",
+    "description": "Retrato protagonista, transparencias lilas, cuenta regresiva delicada y entrada suave.",
+    "className": "theme-lavender-couture",
+    "preview": "✦",
+    "tags": [
+      "alta moda",
+      "lavanda",
+      "fotográfica"
+    ],
+    "eventTypes": [
+      "wedding",
+      "xv"
+    ],
+    "layoutFamily": "portrait",
+    "layoutLabel": "Retrato protagonista",
+    "motionPreset": "subtle",
+    "motionLabel": "Desplazamiento suave",
+    "photoStyle": "portrait",
+    "photoStyleLabel": "Retrato a pantalla completa",
+    "motif": "spark",
+    "defaultExperience": "gallery",
+    "minPlan": "premium"
+  },
+  {
+    "id": "cinematic-vows",
+    "name": "Votos cinematográficos",
+    "description": "Fotografía a pantalla completa, contraste oscuro, oro cálido y tarjetas tipo película.",
+    "className": "theme-cinematic-vows",
+    "preview": "◉",
+    "tags": [
+      "cinematográfica",
+      "fotográfica",
+      "nocturna"
+    ],
+    "eventTypes": [
+      "wedding",
+      "xv",
+      "birthday"
+    ],
+    "layoutFamily": "cinematic",
+    "layoutLabel": "Secuencia cinematográfica",
+    "motionPreset": "dynamic",
+    "motionLabel": "Cortes y fundidos",
+    "photoStyle": "fullscreen",
+    "photoStyleLabel": "Fotos a pantalla completa",
+    "motif": "light",
+    "defaultExperience": "story",
+    "minPlan": "premium"
+  },
+  {
+    "id": "storybook-seal",
+    "name": "Sobre y sello",
+    "description": "Papel marfil, marco clásico y una apertura inspirada en sobre con sello de cera.",
+    "className": "theme-storybook-seal",
+    "preview": "✉",
+    "tags": [
+      "sobre",
+      "clásica",
+      "sello"
+    ],
+    "eventTypes": [
+      "wedding",
+      "xv",
+      "baby-shower"
+    ],
+    "layoutFamily": "storybook",
+    "layoutLabel": "Carta por capítulos",
+    "motionPreset": "subtle",
+    "motionLabel": "Paso de páginas",
+    "photoStyle": "keepsake",
+    "photoStyleLabel": "Fotos tipo recuerdo",
+    "motif": "paper",
+    "defaultExperience": "story",
+    "minPlan": "basic"
+  },
+  {
+    "id": "botanical-scroll",
+    "name": "Recorrido botánico",
+    "description": "Composición vertical ligera, verdes naturales y detalles de hojas en cada momento.",
+    "className": "theme-botanical-scroll",
+    "preview": "❧",
+    "tags": [
+      "botánica",
+      "recorrido",
+      "ligera"
+    ],
+    "eventTypes": [
+      "wedding",
+      "baby-shower",
+      "birthday"
+    ],
+    "layoutFamily": "botanical",
+    "layoutLabel": "Recorrido botánico",
+    "motionPreset": "balanced",
+    "motionLabel": "Hojas y revelado",
+    "photoStyle": "organic",
+    "photoStyleLabel": "Fotos orgánicas",
+    "motif": "leaf",
+    "defaultExperience": "story",
+    "minPlan": "premium"
+  },
+  {
+    "id": "welcome-clouds",
+    "name": "Nubes de bienvenida",
+    "description": "Crema, salvia, melocotón y azul cielo para celebrar una dulce espera.",
+    "className": "theme-welcome-clouds",
+    "preview": "☁",
+    "tags": [
+      "baby shower",
+      "pastel",
+      "nubes"
+    ],
+    "eventTypes": [
+      "baby-shower",
+      "birthday"
+    ],
+    "layoutFamily": "layered",
+    "layoutLabel": "Capas flotantes",
+    "motionPreset": "subtle",
+    "motionLabel": "Nubes suaves",
+    "photoStyle": "clouds",
+    "photoStyleLabel": "Fotos entre nubes",
+    "motif": "cloud",
+    "defaultExperience": "story",
+    "minPlan": "starter"
+  },
+  {
+    "id": "rose-blue-surprise",
+    "name": "Sorpresa rosa y azul",
+    "description": "Dos tonos equilibrados, confeti suave y una revelación alegre sin estereotipos rígidos.",
+    "className": "theme-rose-blue-surprise",
+    "preview": "✧",
+    "tags": [
+      "revelación",
+      "rosa",
+      "azul",
+      "confeti"
+    ],
+    "eventTypes": [
+      "gender-reveal",
+      "baby-shower"
+    ],
+    "layoutFamily": "reveal",
+    "layoutLabel": "Revelación en dos tonos",
+    "motionPreset": "dynamic",
+    "motionLabel": "Confeti final",
+    "photoStyle": "split",
+    "photoStyleLabel": "Fotos divididas",
+    "motif": "confetti",
+    "defaultExperience": "story",
+    "minPlan": "basic"
+  },
+  {
+    "id": "festive-confetti",
+    "name": "Confeti festivo",
+    "description": "Color, ritmo y tarjetas alegres para cumpleaños de cualquier edad.",
+    "className": "theme-festive-confetti",
+    "preview": "◉",
+    "tags": [
+      "cumpleaños",
+      "colorida",
+      "fiesta"
+    ],
+    "eventTypes": [
+      "birthday",
+      "graduation",
+      "custom"
+    ],
+    "layoutFamily": "poster",
+    "layoutLabel": "Cartel festivo",
+    "motionPreset": "dynamic",
+    "motionLabel": "Confeti y rebotes",
+    "photoStyle": "stickers",
+    "photoStyleLabel": "Fotos tipo sticker",
+    "motif": "confetti",
+    "defaultExperience": "poster",
+    "minPlan": "starter"
+  },
+  {
+    "id": "enchanted-letter",
+    "name": "Carta encantada",
+    "description": "Azul tinta, pergamino y oro para celebraciones temáticas originales.",
+    "className": "theme-enchanted-letter",
+    "preview": "✦",
+    "tags": [
+      "temática",
+      "mágica",
+      "pergamino"
+    ],
+    "eventTypes": [
+      "birthday",
+      "graduation",
+      "custom"
+    ],
+    "layoutFamily": "storybook",
+    "layoutLabel": "Relato ilustrado",
+    "motionPreset": "balanced",
+    "motionLabel": "Capítulos encantados",
+    "photoStyle": "keepsake",
+    "photoStyleLabel": "Fotos tipo recuerdo",
+    "motif": "spark",
+    "defaultExperience": "story",
+    "minPlan": "premium"
+  },
+  {
+    "id": "paw-parade",
+    "name": "Desfile de patitas",
+    "description": "Una aventura de mascotas originales con huellas, letreros y fotos del protagonista.",
+    "className": "theme-paw-parade",
+    "preview": "🐾",
+    "tags": [
+      "perritos",
+      "mascotas",
+      "infantil",
+      "animada"
+    ],
+    "eventTypes": [
+      "kids-party",
+      "birthday",
+      "custom"
+    ],
+    "layoutFamily": "story-panels",
+    "layoutLabel": "Escenas por capítulos",
+    "motionPreset": "dynamic",
+    "motionLabel": "Entrada de personajes",
+    "photoStyle": "cutout",
+    "photoStyleLabel": "Foto protagonista recortada",
+    "motif": "paw",
+    "defaultExperience": "story",
+    "minPlan": "express"
+  },
+  {
+    "id": "dino-expedition",
+    "name": "Expedición dinosaurio",
+    "description": "Selva, fósiles y señalética de expedición para una fiesta prehistórica original.",
+    "className": "theme-dino-expedition",
+    "preview": "🦕",
+    "tags": [
+      "dinosaurios",
+      "selva",
+      "aventura",
+      "infantil"
+    ],
+    "eventTypes": [
+      "kids-party",
+      "birthday"
+    ],
+    "layoutFamily": "story-panels",
+    "layoutLabel": "Misión por escenas",
+    "motionPreset": "dynamic",
+    "motionLabel": "Pisadas y profundidad",
+    "photoStyle": "cutout",
+    "photoStyleLabel": "Foto de explorador",
+    "motif": "leaf",
+    "defaultExperience": "story",
+    "minPlan": "express"
+  },
+  {
+    "id": "cosmic-adventure",
+    "name": "Aventura cósmica",
+    "description": "Planetas, órbitas y una misión espacial que presenta cada dato como una nueva parada.",
+    "className": "theme-cosmic-adventure",
+    "preview": "🚀",
+    "tags": [
+      "espacio",
+      "planetas",
+      "aventura",
+      "infantil"
+    ],
+    "eventTypes": [
+      "kids-party",
+      "birthday",
+      "graduation"
+    ],
+    "layoutFamily": "cinematic",
+    "layoutLabel": "Viaje cinematográfico",
+    "motionPreset": "dynamic",
+    "motionLabel": "Órbitas y profundidad",
+    "photoStyle": "orbit",
+    "photoStyleLabel": "Fotos en órbita",
+    "motif": "star",
+    "defaultExperience": "story",
+    "minPlan": "express"
+  },
+  {
+    "id": "undersea-friends",
+    "name": "Amigos bajo el mar",
+    "description": "Capas acuáticas, burbujas y criaturas marinas originales en un recorrido luminoso.",
+    "className": "theme-undersea-friends",
+    "preview": "🐳",
+    "tags": [
+      "mar",
+      "animales",
+      "azul",
+      "infantil"
+    ],
+    "eventTypes": [
+      "kids-party",
+      "birthday",
+      "baby-shower"
+    ],
+    "layoutFamily": "layered",
+    "layoutLabel": "Profundidad por capas",
+    "motionPreset": "balanced",
+    "motionLabel": "Burbujas flotantes",
+    "photoStyle": "bubbles",
+    "photoStyleLabel": "Fotos en burbujas",
+    "motif": "bubble",
+    "defaultExperience": "story",
+    "minPlan": "express"
+  },
+  {
+    "id": "rainbow-playground",
+    "name": "Parque arcoíris",
+    "description": "Bloques de color, formas suaves y un cartel alegre para fotos y datos breves.",
+    "className": "theme-rainbow-playground",
+    "preview": "🌈",
+    "tags": [
+      "arcoíris",
+      "colorida",
+      "juegos",
+      "infantil"
+    ],
+    "eventTypes": [
+      "kids-party",
+      "birthday"
+    ],
+    "layoutFamily": "poster",
+    "layoutLabel": "Cartel ilustrado",
+    "motionPreset": "dynamic",
+    "motionLabel": "Rebotes y confeti",
+    "photoStyle": "stickers",
+    "photoStyleLabel": "Fotos tipo sticker",
+    "motif": "confetti",
+    "defaultExperience": "poster",
+    "minPlan": "express"
+  },
+  {
+    "id": "construction-party",
+    "name": "Equipo constructor",
+    "description": "Señales, franjas y placas modulares para una celebración llena de energía.",
+    "className": "theme-construction-party",
+    "preview": "🚧",
+    "tags": [
+      "construcción",
+      "máquinas",
+      "amarillo",
+      "infantil"
+    ],
+    "eventTypes": [
+      "kids-party",
+      "birthday"
+    ],
+    "layoutFamily": "poster",
+    "layoutLabel": "Señalética modular",
+    "motionPreset": "balanced",
+    "motionLabel": "Piezas en movimiento",
+    "photoStyle": "badge",
+    "photoStyleLabel": "Foto en insignia",
+    "motif": "block",
+    "defaultExperience": "poster",
+    "minPlan": "express"
+  },
+  {
+    "id": "little-racer",
+    "name": "Pequeño gran piloto",
+    "description": "Pista, banderas y paneles rápidos para anunciar la salida, fecha y meta.",
+    "className": "theme-little-racer",
+    "preview": "🏁",
+    "tags": [
+      "carreras",
+      "velocidad",
+      "coches",
+      "infantil"
+    ],
+    "eventTypes": [
+      "kids-party",
+      "birthday"
+    ],
+    "layoutFamily": "split",
+    "layoutLabel": "Pista dividida",
+    "motionPreset": "dynamic",
+    "motionLabel": "Barridos de velocidad",
+    "photoStyle": "speed-cards",
+    "photoStyleLabel": "Fotos en tarjetas rápidas",
+    "motif": "flag",
+    "defaultExperience": "story",
+    "minPlan": "express"
+  },
+  {
+    "id": "sweet-circus",
+    "name": "Circo de caramelo",
+    "description": "Carpa, luces y marcos redondos con una presentación alegre sin personajes licenciados.",
+    "className": "theme-sweet-circus",
+    "preview": "🎪",
+    "tags": [
+      "circo",
+      "caramelo",
+      "fiesta",
+      "infantil"
+    ],
+    "eventTypes": [
+      "kids-party",
+      "birthday"
+    ],
+    "layoutFamily": "carousel",
+    "layoutLabel": "Carrusel de escenas",
+    "motionPreset": "dynamic",
+    "motionLabel": "Giro y luces",
+    "photoStyle": "round-frames",
+    "photoStyleLabel": "Retratos circulares",
+    "motif": "light",
+    "defaultExperience": "story",
+    "minPlan": "express"
+  },
+  {
+    "id": "enchanted-woodland",
+    "name": "Bosque de amigos",
+    "description": "Animales del bosque originales, papel ilustrado y escenas tranquilas para pequeños.",
+    "className": "theme-enchanted-woodland",
+    "preview": "🦊",
+    "tags": [
+      "bosque",
+      "animales",
+      "cuento",
+      "infantil"
+    ],
+    "eventTypes": [
+      "kids-party",
+      "birthday",
+      "baby-shower"
+    ],
+    "layoutFamily": "storybook",
+    "layoutLabel": "Cuento ilustrado",
+    "motionPreset": "subtle",
+    "motionLabel": "Paso de páginas",
+    "photoStyle": "keepsake",
+    "photoStyleLabel": "Fotos tipo cuento",
+    "motif": "leaf",
+    "defaultExperience": "story",
+    "minPlan": "express"
+  },
+  {
+    "id": "pixel-quest",
+    "name": "Misión pixel",
+    "description": "Una estética de videojuego original con niveles para nombre, fecha, lugar y cierre.",
+    "className": "theme-pixel-quest",
+    "preview": "◆",
+    "tags": [
+      "videojuego",
+      "pixel",
+      "misión",
+      "juvenil"
+    ],
+    "eventTypes": [
+      "kids-party",
+      "birthday",
+      "graduation"
+    ],
+    "layoutFamily": "pixel",
+    "layoutLabel": "Niveles interactivos",
+    "motionPreset": "dynamic",
+    "motionLabel": "Cambios de nivel",
+    "photoStyle": "tiles",
+    "photoStyleLabel": "Fotos en mosaicos",
+    "motif": "pixel",
+    "defaultExperience": "story",
+    "minPlan": "basic"
+  },
+  {
+    "id": "teddy-moon",
+    "name": "Osito bajo la luna",
+    "description": "Luna, nubes y un osito original en tonos neutros para una bienvenida delicada.",
+    "className": "theme-teddy-moon",
+    "preview": "🌙",
+    "tags": [
+      "osito",
+      "luna",
+      "baby shower",
+      "neutro"
+    ],
+    "eventTypes": [
+      "baby-shower",
+      "baptism",
+      "birthday"
+    ],
+    "layoutFamily": "portrait",
+    "layoutLabel": "Escena vertical",
+    "motionPreset": "subtle",
+    "motionLabel": "Nubes y estrellas",
+    "photoStyle": "clouds",
+    "photoStyleLabel": "Fotos entre nubes",
+    "motif": "star",
+    "defaultExperience": "story",
+    "minPlan": "express"
+  },
+  {
+    "id": "stork-watercolor",
+    "name": "Cigüeña acuarela",
+    "description": "Acuarela luminosa, papel texturizado y una composición serena para la dulce espera.",
+    "className": "theme-stork-watercolor",
+    "preview": "🪽",
+    "tags": [
+      "cigüeña",
+      "acuarela",
+      "baby shower",
+      "suave"
+    ],
+    "eventTypes": [
+      "baby-shower"
+    ],
+    "layoutFamily": "watercolor",
+    "layoutLabel": "Láminas de acuarela",
+    "motionPreset": "subtle",
+    "motionLabel": "Fundidos suaves",
+    "photoStyle": "floating",
+    "photoStyleLabel": "Fotos flotantes",
+    "motif": "cloud",
+    "defaultExperience": "gallery",
+    "minPlan": "express"
+  },
+  {
+    "id": "garden-reveal",
+    "name": "Jardín de la sorpresa",
+    "description": "Flores, hojas y un desenlace central que funciona sin reducir la celebración a dos colores.",
+    "className": "theme-garden-reveal",
+    "preview": "🌱",
+    "tags": [
+      "revelación",
+      "jardín",
+      "botánica",
+      "elegante"
+    ],
+    "eventTypes": [
+      "gender-reveal",
+      "baby-shower"
+    ],
+    "layoutFamily": "botanical",
+    "layoutLabel": "Jardín por escenas",
+    "motionPreset": "balanced",
+    "motionLabel": "Apertura floral",
+    "photoStyle": "arches",
+    "photoStyleLabel": "Fotos en arcos",
+    "motif": "leaf",
+    "defaultExperience": "story",
+    "minPlan": "express"
+  },
+  {
+    "id": "confetti-reveal",
+    "name": "Explosión de sorpresa",
+    "description": "Grandes titulares, cuenta regresiva y un cierre de confeti para una reunión alegre.",
+    "className": "theme-confetti-reveal",
+    "preview": "🎉",
+    "tags": [
+      "revelación",
+      "confeti",
+      "colorida",
+      "dinámica"
+    ],
+    "eventTypes": [
+      "gender-reveal",
+      "baby-shower",
+      "birthday"
+    ],
+    "layoutFamily": "reveal",
+    "layoutLabel": "Cuenta regresiva visual",
+    "motionPreset": "dynamic",
+    "motionLabel": "Explosión final",
+    "photoStyle": "burst",
+    "photoStyleLabel": "Foto protagonista",
+    "motif": "confetti",
+    "defaultExperience": "poster",
+    "minPlan": "express"
+  },
+  {
+    "id": "photo-scrapbook",
+    "name": "Álbum de recortes",
+    "description": "Fotografías en capas, notas y recuerdos que convierten el recorrido en un álbum personal.",
+    "className": "theme-photo-scrapbook",
+    "preview": "▣",
+    "tags": [
+      "fotografías",
+      "recortes",
+      "recuerdos",
+      "personal"
+    ],
+    "eventTypes": [
+      "wedding",
+      "xv",
+      "birthday",
+      "anniversary",
+      "graduation"
+    ],
+    "layoutFamily": "scrapbook",
+    "layoutLabel": "Álbum de recortes",
+    "motionPreset": "balanced",
+    "motionLabel": "Fotos que se acomodan",
+    "photoStyle": "polaroids",
+    "photoStyleLabel": "Polaroids superpuestas",
+    "motif": "paper",
+    "defaultExperience": "gallery",
+    "minPlan": "basic"
+  },
+  {
+    "id": "travel-postcard",
+    "name": "Postal de viaje",
+    "description": "Sellos, rutas y postales para parejas, aniversarios o celebraciones lejos de casa.",
+    "className": "theme-travel-postcard",
+    "preview": "✈",
+    "tags": [
+      "viaje",
+      "postal",
+      "destino",
+      "fotográfica"
+    ],
+    "eventTypes": [
+      "wedding",
+      "birthday",
+      "anniversary",
+      "custom"
+    ],
+    "layoutFamily": "postcard",
+    "layoutLabel": "Postales enlazadas",
+    "motionPreset": "subtle",
+    "motionLabel": "Ruta progresiva",
+    "photoStyle": "postcards",
+    "photoStyleLabel": "Fotos tipo postal",
+    "motif": "stamp",
+    "defaultExperience": "gallery",
+    "minPlan": "basic"
+  },
+  {
+    "id": "cinema-premiere",
+    "name": "Noche de estreno",
+    "description": "Carteles, créditos y fotogramas para presentar la celebración como un gran estreno.",
+    "className": "theme-cinema-premiere",
+    "preview": "🎬",
+    "tags": [
+      "cine",
+      "estreno",
+      "fotográfica",
+      "nocturna"
+    ],
+    "eventTypes": [
+      "wedding",
+      "xv",
+      "birthday",
+      "anniversary"
+    ],
+    "layoutFamily": "cinematic",
+    "layoutLabel": "Secuencia de película",
+    "motionPreset": "dynamic",
+    "motionLabel": "Créditos y fundidos",
+    "photoStyle": "filmstrip",
+    "photoStyleLabel": "Fotogramas de película",
+    "motif": "light",
+    "defaultExperience": "story",
+    "minPlan": "premium"
+  },
+  {
+    "id": "magazine-cover",
+    "name": "Portada de revista",
+    "description": "Tipografía protagonista, retratos y bloques editoriales para una presentación de alto impacto.",
+    "className": "theme-magazine-cover",
+    "preview": "M",
+    "tags": [
+      "revista",
+      "editorial",
+      "retrato",
+      "moderna"
+    ],
+    "eventTypes": [
+      "xv",
+      "birthday",
+      "graduation",
+      "corporate"
+    ],
+    "layoutFamily": "editorial",
+    "layoutLabel": "Portada y reportaje",
+    "motionPreset": "balanced",
+    "motionLabel": "Titulares por capas",
+    "photoStyle": "cover",
+    "photoStyleLabel": "Retrato de portada",
+    "motif": "frame",
+    "defaultExperience": "poster",
+    "minPlan": "premium"
+  },
+  {
+    "id": "celestial-blessing",
+    "name": "Bendición celestial",
+    "description": "Cielo claro, estrellas doradas y una composición serena para bautizo o comunión.",
+    "className": "theme-celestial-blessing",
+    "preview": "✧",
+    "tags": [
+      "bautizo",
+      "comunión",
+      "celestial",
+      "dorado"
+    ],
+    "eventTypes": [
+      "baptism",
+      "first-communion"
+    ],
+    "layoutFamily": "celestial",
+    "layoutLabel": "Escenas celestiales",
+    "motionPreset": "subtle",
+    "motionLabel": "Destellos suaves",
+    "photoStyle": "halo",
+    "photoStyleLabel": "Retrato luminoso",
+    "motif": "star",
+    "defaultExperience": "story",
+    "minPlan": "express"
+  },
+  {
+    "id": "linen-cross",
+    "name": "Lino y luz",
+    "description": "Lino, marfil y detalles discretos para una invitación religiosa limpia y cálida.",
+    "className": "theme-linen-cross",
+    "preview": "✦",
+    "tags": [
+      "bautizo",
+      "comunión",
+      "minimalista",
+      "marfil"
+    ],
+    "eventTypes": [
+      "baptism",
+      "first-communion"
+    ],
+    "layoutFamily": "minimal",
+    "layoutLabel": "Composición de lino",
+    "motionPreset": "subtle",
+    "motionLabel": "Transición serena",
+    "photoStyle": "linen",
+    "photoStyleLabel": "Foto con marco de lino",
+    "motif": "light",
+    "defaultExperience": "classic",
+    "minPlan": "express"
+  },
+  {
+    "id": "sage-communion",
+    "name": "Salvia de comunión",
+    "description": "Ramas de salvia, arcos y fotografía protagonista en una presentación natural.",
+    "className": "theme-sage-communion",
+    "preview": "❧",
+    "tags": [
+      "comunión",
+      "salvia",
+      "botánica",
+      "fotográfica"
+    ],
+    "eventTypes": [
+      "first-communion",
+      "baptism"
+    ],
+    "layoutFamily": "botanical",
+    "layoutLabel": "Arcos botánicos",
+    "motionPreset": "subtle",
+    "motionLabel": "Hojas y fundidos",
+    "photoStyle": "arches",
+    "photoStyleLabel": "Retrato en arco",
+    "motif": "leaf",
+    "defaultExperience": "gallery",
+    "minPlan": "starter"
+  },
+  {
+    "id": "destination-passport",
+    "name": "Pasaporte al sí",
+    "description": "Pasaporte, sellos y pase de abordar para anunciar una celebración como el comienzo de un gran viaje.",
+    "className": "theme-destination-passport",
+    "preview": "✈",
+    "tags": [
+      "viaje",
+      "pasaporte",
+      "boda destino",
+      "imprimible"
+    ],
+    "eventTypes": [
+      "wedding",
+      "anniversary",
+      "custom"
+    ],
+    "layoutFamily": "passport",
+    "layoutLabel": "Pasaporte y pase de abordar",
+    "motionPreset": "balanced",
+    "motionLabel": "Sellos y abordaje",
+    "photoStyle": "passport",
+    "photoStyleLabel": "Retratos de pasaporte",
+    "motif": "plane",
+    "defaultExperience": "story",
+    "minPlan": "premium"
+  },
+  {
+    "id": "eternal-rose",
+    "name": "Rosa eterna",
+    "description": "Una rosa ilustrada se abre para revelar la invitación en una experiencia romántica y original.",
+    "className": "theme-eternal-rose",
+    "preview": "❀",
+    "tags": [
+      "rosa",
+      "pétalos",
+      "apertura",
+      "romántica"
+    ],
+    "eventTypes": [
+      "wedding",
+      "xv",
+      "anniversary"
+    ],
+    "layoutFamily": "bloom",
+    "layoutLabel": "Revelado entre pétalos",
+    "motionPreset": "balanced",
+    "motionLabel": "Floración ceremonial",
+    "photoStyle": "bloom",
+    "photoStyleLabel": "Retratos entre pétalos",
+    "motif": "rose",
+    "defaultExperience": "story",
+    "minPlan": "premium"
+  },
+  {
+    "id": "cinematic-journey",
+    "name": "Nuestra historia cinemática",
+    "description": "Galería inmersiva con profundidad, tarjetas laterales y transiciones pensadas para recorrer una historia visual.",
+    "className": "theme-cinematic-journey",
+    "preview": "▣",
+    "tags": [
+      "cinemática",
+      "galería",
+      "viaje",
+      "profundidad"
+    ],
+    "eventTypes": [
+      "wedding",
+      "xv",
+      "birthday",
+      "anniversary",
+      "graduation"
+    ],
+    "layoutFamily": "carousel",
+    "layoutLabel": "Carrusel cinematográfico",
+    "motionPreset": "dynamic",
+    "motionLabel": "Profundidad y enfoque",
+    "photoStyle": "depth",
+    "photoStyleLabel": "Escenas con profundidad",
+    "motif": "frame",
+    "defaultExperience": "gallery",
+    "minPlan": "premium"
+  },
+  {
+    "id": "petal-letter",
+    "name": "Carta entre pétalos",
+    "description": "Carta delicada, papel cálido y pétalos que acompañan una historia por capítulos.",
+    "className": "theme-petal-letter",
+    "preview": "❧",
+    "tags": [
+      "carta",
+      "pétalos",
+      "historia",
+      "delicada"
+    ],
+    "eventTypes": [
+      "wedding",
+      "xv",
+      "anniversary",
+      "baby-shower"
+    ],
+    "layoutFamily": "storybook",
+    "layoutLabel": "Carta por capítulos",
+    "motionPreset": "subtle",
+    "motionLabel": "Pétalos al pasar",
+    "photoStyle": "keepsake",
+    "photoStyleLabel": "Fotografías tipo recuerdo",
+    "motif": "petal",
+    "defaultExperience": "story",
+    "minPlan": "basic"
+  },
+  {
+    "id": "achievement-path",
+    "name": "Camino al logro",
+    "description": "Línea de tiempo para presentar etapas, metas y el momento que merece celebrarse.",
+    "className": "theme-achievement-path",
+    "preview": "◆",
+    "tags": [
+      "logros",
+      "línea de tiempo",
+      "graduación",
+      "corporativa"
+    ],
+    "eventTypes": [
+      "graduation",
+      "corporate",
+      "birthday"
+    ],
+    "layoutFamily": "timeline",
+    "layoutLabel": "Ruta de hitos",
+    "motionPreset": "balanced",
+    "motionLabel": "Hitos progresivos",
+    "photoStyle": "timeline",
+    "photoStyleLabel": "Fotos por etapa",
+    "motif": "milestone",
+    "defaultExperience": "story",
+    "minPlan": "basic"
+  },
+  {
+    "id": "family-memories",
+    "name": "Raíces y recuerdos",
+    "description": "Composición familiar que conecta fotografías y generaciones como ramas de una misma historia.",
+    "className": "theme-family-memories",
+    "preview": "⌘",
+    "tags": [
+      "familia",
+      "recuerdos",
+      "generaciones",
+      "aniversario"
+    ],
+    "eventTypes": [
+      "anniversary",
+      "birthday",
+      "custom"
+    ],
+    "layoutFamily": "family-tree",
+    "layoutLabel": "Árbol de recuerdos",
+    "motionPreset": "subtle",
+    "motionLabel": "Ramas que se conectan",
+    "photoStyle": "family-tree",
+    "photoStyleLabel": "Retratos familiares conectados",
+    "motif": "branch",
+    "defaultExperience": "gallery",
+    "minPlan": "premium"
+  },
+  {
+    "id": "daisy-paper-orbit",
+    "name": "Margarita de papel",
+    "description": "Marco floral original de margaritas, hojas suaves y papel marfil con un centro sereno para una composición elegante y luminosa.",
+    "className": "theme-daisy-paper-orbit",
+    "preview": "✿",
+    "tags": [
+      "margaritas",
+      "papel",
+      "botánica",
+      "marfil",
+      "elegante"
+    ],
+    "eventTypes": [
+      "wedding",
+      "xv",
+      "anniversary",
+      "baby-shower",
+      "first-communion",
+      "custom"
+    ],
+    "layoutFamily": "botanical",
+    "layoutLabel": "Óvalo botánico editorial",
+    "motionPreset": "subtle",
+    "motionLabel": "Flores en respiración suave",
+    "photoStyle": "arches",
+    "photoStyleLabel": "Retratos en arco botánico",
+    "motif": "daisy",
+    "defaultExperience": "story",
+    "minPlan": "basic"
+  },
+  {
+    "id": "daisy-meadow-air",
+    "name": "Prado de margaritas",
+    "description": "Margaritas de tallo largo nacen desde la base y dejan amplio espacio en blanco para una invitación fresca, delicada y contemporánea.",
+    "className": "theme-daisy-meadow-air",
+    "preview": "❁",
+    "tags": [
+      "margaritas",
+      "prado",
+      "minimalista",
+      "aire",
+      "natural"
+    ],
+    "eventTypes": [
+      "wedding",
+      "xv",
+      "birthday",
+      "baby-shower",
+      "baptism",
+      "first-communion",
+      "graduation",
+      "custom"
+    ],
+    "layoutFamily": "minimal",
+    "layoutLabel": "Prado con espacio negativo",
+    "motionPreset": "subtle",
+    "motionLabel": "Brisa botánica discreta",
+    "photoStyle": "linen",
+    "photoStyleLabel": "Fotografía sobre lino claro",
+    "motif": "daisy",
+    "defaultExperience": "classic",
+    "minPlan": "starter"
+  },
+  {
+    "id": "daisy-editorial-light",
+    "name": "Margarita editorial",
+    "description": "Composición fotográfica reinterpretada con flores altas a la derecha, luz cálida y tipografía protagonista en un estilo editorial refinado.",
+    "className": "theme-daisy-editorial-light",
+    "preview": "✾",
+    "tags": [
+      "margaritas",
+      "editorial",
+      "luz",
+      "fotográfica",
+      "premium"
+    ],
+    "eventTypes": [
+      "wedding",
+      "xv",
+      "anniversary",
+      "graduation",
+      "custom"
+    ],
+    "layoutFamily": "editorial",
+    "layoutLabel": "Editorial floral asimétrica",
+    "motionPreset": "balanced",
+    "motionLabel": "Entrada editorial por capas",
+    "photoStyle": "portrait",
+    "photoStyleLabel": "Retrato editorial vertical",
+    "motif": "daisy",
+    "defaultExperience": "gallery",
+    "minPlan": "premium"
+  },
+  {
+    "id": "daisy-shadow-studio",
+    "name": "Luz y margaritas",
+    "description": "Ramo de margaritas, textura mineral y sombras geométricas de sol para una invitación moderna que conserva calidez y elegancia.",
+    "className": "theme-daisy-shadow-studio",
+    "preview": "✤",
+    "tags": [
+      "margaritas",
+      "sombras",
+      "sol",
+      "moderna",
+      "editorial"
+    ],
+    "eventTypes": [
+      "wedding",
+      "xv",
+      "anniversary",
+      "graduation",
+      "corporate",
+      "custom"
+    ],
+    "layoutFamily": "split",
+    "layoutLabel": "Luz y sombra editorial",
+    "motionPreset": "balanced",
+    "motionLabel": "Sombras y capas suaves",
+    "photoStyle": "cover",
+    "photoStyleLabel": "Fotografía editorial de portada",
+    "motif": "daisy",
+    "defaultExperience": "story",
+    "minPlan": "premium"
   }
 ]
