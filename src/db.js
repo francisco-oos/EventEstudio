@@ -16,6 +16,38 @@ const dataDir = process.env.DATA_DIR?path.resolve(process.env.DATA_DIR):path.joi
 const backupsDir=process.env.BACKUPS_DIR?path.resolve(process.env.BACKUPS_DIR):path.join(storageRoot,"backups");
 const dbPath=process.env.DB_PATH?path.resolve(process.env.DB_PATH):path.join(dataDir,"wedding.db");
 const schemaVersion=SCHEMA_VERSION;
+
+/* Si un intento de migración falla antes de actualizar user_version, Railway puede
+   reiniciar el proceso. Reutilizamos el PRIMER snapshot verificado del mismo salto
+   de esquema para preservar el estado original y evitar llenar el volumen con una
+   copia nueva en cada reinicio. */
+function findVerifiedPreMigrationBackup(fromVersion,toVersion){
+  if(!fs.existsSync(backupsDir))return null;
+  const prefix=`pre-migration-v${fromVersion}-to-v${toVersion}-`;
+  const manifests=fs.readdirSync(backupsDir)
+    .filter(name=>name.startsWith(prefix)&&name.endsWith('.db.json'))
+    .sort();
+  for(const manifestName of manifests){
+    try{
+      const manifestPath=path.join(backupsDir,manifestName);
+      const manifest=JSON.parse(fs.readFileSync(manifestPath,'utf8'));
+      if(manifest.format!=="eventstudio-pre-migration-v1"||
+         Number(manifest.fromSchemaVersion)!==fromVersion||
+         Number(manifest.toSchemaVersion)!==toVersion||
+         manifest.source!==path.basename(dbPath))continue;
+      const snapshotPath=manifestPath.slice(0,-5);
+      if(!fs.existsSync(snapshotPath))continue;
+      const checksum=crypto.createHash('sha256').update(fs.readFileSync(snapshotPath)).digest('hex');
+      if(checksum!==manifest.databaseSha256)continue;
+      const snapshot=new Database(snapshotPath,{readonly:true,fileMustExist:true});
+      const integrity=snapshot.pragma('integrity_check',{simple:true});
+      snapshot.close();
+      if(integrity==='ok')return snapshotPath;
+    }catch{}
+  }
+  return null;
+}
+
 fs.mkdirSync(dataDir, { recursive: true });
 applyPendingRestoreSync();
 const databaseExisted=fs.existsSync(dbPath);
@@ -45,30 +77,35 @@ if(databaseExisted&&previousSchemaVersion<schemaVersion){
     throw new Error(`La base no superó quick_check antes de migrar: ${integrity}`);
   }
   fs.mkdirSync(backupsDir,{recursive:true});
-  const stamp=new Date().toISOString().replace(/[:.]/g,"-");
-  const snapshotName=`pre-migration-v${previousSchemaVersion}-to-v${schemaVersion}-${stamp}.db`;
-  const snapshotPath=path.join(backupsDir,snapshotName);
-  const sqlPath=snapshotPath.replace(/'/g,"''");
-  db.exec(`VACUUM INTO '${sqlPath}'`);
-  try{fs.chmodSync(snapshotPath,0o600);}catch{}
-  const snapshot=new Database(snapshotPath,{readonly:true,fileMustExist:true});
-  const snapshotIntegrity=snapshot.pragma("integrity_check",{simple:true});
-  snapshot.close();
-  if(snapshotIntegrity!=="ok"){
-    try{fs.unlinkSync(snapshotPath);}catch{}
-    db.close();
-    throw new Error(`El respaldo previo a la migración no superó integrity_check: ${snapshotIntegrity}`);
+  const existingSnapshot=findVerifiedPreMigrationBackup(previousSchemaVersion,schemaVersion);
+  if(existingSnapshot){
+    console.log(`Respaldo previo existente reutilizado: ${path.basename(existingSnapshot)}`);
+  }else{
+    const stamp=new Date().toISOString().replace(/[:.]/g,"-");
+    const snapshotName=`pre-migration-v${previousSchemaVersion}-to-v${schemaVersion}-${stamp}.db`;
+    const snapshotPath=path.join(backupsDir,snapshotName);
+    const sqlPath=snapshotPath.replace(/'/g,"''");
+    db.exec(`VACUUM INTO '${sqlPath}'`);
+    try{fs.chmodSync(snapshotPath,0o600);}catch{}
+    const snapshot=new Database(snapshotPath,{readonly:true,fileMustExist:true});
+    const snapshotIntegrity=snapshot.pragma("integrity_check",{simple:true});
+    snapshot.close();
+    if(snapshotIntegrity!=="ok"){
+      try{fs.unlinkSync(snapshotPath);}catch{}
+      db.close();
+      throw new Error(`El respaldo previo a la migración no superó integrity_check: ${snapshotIntegrity}`);
+    }
+    const checksum=crypto.createHash("sha256").update(fs.readFileSync(snapshotPath)).digest("hex");
+    fs.writeFileSync(`${snapshotPath}.json`,JSON.stringify({
+      format:"eventstudio-pre-migration-v1",
+      createdAt:new Date().toISOString(),
+      source:path.basename(dbPath),
+      fromSchemaVersion:previousSchemaVersion,
+      toSchemaVersion:schemaVersion,
+      databaseSha256:checksum
+    },null,2),{mode:0o600});
+    console.log(`Respaldo verificado previo a migración: ${snapshotName}`);
   }
-  const checksum=crypto.createHash("sha256").update(fs.readFileSync(snapshotPath)).digest("hex");
-  fs.writeFileSync(`${snapshotPath}.json`,JSON.stringify({
-    format:"eventstudio-pre-migration-v1",
-    createdAt:new Date().toISOString(),
-    source: path.basename(dbPath),
-    fromSchemaVersion:previousSchemaVersion,
-    toSchemaVersion:schemaVersion,
-    databaseSha256:checksum
-  },null,2),{mode:0o600});
-  console.log(`Respaldo verificado previo a migración: ${snapshotName}`);
 }
 db.pragma("journal_mode = WAL");
 db.pragma("foreign_keys = ON");
@@ -412,6 +449,11 @@ ensureColumn("events", "owner_user_id", "INTEGER");
 ensureColumn("events", "archived", "INTEGER NOT NULL DEFAULT 0");
 ensureColumn("events", "subscription_required", "INTEGER NOT NULL DEFAULT 1");
 ensureColumn("events", "published", "INTEGER NOT NULL DEFAULT 0");
+/* Producción puede venir de esquemas pre-RC17 con user_version=0. Estas columnas
+   deben existir ANTES de preparar los INSERT/UPSERT de planes de líneas posteriores.
+   commerce-schema también las garantiza, pero se inicializa después del seed; dejar
+   retention_days sólo allí provocaba el crash observado en Railway. */
+ensureColumn("plans", "retention_days", "INTEGER NOT NULL DEFAULT 30");
 ensureColumn("plans", "max_published_events", "INTEGER NOT NULL DEFAULT 1");
 ensureColumn("plans", "publication_policy", "TEXT NOT NULL DEFAULT 'manual_owner'");
 

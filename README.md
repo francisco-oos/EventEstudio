@@ -134,3 +134,7 @@ Documentos clave:
 ## Nota sobre tipografías en el paquete de intercambio
 
 La aplicación conserva sus referencias CSS a las tipografías existentes. Este paquete de intercambio RC21 omite binarios de fuentes; reutiliza `public/fonts/` de una instalación autorizada si deseas conservar exactamente las mismas tipografías locales. Sin ellas se utilizan las familias de respaldo definidas en CSS.
+
+## RC21 production migration hotfix r3
+
+El despliegue sobre bases legacy `user_version=0` está cubierto por `npm run test:production-migration`. El arranque garantiza `plans.retention_days`, `max_published_events` y `publication_policy` antes de preparar seeds comerciales y reutiliza snapshots pre-migración verificados en reintentos. Ver `docs/audits/AUDITORIA_PRODUCTION_MIGRATION_HOTFIX_RC21_R3.md`.
