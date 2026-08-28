@@ -207,7 +207,7 @@ async function main() {
     assert.ok(catalogResponse.data.eventTypes.some(type=>type.id==="baby-shower"));
     assert.ok(catalogResponse.data.eventTypes.some(type=>type.id==="gender-reveal"));
     assert.ok(catalogResponse.data.eventTypes.some(type=>type.id==="kids-party"));
-    assert.equal(catalogResponse.data.themes.length,52);
+    assert.equal(catalogResponse.data.themes.length,59);
     assert.ok(catalogResponse.data.themes.some(theme=>theme.id==="paw-parade"&&theme.layoutFamily==="story-panels"));
     assert.ok(catalogResponse.data.themes.some(theme=>theme.id==="welcome-clouds"&&theme.minPlan==="starter"));
     assert.ok(catalogResponse.data.themes.some(theme=>theme.id==="rose-blue-surprise"));

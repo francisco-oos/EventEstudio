@@ -1394,5 +1394,212 @@
     "motif": "daisy",
     "defaultExperience": "story",
     "minPlan": "premium"
+  },
+  {
+    "id": "wedding-gazette",
+    "name": "Gaceta de celebración",
+    "description": "Diseño editorial tipo periódico: portada con masthead, titulares, columnas y fotografía con tratamiento de prensa.",
+    "className": "theme-wedding-gazette",
+    "preview": "Nº",
+    "tags": [
+      "periódico",
+      "editorial",
+      "gaceta",
+      "blanco y negro",
+      "historia"
+    ],
+    "eventTypes": [
+      "wedding",
+      "anniversary",
+      "graduation",
+      "corporate",
+      "custom"
+    ],
+    "layoutFamily": "editorial",
+    "layoutLabel": "Portada y columnas de gaceta",
+    "motionPreset": "subtle",
+    "motionLabel": "Entrada editorial discreta",
+    "photoStyle": "frames",
+    "photoStyleLabel": "Fotografía de prensa enmarcada",
+    "motif": "paper",
+    "defaultExperience": "classic",
+    "minPlan": "basic"
+  },
+  {
+    "id": "vintage-parchment",
+    "name": "Pergamino vintage",
+    "description": "Papel envejecido, bordes irregulares, tinta sepia y recuerdos enmarcados para una invitación de aire antiguo.",
+    "className": "theme-vintage-parchment",
+    "preview": "❦",
+    "tags": [
+      "vintage",
+      "pergamino",
+      "papel",
+      "sepia",
+      "clásica"
+    ],
+    "eventTypes": [
+      "wedding",
+      "xv",
+      "anniversary",
+      "birthday",
+      "first-communion",
+      "custom"
+    ],
+    "layoutFamily": "storybook",
+    "layoutLabel": "Pergamino por capítulos",
+    "motionPreset": "subtle",
+    "motionLabel": "Despliegue de papel suave",
+    "photoStyle": "keepsake",
+    "photoStyleLabel": "Fotografías tipo recuerdo antiguo",
+    "motif": "paper",
+    "defaultExperience": "story",
+    "minPlan": "basic"
+  },
+  {
+    "id": "sage-photo-editorial",
+    "name": "Editorial salvia",
+    "description": "Portada fotográfica protagonista, bloques marfil y acentos salvia para contar la boda con una lectura limpia y elegante.",
+    "className": "theme-sage-photo-editorial",
+    "preview": "❧",
+    "tags": [
+      "boda",
+      "fotográfica",
+      "salvia",
+      "editorial",
+      "elegante"
+    ],
+    "eventTypes": [
+      "wedding",
+      "xv",
+      "anniversary"
+    ],
+    "layoutFamily": "portrait",
+    "layoutLabel": "Relato fotográfico vertical",
+    "motionPreset": "balanced",
+    "motionLabel": "Capas fotográficas suaves",
+    "photoStyle": "portrait",
+    "photoStyleLabel": "Retratos verticales protagonistas",
+    "motif": "leaf",
+    "defaultExperience": "gallery",
+    "minPlan": "premium"
+  },
+  {
+    "id": "olive-universe",
+    "name": "Oliva Universo",
+    "description": "Verde olivo, marfil y cielo nocturno: una boda botánica con constelaciones, fotografía protagonista y detalles dorados.",
+    "className": "theme-olive-universe",
+    "preview": "✦",
+    "tags": [
+      "olivo",
+      "universo",
+      "constelaciones",
+      "nocturna",
+      "elegante"
+    ],
+    "eventTypes": [
+      "wedding",
+      "anniversary",
+      "custom"
+    ],
+    "layoutFamily": "celestial",
+    "layoutLabel": "Constelación botánica vertical",
+    "motionPreset": "balanced",
+    "motionLabel": "Órbita y destellos lentos",
+    "photoStyle": "halo",
+    "photoStyleLabel": "Retratos con halo nocturno",
+    "motif": "leaf",
+    "defaultExperience": "story",
+    "minPlan": "premium"
+  },
+  {
+    "id": "olive-nectar",
+    "name": "Oliva Néctar",
+    "description": "Marfil cálido, verde olivo y acentos miel para una invitación orgánica, luminosa y mediterránea.",
+    "className": "theme-olive-nectar",
+    "preview": "❧",
+    "tags": [
+      "olivo",
+      "néctar",
+      "miel",
+      "mediterránea",
+      "botánica"
+    ],
+    "eventTypes": [
+      "wedding",
+      "anniversary",
+      "baptism",
+      "first-communion",
+      "custom"
+    ],
+    "layoutFamily": "botanical",
+    "layoutLabel": "Botánica mediterránea por bloques",
+    "motionPreset": "subtle",
+    "motionLabel": "Hojas y luz cálida suaves",
+    "photoStyle": "organic",
+    "photoStyleLabel": "Fotografía orgánica de bordes suaves",
+    "motif": "leaf",
+    "defaultExperience": "classic",
+    "minPlan": "basic"
+  },
+  {
+    "id": "blue-breeze-aurora",
+    "name": "Brisa Azul Aurora",
+    "description": "Azules brumosos, blanco y reflejos arena con una composición ligera inspirada en cielo, agua y amanecer.",
+    "className": "theme-blue-breeze-aurora",
+    "preview": "≈",
+    "tags": [
+      "azul",
+      "aurora",
+      "brisa",
+      "acuarela",
+      "luminoso"
+    ],
+    "eventTypes": [
+      "wedding",
+      "xv",
+      "anniversary",
+      "baptism",
+      "custom"
+    ],
+    "layoutFamily": "watercolor",
+    "layoutLabel": "Acuarela aérea de amanecer",
+    "motionPreset": "balanced",
+    "motionLabel": "Brisa y velos de luz",
+    "photoStyle": "fullscreen",
+    "photoStyleLabel": "Fotografía amplia y luminosa",
+    "motif": "wave",
+    "defaultExperience": "gallery",
+    "minPlan": "premium"
+  },
+  {
+    "id": "botanical-cosmos",
+    "name": "Botánico Cosmos",
+    "description": "Jardín profundo en verde bosque y azul noche, con órbitas, estrellas discretas y marcos botánicos.",
+    "className": "theme-botanical-cosmos",
+    "preview": "✧",
+    "tags": [
+      "botánico",
+      "cosmos",
+      "jardín",
+      "estrellas",
+      "noche"
+    ],
+    "eventTypes": [
+      "wedding",
+      "xv",
+      "anniversary",
+      "birthday",
+      "custom"
+    ],
+    "layoutFamily": "botanical",
+    "layoutLabel": "Jardín cósmico por capítulos",
+    "motionPreset": "balanced",
+    "motionLabel": "Órbitas botánicas lentas",
+    "photoStyle": "orbit",
+    "photoStyleLabel": "Fotografías en órbita botánica",
+    "motif": "branch",
+    "defaultExperience": "story",
+    "minPlan": "premium"
   }
 ]

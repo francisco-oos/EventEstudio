@@ -215,7 +215,7 @@ for(const expected of ["kids-party","anniversary","baptism","first-communion"]){
   assert.ok(eventTypes.some(type=>type.id===expected),`Falta el tipo de evento ${expected}.`);
 }
 const themes=JSON.parse(read("config/themes.json"));
-assert.equal(themes.length,52,"RC15 debe conservar 52 plantillas distintas.");
+assert.equal(themes.length,59,"La base conserva 52 plantillas y el add-on suma 7 sin sustituir ninguna.");
 assert.equal(new Set(themes.map(theme=>theme.id)).size,themes.length,"Las plantillas deben tener identificadores únicos.");
 const themeDesigns=loadThemeDesigns(themes,path.join(root,"public","styles.css"));
 assert.equal(themeDesigns.size,themes.length,"Cada plantilla debe tener una paleta de impresión derivada de su CSS.");
@@ -234,7 +234,7 @@ for(const theme of themes){
   assert.ok(publicApp.includes(`'${theme.photoStyle}'`),`${theme.id} usa el estilo fotográfico no reconocido ${theme.photoStyle}.`);
   assert.ok(publicStyles.includes(`[data-photo-style=${theme.photoStyle}]`),`${theme.id} no tiene comportamiento CSS para ${theme.photoStyle}.`);
 }
-for(const id of ["destination-passport","eternal-rose","cinematic-journey","petal-letter","achievement-path","family-memories","daisy-paper-orbit","daisy-meadow-air","daisy-editorial-light","daisy-shadow-studio"]){
+for(const id of ["destination-passport","eternal-rose","cinematic-journey","petal-letter","achievement-path","family-memories","daisy-paper-orbit","daisy-meadow-air","daisy-editorial-light","daisy-shadow-studio","wedding-gazette","vintage-parchment","sage-photo-editorial","olive-universe","olive-nectar","blue-breeze-aurora","botanical-cosmos"]){
   assert.ok(themes.some(theme=>theme.id===id),`Falta la plantilla requerida ${id}.`);
 }
 const protectedBrands=/Disney|Pixar|Zootopia|Toy Story|Bluey|Paw Patrol|Marvel|Nintendo/i;
@@ -264,7 +264,7 @@ assert.match(read("public/sandbox.html"),/Empieza sin registro/);
 assert.match(read("src/server.js"),/VALUES\(\?,\?,'courtesy'/,"Las concesiones manuales deben registrarse como cortesía.");
 assert.match(read("src/server.js"),/DESIGN_PRODUCT_REQUIRED/,"El servidor debe impedir experiencias no adquiridas.");
 const experienceConfig=JSON.parse(read("config/experiences.json"));
-for(const id of ["rose-bloom","particle-heart","daisy-bloom","ivory-seal"]){assert.ok(experienceConfig.openings.some(item=>item.id===id),`Falta la apertura ${id}.`);}
+for(const id of ["rose-bloom","particle-heart","daisy-bloom","ivory-seal","newspaper-fold","vintage-parchment","olive-universe-orbit","olive-nectar-seal","blue-aurora-reveal","botanical-cosmos-orbit"]){assert.ok(experienceConfig.openings.some(item=>item.id===id),`Falta la apertura ${id}.`);}
 for(const id of ["cinematic-depth","focus-strip","editorial-masonry","memories-orbit"]){assert.ok(experienceConfig.galleries.some(item=>item.id===id),`Falta la galería ${id}.`);}
 assert.match(read("src/server.js"),/status:"pending_payment"/,"El carrito no debe acreditarse antes de confirmar el pago.");
 assert.match(read("public/admin.html"),/id="commerceProductGrid"/,"Mi negocio debe contener el catálogo único.");

@@ -1509,3 +1509,342 @@ body[data-motion="still"]:not(.force-motion-preview) .opening-ivory-seal .openin
   opacity:1;
   transition:none;
 }
+
+/* RC21 · Colección editorial de papel (implementación original EventStudio).
+   Referencias de estudio: plegado 3D, superficie de papel y composición editorial.
+   No se importan assets, fuentes, shaders ni código externo: todo queda aislado
+   en namespaces propios para no alterar las plantillas y aperturas existentes. */
+.theme-wedding-gazette{--bg:#e8e4da;--paper:#fbf8ef;--ink:#1b1a18;--muted:#5f5a52;--accent:#701f24;--accent-dark:#50161a;--gold:#9a7a44;--line:#b9b1a4}
+.theme-vintage-parchment{--bg:#d8c3a0;--paper:#f4e3bd;--ink:#3b2618;--muted:#66503f;--accent:#7a3e23;--accent-dark:#552815;--gold:#9b7138;--line:#b69769}
+.theme-sage-photo-editorial{--bg:#e9eee6;--paper:#fffdf8;--ink:#283228;--muted:#59655a;--accent:#5b744f;--accent-dark:#405339;--gold:#aa8b5a;--line:#d0d8ca}
+
+/* Gaceta de celebración: jerarquía de periódico, columnas legibles y fotografía
+   con tratamiento editorial. El contenido sigue siendo el mismo DOM público. */
+body.theme-wedding-gazette{background-color:var(--bg);background-image:repeating-linear-gradient(0deg,rgba(35,30,25,.025) 0 1px,transparent 1px 4px),radial-gradient(circle at 15% 18%,#fff8 0 1px,transparent 1.5px)}
+body.theme-wedding-gazette .theme-atmosphere{opacity:.18}
+body.theme-wedding-gazette .hero{min-height:min(92svh,860px);margin:clamp(.65rem,2vw,1.5rem);border:1px solid var(--ink);border-radius:0;box-shadow:0 0 0 5px var(--paper),0 0 0 6px var(--ink),0 18px 48px #201a1424;background-color:#4a433b;background-blend-mode:luminosity}
+body.theme-wedding-gazette .hero .overlay{background:linear-gradient(to bottom,rgba(22,20,18,.2),rgba(22,20,18,.54))}
+body.theme-wedding-gazette .hero-content{width:min(920px,92%);padding:clamp(1.1rem,4vw,2.7rem);border-top:4px double currentColor;border-bottom:4px double currentColor;text-align:center;text-shadow:0 2px 10px #0008}
+body.theme-wedding-gazette .hero-content:before{content:"THE CELEBRATION GAZETTE";display:block;margin-bottom:.7rem;font:900 clamp(.72rem,2vw,1rem)/1 Georgia,"Times New Roman",serif;letter-spacing:.24em}
+body.theme-wedding-gazette .hero-content:after{content:"SPECIAL EDITION  ·  EVENTSTUDIO";display:block;margin-top:1.1rem;padding-top:.55rem;border-top:1px solid currentColor;font:800 .62rem/1.2 ui-sans-serif,system-ui,sans-serif;letter-spacing:.18em}
+body.theme-wedding-gazette .hero h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(3rem,10vw,7rem);line-height:.84;letter-spacing:-.055em;text-transform:uppercase}
+body.theme-wedding-gazette main{width:min(1180px,96%);margin:auto;padding-block:clamp(1rem,3vw,2.4rem)}
+body.theme-wedding-gazette main>.section{border:1px solid var(--ink);border-radius:0;box-shadow:none;background:color-mix(in srgb,var(--paper) 97%,transparent)}
+body.theme-wedding-gazette main>.section:before{content:"EVENTSTUDIO · CELEBRATION EDITION";display:block;margin-bottom:1rem;padding-bottom:.5rem;border-bottom:3px double var(--ink);color:var(--muted);font:800 .58rem/1.2 ui-sans-serif,system-ui,sans-serif;letter-spacing:.17em;text-transform:uppercase}
+body.theme-wedding-gazette main>.section h2{font-family:Georgia,"Times New Roman",serif;font-size:clamp(2rem,6vw,4.2rem);line-height:.95;letter-spacing:-.035em}
+body.theme-wedding-gazette .story-card #storyText{columns:2 270px;column-gap:clamp(1.2rem,4vw,2.6rem);column-rule:1px solid var(--line);text-align:justify;hyphens:auto}
+body.theme-wedding-gazette .event-card{border:0;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);border-radius:0;box-shadow:none}
+body.theme-wedding-gazette .public-gallery .gallery-item{border:1px solid var(--ink)!important;border-radius:0!important;padding:.35rem!important;background:var(--paper)!important;box-shadow:4px 4px 0 color-mix(in srgb,var(--ink) 14%,transparent)!important}
+body.theme-wedding-gazette .public-gallery img{border-radius:0!important;filter:grayscale(.92) sepia(.16) contrast(1.05)}
+body.theme-wedding-gazette .primary-btn,body.theme-wedding-gazette .secondary-btn{border-radius:0;text-transform:uppercase;letter-spacing:.08em}
+.catalog-theme-visual.theme-wedding-gazette{position:relative;border:8px solid var(--paper);outline:1px solid var(--ink);background:repeating-linear-gradient(90deg,var(--paper) 0 31%,var(--line) 31% 32%,var(--paper) 32% 65%,var(--line) 65% 66%,var(--paper) 66%);color:var(--ink)}
+.catalog-theme-visual.theme-wedding-gazette:before{content:"THE GAZETTE";position:absolute;top:1rem;left:1rem;right:1rem;padding:.35rem;border-block:3px double var(--ink);font:900 .7rem Georgia,serif;letter-spacing:.15em}
+
+/* Pergamino vintage: superficie generada con gradientes; evita imágenes remotas
+   y filtros SVG para conservar compatibilidad móvil y rendimiento. */
+body.theme-vintage-parchment{background-color:var(--bg);background-image:radial-gradient(ellipse at 12% 7%,#fff5 0 1px,transparent 2px),radial-gradient(ellipse at 78% 34%,#5b37100c 0 1px,transparent 2px),repeating-linear-gradient(12deg,transparent 0 7px,#6e441908 8px 9px)}
+body.theme-vintage-parchment .theme-atmosphere{opacity:.24;filter:sepia(1)}
+body.theme-vintage-parchment .hero{margin:clamp(.6rem,2vw,1.4rem);border:1px solid #7d552f;border-radius:2px;box-shadow:inset 0 0 70px #7a451f72,0 20px 55px #4a2e1d32;background-color:#b58a58;background-blend-mode:sepia}
+body.theme-vintage-parchment .hero .overlay{background:linear-gradient(rgba(58,35,20,.25),rgba(58,35,20,.52))}
+body.theme-vintage-parchment .hero-content{width:min(820px,90%);padding:clamp(1.2rem,4vw,2.5rem);border:1px solid #f6e7c488;outline:1px solid #5d3a23;outline-offset:8px;text-shadow:0 2px 8px #2a160da8}
+body.theme-vintage-parchment .hero h1{font-family:Georgia,"Times New Roman",serif;font-style:italic;letter-spacing:-.03em}
+body.theme-vintage-parchment main{padding-block:1rem}
+body.theme-vintage-parchment main>.section{position:relative;overflow:hidden;border:1px solid #9d784d;border-radius:2px 18px 4px 14px;background-color:var(--paper);background-image:radial-gradient(circle at 0 0,#a36b2d24,transparent 24%),radial-gradient(circle at 100% 100%,#7b4d2220,transparent 27%),repeating-linear-gradient(170deg,transparent 0 8px,#72481608 9px 10px);box-shadow:inset 0 0 55px #8b59284a,0 18px 45px #52331d24}
+body.theme-vintage-parchment main>.section:after{content:"";position:absolute;inset:8px;pointer-events:none;border:1px solid color-mix(in srgb,var(--gold) 48%,transparent);border-radius:1px 12px 2px 10px}
+body.theme-vintage-parchment main>.section h2{font-family:Georgia,"Times New Roman",serif;font-style:italic;color:var(--accent)}
+body.theme-vintage-parchment #storyText{text-align:justify;line-height:1.85}
+body.theme-vintage-parchment #storyText::first-letter{float:left;margin:.08em .12em 0 0;font:700 3.2em/.72 Georgia,"Times New Roman",serif;color:var(--accent);text-shadow:1px 1px 0 #d8b875}
+body.theme-vintage-parchment .public-gallery .gallery-item{border-radius:2px!important;outline-color:#947049!important;box-shadow:0 11px 24px #4c2d192c!important}
+body.theme-vintage-parchment .public-gallery img{border-radius:1px!important;filter:sepia(.48) saturate(.82) contrast(.96)}
+body.theme-vintage-parchment .primary-btn,body.theme-vintage-parchment .secondary-btn{border-radius:4px;border-color:#8c623c}
+.catalog-theme-visual.theme-vintage-parchment{position:relative;overflow:hidden;border:10px solid #d5b67d;background:radial-gradient(circle at 15% 18%,#fff4 0 2px,transparent 3px),linear-gradient(145deg,#f3dfb6,#c79d63);color:#4a2b18;box-shadow:inset 0 0 34px #6d421d8a}
+.catalog-theme-visual.theme-vintage-parchment:after{content:"❦";position:absolute;right:1rem;bottom:.8rem;font-size:2.6rem;opacity:.3}
+
+/* Editorial salvia: reinterpretación propia del patrón observable en invitaciones
+   fotográficas modernas: portada protagonista, bloques claros y ritmo vertical. */
+body.theme-sage-photo-editorial .hero{min-height:100svh;background-position:center;background-size:cover}
+body.theme-sage-photo-editorial .hero .overlay{background:linear-gradient(to top,rgba(22,31,23,.7) 0%,rgba(22,31,23,.18) 56%,rgba(22,31,23,.08) 100%)}
+body.theme-sage-photo-editorial .hero-content{align-self:end;width:min(920px,92%);margin:0 auto clamp(3rem,9vh,7rem);padding:1rem;text-align:center}
+body.theme-sage-photo-editorial .hero h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(3.2rem,12vw,8.2rem);line-height:.88;font-weight:500;letter-spacing:-.04em}
+body.theme-sage-photo-editorial main>.section{border:0;border-radius:0;box-shadow:none;background:var(--paper)}
+body.theme-sage-photo-editorial main>.section:nth-child(even){background:color-mix(in srgb,var(--accent) 8%,var(--paper))}
+body.theme-sage-photo-editorial main>.section h2{font-family:Georgia,"Times New Roman",serif;font-weight:500;letter-spacing:-.025em}
+body.theme-sage-photo-editorial .eyebrow{letter-spacing:.18em;text-transform:uppercase;color:var(--accent)}
+body.theme-sage-photo-editorial .public-gallery{gap:clamp(.6rem,2vw,1.2rem)}
+body.theme-sage-photo-editorial .public-gallery .gallery-item{border:0!important;border-radius:46% 46% 2px 2px!important;overflow:hidden;box-shadow:0 18px 42px #2e3b2c26!important}
+body.theme-sage-photo-editorial .public-gallery img{border-radius:inherit!important;filter:saturate(.9) contrast(.98)}
+body.theme-sage-photo-editorial .event-card{border:1px solid var(--line);border-radius:0;box-shadow:none}
+.catalog-theme-visual.theme-sage-photo-editorial{position:relative;background:linear-gradient(to top,#344432d6,#34443210),linear-gradient(145deg,#91a087,#dfe7d9);color:#fff}
+.catalog-theme-visual.theme-sage-photo-editorial:before{content:"";position:absolute;inset:13% 22%;border:1px solid #ffffffa8;border-radius:50% 50% 4px 4px}
+
+/* Apertura · Gaceta plegada. Usa únicamente las capas de apertura existentes;
+   el orden RC13 del DOM no cambia. */
+.opening-newspaper-fold{--opening-copy-delay:3.05s;--opening-exit-delay:3.55s;color:#1c1b18;background:radial-gradient(circle at 50% 42%,#fbf8ef,#d9d4c9 72%);grid-template-rows:minmax(120px,.75fr) minmax(300px,1.8fr) minmax(110px,.65fr)}
+.opening-newspaper-fold .opening-glow{display:none}
+.opening-newspaper-fold .opening-copy{grid-row:1;align-self:end;max-width:min(92vw,760px)}
+.opening-newspaper-fold .opening-copy .eyebrow{color:#6b6258;letter-spacing:.18em;text-transform:uppercase}
+.opening-newspaper-fold .opening-copy h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.9rem,6vmin,4.3rem);line-height:.95;text-transform:uppercase;overflow-wrap:anywhere}
+.opening-newspaper-fold .opening-envelope-button{grid-row:2/4;align-self:center;gap:.75rem}
+.opening-newspaper-fold .opening-envelope{width:min(66vw,330px);aspect-ratio:.76;filter:drop-shadow(0 24px 25px #211c1738);transform:rotate(-1.5deg) rotateX(8deg);transition:transform 1.15s cubic-bezier(.2,.78,.25,1)}
+.opening-newspaper-fold .opening-envelope-back,.opening-newspaper-fold .opening-card,.opening-newspaper-fold .opening-envelope-front,.opening-newspaper-fold .opening-flap{border-radius:1px;border:1px solid #8f887e;background-color:#f8f4e9}
+.opening-newspaper-fold .opening-envelope-back{z-index:1;background-image:linear-gradient(#1b1a18,#1b1a18),repeating-linear-gradient(90deg,transparent 0 31%,#b9b1a4 31% 32%,transparent 32% 65%,#b9b1a4 65% 66%,transparent 66%),repeating-linear-gradient(0deg,transparent 0 12px,#d7d0c4 13px 14px);background-size:82% 3px,100% 100%,100% 100%;background-position:50% 14%,0 0,0 0;background-repeat:no-repeat}
+.opening-newspaper-fold .opening-envelope-back:before{content:"THE EVENT GAZETTE";position:absolute;z-index:2;left:8%;right:8%;top:7%;padding-bottom:.4rem;border-bottom:3px double #1b1a18;font:900 clamp(.58rem,2.7vw,.88rem)/1 Georgia,"Times New Roman",serif;letter-spacing:.08em;text-align:center}
+.opening-newspaper-fold .opening-card{z-index:2;inset:23% 8% 19%;display:grid;place-items:center;padding:.55rem;background:#fbf8ef;color:#1c1b18;border:1px solid #aaa196;font-family:Georgia,"Times New Roman",serif;box-shadow:inset 0 0 24px #5d514321;transform:translateY(8%) rotateX(62deg) scaleY(.74);transform-origin:top;transition:transform 1.25s .7s cubic-bezier(.18,.8,.2,1)}
+.opening-newspaper-fold .opening-card:before{content:"SPECIAL EDITION";position:absolute;top:12%;font:800 .52rem/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.14em}
+.opening-newspaper-fold .opening-envelope-front{z-index:3;clip-path:none;inset:50% 0 0;background:linear-gradient(180deg,#e8e2d6,#f8f4e9);transform-origin:top;transform:rotateX(-24deg);transition:transform 1.1s .35s cubic-bezier(.2,.8,.25,1),opacity .45s 1.45s ease}
+.opening-newspaper-fold .opening-flap{z-index:4;clip-path:none;inset:0 0 50%;background:linear-gradient(180deg,#f8f4e9,#e3ddd1);transform-origin:bottom;transform:rotateX(26deg);transition:transform 1.1s .35s cubic-bezier(.2,.8,.25,1),opacity .45s 1.45s ease}
+.opening-newspaper-fold .opening-seal{display:none}
+.opening-newspaper-fold .opening-envelope-button>strong{border-radius:2px;border-color:#1b1a18;background:#fbf8efd9;color:#1b1a18;text-transform:uppercase;font-size:.72rem;letter-spacing:.14em}
+.opening-newspaper-fold.is-opening .opening-envelope{transform:rotate(0) rotateX(0) scale(1.05)}
+.opening-newspaper-fold.is-opening .opening-flap{transform:rotateX(178deg);opacity:.08}
+.opening-newspaper-fold.is-opening .opening-envelope-front{transform:rotateX(-178deg);opacity:.08}
+.opening-newspaper-fold.is-opening .opening-card{transform:translateY(0) rotateX(0) scaleY(1)}
+
+/* Apertura · Pergamino desplegable. Los dos extremos simulan rodillos y la
+   tarjeta central usa la fecha real ya existente en #openingDate. */
+.opening-vintage-parchment{--opening-copy-delay:3.2s;--opening-exit-delay:3.7s;color:#f7e9c8;background:radial-gradient(circle at 50% 45%,#6d4b30,#241710 72%);grid-template-rows:minmax(120px,.7fr) minmax(300px,1.75fr) minmax(110px,.65fr)}
+.opening-vintage-parchment .opening-glow{background:radial-gradient(circle,#d6a85a40,transparent 66%);filter:blur(60px)}
+.opening-vintage-parchment .opening-copy{grid-row:1;align-self:end;max-width:min(92vw,760px);text-shadow:0 3px 16px #140c08}
+.opening-vintage-parchment .opening-copy h1{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:clamp(1.9rem,6vmin,4.2rem);line-height:1;overflow-wrap:anywhere}
+.opening-vintage-parchment .opening-envelope-button{grid-row:2/4;align-self:center;gap:.9rem}
+.opening-vintage-parchment .opening-envelope{width:min(74vw,390px);aspect-ratio:1.18;filter:drop-shadow(0 30px 28px #120a0666);transform:rotate(-1deg);transition:transform 1.1s ease}
+.opening-vintage-parchment .opening-envelope-back,.opening-vintage-parchment .opening-envelope-front{z-index:4;left:-4%;right:-4%;height:34px;border:1px solid #6f431f;border-radius:50%;background:linear-gradient(180deg,#f0d49b 0%,#a56d35 42%,#6c3b1c 58%,#d09b58 100%);box-shadow:0 5px 12px #29150b70,inset 0 2px 3px #fff6}
+.opening-vintage-parchment .opening-envelope-back{inset:auto -4% 4%;transform:translateY(-44%);transition:transform 1.45s .35s cubic-bezier(.2,.8,.2,1)}
+.opening-vintage-parchment .opening-envelope-front{inset:4% -4% auto;clip-path:none;transform:translateY(44%);transition:transform 1.45s .35s cubic-bezier(.2,.8,.2,1)}
+.opening-vintage-parchment .opening-card{z-index:2;inset:9% 0;display:grid;place-items:center;padding:1.1rem;background-color:#efd39b;background-image:radial-gradient(circle at 10% 8%,#fff5 0 1px,transparent 2px),radial-gradient(circle at 88% 74%,#6a3d1a17 0 1px,transparent 2px),repeating-linear-gradient(12deg,transparent 0 8px,#7045160c 9px 10px);border:1px solid #9b6a37;border-radius:2px;color:#4a2915;box-shadow:inset 0 0 45px #7c4b1e66;transform:scaleY(.16);transform-origin:center;transition:transform 1.65s .45s cubic-bezier(.18,.82,.2,1)}
+.opening-vintage-parchment .opening-card:before{content:"❦";position:absolute;top:18%;font-size:1.8rem;color:#7a3e23;opacity:.74}
+.opening-vintage-parchment .opening-card small{font:700 clamp(.78rem,3vw,1rem)/1.2 Georgia,"Times New Roman",serif;letter-spacing:.06em}
+.opening-vintage-parchment .opening-flap{display:none}
+.opening-vintage-parchment .opening-seal{z-index:6;top:50%;width:58px;height:58px;color:#f0cfaa;background:radial-gradient(circle at 32% 25%,#b94e3a,#7a281d 57%,#48150f);box-shadow:0 6px 15px #1a090675,inset 0 0 0 4px #ffffff12}
+.opening-vintage-parchment .opening-envelope-button>strong{color:#f7e9c8;border-color:#d4aa68;background:#342117d8;box-shadow:0 8px 24px #130b0770}
+.opening-vintage-parchment.is-opening .opening-envelope{transform:rotate(0) scale(1.04)}
+.opening-vintage-parchment.is-opening .opening-envelope-back{transform:translateY(11%)}
+.opening-vintage-parchment.is-opening .opening-envelope-front{transform:translateY(-11%)}
+.opening-vintage-parchment.is-opening .opening-card{transform:scaleY(1)}
+.opening-vintage-parchment.is-opening .opening-seal{opacity:0;transform:translate(-50%,-50%) rotate(24deg) scale(.68)}
+
+@media(max-width:720px){
+  body.theme-wedding-gazette .hero{min-height:82svh;margin:.4rem}body.theme-wedding-gazette .hero-content:before{letter-spacing:.12em}body.theme-wedding-gazette .story-card #storyText{columns:1}body.theme-wedding-gazette main>.section{padding:1.15rem}
+  body.theme-vintage-parchment .hero-content{outline-offset:5px}body.theme-vintage-parchment main>.section{border-radius:2px 10px}
+  .opening-newspaper-fold{padding:.75rem;grid-template-rows:minmax(120px,.7fr) minmax(285px,1.7fr) minmax(100px,.58fr)}.opening-newspaper-fold .opening-envelope{width:min(72vw,300px)}.opening-newspaper-fold .opening-copy h1{font-size:clamp(1.65rem,8.2vw,2.8rem)}
+  .opening-vintage-parchment{padding:.75rem;grid-template-rows:minmax(120px,.7fr) minmax(275px,1.65fr) minmax(100px,.58fr)}.opening-vintage-parchment .opening-envelope{width:min(82vw,340px)}.opening-vintage-parchment .opening-copy h1{font-size:clamp(1.65rem,8.2vw,2.8rem)}
+}
+@media(prefers-reduced-motion:reduce){
+  body:not(.force-motion-preview) .opening-newspaper-fold .opening-envelope,body:not(.force-motion-preview) .opening-newspaper-fold .opening-card,body:not(.force-motion-preview) .opening-newspaper-fold .opening-envelope-front,body:not(.force-motion-preview) .opening-newspaper-fold .opening-flap,body:not(.force-motion-preview) .opening-vintage-parchment .opening-envelope,body:not(.force-motion-preview) .opening-vintage-parchment .opening-card,body:not(.force-motion-preview) .opening-vintage-parchment .opening-envelope-front,body:not(.force-motion-preview) .opening-vintage-parchment .opening-envelope-back{transition-duration:.2s!important;transition-delay:0s!important}
+  body.force-motion-preview .opening-newspaper-fold .opening-envelope,body.force-motion-preview .opening-vintage-parchment .opening-envelope{transition-duration:1.15s!important}
+  body.force-motion-preview .opening-newspaper-fold .opening-card{transition-duration:1.25s!important;transition-delay:.7s!important}body.force-motion-preview .opening-newspaper-fold .opening-envelope-front,body.force-motion-preview .opening-newspaper-fold .opening-flap{transition-duration:1.1s!important;transition-delay:.35s!important}
+  body.force-motion-preview .opening-vintage-parchment .opening-card{transition-duration:1.65s!important;transition-delay:.45s!important}body.force-motion-preview .opening-vintage-parchment .opening-envelope-front,body.force-motion-preview .opening-vintage-parchment .opening-envelope-back{transition-duration:1.45s!important;transition-delay:.35s!important}
+}
+body[data-motion="still"]:not(.force-motion-preview) .opening-newspaper-fold .opening-envelope,body[data-motion="still"]:not(.force-motion-preview) .opening-newspaper-fold .opening-card,body[data-motion="still"]:not(.force-motion-preview) .opening-newspaper-fold .opening-envelope-front,body[data-motion="still"]:not(.force-motion-preview) .opening-newspaper-fold .opening-flap,body[data-motion="still"]:not(.force-motion-preview) .opening-vintage-parchment .opening-envelope,body[data-motion="still"]:not(.force-motion-preview) .opening-vintage-parchment .opening-card,body[data-motion="still"]:not(.force-motion-preview) .opening-vintage-parchment .opening-envelope-front,body[data-motion="still"]:not(.force-motion-preview) .opening-vintage-parchment .opening-envelope-back{transition:none!important}
+
+/* ========================================================================
+   RC21 · Add-on Linvia study collection
+   ------------------------------------------------------------------------
+   Estas cuatro composiciones se reconstruyen con CSS propio sobre el DOM
+   público existente. Las páginas de referencia se usan sólo para estudiar
+   lenguaje visual, jerarquía, paletas y forma de presentar fotografías.
+   No se importan recursos, fotografías, tipografías ni código del proveedor.
+
+   Regla de integración: las aperturas reutilizan #invitationOpening y las
+   cinco capas RC13 del sobre. No añaden listeners ni renderers nuevos; por
+   eso conservan el mismo flujo probado de click, replay, skip y reduced motion.
+   ======================================================================== */
+
+.theme-olive-universe{--bg:#101812;--paper:#f5f0df;--ink:#243024;--muted:#596459;--accent:#667744;--accent-dark:#48552f;--gold:#b49355;--line:#cec6ae}
+.theme-olive-nectar{--bg:#eee5d2;--paper:#fffaf0;--ink:#3b3529;--muted:#6b6252;--accent:#6c793f;--accent-dark:#4d592c;--gold:#b7832e;--line:#d9ceb5}
+.theme-blue-breeze-aurora{--bg:#dfeaf0;--paper:#fbfdff;--ink:#243642;--muted:#5d6c75;--accent:#4d7186;--accent-dark:#365568;--gold:#aa8a59;--line:#cbd9e0}
+.theme-botanical-cosmos{--bg:#091512;--paper:#f4f4e8;--ink:#23302b;--muted:#59655e;--accent:#315e51;--accent-dark:#21453b;--gold:#b99a62;--line:#ccd5cc}
+
+/* Oliva Universo · botánica nocturna + constelaciones. */
+body.theme-olive-universe{background:#101812;background-image:radial-gradient(circle at 12% 14%,#d9c98e22 0 1px,transparent 1.6px),radial-gradient(circle at 78% 22%,#ffffff1c 0 1px,transparent 1.5px),radial-gradient(circle at 36% 74%,#98aa7820 0 1px,transparent 1.5px)}
+body.theme-olive-universe .theme-atmosphere{opacity:.25;color:#d6c384}
+body.theme-olive-universe .hero{min-height:100svh;background-position:center;background-size:cover;isolation:isolate}
+body.theme-olive-universe .hero .overlay{background:radial-gradient(circle at 50% 36%,rgba(105,123,76,.12),rgba(9,17,14,.28) 42%,rgba(5,10,8,.78) 100%)}
+body.theme-olive-universe .hero-content{width:min(880px,92%);padding:clamp(1.2rem,4vw,2.6rem);border:1px solid #d6c38488;border-radius:50% 50% 18px 18px;text-shadow:0 3px 18px #000}
+body.theme-olive-universe .hero-content:before{content:"✦  ·  ❧  ·  ✦";display:block;margin-bottom:1rem;color:#d6c384;font:500 clamp(.85rem,2vw,1.1rem)/1 Georgia,serif;letter-spacing:.35em}
+body.theme-olive-universe .hero h1{font-family:Georgia,"Times New Roman",serif;font-weight:500;font-size:clamp(3.2rem,10vw,7.2rem);line-height:.9;letter-spacing:-.045em}
+body.theme-olive-universe main{width:min(1100px,94%);margin:auto;padding-block:clamp(1rem,4vw,3rem)}
+body.theme-olive-universe main>.section{position:relative;overflow:hidden;border:1px solid #8c9676;border-radius:48px 48px 14px 14px;background:var(--paper);box-shadow:0 22px 58px #00000035}
+body.theme-olive-universe main>.section:before{content:"";position:absolute;right:-38px;top:-38px;width:128px;height:128px;border:1px solid #7b895e55;border-radius:50%;box-shadow:0 0 0 18px #7b895e0b,0 0 0 38px #b4935508;pointer-events:none}
+body.theme-olive-universe main>.section h2{font-family:Georgia,"Times New Roman",serif;font-weight:500;color:#39472e}
+body.theme-olive-universe .eyebrow{letter-spacing:.18em;text-transform:uppercase;color:#6a774a}
+body.theme-olive-universe .public-gallery .gallery-item{border-radius:50%!important;outline:1px solid #b4935599!important;outline-offset:-7px;box-shadow:0 18px 42px #0d171128!important}
+body.theme-olive-universe .public-gallery img{border-radius:50%!important;filter:saturate(.88) contrast(1.02)}
+body.theme-olive-universe .primary-btn{background:#526438;color:#fffdf3}
+body.theme-olive-universe .secondary-btn{border-color:#526438;color:#43532e}
+.theme-preview.theme-olive-universe,.catalog-theme-visual.theme-olive-universe,.sample-phone.theme-olive-universe{background:radial-gradient(circle at 50% 35%,#738055 0 2%,transparent 3%),radial-gradient(circle at 28% 22%,#d6c384 0 1px,transparent 1.7px),radial-gradient(circle at 76% 66%,#fff 0 1px,transparent 1.6px),linear-gradient(150deg,#111b15,#253426 58%,#0b100d);color:#f7f0de}
+
+/* Oliva Néctar · papel marfil, miel y hojas mediterráneas. */
+body.theme-olive-nectar{background-color:var(--bg);background-image:radial-gradient(circle at 8% 12%,#fff6 0 1px,transparent 2px),radial-gradient(circle at 86% 28%,#b7832e15 0 2px,transparent 3px),linear-gradient(145deg,#f5eddd,#e7dcc7)}
+body.theme-olive-nectar .hero{min-height:min(92svh,880px);border-radius:0 0 72px 72px;background-position:center;background-size:cover;overflow:hidden}
+body.theme-olive-nectar .hero .overlay{background:linear-gradient(to top,rgba(54,51,34,.62),rgba(54,51,34,.12) 60%,rgba(255,250,238,.04))}
+body.theme-olive-nectar .hero-content{width:min(820px,90%);padding:clamp(1.6rem,5vw,3.2rem);background:#fffaf0d9;border:1px solid #b7832e66;border-radius:46% 46% 24px 24px;color:#39372a;box-shadow:0 24px 70px #342b182c;backdrop-filter:blur(2px)}
+body.theme-olive-nectar .hero-content:before{content:"❧  OLIVA  ·  NÉCTAR  ❧";display:block;margin-bottom:.8rem;color:#6c793f;font:700 .72rem/1.2 ui-sans-serif,system-ui,sans-serif;letter-spacing:.2em}
+body.theme-olive-nectar .hero h1{font-family:Georgia,"Times New Roman",serif;font-weight:500;font-style:italic;font-size:clamp(3rem,9vw,6.6rem);line-height:.92;color:#485132;text-shadow:none}
+body.theme-olive-nectar main{width:min(1080px,94%);margin:auto;padding-block:2rem}
+body.theme-olive-nectar main>.section{border:1px solid #d4c7aa;border-radius:56px 14px 56px 14px;background:color-mix(in srgb,var(--paper) 96%,#f5e9cc);box-shadow:0 18px 48px #57462716}
+body.theme-olive-nectar main>.section:nth-child(even){border-radius:14px 56px 14px 56px;background:color-mix(in srgb,var(--accent) 7%,var(--paper))}
+body.theme-olive-nectar main>.section h2{font-family:Georgia,"Times New Roman",serif;font-weight:500;color:#535d35}
+body.theme-olive-nectar .eyebrow{color:#68763d;letter-spacing:.17em;text-transform:uppercase}
+body.theme-olive-nectar .public-gallery .gallery-item{border:8px solid #fffaf0!important;border-radius:34px 8px 34px 8px!important;box-shadow:0 16px 34px #594a2f24!important}
+body.theme-olive-nectar .public-gallery img{border-radius:24px 4px 24px 4px!important;filter:saturate(.92) contrast(.98)}
+.theme-preview.theme-olive-nectar,.catalog-theme-visual.theme-olive-nectar,.sample-phone.theme-olive-nectar{background:radial-gradient(ellipse at 18% 18%,#7b87514a 0 8%,transparent 9%),radial-gradient(ellipse at 80% 78%,#b7832e38 0 7%,transparent 8%),linear-gradient(145deg,#fffaf0,#e7dcc7);color:#3b3529}
+
+/* Brisa Azul Aurora · capas acuosas y fotografía de gran formato. */
+body.theme-blue-breeze-aurora{background-color:var(--bg);background-image:radial-gradient(ellipse at 20% 10%,#ffffffb0,transparent 34%),radial-gradient(ellipse at 82% 18%,#a7cbdc70,transparent 36%),linear-gradient(180deg,#e8f1f6,#d9e7ee 58%,#f5efe5)}
+body.theme-blue-breeze-aurora .hero{min-height:100svh;background-position:center;background-size:cover}
+body.theme-blue-breeze-aurora .hero .overlay{background:linear-gradient(180deg,rgba(213,235,246,.18),rgba(51,82,99,.18) 52%,rgba(30,52,64,.64))}
+body.theme-blue-breeze-aurora .hero-content{align-self:end;width:min(900px,92%);margin-bottom:clamp(3rem,9vh,7rem);padding:1rem;text-shadow:0 3px 20px #203b4a88}
+body.theme-blue-breeze-aurora .hero-content:before{content:"A U R O R A";display:block;margin-bottom:.8rem;font:700 .72rem/1.2 ui-sans-serif,system-ui,sans-serif;letter-spacing:.52em}
+body.theme-blue-breeze-aurora .hero h1{font-family:Georgia,"Times New Roman",serif;font-weight:400;font-size:clamp(3.4rem,12vw,8.4rem);line-height:.88;letter-spacing:-.05em}
+body.theme-blue-breeze-aurora main>.section{border:0;border-radius:34px;background:#fbfdffd9;box-shadow:0 22px 60px #31546918;backdrop-filter:blur(7px)}
+body.theme-blue-breeze-aurora main>.section:nth-child(even){background:linear-gradient(145deg,#f9fcff,#e9f2f6)}
+body.theme-blue-breeze-aurora main>.section h2{font-family:Georgia,"Times New Roman",serif;font-weight:500;color:#35586a}
+body.theme-blue-breeze-aurora .eyebrow{color:#527b91;letter-spacing:.2em;text-transform:uppercase}
+body.theme-blue-breeze-aurora .public-gallery{gap:clamp(.55rem,2vw,1.1rem)}
+body.theme-blue-breeze-aurora .public-gallery .gallery-item{border:0!important;border-radius:4px 64px 4px 64px!important;overflow:hidden;box-shadow:0 20px 46px #31546925!important}
+body.theme-blue-breeze-aurora .public-gallery img{border-radius:inherit!important;filter:saturate(.86) brightness(1.03)}
+.theme-preview.theme-blue-breeze-aurora,.catalog-theme-visual.theme-blue-breeze-aurora,.sample-phone.theme-blue-breeze-aurora{background:radial-gradient(ellipse at 20% 18%,#fff 0 13%,transparent 14%),radial-gradient(ellipse at 72% 30%,#9fc7da80 0 20%,transparent 21%),linear-gradient(160deg,#eaf4fa,#aecada 55%,#f4e7d5);color:#284252}
+
+/* Botánico Cosmos · jardín oscuro con órbitas muy discretas. */
+body.theme-botanical-cosmos{background:#091512;background-image:radial-gradient(circle at 16% 12%,#ffffff18 0 1px,transparent 1.7px),radial-gradient(circle at 86% 32%,#b99a6230 0 1px,transparent 1.7px),linear-gradient(145deg,#08110f,#10231d)}
+body.theme-botanical-cosmos .hero{min-height:100svh;background-position:center;background-size:cover;overflow:hidden}
+body.theme-botanical-cosmos .hero .overlay{background:radial-gradient(circle at 50% 42%,rgba(47,93,79,.14),rgba(5,13,11,.78) 72%)}
+body.theme-botanical-cosmos .hero-content{width:min(860px,92%);padding:clamp(1.3rem,4vw,2.8rem);border:1px solid #b99a626e;border-radius:50%;text-shadow:0 3px 20px #000}
+body.theme-botanical-cosmos .hero-content:before{content:"☾  ❧  ✧  ❧  ☽";display:block;margin-bottom:1rem;color:#d1ba85;font:500 clamp(.9rem,2.2vw,1.2rem)/1 Georgia,serif;letter-spacing:.24em}
+body.theme-botanical-cosmos .hero h1{font-family:Georgia,"Times New Roman",serif;font-weight:500;font-size:clamp(3rem,10vw,7rem);line-height:.9}
+body.theme-botanical-cosmos main{width:min(1100px,94%);margin:auto;padding-block:2rem}
+body.theme-botanical-cosmos main>.section{position:relative;overflow:hidden;border:1px solid #aeb9ac;border-radius:20px 72px 20px 72px;background:var(--paper);box-shadow:0 22px 58px #0004}
+body.theme-botanical-cosmos main>.section:nth-child(even){border-radius:72px 20px 72px 20px}
+body.theme-botanical-cosmos main>.section:before{content:"✧";position:absolute;right:1.2rem;top:.8rem;color:#b99a6270;font-size:2rem;pointer-events:none}
+body.theme-botanical-cosmos main>.section h2{font-family:Georgia,"Times New Roman",serif;font-weight:500;color:#244b40}
+body.theme-botanical-cosmos .eyebrow{color:#3d675a;letter-spacing:.18em;text-transform:uppercase}
+body.theme-botanical-cosmos .public-gallery .gallery-item{border-radius:50%!important;border:1px solid #b99a6277!important;outline:8px solid #edf0e5!important;outline-offset:-9px;box-shadow:0 18px 42px #12251f2d!important}
+body.theme-botanical-cosmos .public-gallery img{border-radius:50%!important;filter:saturate(.88) contrast(1.01)}
+.theme-preview.theme-botanical-cosmos,.catalog-theme-visual.theme-botanical-cosmos,.sample-phone.theme-botanical-cosmos{background:radial-gradient(circle at 50% 50%,transparent 0 27%,#b99a6240 28% 28.8%,transparent 29.5%),radial-gradient(circle at 22% 24%,#fff 0 1px,transparent 1.6px),radial-gradient(circle at 77% 73%,#d2bd8d 0 1px,transparent 1.7px),linear-gradient(145deg,#081310,#183329);color:#f4f2e4}
+
+/* ------------------------------------------------------------------------
+   Apertura · Órbita de olivo
+   El sobre se convierte visualmente en un medallón celeste. Las mismas capas
+   opening-back/card/flap/front/seal se animan con .is-opening, de modo que el
+   controlador RC21 sigue siendo exactamente el mismo.
+   ------------------------------------------------------------------------ */
+.opening-olive-universe-orbit{--opening-copy-delay:3.3s;--opening-exit-delay:3.82s;color:#f4efdf;background:radial-gradient(circle at 50% 44%,#263a2c,#0a120e 68%);grid-template-rows:minmax(120px,.72fr) minmax(310px,1.85fr) minmax(105px,.6fr)}
+.opening-olive-universe-orbit .opening-glow{width:min(78vw,620px);background:radial-gradient(circle,#b4935533,transparent 67%);filter:blur(55px)}
+.opening-olive-universe-orbit .opening-copy{grid-row:1;align-self:end;width:min(92vw,760px);text-shadow:0 3px 18px #000}
+.opening-olive-universe-orbit .opening-copy h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.9rem,6vmin,4.2rem);line-height:.98;overflow-wrap:anywhere}
+.opening-olive-universe-orbit .opening-envelope-button{grid-row:2/4;align-self:center;gap:.85rem;color:#f4efdf}
+.opening-olive-universe-orbit .opening-envelope{width:min(70vw,350px);aspect-ratio:1;border-radius:50%;filter:drop-shadow(0 28px 28px #0008);transform:rotate(-7deg) scale(.94);transition:transform 1.25s cubic-bezier(.2,.8,.2,1)}
+.opening-olive-universe-orbit .opening-envelope-back{z-index:1;border-radius:50%;border:1px solid #b4935588;background:radial-gradient(circle at 28% 24%,#f4efdf 0 1px,transparent 1.8px),radial-gradient(circle at 72% 32%,#d4c48e 0 1px,transparent 1.7px),radial-gradient(circle at 48% 72%,#fff 0 1px,transparent 1.6px),linear-gradient(145deg,#203126,#0d1712)}
+.opening-olive-universe-orbit .opening-card{z-index:2;inset:17%;border-radius:50%;border:1px solid #c7b77d;background:#f5f0df;color:#33402f;box-shadow:0 0 0 8px #f5f0df22,0 12px 30px #0005;transform:scale(.58) rotate(12deg);transition:transform 1.45s .55s cubic-bezier(.18,.82,.2,1)}
+.opening-olive-universe-orbit .opening-card:before{content:"✦";position:absolute;top:18%;color:#9b7e45;font-size:1.15rem}
+.opening-olive-universe-orbit .opening-flap,.opening-olive-universe-orbit .opening-envelope-front{z-index:3;inset:5%;border-radius:50%;border:1px solid #b4935570;clip-path:none;background:conic-gradient(from 40deg,transparent 0 18%,#71805255 18% 22%,transparent 22% 48%,#b493553b 48% 51%,transparent 51%);transform-origin:center;transition:transform 1.4s .25s cubic-bezier(.2,.8,.2,1),opacity .55s 1.2s ease}
+.opening-olive-universe-orbit .opening-flap{transform:rotate(0deg)}
+.opening-olive-universe-orbit .opening-envelope-front{transform:rotate(70deg)}
+.opening-olive-universe-orbit .opening-seal{z-index:5;width:62px;height:62px;color:#2b3728;background:radial-gradient(circle at 32% 28%,#e5d39a,#b49355 58%,#71582f);box-shadow:0 0 0 5px #b4935528,0 7px 18px #0006}
+.opening-olive-universe-orbit .opening-seal:before{content:"✦";font-size:1.25rem}
+.opening-olive-universe-orbit .opening-envelope-button>strong{color:#f4efdf;border-color:#b49355;background:#132019d9}
+.opening-olive-universe-orbit.is-opening .opening-envelope{transform:rotate(0) scale(1.04)}
+.opening-olive-universe-orbit.is-opening .opening-flap{transform:rotate(-150deg) scale(1.08);opacity:.12}
+.opening-olive-universe-orbit.is-opening .opening-envelope-front{transform:rotate(220deg) scale(1.08);opacity:.12}
+.opening-olive-universe-orbit.is-opening .opening-card{transform:scale(1) rotate(0)}
+
+/* Apertura · Sello de néctar y olivo. Conserva la mecánica de sobre que ya
+   funciona, pero con una cadencia temprana de tarjeta para evitar huecos. */
+.opening-olive-nectar-seal{--opening-flap-duration:1.35s;--opening-card-duration:1.58s;--opening-card-delay:.68s;--opening-copy-delay:3.05s;--opening-exit-delay:3.55s;color:#3d382b;background:radial-gradient(circle at 50% 42%,#fffaf0,#e1d5bb 72%);grid-template-rows:minmax(120px,.72fr) minmax(300px,1.78fr) minmax(105px,.62fr)}
+.opening-olive-nectar-seal .opening-copy{grid-row:1;align-self:end;width:min(92vw,760px)}
+.opening-olive-nectar-seal .opening-copy h1{font-family:Georgia,"Times New Roman",serif;font-style:italic;font-size:clamp(1.9rem,6vmin,4.2rem);line-height:1;overflow-wrap:anywhere;color:#4d5635}
+.opening-olive-nectar-seal .opening-envelope-button{grid-row:2/4;align-self:center;gap:.85rem}
+.opening-olive-nectar-seal .opening-envelope{width:min(76vw,420px);filter:drop-shadow(0 25px 26px #493c2738);transform:rotate(-1.2deg);transition:transform 1s ease}
+.opening-olive-nectar-seal .opening-envelope-back,.opening-olive-nectar-seal .opening-envelope-front,.opening-olive-nectar-seal .opening-flap{border-color:#b9a77f;background-color:#f7ecd5;background-image:radial-gradient(ellipse at 10% 18%,#6c793f 0 4%,transparent 4.7%),radial-gradient(ellipse at 18% 12%,#86945c 0 3%,transparent 3.8%),radial-gradient(ellipse at 88% 82%,#6c793f 0 4%,transparent 4.7%),radial-gradient(ellipse at 78% 88%,#86945c 0 3%,transparent 3.8%),linear-gradient(145deg,#fff8ea,#e6d4ae)}
+.opening-olive-nectar-seal .opening-card{background:#fffaf0;color:#3b3529;border-color:#cfbd94;box-shadow:0 5px 18px #4d3b2028}
+.opening-olive-nectar-seal .opening-card:before{content:"❧";position:absolute;top:17%;color:#6c793f;font-size:1.5rem}
+.opening-olive-nectar-seal .opening-seal{width:60px;height:60px;color:#fff3cb;background:radial-gradient(circle at 34% 27%,#e2b84e,#b7832e 58%,#76521c);box-shadow:0 6px 14px #5a401d55,inset 0 0 0 4px #fff3c733}
+.opening-olive-nectar-seal .opening-seal:before{content:"❧";font-size:1.15rem}
+.opening-olive-nectar-seal .opening-envelope-button>strong{border-color:#8c743d;background:#fffaf0db;color:#4c4b32}
+.opening-olive-nectar-seal.is-opening .opening-envelope{transform:translateY(-5px) rotate(0) scale(1.02)}
+
+/* Apertura · Brisa de aurora. Las dos capas superiores se comportan como
+   velos laterales; no se crea un canvas ni una dependencia de animación. */
+.opening-blue-aurora-reveal{--opening-copy-delay:3.15s;--opening-exit-delay:3.65s;color:#23404f;background:radial-gradient(ellipse at 20% 16%,#ffffff,#dcebf2 36%,#aac8d8 72%,#789eb2);grid-template-rows:minmax(120px,.72fr) minmax(315px,1.86fr) minmax(105px,.62fr)}
+.opening-blue-aurora-reveal .opening-glow{width:min(86vw,760px);background:radial-gradient(ellipse,#fff9,transparent 68%);filter:blur(64px)}
+.opening-blue-aurora-reveal .opening-copy{grid-row:1;align-self:end;width:min(92vw,760px);text-shadow:0 2px 14px #fff}
+.opening-blue-aurora-reveal .opening-copy h1{font-family:Georgia,"Times New Roman",serif;font-weight:500;font-size:clamp(1.9rem,6vmin,4.2rem);line-height:.98;overflow-wrap:anywhere}
+.opening-blue-aurora-reveal .opening-envelope-button{grid-row:2/4;align-self:center;gap:.85rem}
+.opening-blue-aurora-reveal .opening-envelope{width:min(68vw,330px);aspect-ratio:.82;border-radius:120px 120px 24px 24px;filter:drop-shadow(0 28px 30px #34596d38);transform:translateY(6px);transition:transform 1.1s ease}
+.opening-blue-aurora-reveal .opening-envelope-back{z-index:1;border:1px solid #87aebe;border-radius:inherit;background:linear-gradient(180deg,#fafdff,#d6e7ef 58%,#afcbd8)}
+.opening-blue-aurora-reveal .opening-card{z-index:2;inset:12% 11%;border:1px solid #b4cad5;border-radius:50% 50% 12px 12px;background:#fbfdff;color:#2b4857;box-shadow:0 13px 28px #365b6b22;transform:scale(.84);transition:transform 1.35s .55s cubic-bezier(.18,.82,.2,1)}
+.opening-blue-aurora-reveal .opening-card:before{content:"AURORA";position:absolute;top:15%;font:800 .5rem/1 ui-sans-serif,system-ui,sans-serif;letter-spacing:.25em;color:#63889a}
+.opening-blue-aurora-reveal .opening-flap,.opening-blue-aurora-reveal .opening-envelope-front{z-index:3;clip-path:none;border:0;border-radius:inherit;background:linear-gradient(155deg,#f8fdffe6,#9fc2d2cc);backdrop-filter:blur(3px);transition:transform 1.45s .25s cubic-bezier(.2,.8,.2,1),opacity .55s 1.2s ease}
+.opening-blue-aurora-reveal .opening-flap{inset:0 50% 0 0;transform-origin:center right;border-radius:120px 0 0 24px}
+.opening-blue-aurora-reveal .opening-envelope-front{inset:0 0 0 50%;border-radius:0 120px 24px 0}
+.opening-blue-aurora-reveal .opening-seal{opacity:0;visibility:hidden;pointer-events:none}
+.opening-blue-aurora-reveal .opening-envelope-button>strong{color:#2e5264;border-color:#6f9aae;background:#eff8fbd9}
+.opening-blue-aurora-reveal.is-opening .opening-envelope{transform:translateY(0) scale(1.03)}
+.opening-blue-aurora-reveal.is-opening .opening-flap{transform:translateX(-108%);opacity:.08}
+.opening-blue-aurora-reveal.is-opening .opening-envelope-front{transform:translateX(108%);opacity:.08}
+.opening-blue-aurora-reveal.is-opening .opening-card{transform:scale(1)}
+
+/* Apertura · Cosmos botánico. Dos órbitas giran alrededor de la tarjeta y se
+   apartan al abrir; la tarjeta permanece siempre presente para evitar el salto
+   visual observado en versiones anteriores del sobre. */
+.opening-botanical-cosmos-orbit{--opening-copy-delay:3.4s;--opening-exit-delay:3.95s;color:#eff3e6;background:radial-gradient(circle at 50% 45%,#1d392f,#06100d 70%);grid-template-rows:minmax(120px,.72fr) minmax(320px,1.9fr) minmax(105px,.58fr)}
+.opening-botanical-cosmos-orbit .opening-glow{width:min(82vw,670px);background:radial-gradient(circle,#4f8a7350,transparent 66%);filter:blur(58px)}
+.opening-botanical-cosmos-orbit .opening-copy{grid-row:1;align-self:end;width:min(92vw,760px);text-shadow:0 3px 18px #000}
+.opening-botanical-cosmos-orbit .opening-copy h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.9rem,6vmin,4.2rem);line-height:.98;overflow-wrap:anywhere}
+.opening-botanical-cosmos-orbit .opening-envelope-button{grid-row:2/4;align-self:center;gap:.85rem}
+.opening-botanical-cosmos-orbit .opening-envelope{width:min(72vw,360px);aspect-ratio:1;border-radius:50%;filter:drop-shadow(0 28px 28px #0008);transform:scale(.94);transition:transform 1.2s ease}
+.opening-botanical-cosmos-orbit .opening-envelope-back{z-index:1;border-radius:50%;border:1px solid #b99a6280;background:radial-gradient(circle at 24% 22%,#fff 0 1px,transparent 1.7px),radial-gradient(circle at 70% 30%,#cbb17b 0 1px,transparent 1.7px),radial-gradient(circle at 65% 76%,#8bb6a5 0 1px,transparent 1.8px),linear-gradient(145deg,#163128,#091713)}
+.opening-botanical-cosmos-orbit .opening-card{z-index:2;inset:18%;border-radius:50%;border:1px solid #b6c3b6;background:#f4f4e8;color:#2b443a;box-shadow:0 13px 30px #0006;transform:scale(.66);transition:transform 1.5s .5s cubic-bezier(.18,.82,.2,1)}
+.opening-botanical-cosmos-orbit .opening-card:before{content:"❧";position:absolute;top:17%;font-size:1.35rem;color:#315e51}
+.opening-botanical-cosmos-orbit .opening-flap,.opening-botanical-cosmos-orbit .opening-envelope-front{z-index:3;inset:6%;clip-path:none;border-radius:50%;background:transparent;border:2px solid #71928380;box-shadow:inset 0 0 0 1px #b99a6244;transform-origin:center;transition:transform 1.5s .25s cubic-bezier(.2,.8,.2,1),opacity .55s 1.25s ease}
+.opening-botanical-cosmos-orbit .opening-flap:before,.opening-botanical-cosmos-orbit .opening-envelope-front:before{content:"❧";position:absolute;top:-8px;left:50%;translate:-50% 0;color:#93ad8a;font-size:1.25rem}
+.opening-botanical-cosmos-orbit .opening-flap{transform:rotate(-22deg)}
+.opening-botanical-cosmos-orbit .opening-envelope-front{inset:13%;border-color:#b99a626e;transform:rotate(38deg)}
+.opening-botanical-cosmos-orbit .opening-seal{z-index:5;width:56px;height:56px;color:#eff3e6;background:radial-gradient(circle at 32% 28%,#527a69,#315e51 58%,#17382f);box-shadow:0 0 0 5px #b99a6220,0 6px 16px #0007}
+.opening-botanical-cosmos-orbit .opening-seal:before{content:"✧";font-size:1.1rem}
+.opening-botanical-cosmos-orbit .opening-envelope-button>strong{color:#eff3e6;border-color:#b99a62;background:#0e201ad9}
+.opening-botanical-cosmos-orbit.is-opening .opening-envelope{transform:scale(1.04)}
+.opening-botanical-cosmos-orbit.is-opening .opening-flap{transform:rotate(-170deg) scale(1.08);opacity:.08}
+.opening-botanical-cosmos-orbit.is-opening .opening-envelope-front{transform:rotate(210deg) scale(1.12);opacity:.08}
+.opening-botanical-cosmos-orbit.is-opening .opening-card{transform:scale(1)}
+
+/* Responsive: las aperturas nuevas conservan texto, CTA y figura central dentro
+   de 390 × 844 px, que es la geometría usada por el QA gráfico existente. */
+@media(max-width:720px){
+  body.theme-olive-universe .hero-content,body.theme-botanical-cosmos .hero-content{border-radius:42% 42% 18px 18px}
+  body.theme-olive-nectar .hero{border-radius:0 0 38px 38px}body.theme-olive-nectar .hero-content{width:min(88vw,620px);border-radius:38% 38% 22px 22px}
+  body.theme-blue-breeze-aurora main>.section{border-radius:24px}
+  .opening-olive-universe-orbit,.opening-olive-nectar-seal,.opening-blue-aurora-reveal,.opening-botanical-cosmos-orbit{padding:.75rem;grid-template-rows:minmax(118px,.7fr) minmax(285px,1.72fr) minmax(96px,.56fr)}
+  .opening-olive-universe-orbit .opening-envelope{width:min(76vw,310px)}
+  .opening-olive-nectar-seal .opening-envelope{width:min(82vw,360px)}
+  .opening-blue-aurora-reveal .opening-envelope{width:min(72vw,300px)}
+  .opening-botanical-cosmos-orbit .opening-envelope{width:min(78vw,320px)}
+  :is(.opening-olive-universe-orbit,.opening-olive-nectar-seal,.opening-blue-aurora-reveal,.opening-botanical-cosmos-orbit) .opening-copy h1{font-size:clamp(1.6rem,8vw,2.8rem)}
+}
+
+/* Accesibilidad: la invitación pública respeta reduced-motion. La vista de
+   prueba force-motion conserva las duraciones para que el propietario pueda
+   inspeccionar realmente cada apertura, igual que las aperturas existentes. */
+@media(prefers-reduced-motion:reduce){
+  body:not(.force-motion-preview) :is(.opening-newspaper-fold,.opening-vintage-parchment,.opening-olive-universe-orbit,.opening-olive-nectar-seal,.opening-blue-aurora-reveal,.opening-botanical-cosmos-orbit) .opening-envelope,
+  body:not(.force-motion-preview) :is(.opening-newspaper-fold,.opening-vintage-parchment,.opening-olive-universe-orbit,.opening-olive-nectar-seal,.opening-blue-aurora-reveal,.opening-botanical-cosmos-orbit) .opening-card,
+  body:not(.force-motion-preview) :is(.opening-newspaper-fold,.opening-vintage-parchment,.opening-olive-universe-orbit,.opening-olive-nectar-seal,.opening-blue-aurora-reveal,.opening-botanical-cosmos-orbit) .opening-envelope-front,
+  body:not(.force-motion-preview) :is(.opening-newspaper-fold,.opening-vintage-parchment,.opening-olive-universe-orbit,.opening-olive-nectar-seal,.opening-blue-aurora-reveal,.opening-botanical-cosmos-orbit) .opening-flap{transition-duration:.2s!important;transition-delay:0s!important}
+  body.force-motion-preview .opening-olive-universe-orbit .opening-envelope,body.force-motion-preview .opening-botanical-cosmos-orbit .opening-envelope{transition-duration:1.25s!important}
+  body.force-motion-preview .opening-olive-universe-orbit .opening-card{transition-duration:1.45s!important;transition-delay:.55s!important}
+  body.force-motion-preview .opening-olive-universe-orbit .opening-flap,body.force-motion-preview .opening-olive-universe-orbit .opening-envelope-front{transition-duration:1.4s!important;transition-delay:.25s!important}
+  body.force-motion-preview .opening-olive-nectar-seal .opening-flap{transition-duration:1.35s!important}.opening-olive-nectar-seal .opening-card{transition-duration:1.58s!important;transition-delay:.68s!important}
+  body.force-motion-preview .opening-blue-aurora-reveal .opening-card{transition-duration:1.35s!important;transition-delay:.55s!important}body.force-motion-preview .opening-blue-aurora-reveal .opening-flap,body.force-motion-preview .opening-blue-aurora-reveal .opening-envelope-front{transition-duration:1.45s!important;transition-delay:.25s!important}
+  body.force-motion-preview .opening-botanical-cosmos-orbit .opening-card{transition-duration:1.5s!important;transition-delay:.5s!important}body.force-motion-preview .opening-botanical-cosmos-orbit .opening-flap,body.force-motion-preview .opening-botanical-cosmos-orbit .opening-envelope-front{transition-duration:1.5s!important;transition-delay:.25s!important}
+}
+body[data-motion="still"]:not(.force-motion-preview) :is(.opening-newspaper-fold,.opening-vintage-parchment,.opening-olive-universe-orbit,.opening-olive-nectar-seal,.opening-blue-aurora-reveal,.opening-botanical-cosmos-orbit) .opening-envelope,
+body[data-motion="still"]:not(.force-motion-preview) :is(.opening-newspaper-fold,.opening-vintage-parchment,.opening-olive-universe-orbit,.opening-olive-nectar-seal,.opening-blue-aurora-reveal,.opening-botanical-cosmos-orbit) .opening-card,
+body[data-motion="still"]:not(.force-motion-preview) :is(.opening-newspaper-fold,.opening-vintage-parchment,.opening-olive-universe-orbit,.opening-olive-nectar-seal,.opening-blue-aurora-reveal,.opening-botanical-cosmos-orbit) .opening-envelope-front,
+body[data-motion="still"]:not(.force-motion-preview) :is(.opening-newspaper-fold,.opening-vintage-parchment,.opening-olive-universe-orbit,.opening-olive-nectar-seal,.opening-blue-aurora-reveal,.opening-botanical-cosmos-orbit) .opening-flap{transition:none!important}
+
+/* QA 390×844: las transformaciones de órbita/velos no deben ampliar el área
+   desplazable del viewport. El recorte pertenece al objeto de apertura, no a
+   la página, por lo que conserva la revelación y elimina scroll horizontal. */
+.opening-olive-universe-orbit .opening-envelope,
+.opening-blue-aurora-reveal .opening-envelope{overflow:hidden}

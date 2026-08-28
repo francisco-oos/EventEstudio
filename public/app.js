@@ -291,6 +291,14 @@ function setupInvitationOpening(){
     'minimal-envelope':{replay:4300,normal:4000},
     'cinematic-fold':{replay:4400,normal:4100},
     'ivory-seal':{replay:4600,normal:4300},
+    /* Add-on de plantillas: sólo se agregan tiempos de salida. El controlador,
+       listeners y flujo de reproducción quedan exactamente en RC21. */
+    'newspaper-fold':{replay:4700,normal:4400},
+    'vintage-parchment':{replay:4900,normal:4600},
+    'olive-universe-orbit':{replay:5000,normal:4700},
+    'olive-nectar-seal':{replay:4700,normal:4400},
+    'blue-aurora-reveal':{replay:4800,normal:4500},
+    'botanical-cosmos-orbit':{replay:5100,normal:4800},
     'particle-heart':{replay:4100,normal:3800}
   };
   const defaultFinishDelay=()=>{

@@ -10,6 +10,12 @@
     {"id":"luminous-garden","label":"Jardín luminoso","renderer":"LuminousGardenScene","commercial":true,"productCode":"experience:luminous-garden","grant":"opening:luminous-garden","colorControl":"floralPetalColor"},
     {"id":"night-flower-original","label":"Flor nocturna original","renderer":"OriginalNightFlowerScene","commercial":true,"productCode":"experience:night-flower-original","grant":"opening:night-flower-original","colorControl":"floralPetalColor"},
     {"id":"particle-heart","label":"Corazón de partículas","renderer":"ParticleTraceScene","commercial":true,"productCode":"experience:particle-heart","grant":"opening:particle-heart"},
+    {"id":"newspaper-fold","label":"Gaceta plegada","renderer":"css","commercial":false},
+    {"id":"vintage-parchment","label":"Pergamino desplegable","renderer":"css","commercial":false},
+    {"id":"olive-universe-orbit","label":"Órbita de olivo","renderer":"css","commercial":false},
+    {"id":"olive-nectar-seal","label":"Sello de néctar y olivo","renderer":"css","commercial":false},
+    {"id":"blue-aurora-reveal","label":"Brisa de aurora","renderer":"css","commercial":false},
+    {"id":"botanical-cosmos-orbit","label":"Cosmos botánico","renderer":"css","commercial":false},
     {"id":"none","label":"Sin apertura","renderer":"none","commercial":false}
   ],
   "galleries": [

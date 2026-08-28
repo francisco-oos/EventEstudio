@@ -90,7 +90,8 @@ for(const style of ["rose-bloom","daisy-bloom","luminous-garden","night-flower-o
 
 for(const [style,minimum] of Object.entries({
   "wax-envelope":3500,"floral-envelope":3700,"minimal-envelope":3900,
-  "cinematic-fold":4000,"ivory-seal":4200,"particle-heart":3700
+  "cinematic-fold":4000,"ivory-seal":4200,"newspaper-fold":4300,"vintage-parchment":4500,
+  "olive-universe-orbit":4600,"olive-nectar-seal":4300,"blue-aurora-reveal":4400,"botanical-cosmos-orbit":4700,"particle-heart":3700
 })){
   const timing=new RegExp(`'${style}':\\{replay:(\\d+),normal:(\\d+)\\}`).exec(app);
   assert.ok(timing,`Falta temporización legible para ${style}.`);
@@ -100,5 +101,10 @@ for(const [style,minimum] of Object.entries({
 assert.match(styles,/\.opening-minimal-envelope\{--opening-flap-duration:1\.3s/);
 assert.match(styles,/\.opening-ivory-seal\{--opening-flap-duration:1\.38s/);
 assert.match(styles,/body\[data-motion="still"\]:not\(\.force-motion-preview\) \.opening-ivory-seal/);
+for(const style of ["newspaper-fold","vintage-parchment","olive-universe-orbit","olive-nectar-seal","blue-aurora-reveal","botanical-cosmos-orbit"]){
+  assert.match(styles,new RegExp(`opening-${style}\\.is-opening|opening-${style}\\.is-opening`),`${style} no define su estado de apertura.`);
+}
+assert.match(styles,/body\.force-motion-preview \.opening-olive-universe-orbit/);
+assert.match(styles,/body\[data-motion="still"\]:not\(\.force-motion-preview\)[\s\S]*opening-botanical-cosmos-orbit/);
 
 console.log("✓ Contratos de animación, accesibilidad y geometría verificados");
