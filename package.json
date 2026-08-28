@@ -23,7 +23,8 @@
     "test:rc21": "node tests/rc21-visual-contracts.js && node tests/rc21-invitation-journeys.js",
     "test:security": "node tests/security-database.js && node tests/security-adversarial.js && node tests/security-headers.js && node tests/origin-policy.js && node tests/data-safety.js && node tests/restore.js && node tests/rc20-permissions.js && node tests/payments-mercadopago.js && node tests/whatsapp-readiness.js",
     "test:functional-parity": "node tests/functional-parity-security-r1.js",
-    "test:production-migration": "node tests/legacy-v0-production-migration.js"
+    "test:production-migration": "node tests/legacy-v0-production-migration.js",
+    "test:production-reset": "node tests/production-reset-keep-users.js"
   },
   "dependencies": {
     "adm-zip": "^0.6.0",
