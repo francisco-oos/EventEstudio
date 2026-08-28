@@ -20,6 +20,18 @@ fs.mkdirSync(dataDir, { recursive: true });
 applyPendingRestoreSync();
 const databaseExisted=fs.existsSync(dbPath);
 const db = new Database(dbPath);
+/* Seguridad de integridad: antes de consultar el esquema, verifica que el archivo
+   SQLite sea legible. Luego activa defensas recomendadas por SQLite para procesos
+   que manejan datos externos/restaurados. No cambia el modelo ni los datos. */
+const startupIntegrity=db.pragma("quick_check",{simple:true});
+if(startupIntegrity!=="ok"){
+  db.close();
+  throw new Error(`La base no superó quick_check al iniciar: ${startupIntegrity}`);
+}
+try{fs.chmodSync(dbPath,0o600);}catch{}
+db.pragma("trusted_schema = OFF");
+db.pragma("cell_size_check = ON");
+db.pragma("mmap_size = 0");
 db.pragma("busy_timeout = 5000");
 const previousSchemaVersion=Number(db.pragma("user_version",{simple:true})||0);
 if(previousSchemaVersion>schemaVersion){
@@ -529,5 +541,14 @@ commercialPlans.plans.forEach(plan=>upsertPlan.run(
 
 require("./commerce-schema").initialize(db);
 db.pragma(`user_version = ${schemaVersion}`);
+
+/* La integridad estructural y la integridad referencial son controles distintos.
+   quick_check detecta corrupción del archivo; foreign_key_check detecta relaciones
+   lógicas rotas que podrían haber llegado desde una restauración o versión antigua. */
+const foreignKeyViolations=db.pragma("foreign_key_check");
+if(foreignKeyViolations.length){
+  db.close();
+  throw new Error(`La base contiene ${foreignKeyViolations.length} violación(es) de clave foránea.`);
+}
 
 module.exports = db;

@@ -12,7 +12,7 @@
     "start": "node src/server.js",
     "local": "node scripts/iniciar-local.js",
     "seed": "node src/seed.js",
-    "test": "node tests/project-integrity.js && node tests/source-references.js && node tests/mobile-ui.js && node tests/local-network.js && node tests/rc14-regressions.js && node tests/data-safety.js && node tests/commerce-migration.js && node tests/origin-policy.js && node tests/security-headers.js && node tests/commerce-journeys.js && node tests/smoke.js && node tests/restore.js && npm run test:rc15 && npm run test:rc15.1 && npm run test:rc17 && npm run test:rc19 && npm run test:animations && npm run test:rc20 && npm run test:rc21",
+    "test": "node tests/project-integrity.js && node tests/source-references.js && node tests/mobile-ui.js && node tests/local-network.js && node tests/rc14-regressions.js && node tests/data-safety.js && node tests/security-database.js && node tests/commerce-migration.js && node tests/origin-policy.js && node tests/security-headers.js && node tests/commerce-journeys.js && npm run test:functional-parity && node tests/smoke.js && node tests/restore.js && npm run test:rc15 && npm run test:rc15.1 && npm run test:rc17 && npm run test:rc19 && npm run test:animations && npm run test:rc20 && npm run test:rc21",
     "test:rc15": "node tests/rc15-regressions.js",
     "test:rc15.1": "node tests/rc15-1-login-hotfix.js",
     "audit": "node scripts/audit-project.js",
@@ -20,7 +20,9 @@
     "test:rc19": "node tests/rc19-regressions.js",
     "test:animations": "node tests/animation-contracts.js",
     "test:rc20": "node tests/rc20-regressions.js && node tests/rc20-permissions.js && node tests/qr-photo-matrix.js && node tests/payments-mercadopago.js && node tests/localization-provider.js && node tests/whatsapp-readiness.js && node tests/scale-1200-users.js",
-    "test:rc21": "node tests/rc21-visual-contracts.js && node tests/rc21-invitation-journeys.js"
+    "test:rc21": "node tests/rc21-visual-contracts.js && node tests/rc21-invitation-journeys.js",
+    "test:security": "node tests/security-database.js && node tests/security-adversarial.js && node tests/security-headers.js && node tests/origin-policy.js && node tests/data-safety.js && node tests/restore.js && node tests/rc20-permissions.js && node tests/payments-mercadopago.js && node tests/whatsapp-readiness.js",
+    "test:functional-parity": "node tests/functional-parity-security-r1.js"
   },
   "dependencies": {
     "adm-zip": "^0.6.0",
@@ -32,7 +34,7 @@
     "exceljs": "^4.4.0",
     "express": "^4.21.2",
     "helmet": "^8.0.0",
-    "multer": "^2.0.2",
+    "multer": "^2.2.0",
     "pdfkit": "^0.15.0",
     "qrcode": "^1.5.4",
     "sanitize-filename": "^1.6.3"
@@ -43,6 +45,7 @@
     "exceljs": {
       "archiver": "$archiver",
       "unzipper": "^0.12.5"
-    }
+    },
+    "tmp": "^0.2.7"
   }
 }

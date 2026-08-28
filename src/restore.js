@@ -40,6 +40,12 @@ function inspectDatabase(databasePath,{production=process.env.NODE_ENV==="produc
   try{
     const integrity=snapshot.pragma("integrity_check",{simple:true});
     if(integrity!=="ok")throw Object.assign(new Error(`La base no pasó la verificación SQLite: ${integrity}`),{code:"RESTORE_DB_INTEGRITY"});
+    snapshot.pragma("trusted_schema = OFF");
+    snapshot.pragma("cell_size_check = ON");
+    snapshot.pragma("mmap_size = 0");
+    snapshot.pragma("foreign_keys = ON");
+    const foreignKeyViolations=snapshot.pragma("foreign_key_check");
+    if(foreignKeyViolations.length)throw Object.assign(new Error(`La base restaurada contiene ${foreignKeyViolations.length} violación(es) de clave foránea.`),{code:"RESTORE_DB_FOREIGN_KEYS"});
     const tables=new Set(snapshot.prepare("SELECT name FROM sqlite_master WHERE type='table'").all().map(row=>row.name));
     const missing=requiredTables.filter(table=>!tables.has(table));
     if(missing.length)throw Object.assign(new Error(`El respaldo no contiene las tablas requeridas: ${missing.join(", ")}.`),{code:"RESTORE_SCHEMA_INVALID"});

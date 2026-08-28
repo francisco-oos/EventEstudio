@@ -11,7 +11,7 @@ const sanitize=require("sanitize-filename");
 const QRCode=require("qrcode");
 const ExcelJS=require("exceljs");
 const PDFDocument=require("pdfkit");
-const archiver=require("archiver");
+const archiverModule=require("archiver");
 const db=require("./db");
 const commerce=require("./commerce");
 const themes=require("../config/themes.json");
@@ -27,6 +27,16 @@ const backups=require("./backup");
 const restore=require("./restore");
 const {numberSetting}=require("./config");
 const {validateImageStructure}=require("./media-validation");
+
+/* Archiver 8 expone clases ESM/CommonJS en lugar de la antigua función fábrica.
+   Este adaptador conserva compatibilidad con ambas formas para que la exportación
+   ZIP de fotografías no dependa de una versión concreta de la dependencia. */
+function createZipArchive(options={}){
+  if(typeof archiverModule==="function")return archiverModule("zip",options);
+  if(typeof archiverModule.ZipArchive==="function")return new archiverModule.ZipArchive(options);
+  throw new Error("No se encontró un renderer ZIP compatible en archiver.");
+}
+const {validateXlsxArchive}=require("./spreadsheet-security");
 const {
   NEUTRAL_PALETTE,
   loadThemeDesigns,
@@ -1884,12 +1894,16 @@ function drawSeatingRosterPdf(doc,{settings,snapshot,palette}){
 function whatsappUrl(event,g){ const s=settingsOf(event); const p=normalizePhone(g.phone); const places=[g.max_adults?`${g.max_adults} adulto(s)`:"",g.max_children?`${g.max_children} niño(s)`:""].filter(Boolean).join(" y "); const eventName=presentedName(s.couple?.displayName||event.name,s.typography); const guestName=presentedName(g.family_name,s.typography); const text=[`Hola, ${guestName}.`,"",`Te compartimos la invitación a ${eventName}.`,places?`Hemos reservado ${places} para ustedes.`:"",g.custom_message||"","","Aquí pueden consultar los detalles y confirmar su asistencia:",invitationUrl(event,g.token)].filter(Boolean).join("\n"); return p?`https://wa.me/${p}?text=${encodeURIComponent(text)}`:""; }
 function safeName(n){ const ext=path.extname(n).toLowerCase(); const base=sanitize(path.basename(n,ext))||"archivo"; return `${Date.now()}-${crypto.randomBytes(4).toString("hex")}-${base}${ext}`; }
 
-const photoUpload=multer({storage:multer.diskStorage({destination:guestPhotosDir,filename:(_r,f,cb)=>cb(null,safeName(f.originalname))}),limits:{fileSize:MAX_UPLOAD_MB*1024*1024,files:20},fileFilter:(_r,f,cb)=>{const ok=["image/jpeg","image/png","image/webp","image/heic","image/heif"].includes(f.mimetype);cb(ok?null:new Error("Sólo fotografías."),ok);}});
-const mediaUpload=multer({storage:multer.diskStorage({destination:siteMediaDir,filename:(_r,f,cb)=>cb(null,safeName(f.originalname))}),limits:{fileSize:70*1024*1024,files:30},fileFilter:(_r,f,cb)=>{const ok=f.mimetype.startsWith("image/")||f.mimetype.startsWith("audio/");cb(ok?null:new Error("Sólo imágenes o audio."),ok);}});
-const excelUpload=multer({dest:tempDir,limits:{fileSize:8*1024*1024,files:1},fileFilter:(_r,f,cb)=>{const ok=/\.(xlsx|csv)$/i.test(f.originalname);cb(ok?null:new Error("Usa un archivo .xlsx o .csv."),ok);}});
+/* Multer 2.2 permite limitar también la profundidad de nombres multipart.
+   EventStudio usa campos planos, así que una profundidad de 1 evita estructuras
+   arbitrariamente anidadas sin cambiar los formularios existentes. */
+const multipartBaseLimits={fields:24,fieldSize:64*1024,fieldNestingDepth:1};
+const photoUpload=multer({storage:multer.diskStorage({destination:guestPhotosDir,filename:(_r,f,cb)=>cb(null,safeName(f.originalname))}),limits:{...multipartBaseLimits,fileSize:MAX_UPLOAD_MB*1024*1024,files:20,parts:48},fileFilter:(_r,f,cb)=>{const ok=["image/jpeg","image/png","image/webp","image/heic","image/heif"].includes(f.mimetype);cb(ok?null:new Error("Sólo fotografías."),ok);}});
+const mediaUpload=multer({storage:multer.diskStorage({destination:siteMediaDir,filename:(_r,f,cb)=>cb(null,safeName(f.originalname))}),limits:{...multipartBaseLimits,fileSize:70*1024*1024,files:30,parts:64},fileFilter:(_r,f,cb)=>{const ok=f.mimetype.startsWith("image/")||f.mimetype.startsWith("audio/");cb(ok?null:new Error("Sólo imágenes o audio."),ok);}});
+const excelUpload=multer({dest:tempDir,limits:{...multipartBaseLimits,fields:4,fileSize:8*1024*1024,files:1,parts:6},fileFilter:(_r,f,cb)=>{const ok=/\.(xlsx|csv)$/i.test(f.originalname);cb(ok?null:new Error("Usa un archivo .xlsx o .csv."),ok);}});
 const backupRestoreUpload=multer({
   dest:tempDir,
-  limits:{fileSize:numberSetting("MAX_RESTORE_MB",4096,{min:64,max:16384})*1024*1024,files:1},
+  limits:{...multipartBaseLimits,fields:4,fileSize:numberSetting("MAX_RESTORE_MB",4096,{min:64,max:16384})*1024*1024,files:1,parts:6},
   fileFilter:(_req,file,callback)=>{
     const accepted=/\.zip$/i.test(file.originalname)&&["application/zip","application/x-zip-compressed","application/octet-stream"].includes(file.mimetype);
     callback(accepted?null:new Error("Selecciona un respaldo ZIP generado por EventStudio."),accepted);
@@ -5037,7 +5051,10 @@ async function readSpreadsheetRows(filePath,originalName=""){
   const workbook=new ExcelJS.Workbook();
   const extension=path.extname(originalName||filePath).toLowerCase();
   if(extension===".csv")await workbook.csv.readFile(filePath);
-  else await workbook.xlsx.readFile(filePath);
+  else{
+    validateXlsxArchive(filePath);
+    await workbook.xlsx.readFile(filePath);
+  }
   const sheet=workbook.worksheets[0];
   if(!sheet)return [];
   const headers=[];
@@ -5415,7 +5432,7 @@ app.get("/api/admin/photos-export.zip",authRequired,eventAllowed,featureRequired
     const rows=db.prepare(`SELECT p.* FROM photos p LEFT JOIN photo_batches b ON b.id=p.batch_id WHERE ${conditions.join(" AND ")} ORDER BY p.created_at,p.id`).all(...params);
     const filename=`fotos-${sanitize(req.event.slug||"evento")}-${statusFilter||"approved"}.zip`;
     res.type("application/zip");res.setHeader("Content-Disposition",`attachment; filename="${filename}"`);
-    const archive=archiver("zip",{zlib:{level:6}});archive.on("error",next);archive.pipe(res);
+    const archive=createZipArchive({zlib:{level:6}});archive.on("error",next);archive.pipe(res);
     const used=new Set();rows.forEach((photo,index)=>{const file=path.join(guestPhotosDir,path.basename(photo.stored_name));if(!fs.existsSync(file))return;let name=sanitize(photo.original_name||`foto-${index+1}.jpg`)||`foto-${index+1}.jpg`;if(used.has(name))name=`${index+1}-${name}`;used.add(name);archive.file(file,{name});});
     archive.finalize();
   }catch(error){next(error);}

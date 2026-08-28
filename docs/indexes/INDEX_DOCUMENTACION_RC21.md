@@ -16,7 +16,7 @@ RC21 prevalece sobre RC20 y anteriores únicamente en preview autorizado, geomet
 
 ## Estado resumido
 
-- 52 plantillas, 10 aperturas, perfiles, invitación/RSVP y base compartida: PASS automatizado.
+- 59 plantillas, 16 aperturas, perfiles, invitación/RSVP y base compartida: PASS automatizado en el paquete suplementado.
 - 1,200 usuarios/eventos, QR/fotos, pago, traducción, WhatsApp y seguridad histórica: PASS.
 - QA ocular en navegadores/hardware y proveedores reales: pendiente antes de estable.
 
@@ -29,3 +29,12 @@ Sobre la base RC21 funcional se añadió una colección visual aislada. Document
 - `../traceability/MATRIZ_TRAZABILIDAD_PLANTILLAS_RC21_ADDON.md`
 
 Inventario efectivo del paquete suplementado: **59 plantillas y 16 aperturas activas** (52/10 originales + 7/6 nuevas). La precedencia funcional del RC21 original no cambia fuera del catálogo visual y del mapa de tiempos de esas seis aperturas.
+
+## Hardening y regresión funcional preproducción — 27/08/2026
+
+- `../security/SEGURIDAD_RC21_PREPRODUCCION_HARDENING.md`
+- `../validation/VALIDACION_SEGURIDAD_RC21_PREPRODUCCION.md`
+- `../audits/AUDITORIA_COMPARATIVA_FUNCIONAL_RC21_SECURITY_R2.md`
+- `../validation/VALIDACION_COMPARATIVA_FUNCIONAL_RC21_SECURITY_R2.md`
+
+La regresión comparativa mantiene 59/16, añade `test:security` y `test:functional-parity`, y corrige la exportación ZIP de fotografías para la API de Archiver 8 sin modificar el frontend ni el catálogo visual.

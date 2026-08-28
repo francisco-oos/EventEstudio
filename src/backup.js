@@ -62,8 +62,14 @@ async function createBackup(userId,metadata={}){
        viva. No debe viajar dentro de su propio snapshot y reaparecer atascado. */
     checkDb.prepare("DELETE FROM backup_records WHERE id=?").run(record.lastInsertRowid);
     const integrity=checkDb.pragma("integrity_check",{simple:true});
+    checkDb.pragma("trusted_schema = OFF");
+    checkDb.pragma("cell_size_check = ON");
+    checkDb.pragma("mmap_size = 0");
+    checkDb.pragma("foreign_keys = ON");
+    const foreignKeyViolations=checkDb.pragma("foreign_key_check");
     checkDb.close();
     if(integrity!=="ok")throw new Error(`La copia SQLite no pasó la verificación: ${integrity}`);
+    if(foreignKeyViolations.length)throw new Error(`La copia SQLite contiene ${foreignKeyViolations.length} violación(es) de clave foránea.`);
     const databaseSha256=await checksum(snapshot);
     const manifest={
       format:"eventstudio-backup-v2",createdAt:new Date().toISOString(),appVersion:require("../package.json").version,

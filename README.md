@@ -9,7 +9,7 @@ Candidata correctiva construida sobre la RC20 entregada por el propietario. RC13
 - Corazón de partículas mide el espacio entre texto y acción en lugar de usar coordenadas rígidas.
 - Flor nocturna original se integra como experiencia separada, con tres flores de cuatro pétalos y colores configurables.
 - Se conserva el orden de capas de RC13 con las cadencias legibles de RC20 (3.6–4.3 s para sobres).
-- Matriz real de 52 plantillas, 10 aperturas, registro, publicación, invitación, RSVP, cortesías y base importada.
+- Matriz efectiva de 59 plantillas, 16 aperturas, registro, publicación, invitación, RSVP, cortesías y base importada.
 - Índice vigente: `docs/indexes/INDEX_DOCUMENTACION_RC21.md`.
 
 ## Principios de esta candidata
