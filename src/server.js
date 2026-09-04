@@ -23,6 +23,20 @@ const {catalog:featureCatalog,normalizeFeatureSettings,featureDecision,featureOv
 const {log,audit}=require("./logger");
 const messaging=require("./messaging");
 const paymentGateway=require("./payments");
+const openpayGifts=require("./openpay-gifts");
+const giftMessagePresets=require("./gift-message-presets");
+const giftPersuasionPresets=require("./gift-persuasion-presets");
+const {normalizeBankDetails,normalizeOpenpayOptions,normalizeGiftMethods,legacyModeFromMethods,publicGiftProjection}=require("./gift-settings");
+const {catalog:sealCatalog,normalizeSeal}=require("./seal-config");
+const {
+  catalog:stationeryCatalog,
+  normalizeStationery,
+  legacyPresetForOpening,
+  isLegacyEnvelopeOpening,
+  designTokens:stationeryDesignTokens,
+  surfaceTexture:stationerySurfaceTexture
+}=require("./stationery-config");
+const {coordinationFor,stationeryIsAuthoritative}=require("./opening-coordination");
 const backups=require("./backup");
 const restore=require("./restore");
 const {numberSetting}=require("./config");
@@ -355,8 +369,9 @@ function normalizePresentation(currentPresentation,incomingPresentation){
     if(Object.prototype.hasOwnProperty.call(incoming,key))next[key]=cleanText(incoming[key],key.endsWith("Description")?1000:240);
   }
   const openingStyles=experienceCatalog.openingIds;
-  if(openingStyles.has(incoming.openingStyle))next.openingStyle=incoming.openingStyle;
-  else if(!openingStyles.has(next.openingStyle))next.openingStyle="wax-envelope";
+  if(openingStyles.has(incoming.openingStyle))next.openingStyle=isLegacyEnvelopeOpening(incoming.openingStyle)?stationeryCatalog.openingId:incoming.openingStyle;
+  else if(!openingStyles.has(next.openingStyle))next.openingStyle=stationeryCatalog.openingId;
+  if(isLegacyEnvelopeOpening(next.openingStyle))next.openingStyle=stationeryCatalog.openingId;
   const experienceModes=new Set(["auto","classic","story","poster","gallery"]);
   const motionLevels=experienceCatalog.motionLevelIds;
   const galleryStyles=experienceCatalog.galleryIds;
@@ -369,8 +384,11 @@ function normalizePresentation(currentPresentation,incomingPresentation){
   next.galleryStyle=galleryStyles.has(incoming.galleryStyle)
     ?incoming.galleryStyle
     :(galleryStyles.has(next.galleryStyle)?next.galleryStyle:"classic");
-  const colorFields={rosePetalColor:"#b70f36",floralPetalColor:"#f7f3de",floralCenterColor:"#d8ad61"};
-  for(const [key,fallback] of Object.entries(colorFields)){
+  const presentationDefaults=defaultSettings.presentation&&typeof defaultSettings.presentation==="object"?defaultSettings.presentation:{};
+  const colorFields=["rosePetalColor","floralPetalColor","floralCenterColor"]
+    .map(key=>[key,String(presentationDefaults[key]||"").toLowerCase()])
+    .filter(([,fallback])=>/^#[0-9a-f]{6}$/i.test(fallback));
+  for(const [key,fallback] of colorFields){
     if(Object.prototype.hasOwnProperty.call(incoming,key)){
       const color=String(incoming[key]||"").trim();
       next[key]=/^#[0-9a-f]{6}$/i.test(color)?color.toLowerCase():fallback;
@@ -702,7 +720,8 @@ function publicBaseUrl(event){
   return alias?.hostname?`https://${normalizeHostname(alias.hostname)}`:SITE_URL.replace(/\/$/,"");
 }
 
-function invitationUrl(event,token){ return `${publicBaseUrl(event)}/e/${event.slug}?i=${encodeURIComponent(token)}`; }
+function publicInvitationUrl(event){ return `${publicBaseUrl(event)}/e/${event.slug}`; }
+function invitationUrl(event,token){ return `${publicInvitationUrl(event)}?i=${encodeURIComponent(token)}`; }
 function tableQrSignature(event,table){
   if(!event||!table)return "";
   return crypto.createHmac("sha256",SESSION_SECRET).update(`${event.id}|${event.slug}|${String(table).trim()}`).digest("base64url").slice(0,32);
@@ -1050,11 +1069,31 @@ function normalizeDesignKit(current={},incoming={}){
 function themeDescriptor(settings){
   const base=themeDesignFor(themeDesigns,settings?.themeId);
   const kit=normalizeDesignKit({},settings?.designKit||{});
-  const merged=kit.enabled?{...base.palette,...kit.palette}:base.palette;
-  return {...base,palette:Object.freeze(ensureAccessiblePalette(merged)),texture:kit.enabled?kit.texture:"none"};
+  const manualBase=kit.enabled?{...base.palette,...kit.palette}:base.palette;
+  const stationery=normalizeStationery(settings?.stationery||{},{},{openingStyle:settings?.presentation?.openingStyle});
+  /*
+     La papelería gobierna todos los tokens únicamente cuando la apertura activa
+     es el sobre unificado personalizado. Cualquier otra entrada conserva la
+     paleta propia de la plantilla y los colores propios de su animación.
+  */
+  const stationeryLinked=stationeryIsAuthoritative(settings,stationery);
+  const merged=stationeryLinked
+    ? {...manualBase,...stationeryDesignTokens(stationery)}
+    :manualBase;
+  const texture=stationeryLinked?stationerySurfaceTexture(stationery):(kit.enabled?kit.texture:"none");
+  return {
+    ...base,
+    palette:Object.freeze(ensureAccessiblePalette(merged)),
+    texture,
+    coordination:coordinationFor(settings)
+  };
 }
 
 function qrPalette(settings){
+  const stationery=normalizeStationery(settings?.stationery||{},{},{openingStyle:settings?.presentation?.openingStyle});
+  /* Un sobre personalizado gobierna también QR: no debe existir una excepción
+     local que rompa la identidad aplicada desde el estudio. */
+  if(stationeryIsAuthoritative(settings,stationery))return themeDescriptor(settings).palette;
   return qrDesignOf(settings).useInvitationColors===false
     ?NEUTRAL_PALETTE
     :themeDescriptor(settings).palette;
@@ -1964,6 +2003,11 @@ app.get("/e/:slug",(req,res)=>{
 });
 app.get("/api/health",(_req,res)=>res.json({ok:true,version:require("../package.json").version}));
 
+app.get("/api/admin/events/:id/public-url",authRequired,eventAllowed,(req,res)=>{
+  if(Number(req.params.id)!==req.event.id)return res.status(400).json({error:"El evento solicitado no coincide con el evento activo."});
+  res.json({url:publicInvitationUrl(req.event),published:Boolean(req.event.published)});
+});
+
 function cookiesOf(req){
   return String(req.headers.cookie||"").split(";").reduce((out,part)=>{
     const index=part.indexOf("=");
@@ -2121,6 +2165,9 @@ app.get("/api/public/plans",(_req,res)=>{
   if(!ALLOW_PUBLIC_REGISTRATION)return res.status(404).json({error:"Registro público deshabilitado.",code:"REGISTRATION_DISABLED"});
   res.json(publicCommercialPlans());
 });
+
+app.get("/api/public/seals",(_req,res)=>res.json(sealCatalog));
+app.get("/api/public/stationery",(_req,res)=>res.json(stationeryCatalog));
 
 app.get("/api/public/catalog",(_req,res)=>{
   const publicThemeProducts=new Map(commerce.allProducts()
@@ -3869,10 +3916,13 @@ function publicConfig(event,{preview=false,platformPreview=false,catalogPreview=
   }
   const currentOpening=settings.presentation?.openingStyle;
   const previewOpeningBypass=openingPreviewApplied&&String(previewOptions.opening||"")===currentOpening;
-  if(!previewOpeningBypass&&DESIGN_PRODUCT_KEYS.opening[currentOpening]&&!publicDesignAccess.opening[currentOpening])settings.presentation.openingStyle="wax-envelope";
+  if(!previewOpeningBypass&&DESIGN_PRODUCT_KEYS.opening[currentOpening]&&!publicDesignAccess.opening[currentOpening])settings.presentation.openingStyle=stationeryCatalog.openingId;
   const currentGallery=settings.presentation?.galleryStyle;
   const previewGalleryBypass=galleryPreviewApplied&&String(previewOptions.gallery||"")===currentGallery;
   if(!previewGalleryBypass&&DESIGN_PRODUCT_KEYS.gallery[currentGallery]&&!publicDesignAccess.gallery[currentGallery])settings.presentation.galleryStyle="classic";
+  const effectiveOpening=settings.presentation?.openingStyle;
+  settings.stationery=normalizeStationery(settings.stationery||{},{},{openingStyle:effectiveOpening});
+  if(isLegacyEnvelopeOpening(effectiveOpening))settings.presentation.openingStyle=stationeryCatalog.openingId;
   /* El brief es material de trabajo interno, no contenido de la invitación. */
   delete settings.creativeBrief;
   if(settings.media){
@@ -3887,7 +3937,17 @@ function publicConfig(event,{preview=false,platformPreview=false,catalogPreview=
       .map(item=>safePublicMediaUrl(item,{allowHttps:true}))
       .filter(Boolean);
   }
-  if(settings.gifts)settings.gifts.link=safeHttpUrl(settings.gifts.link);
+  if(settings.gifts){
+    const publicBank=giftPersuasionPresets.normalizeBank(settings.gifts.bank||{});
+    const motivationalMessage=giftPersuasionPresets.resolve(publicBank);
+    settings.gifts=publicGiftProjection(settings.gifts,{
+      resolvedBank:publicBank,
+      motivationalMessage,
+      registryLink:safeHttpUrl(settings.gifts.link)
+    });
+    delete settings.gifts.bank.persuasionPresetId;
+    delete settings.gifts.bank.persuasionCustomText;
+  }
   if(settings.venue)settings.venue.mapsUrl=safeHttpUrl(settings.venue.mapsUrl);
   if(settings.venues){
     if(settings.venues.ceremony)settings.venues.ceremony.mapsUrl=safeHttpUrl(settings.venues.ceremony.mapsUrl);
@@ -3901,6 +3961,9 @@ function publicConfig(event,{preview=false,platformPreview=false,catalogPreview=
   return {
     ...settings,
     _experiences:experienceCatalog.publicCatalog,
+    _sealCatalog:sealCatalog,
+    _stationeryCatalog:stationeryCatalog,
+    _giftMessagePresets:settings.gifts?.openpay?.messageEnabled===false?[]:giftMessagePresets.forEventType(event.event_type),
     _platform:{branding:{
       attributionEnabled:Boolean(branding.attributionEnabled),
       attributionLabel:cleanText(branding.attributionLabel||"Creado con EventStudio",80),
@@ -3917,6 +3980,7 @@ function publicConfig(event,{preview=false,platformPreview=false,catalogPreview=
     },
     _palette:themeDescriptor(settings).palette,
     _surfaceTexture:themeDescriptor(settings).texture||"none",
+    _openingCoordination:themeDescriptor(settings).coordination,
     _revision:revision,
     event:{...settings.event,slug:event.slug,eventId:event.id,eventType:event.event_type}
   };
@@ -3961,6 +4025,39 @@ app.get("/api/invitation/token/:token",(req,res)=>{
   res.json({guest,rsvp:rsvp||null,eventSlug,menus:eventSettings.menus||{}});
 });
 
+app.get("/api/gifts/openpay/config/:slug",(req,res)=>{
+  const event=eventBySlug(req.params.slug);
+  if(!event||event.archived||!event.published)return res.status(404).json({error:"Evento no encontrado."});
+  const settings=settingsOf(event);
+  if(!eventFeatureDecision(event,"gifts",{role:"public"}).allowed||settings.gifts?.openpay?.enabled!==true)return res.status(404).json({error:"Pago no disponible."});
+  const status=openpayGifts.status();
+  if(!status.configured)return res.status(503).json({error:"Openpay no está configurado.",code:"OPENPAY_NOT_CONFIGURED"});
+  const suggestedAmountCents=Number.isFinite(Number(settings.gifts?.openpay?.suggestedAmountCents))&&Number(settings.gifts.openpay.suggestedAmountCents)>=1000
+    ?Number(settings.gifts.openpay.suggestedAmountCents)
+    :null;
+  res.json({merchantId:status.merchantId,publicKey:status.publicKey,sandbox:status.sandbox,currency:"MXN",suggestedAmountCents,allowCustomAmount:suggestedAmountCents===null?true:settings.gifts?.openpay?.allowCustomAmount!==false,messageEnabled:settings.gifts?.openpay?.messageEnabled!==false,messagePresets:settings.gifts?.openpay?.messageEnabled===false?[]:giftMessagePresets.forEventType(event.event_type)});
+});
+
+app.post("/api/gifts/openpay/charge",async(req,res)=>{
+  const event=eventBySlug(cleanText(req.body?.eventSlug||"",120));
+  if(!event||event.archived||!event.published)return res.status(404).json({error:"Evento no encontrado."});
+  const settings=settingsOf(event);
+  if(!eventFeatureDecision(event,"gifts",{role:"public"}).allowed||settings.gifts?.openpay?.enabled!==true)return res.status(403).json({error:"La pasarela de regalos no está habilitada.",code:"FEATURE_UNAVAILABLE"});
+  const amountCents=Math.round(Number(req.body?.amountCents||0));
+  if(!Number.isInteger(amountCents)||amountCents<1000||amountCents>50000000)return res.status(400).json({error:"Monto inválido."});
+  const tokenId=cleanText(req.body?.tokenId||"",120),deviceSessionId=cleanText(req.body?.deviceSessionId||"",160);
+  if(!tokenId||!deviceSessionId)return res.status(400).json({error:"Token de pago incompleto."});
+  const name=cleanText(req.body?.name||"Invitado",120),email=cleanText(req.body?.email||"",180),phone=cleanText(req.body?.phone||"",40),message=cleanText(req.body?.message||"",500);
+  try{
+    const result=await openpayGifts.charge({event,amountCents,tokenId,deviceSessionId,name,email,phone,message});
+    db.prepare("INSERT INTO gift_contributions(event_id,provider,provider_reference,amount_cents,currency,status,donor_name,donor_email,message) VALUES(?,?,?,?,?,?,?,?,?)").run(event.id,"openpay",result.id,amountCents,"MXN",result.status||"completed",name,email,message);
+    res.json({ok:true,id:result.id,status:result.status||"completed"});
+  }catch(error){
+    console.error("Openpay gift charge failed",error);
+    res.status(error.statusCode||502).json({error:error.publicMessage||"No se pudo procesar el regalo con Openpay.",code:"OPENPAY_CHARGE_FAILED"});
+  }
+});
+
 app.post("/api/rsvp",(req,res)=>{
   const {
     token,attending,adults=0,children=0,attendee_names="",dietary="",
@@ -3975,6 +4072,7 @@ app.post("/api/rsvp",(req,res)=>{
   if(!guest)return res.status(404).json({error:"Invitación inválida."});
 
   const eventSettings=normalizeFeatureSettings(JSON.parse(guest.settings_json));
+  if(eventSettings.rsvp?.enabled===false)return res.status(403).json({error:"Las confirmaciones están desactivadas para este evento.",code:"RSVP_DISABLED"});
   const rsvpEvent=db.prepare("SELECT * FROM events WHERE id=?").get(guest.event_id);
   if(!rsvpEvent||!eventFeatureDecision(rsvpEvent,"rsvp",{role:"public"}).allowed)return res.status(403).json({error:"Las confirmaciones no están habilitadas.",code:"FEATURE_UNAVAILABLE"});
   const closeAt=String(eventSettings.rsvp?.closeAt||"");
@@ -4464,6 +4562,9 @@ app.get("/api/admin/settings",authRequired,eventAllowed,(req,res)=>{
   if(!event)return res.status(404).json({error:"Evento no encontrado."});
 
   const settings=settingsOf(event);
+  const storedOpening=settings.presentation?.openingStyle;
+  settings.stationery=normalizeStationery(settings.stationery||{},{},{openingStyle:storedOpening});
+  settings.presentation=normalizePresentation(settings.presentation,{});
   const platformUser=["owner","developer"].includes(req.user.role);
 
   if(!platformUser){
@@ -4477,6 +4578,7 @@ app.get("/api/admin/settings",authRequired,eventAllowed,(req,res)=>{
     };
   }
 
+  const descriptor=themeDescriptor(settings);
   res.json({
     ...settings,
     _event:{
@@ -4489,7 +4591,13 @@ app.get("/api/admin/settings",authRequired,eventAllowed,(req,res)=>{
     },
     _permissions:{platformUser},
     _experiences:experienceCatalog.publicCatalog,
-    _themePalette:themeDescriptor(settings).palette,
+    _sealCatalog:sealCatalog,
+    _stationeryCatalog:stationeryCatalog,
+    _giftMessagePresets:settings.gifts?.openpay?.messageEnabled===false?[]:giftMessagePresets.forEventType(event.event_type),
+    _giftPersuasionPresets:giftPersuasionPresets.publicCatalog(),
+    _themePalette:descriptor.palette,
+    _surfaceTexture:descriptor.texture||"none",
+    _openingCoordination:descriptor.coordination,
     _designAccess:designAccessForEvent(event,{platform:platformUser}),
     _mediaHealth:eventMediaReferenceReport(event)
   });
@@ -4563,12 +4671,17 @@ app.put("/api/admin/settings",authRequired,eventAllowed,(req,res)=>{
   const current=settingsOf(event);
   const platformUser=["owner","developer"].includes(req.user.role);
   const can=key=>platformUser||eventFeatureDecision(event,key,{role:req.user.role}).allowed;
+  if(!can("templates")&&(req.body.stationery!==undefined||req.body.seal!==undefined)){
+    return res.status(403).json({error:"Tu perfil no puede modificar la papelería ni el lacre de este evento.",code:"TEMPLATES_REQUIRED"});
+  }
   if(!platformUser&&req.body.presentation&&typeof req.body.presentation==="object"){
     const designAccess=designAccessForEvent(event);
     const requestedOpening=req.body.presentation.openingStyle;
+    const requestedPreset=req.body.stationery?.presetId;
+    const gatedOpening=requestedOpening===stationeryCatalog.openingId&&requestedPreset?requestedPreset:requestedOpening;
     const requestedGallery=req.body.presentation.galleryStyle;
-    if(DESIGN_PRODUCT_KEYS.opening[requestedOpening]&&!designAccess.opening[requestedOpening]){
-      const productCode=experienceCatalog.openingProductMap[requestedOpening];
+    if(DESIGN_PRODUCT_KEYS.opening[gatedOpening]&&!designAccess.opening[gatedOpening]){
+      const productCode=experienceCatalog.openingProductMap[gatedOpening];
       return res.status(403).json({error:"Esta apertura requiere adquirir la experiencia correspondiente en la Store.",code:"DESIGN_PRODUCT_REQUIRED",productCode});
     }
     if(DESIGN_PRODUCT_KEYS.gallery[requestedGallery]&&!designAccess.gallery[requestedGallery]){
@@ -4595,6 +4708,13 @@ app.put("/api/admin/settings",authRequired,eventAllowed,(req,res)=>{
     return res.status(403).json({error:"Esta plantilla requiere Premium o el complemento de plantillas.",code:"THEME_PLAN_REQUIRED"});
   }
 
+  const hasStationeryPayload=req.body.stationery&&typeof req.body.stationery==="object";
+  const stationeryOpeningSource=hasStationeryPayload
+    ?(req.body.presentation?.openingStyle||current.presentation?.openingStyle)
+    :(current.presentation?.openingStyle||req.body.presentation?.openingStyle);
+  const stationeryIncoming=req.body.stationery&&typeof req.body.stationery==="object"
+    ?req.body.stationery
+    :(req.body.designKit&&typeof req.body.designKit==="object"?{...(current.stationery||{}),syncDesignTokens:false}:{});
   const next={
     ...current,
     couple:{...(current.couple||{}),...(req.body.couple||{})},
@@ -4610,16 +4730,30 @@ app.put("/api/admin/settings",authRequired,eventAllowed,(req,res)=>{
         }
       : {...(current.dressCode||{})},
     gifts:can("gifts")
-      ? {
-          ...(current.gifts||{}),
-          ...(req.body.gifts||{}),
-          link:safeHttpUrl(req.body.gifts?.link??current.gifts?.link)
-        }
+      ? (()=>{
+          const incoming=req.body.gifts||{};
+          const methods=normalizeGiftMethods(current.gifts||{},incoming);
+          const bank=giftPersuasionPresets.normalizeBank(normalizeBankDetails(current.gifts?.bank||{},incoming.bank||{}));
+          const legacyBankInfo=cleanText(incoming.bankInfo??current.gifts?.bankInfo,1000);
+          const openpay=normalizeOpenpayOptions(current.gifts?.openpay||{},incoming.openpay||{});
+          return {
+            ...(current.gifts||{}),
+            ...incoming,
+            methods,
+            mode:legacyModeFromMethods(methods,openpay.enabled),
+            link:safeHttpUrl(incoming.link??current.gifts?.link),
+            bankInfo:legacyBankInfo,
+            bank,
+            bankInfoEnabled:methods.bankTransfer.enabled===true,
+            openpay
+          };
+        })()
       : {...(current.gifts||{})},
     menus:can("menus")?{...(current.menus||{}),...(req.body.menus||{})}:{...(current.menus||{})},
     media,
     typography:can("templates")?normalizeTypography(current.typography,req.body.typography):normalizeTypography(current.typography,{}),
     designKit:can("templates")?normalizeDesignKit(current.designKit,req.body.designKit):normalizeDesignKit(current.designKit,{}),
+    stationery:can("templates")?normalizeStationery(current.stationery,stationeryIncoming,{openingStyle:stationeryOpeningSource}):normalizeStationery(current.stationery,{}),
     accessibility:can("rsvp")?{...(current.accessibility||{}),...(req.body.accessibility||{})}:{...(current.accessibility||{})},
     agenda:can("program")?{...(current.agenda||{}),...(req.body.agenda||{})}:{...(current.agenda||{})},
     presentation:can("templates")?normalizePresentation(current.presentation,req.body.presentation):normalizePresentation(current.presentation,{}),
@@ -4635,7 +4769,8 @@ app.put("/api/admin/settings",authRequired,eventAllowed,(req,res)=>{
     themeId:nextTheme,
     localization:normalizeLocalization(current.localization,req.body.localization),
     storagePolicy:platformUser?{...(current.storagePolicy||{}),...(req.body.storagePolicy||{})}:{...(current.storagePolicy||{})},
-    rsvp:can("rsvp")?{...(current.rsvp||{}),...(req.body.rsvp||{})}:{...(current.rsvp||{})},
+    rsvp:can("rsvp")?{...(current.rsvp||{}),...(req.body.rsvp||{}),enabled:Boolean(req.body.rsvp?.enabled??current.rsvp?.enabled??true)}:{...(current.rsvp||{})},
+    seal:can("templates")?normalizeSeal(current.seal,req.body.seal):normalizeSeal(current.seal,{}),
     photoPolicy:can("guestPhotoMessages")?{...(current.photoPolicy||{}),...(req.body.photoPolicy||{})}:{...(current.photoPolicy||{})},
     lifecycle:platformUser?{...(current.lifecycle||{}),...(req.body.lifecycle||{})}:{...(current.lifecycle||{})},
     /* La disponibilidad comercial de módulos la controla la plataforma. */
@@ -4667,7 +4802,8 @@ app.put("/api/admin/settings",authRequired,eventAllowed,(req,res)=>{
     ? normalized
     : {...normalized,developer:{mode:"production",showBanner:false,ownerOnly:true}};
   const updatedEvent={...event,settings_json:JSON.stringify(normalized)};
-  res.json({ok:true,settings:{...responseSettings,_mediaHealth:eventMediaReferenceReport(updatedEvent)}});
+  const responseDescriptor=themeDescriptor(normalized);
+  res.json({ok:true,settings:{...responseSettings,_experiences:experienceCatalog.publicCatalog,_sealCatalog:sealCatalog,_stationeryCatalog:stationeryCatalog,_themePalette:responseDescriptor.palette,_surfaceTexture:responseDescriptor.texture||"none",_openingCoordination:responseDescriptor.coordination,_giftMessagePresets:giftMessagePresets.forEventType(req.body.eventMeta?.eventType||event.event_type),_giftPersuasionPresets:giftPersuasionPresets.publicCatalog(),_mediaHealth:eventMediaReferenceReport(updatedEvent)}});
 });
 
 /* Reparación explícita para bases restauradas sin su carpeta uploads.

@@ -7,7 +7,7 @@ const path=require("node:path");
 const root=path.join(__dirname,"..");
 const read=file=>fs.readFileSync(path.join(root,file),"utf8");
 const pkg=require("../package.json");
-assert.ok(["6.14.2-rc.20","6.14.2-rc.21"].includes(pkg.version),"La regresión RC20 debe seguir ejecutándose en RC21.");
+assert.match(pkg.version,/^6\.14\.2-rc\.(?:2[0-9]|[3-9]\d+)$/,"La regresión RC20 debe seguir ejecutándose en RC21 y posteriores.");
 
 for(const file of ["public/admin.html","public/index.html","public/album.html","public/catalogo.html","public/muestra.html","public/showcase.html","public/sandbox.html"]){
   assert.ok(read(file).includes(`styles.css?v=${pkg.version}`),`${file} debe invalidar la caché CSS de la versión actual.`);
@@ -17,9 +17,8 @@ assert.match(admin,/supportClientView=false/);
 assert.doesNotMatch(adminHtml,/id="supportClientView"[^>]*checked/);
 assert.match(adminHtml,/Simular vista cliente/);
 assert.match(renderer,/forceMotion&&this\.motionLevel==='still'\?'balanced'/);
-assert.match(app,/'minimal-envelope':\{replay:4300,normal:4000\}/);
-assert.match(app,/'ivory-seal':\{replay:4600,normal:4300\}/);
-assert.match(styles,/body\[data-motion="still"\]:not\(\.force-motion-preview\) \.opening-ivory-seal/);
+assert.match(app,/'unified-envelope':\{replay:4600,normal:4300\}/);
+assert.match(read("public/stationery-engine.css"),/@media\(prefers-reduced-motion:reduce\)/);
 assert.match(server,/paymentGateway\.verifyWebhookSignature/);
 assert.match(server,/paymentGateway\.getPayment\(dataId\)/);
 assert.match(server,/PAYMENT_AMOUNT_MISMATCH/);

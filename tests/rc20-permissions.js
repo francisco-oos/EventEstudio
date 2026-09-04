@@ -110,7 +110,7 @@ async function main(){
   assert.equal(revoked.response.status,200);
   assert.equal((await request("/api/admin/features",{token:clientA.token,eventId:eventA.data.id})).data.designAccess.opening["luminous-garden"],false);
   const degraded=await request(`/api/config/${encodeURIComponent(eventA.data.slug)}?preview=1`,{token:clientA.token});
-  assert.equal(degraded.data.presentation.openingStyle,"wax-envelope","Al revocar, la salida pública debe degradar a una apertura autorizada.");
+  assert.equal(degraded.data.presentation.openingStyle,"unified-envelope","Al revocar, la salida pública debe degradar a una apertura autorizada.");
 
   const adminSource=fs.readFileSync(path.join(root,"public/admin.js"),"utf8");
   const adminHtml=fs.readFileSync(path.join(root,"public/admin.html"),"utf8");

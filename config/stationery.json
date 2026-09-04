@@ -1,0 +1,826 @@
+{
+  "version": 1,
+  "openingId": "unified-envelope",
+  "defaults": {
+    "enabled": true,
+    "customized": false,
+    "syncDesignTokens": false,
+    "presetId": "wax-envelope",
+    "formatId": "v-flap",
+    "materialId": "smooth-paper",
+    "textureStrength": 62,
+    "outerColor": "#6f7860",
+    "innerColor": "#49513f",
+    "cardColor": "#fffaf3",
+    "textColor": "#40372f",
+    "ornamentColor": "#c3a15c",
+    "sealColor": "#8f3140",
+    "linerId": "mudejar",
+    "overlayId": "none",
+    "stampId": "none",
+    "frameId": "imperial-basic",
+    "dividerId": "diamond-classic",
+    "fontMode": "event"
+  },
+  "legacyAliases": [
+    {
+      "openingId": "wax-envelope",
+      "presetId": "wax-envelope"
+    },
+    {
+      "openingId": "floral-envelope",
+      "presetId": "floral-envelope"
+    },
+    {
+      "openingId": "minimal-envelope",
+      "presetId": "minimal-envelope"
+    },
+    {
+      "openingId": "cinematic-fold",
+      "presetId": "cinematic-fold"
+    },
+    {
+      "openingId": "ivory-seal",
+      "presetId": "ivory-seal"
+    },
+    {
+      "openingId": "olive-nectar-seal",
+      "presetId": "olive-nectar-seal"
+    },
+    {
+      "openingId": "powder-blue-seal",
+      "presetId": "powder-blue-seal"
+    },
+    {
+      "openingId": "blush-heart-emblem",
+      "presetId": "blush-heart-emblem"
+    }
+  ],
+  "formats": [
+    {
+      "id": "v-flap",
+      "label": "Sobre Pico en V",
+      "description": "Clásico, limpio y versátil."
+    },
+    {
+      "id": "square",
+      "label": "Sobre Cuadrado",
+      "description": "Solapa recta, moderno y gráfico."
+    },
+    {
+      "id": "rustic",
+      "label": "Sobre Rústico cruzado",
+      "description": "Solapas laterales más marcadas."
+    },
+    {
+      "id": "card",
+      "label": "Tarjeta Completa",
+      "description": "Sin sobre, vista inmersiva 3D."
+    }
+  ],
+  "materials": [
+    {
+      "id": "smooth-paper",
+      "label": "Papel mate fino",
+      "surfaceTexture": "paper",
+      "description": "Fibra discreta para sobres clásicos y minimalistas.",
+      "source": "wax-envelope / minimal-envelope"
+    },
+    {
+      "id": "floral-bloom",
+      "label": "Floral suave",
+      "surfaceTexture": "paper",
+      "description": "Motivos florales dispersos con hojas y pétalos.",
+      "source": "floral-envelope"
+    },
+    {
+      "id": "cinematic-linen",
+      "label": "Lino cinematográfico",
+      "surfaceTexture": "linen",
+      "description": "Papel de alto contraste con trama diagonal.",
+      "source": "cinematic-fold"
+    },
+    {
+      "id": "ivory-fiber",
+      "label": "Marfil ceremonial",
+      "surfaceTexture": "soft-grain",
+      "description": "Fibra cálida y brillo ornamental muy sutil.",
+      "source": "ivory-seal"
+    },
+    {
+      "id": "newsprint",
+      "label": "Papel gaceta",
+      "surfaceTexture": "paper",
+      "description": "Columnas, reglas finas y aspecto editorial envejecido.",
+      "source": "newspaper-fold"
+    },
+    {
+      "id": "parchment",
+      "label": "Pergamino antiguo",
+      "surfaceTexture": "soft-grain",
+      "description": "Fibras, manchas y variación tonal de papel envejecido.",
+      "source": "vintage-parchment"
+    },
+    {
+      "id": "olive-cosmos",
+      "label": "Universo de olivo",
+      "surfaceTexture": "soft-grain",
+      "description": "Partículas estelares y destellos cálidos sobre la paleta elegida.",
+      "source": "olive-universe-orbit"
+    },
+    {
+      "id": "olive-nectar",
+      "label": "Néctar y olivo",
+      "surfaceTexture": "paper",
+      "description": "Hojas de olivo reinterpretadas con los colores actuales.",
+      "source": "olive-nectar-seal"
+    },
+    {
+      "id": "blue-aurora",
+      "label": "Aurora ondulada",
+      "surfaceTexture": "wash",
+      "description": "Velos y ondas perladas coloreadas con la paleta actual.",
+      "source": "blue-aurora-reveal"
+    },
+    {
+      "id": "botanical-cosmos",
+      "label": "Sobre cosmos botánico",
+      "surfaceTexture": "soft-grain",
+      "description": "Hojas, órbitas y puntos luminosos adaptables.",
+      "source": "botanical-cosmos-orbit"
+    },
+    {
+      "id": "powder-blue",
+      "label": "Perlado diagonal",
+      "surfaceTexture": "linen",
+      "description": "Reflejo nacarado que toma el color exterior actual.",
+      "source": "powder-blue-seal"
+    },
+    {
+      "id": "gala-velvet",
+      "label": "Terciopelo gala",
+      "surfaceTexture": "linen",
+      "description": "Franjas ceremoniales derivadas del color exterior.",
+      "source": "gala-curtain"
+    },
+    {
+      "id": "constellation",
+      "label": "Constelación",
+      "surfaceTexture": "soft-grain",
+      "description": "Estrellas y líneas orbitales con el acento seleccionado.",
+      "source": "constellation-veil"
+    },
+    {
+      "id": "blush-paper",
+      "label": "Microcorazones",
+      "surfaceTexture": "paper",
+      "description": "Corazones y puntos sobre el color elegido.",
+      "source": "blush-heart-emblem"
+    },
+    {
+      "id": "reserve-stripe",
+      "label": "Rayado reserva",
+      "surfaceTexture": "linen",
+      "description": "Rayado diagonal derivado del exterior y sus sombras.",
+      "source": "reserve-uncork"
+    }
+  ],
+  "liners": [
+    {
+      "id": "none",
+      "label": "Ninguno / Quitar",
+      "description": "Sin patrón interior."
+    },
+    {
+      "id": "mudejar",
+      "label": "Celosía Mudéjar",
+      "description": "Trama geométrica andalusí."
+    },
+    {
+      "id": "floral-bloom",
+      "label": "Floral Romance",
+      "description": "Pétalos suaves para combinar con Floral Envelope."
+    },
+    {
+      "id": "damask",
+      "label": "Damask Vintage",
+      "description": "Patrón floral clásico."
+    },
+    {
+      "id": "newsprint",
+      "label": "Gaceta interior",
+      "description": "Columnas finas inspiradas en Newspaper Fold."
+    },
+    {
+      "id": "parchment-fiber",
+      "label": "Fibra Pergamino",
+      "description": "Trazos orgánicos de papel antiguo."
+    },
+    {
+      "id": "constellation",
+      "label": "Constelación Astral",
+      "description": "Motas y estrellas."
+    },
+    {
+      "id": "botanical",
+      "label": "Helechos Botánicos",
+      "description": "Ramas entrelazadas."
+    },
+    {
+      "id": "aurora-wave",
+      "label": "Ondas Aurora",
+      "description": "Velos curvos reinterpretados con el color de acento."
+    }
+  ],
+  "overlays": [
+    {
+      "id": "none",
+      "label": "Ninguno / Quitar",
+      "description": "Sin overlay exterior."
+    },
+    {
+      "id": "ceremonial-gold",
+      "label": "Fajín Oro Ceremonial",
+      "description": "Doble línea dorada ceremonial."
+    },
+    {
+      "id": "victorian-feston",
+      "label": "Festón Victoriano",
+      "description": "Guarda ornamental calada."
+    },
+    {
+      "id": "botanical-corners",
+      "label": "Botánico Exterior",
+      "description": "Ramas ligeras inspiradas en Cosmos y Olivo."
+    },
+    {
+      "id": "constellation-veil",
+      "label": "Velo de Constelación",
+      "description": "Órbitas y puntos celestes por encima del sobre."
+    },
+    {
+      "id": "aurora-veil",
+      "label": "Velo Aurora",
+      "description": "Dos velos translúcidos laterales."
+    },
+    {
+      "id": "blush-heart-band",
+      "label": "Emblema Corazón Blush",
+      "description": "Fajín translúcido con corazón central."
+    },
+    {
+      "id": "reserve-label",
+      "label": "Banda Gran Reserva",
+      "description": "Etiqueta central con filetes inspirada en Reserve."
+    },
+    {
+      "id": "jute-band",
+      "label": "Fajín Yute Rústico",
+      "description": "Banda textil con hilo natural."
+    },
+    {
+      "id": "vellum",
+      "label": "Vitela Translúcida",
+      "description": "Banda semi-transparente elegante."
+    }
+  ],
+  "stamps": [
+    {
+      "id": "none",
+      "label": "Ninguno / Quitar",
+      "description": "Sin elemento postal."
+    },
+    {
+      "id": "wedding-perforated",
+      "label": "Perforado Nupcial",
+      "description": "Estampilla clásica con iniciales."
+    },
+    {
+      "id": "botanical-post",
+      "label": "Botánico Floral",
+      "description": "Estampilla con diseño vegetal."
+    },
+    {
+      "id": "airmail-cancel",
+      "label": "Matasellos Circular",
+      "description": "Doble anillo postal al aire."
+    },
+    {
+      "id": "gazette-special",
+      "label": "Edición Especial",
+      "description": "Sello editorial de Gaceta Plegada."
+    },
+    {
+      "id": "reserve-post",
+      "label": "Gran Reserva",
+      "description": "Etiqueta postal borgoña y oro."
+    },
+    {
+      "id": "celestial-post",
+      "label": "Postal Celestial",
+      "description": "Constelación y monograma."
+    }
+  ],
+  "frames": [
+    {
+      "id": "none",
+      "label": "Ninguno / Quitar",
+      "description": "Sin marco de tarjeta."
+    },
+    {
+      "id": "imperial-basic",
+      "label": "Imperial Básico",
+      "description": "Doble fileteado formal."
+    },
+    {
+      "id": "floral-corners",
+      "label": "Esquinas Florales",
+      "description": "Rosas clásicas en diagonales."
+    },
+    {
+      "id": "vintage-calligraphy",
+      "label": "Marco Caligráfico Vintage",
+      "description": "Filigranas románticas en esquinas."
+    },
+    {
+      "id": "corner-bouquet",
+      "label": "Bouquet Esquina",
+      "description": "Arreglo grande superior derecho."
+    },
+    {
+      "id": "celestial-ring",
+      "label": "Aro Celestial",
+      "description": "Órbita fina tomada del lenguaje de constelación."
+    },
+    {
+      "id": "half-moon-floral",
+      "label": "Media Luna Floral",
+      "description": "Arco de rosas asimétrico."
+    },
+    {
+      "id": "aurora-arch",
+      "label": "Arco Aurora",
+      "description": "Marco superior suave inspirado en Brisa de Aurora."
+    }
+  ],
+  "dividers": [
+    {
+      "id": "none",
+      "label": "Ninguno / Quitar",
+      "symbol": "",
+      "description": "Sin divisor de texto."
+    },
+    {
+      "id": "diamond-classic",
+      "label": "Clásico Rombo",
+      "symbol": "◇",
+      "description": "Línea fina central."
+    },
+    {
+      "id": "twin-vines",
+      "label": "Zarcillos Gemelos",
+      "symbol": "⌁ ◦ ⌁",
+      "description": "Rizos simétricos simples."
+    },
+    {
+      "id": "botanical-heart",
+      "label": "Botánico Corazón",
+      "symbol": "❦",
+      "description": "Hojas entrelazadas."
+    },
+    {
+      "id": "imperial-arrow",
+      "label": "Flecha Imperial",
+      "symbol": "◆",
+      "description": "Puntas de lanza clásicas."
+    },
+    {
+      "id": "vintage-calligraphy-divider",
+      "label": "Caligráfico Vintage",
+      "symbol": "❧",
+      "description": "Volutas ornamentales."
+    },
+    {
+      "id": "constellation-divider",
+      "label": "Constelación",
+      "symbol": "✦ · ✧",
+      "description": "Línea estelar del estilo Cosmos."
+    },
+    {
+      "id": "olive-branch",
+      "label": "Rama de Olivo",
+      "symbol": "❧",
+      "description": "Separador botánico del estilo Néctar."
+    },
+    {
+      "id": "romantic-ribbon",
+      "label": "Lazo Romántico",
+      "symbol": "♡",
+      "description": "Línea de lazo continuo."
+    }
+  ],
+  "presets": [
+    {
+      "id": "wax-envelope",
+      "label": "Sobre con sello de cera",
+      "description": "Papel mate, geometría mudéjar y lacre de la paleta.",
+      "formatId": "v-flap",
+      "materialId": "smooth-paper",
+      "textureStrength": 62,
+      "outerColor": "#6f7860",
+      "innerColor": "#49513f",
+      "cardColor": "#fffaf3",
+      "textColor": "#40372f",
+      "ornamentColor": "#c3a15c",
+      "sealColor": "#8f3140",
+      "linerId": "mudejar",
+      "overlayId": "none",
+      "stampId": "none",
+      "frameId": "imperial-basic",
+      "dividerId": "diamond-classic",
+      "seal": {
+        "enabled": true,
+        "material": "theme",
+        "borderStyle": "organic",
+        "ornament": "laurel"
+      }
+    },
+    {
+      "id": "floral-envelope",
+      "label": "Sobre floral",
+      "description": "Papel romántico, flores y marco botánico.",
+      "formatId": "v-flap",
+      "materialId": "floral-bloom",
+      "textureStrength": 78,
+      "outerColor": "#f7efe9",
+      "innerColor": "#eadbd2",
+      "cardColor": "#fffaf7",
+      "textColor": "#684957",
+      "ornamentColor": "#c37d91",
+      "sealColor": "#8f3f55",
+      "linerId": "floral-bloom",
+      "overlayId": "botanical-corners",
+      "stampId": "botanical-post",
+      "frameId": "floral-corners",
+      "dividerId": "botanical-heart",
+      "seal": {
+        "enabled": true,
+        "material": "theme",
+        "borderStyle": "organic",
+        "ornament": "laurel"
+      }
+    },
+    {
+      "id": "minimal-envelope",
+      "label": "Sobre minimalista",
+      "description": "Marfil limpio, pocos adornos y lacre carbón.",
+      "formatId": "square",
+      "materialId": "smooth-paper",
+      "textureStrength": 34,
+      "outerColor": "#f4f1eb",
+      "innerColor": "#e5e1da",
+      "cardColor": "#ffffff",
+      "textColor": "#222222",
+      "ornamentColor": "#555555",
+      "sealColor": "#222222",
+      "linerId": "none",
+      "overlayId": "none",
+      "stampId": "none",
+      "frameId": "imperial-basic",
+      "dividerId": "diamond-classic",
+      "seal": {
+        "enabled": true,
+        "material": "charcoal",
+        "borderStyle": "classic",
+        "ornament": "none"
+      }
+    },
+    {
+      "id": "cinematic-fold",
+      "label": "Sobre cinematográfico",
+      "description": "Lino negro, oro y contraste de gala.",
+      "formatId": "v-flap",
+      "materialId": "cinematic-linen",
+      "textureStrength": 82,
+      "outerColor": "#191713",
+      "innerColor": "#0f0e0c",
+      "cardColor": "#f7f0e4",
+      "textColor": "#211d17",
+      "ornamentColor": "#b6924f",
+      "sealColor": "#7a1128",
+      "linerId": "damask",
+      "overlayId": "ceremonial-gold",
+      "stampId": "none",
+      "frameId": "imperial-basic",
+      "dividerId": "imperial-arrow",
+      "seal": {
+        "enabled": true,
+        "material": "burgundy",
+        "borderStyle": "organic",
+        "ornament": "fleur"
+      }
+    },
+    {
+      "id": "ivory-seal",
+      "label": "Sobre marfil ceremonial",
+      "description": "Fibra marfil, oro y sello metálico.",
+      "formatId": "v-flap",
+      "materialId": "ivory-fiber",
+      "textureStrength": 58,
+      "outerColor": "#f1e7d8",
+      "innerColor": "#ded0bb",
+      "cardColor": "#fffdf8",
+      "textColor": "#3e342c",
+      "ornamentColor": "#b6924f",
+      "sealColor": "#b8892f",
+      "linerId": "damask",
+      "overlayId": "ceremonial-gold",
+      "stampId": "wedding-perforated",
+      "frameId": "vintage-calligraphy",
+      "dividerId": "imperial-arrow",
+      "seal": {
+        "enabled": true,
+        "material": "gold",
+        "borderStyle": "organic",
+        "ornament": "fleur"
+      }
+    },
+    {
+      "id": "newspaper-fold",
+      "label": "Sobre gaceta plegada",
+      "description": "Papel editorial y elementos de edición especial.",
+      "formatId": "square",
+      "materialId": "newsprint",
+      "textureStrength": 88,
+      "outerColor": "#f8f4e9",
+      "innerColor": "#e8e2d6",
+      "cardColor": "#fbf8ef",
+      "textColor": "#1c1b18",
+      "ornamentColor": "#5f584f",
+      "sealColor": "#222222",
+      "linerId": "none",
+      "overlayId": "none",
+      "stampId": "gazette-special",
+      "frameId": "imperial-basic",
+      "dividerId": "diamond-classic",
+      "seal": {
+        "enabled": false
+      }
+    },
+    {
+      "id": "vintage-parchment",
+      "label": "Sobre pergamino desplegable",
+      "description": "Papel envejecido, yute y lacre borgoña.",
+      "formatId": "rustic",
+      "materialId": "parchment",
+      "textureStrength": 92,
+      "outerColor": "#c99658",
+      "innerColor": "#6c3b1c",
+      "cardColor": "#efd39b",
+      "textColor": "#4a2915",
+      "ornamentColor": "#8a5d2e",
+      "sealColor": "#7a281d",
+      "linerId": "parchment-fiber",
+      "overlayId": "jute-band",
+      "stampId": "none",
+      "frameId": "vintage-calligraphy",
+      "dividerId": "vintage-calligraphy-divider",
+      "seal": {
+        "enabled": true,
+        "material": "burgundy",
+        "borderStyle": "melted",
+        "ornament": "fleur"
+      }
+    },
+    {
+      "id": "olive-universe-orbit",
+      "label": "Sobre órbita de olivo",
+      "description": "Verde noche, estrellas y oro antiguo.",
+      "formatId": "v-flap",
+      "materialId": "olive-cosmos",
+      "textureStrength": 86,
+      "outerColor": "#203126",
+      "innerColor": "#0d1712",
+      "cardColor": "#f5f0df",
+      "textColor": "#33402f",
+      "ornamentColor": "#b49355",
+      "sealColor": "#b49355",
+      "linerId": "constellation",
+      "overlayId": "constellation-veil",
+      "stampId": "celestial-post",
+      "frameId": "celestial-ring",
+      "dividerId": "constellation-divider",
+      "seal": {
+        "enabled": true,
+        "material": "gold",
+        "borderStyle": "organic",
+        "ornament": "stars"
+      }
+    },
+    {
+      "id": "olive-nectar-seal",
+      "label": "Sobre néctar y olivo",
+      "description": "Marfil cálido, hojas de olivo y oro miel.",
+      "formatId": "v-flap",
+      "materialId": "olive-nectar",
+      "textureStrength": 82,
+      "outerColor": "#f7ecd5",
+      "innerColor": "#d7c59f",
+      "cardColor": "#fffaf0",
+      "textColor": "#3b3529",
+      "ornamentColor": "#6c793f",
+      "sealColor": "#b7832e",
+      "linerId": "botanical",
+      "overlayId": "botanical-corners",
+      "stampId": "botanical-post",
+      "frameId": "half-moon-floral",
+      "dividerId": "olive-branch",
+      "seal": {
+        "enabled": true,
+        "material": "gold",
+        "borderStyle": "organic",
+        "ornament": "laurel"
+      }
+    },
+    {
+      "id": "blue-aurora-reveal",
+      "label": "Sobre brisa de aurora",
+      "description": "Azul hielo con velos translúcidos.",
+      "formatId": "square",
+      "materialId": "blue-aurora",
+      "textureStrength": 78,
+      "outerColor": "#d6e7ef",
+      "innerColor": "#afcbd8",
+      "cardColor": "#fbfdff",
+      "textColor": "#2b4857",
+      "ornamentColor": "#63889a",
+      "sealColor": "#9fc4e6",
+      "linerId": "aurora-wave",
+      "overlayId": "aurora-veil",
+      "stampId": "none",
+      "frameId": "aurora-arch",
+      "dividerId": "diamond-classic",
+      "seal": {
+        "enabled": false
+      }
+    },
+    {
+      "id": "botanical-cosmos-orbit",
+      "label": "Sobre cosmos botánico",
+      "description": "Verde profundo con órbitas, hojas y estrellas.",
+      "formatId": "v-flap",
+      "materialId": "botanical-cosmos",
+      "textureStrength": 90,
+      "outerColor": "#1d392f",
+      "innerColor": "#06100d",
+      "cardColor": "#f4f4e8",
+      "textColor": "#23302b",
+      "ornamentColor": "#b99a62",
+      "sealColor": "#1f4f3a",
+      "linerId": "botanical",
+      "overlayId": "constellation-veil",
+      "stampId": "celestial-post",
+      "frameId": "celestial-ring",
+      "dividerId": "constellation-divider",
+      "seal": {
+        "enabled": true,
+        "material": "bottle-green",
+        "borderStyle": "organic",
+        "ornament": "stars"
+      }
+    },
+    {
+      "id": "powder-blue-seal",
+      "label": "Sobre azul perlado",
+      "description": "Papel polvo, acabado nacarado y plata.",
+      "formatId": "square",
+      "materialId": "powder-blue",
+      "textureStrength": 72,
+      "outerColor": "#dce9f6",
+      "innerColor": "#bfcfe4",
+      "cardColor": "#ffffff",
+      "textColor": "#4e6787",
+      "ornamentColor": "#8eb3d8",
+      "sealColor": "#a7b0b8",
+      "linerId": "aurora-wave",
+      "overlayId": "vellum",
+      "stampId": "wedding-perforated",
+      "frameId": "aurora-arch",
+      "dividerId": "diamond-classic",
+      "seal": {
+        "enabled": true,
+        "material": "silver",
+        "borderStyle": "classic",
+        "ornament": "none"
+      }
+    },
+    {
+      "id": "gala-curtain",
+      "label": "Sobre telón de gala",
+      "description": "Terciopelo, oro y presencia ceremonial.",
+      "formatId": "square",
+      "materialId": "gala-velvet",
+      "textureStrength": 92,
+      "outerColor": "#7f3040",
+      "innerColor": "#4e1f2a",
+      "cardColor": "#fffdf9",
+      "textColor": "#442d2d",
+      "ornamentColor": "#d8b25a",
+      "sealColor": "#b8892f",
+      "linerId": "damask",
+      "overlayId": "ceremonial-gold",
+      "stampId": "reserve-post",
+      "frameId": "imperial-basic",
+      "dividerId": "imperial-arrow",
+      "seal": {
+        "enabled": true,
+        "material": "gold",
+        "borderStyle": "organic",
+        "ornament": "fleur"
+      }
+    },
+    {
+      "id": "constellation-veil",
+      "label": "Sobre velo de constelación",
+      "description": "Azul medianoche con red estelar y oro.",
+      "formatId": "v-flap",
+      "materialId": "constellation",
+      "textureStrength": 92,
+      "outerColor": "#22305d",
+      "innerColor": "#10193b",
+      "cardColor": "#1f2b55",
+      "textColor": "#f6f0d9",
+      "ornamentColor": "#d2b26b",
+      "sealColor": "#232f57",
+      "linerId": "constellation",
+      "overlayId": "constellation-veil",
+      "stampId": "celestial-post",
+      "frameId": "celestial-ring",
+      "dividerId": "constellation-divider",
+      "seal": {
+        "enabled": true,
+        "material": "midnight-blue",
+        "borderStyle": "organic",
+        "ornament": "stars"
+      }
+    },
+    {
+      "id": "blush-heart-emblem",
+      "label": "Sobre corazón blush",
+      "description": "Rosa empolvado, corazón y oro rosa.",
+      "formatId": "square",
+      "materialId": "blush-paper",
+      "textureStrength": 68,
+      "outerColor": "#f1d9e1",
+      "innerColor": "#e7bdca",
+      "cardColor": "#fffaf8",
+      "textColor": "#7a4555",
+      "ornamentColor": "#cf4f73",
+      "sealColor": "#c68f7d",
+      "linerId": "floral-bloom",
+      "overlayId": "blush-heart-band",
+      "stampId": "botanical-post",
+      "frameId": "aurora-arch",
+      "dividerId": "romantic-ribbon",
+      "seal": {
+        "enabled": true,
+        "material": "rose-gold",
+        "borderStyle": "organic",
+        "ornament": "none"
+      }
+    },
+    {
+      "id": "reserve-uncork",
+      "label": "Sobre gran reserva",
+      "description": "Rayado borgoña, etiqueta y lacre oro.",
+      "formatId": "v-flap",
+      "materialId": "reserve-stripe",
+      "textureStrength": 96,
+      "outerColor": "#7d3b4d",
+      "innerColor": "#4a252f",
+      "cardColor": "#fbf7f0",
+      "textColor": "#4a3532",
+      "ornamentColor": "#ccb18e",
+      "sealColor": "#bd8a31",
+      "linerId": "damask",
+      "overlayId": "reserve-label",
+      "stampId": "reserve-post",
+      "frameId": "imperial-basic",
+      "dividerId": "imperial-arrow",
+      "seal": {
+        "enabled": true,
+        "material": "gold",
+        "borderStyle": "melted",
+        "ornament": "laurel"
+      }
+    }
+  ],
+  "controls": {
+    "textureStrength": {
+      "min": 0,
+      "max": 100,
+      "step": 1,
+      "suffix": "%"
+    }
+  }
+}

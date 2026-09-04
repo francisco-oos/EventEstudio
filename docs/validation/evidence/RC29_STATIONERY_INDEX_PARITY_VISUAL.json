@@ -1,0 +1,227 @@
+{
+  "summary": {
+    "cases": 2,
+    "profileCases": 5,
+    "failures": 0,
+    "minFps": 60.0029269720474,
+    "avgFps": 60.0029269720474,
+    "maxP95IntervalMs": 16.700000000000728
+  },
+  "rows": [
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "inherited": {
+        "names": "Andrea & Mateo",
+        "date": "18 de diciembre de 2026",
+        "font": "Cormorant"
+      },
+      "presetCount": 16,
+      "presetSvgCount": 16,
+      "presetsRendered": 16,
+      "materialCount": 15,
+      "materialSvgCount": 15,
+      "materialsRendered": 15,
+      "resources": {
+        "frames": {
+          "choices": 8,
+          "expected": 8,
+          "svg": 7,
+          "expectedSvg": 7,
+          "rendered": 8
+        },
+        "dividers": {
+          "choices": 9,
+          "expected": 9,
+          "svg": 8,
+          "expectedSvg": 8,
+          "rendered": 9
+        },
+        "liners": {
+          "choices": 9,
+          "expected": 9,
+          "svg": 8,
+          "expectedSvg": 8,
+          "rendered": 9
+        },
+        "overlays": {
+          "choices": 10,
+          "expected": 10,
+          "svg": 9,
+          "expectedSvg": 9,
+          "rendered": 10
+        },
+        "stamps": {
+          "choices": 7,
+          "expected": 7,
+          "svg": 6,
+          "expectedSvg": 6,
+          "rendered": 7
+        }
+      },
+      "sealSvg": 1,
+      "sealMaterial": "theme",
+      "fps": {
+        "fps": 60.0029269720474,
+        "p95Interval": 16.700000000000728,
+        "frames": 41
+      },
+      "overflow": 0,
+      "previewOpen": true,
+      "clickOpened": true,
+      "clickClosed": true,
+      "putKeys": [
+        "presentation",
+        "seal",
+        "stationery"
+      ],
+      "openingStyle": "unified-envelope",
+      "customized": true,
+      "sync": true,
+      "outerColor": "#123456",
+      "sealColor": "#654321",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "viewport": [
+        1440,
+        900
+      ],
+      "inherited": {
+        "names": "Andrea & Mateo",
+        "date": "18 de diciembre de 2026",
+        "font": "Cormorant"
+      },
+      "presetCount": 16,
+      "presetSvgCount": 16,
+      "presetsRendered": 16,
+      "materialCount": 15,
+      "materialSvgCount": 15,
+      "materialsRendered": 15,
+      "resources": {
+        "frames": {
+          "choices": 8,
+          "expected": 8,
+          "svg": 7,
+          "expectedSvg": 7,
+          "rendered": 8
+        },
+        "dividers": {
+          "choices": 9,
+          "expected": 9,
+          "svg": 8,
+          "expectedSvg": 8,
+          "rendered": 9
+        },
+        "liners": {
+          "choices": 9,
+          "expected": 9,
+          "svg": 8,
+          "expectedSvg": 8,
+          "rendered": 9
+        },
+        "overlays": {
+          "choices": 10,
+          "expected": 10,
+          "svg": 9,
+          "expectedSvg": 9,
+          "rendered": 10
+        },
+        "stamps": {
+          "choices": 7,
+          "expected": 7,
+          "svg": 6,
+          "expectedSvg": 6,
+          "rendered": 7
+        }
+      },
+      "sealSvg": 1,
+      "sealMaterial": "theme",
+      "fps": {
+        "fps": 60.0029269720474,
+        "p95Interval": 16.700000000000728,
+        "frames": 41
+      },
+      "overflow": 0,
+      "previewOpen": true,
+      "clickOpened": true,
+      "clickClosed": true,
+      "putKeys": [
+        "presentation",
+        "seal",
+        "stationery"
+      ],
+      "openingStyle": "unified-envelope",
+      "customized": true,
+      "sync": true,
+      "outerColor": "#123456",
+      "sealColor": "#654321",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "profile": {
+        "profile": "superadmin-propietario",
+        "role": "owner",
+        "templates": false,
+        "canApply": true,
+        "expected": true,
+        "status": "",
+        "errors": [],
+        "ok": true
+      }
+    },
+    {
+      "profile": {
+        "profile": "desarrollador",
+        "role": "developer",
+        "templates": false,
+        "canApply": true,
+        "expected": true,
+        "status": "",
+        "errors": [],
+        "ok": true
+      }
+    },
+    {
+      "profile": {
+        "profile": "cliente-pago-con-plantillas",
+        "role": "client",
+        "templates": true,
+        "canApply": true,
+        "expected": true,
+        "status": "",
+        "errors": [],
+        "ok": true
+      }
+    },
+    {
+      "profile": {
+        "profile": "cliente-gratuito-sin-plantillas",
+        "role": "client",
+        "templates": false,
+        "canApply": false,
+        "expected": false,
+        "status": "Tu perfil puede consultar el diseño, pero no modificar las plantillas de este evento.",
+        "errors": [],
+        "ok": true
+      }
+    },
+    {
+      "profile": {
+        "profile": "cliente-cortesia-con-concesion-plantillas",
+        "role": "client",
+        "templates": true,
+        "canApply": true,
+        "expected": true,
+        "status": "",
+        "errors": [],
+        "ok": true
+      }
+    }
+  ],
+  "failures": []
+}

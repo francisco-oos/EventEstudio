@@ -45,11 +45,11 @@ assert.deepEqual(catalog.motionLevels.map(item=>item.id),["still","subtle","bala
 assert.equal(new Set(catalog.openings.map(item=>item.id)).size,catalog.openings.length,"No puede haber aperturas duplicadas.");
 
 for(const opening of catalog.openings){
-  if(opening.id==="none")continue;
-  if(opening.renderer==="css"&&!["wax-envelope"].includes(opening.id)){
+  if(opening.id==="none"||opening.retired)continue;
+  if(opening.renderer==="css"){
     assert.ok(styles.includes(`.opening-${opening.id}`),`Falta presentación CSS para ${opening.id}.`);
   }
-  if(opening.renderer!=="css"){
+  if(opening.renderer!=="css"&&opening.renderer!=="StationeryEngine"){
     assert.ok(app.includes(`'${opening.id}'`),`app.js no inicializa ${opening.id}.`);
     assert.ok(rendererSource.includes(`class ${opening.renderer}`),`Falta renderer ${opening.renderer}.`);
     assert.ok(rendererSource.includes(opening.renderer),`No se exporta ${opening.renderer}.`);
@@ -89,22 +89,22 @@ for(const style of ["rose-bloom","daisy-bloom","luminous-garden","night-flower-o
 }
 
 for(const [style,minimum] of Object.entries({
-  "wax-envelope":3500,"floral-envelope":3700,"minimal-envelope":3900,
-  "cinematic-fold":4000,"ivory-seal":4200,"newspaper-fold":4300,"vintage-parchment":4500,
-  "olive-universe-orbit":4600,"olive-nectar-seal":4300,"blue-aurora-reveal":4400,"botanical-cosmos-orbit":4700,"particle-heart":3700
+  "unified-envelope":4200,"newspaper-fold":4300,"vintage-parchment":4500,
+  "olive-universe-orbit":4600,"blue-aurora-reveal":4400,"botanical-cosmos-orbit":4700,
+  "gala-curtain":4500,"constellation-veil":4700,"reserve-uncork":4600,"particle-heart":3700
 })){
   const timing=new RegExp(`'${style}':\\{replay:(\\d+),normal:(\\d+)\\}`).exec(app);
   assert.ok(timing,`Falta temporización legible para ${style}.`);
   assert.ok(Number(timing[2])>=minimum,`${style} termina antes de ser perceptible.`);
   assert.ok(Number(timing[1])>=Number(timing[2]),`${style} no puede acelerar durante replay.`);
 }
-assert.match(styles,/\.opening-minimal-envelope\{--opening-flap-duration:1\.3s/);
-assert.match(styles,/\.opening-ivory-seal\{--opening-flap-duration:1\.38s/);
-assert.match(styles,/body\[data-motion="still"\]:not\(\.force-motion-preview\) \.opening-ivory-seal/);
-for(const style of ["newspaper-fold","vintage-parchment","olive-universe-orbit","olive-nectar-seal","blue-aurora-reveal","botanical-cosmos-orbit"]){
+assert.match(read("public/stationery-engine.css"),/\.opening-unified-envelope/);
+for(const style of ["newspaper-fold","vintage-parchment","olive-universe-orbit","blue-aurora-reveal","botanical-cosmos-orbit","gala-curtain","constellation-veil","reserve-uncork"]){
   assert.match(styles,new RegExp(`opening-${style}\\.is-opening|opening-${style}\\.is-opening`),`${style} no define su estado de apertura.`);
 }
 assert.match(styles,/body\.force-motion-preview \.opening-olive-universe-orbit/);
 assert.match(styles,/body\[data-motion="still"\]:not\(\.force-motion-preview\)[\s\S]*opening-botanical-cosmos-orbit/);
+assert.match(styles,/data-seal-preset="frosted"|\[data-seal-preset="frosted"\]/);
+assert.match(styles,/\.opening-seal \.seal-monogram/);
 
 console.log("✓ Contratos de animación, accesibilidad y geometría verificados");

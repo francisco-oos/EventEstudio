@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "presets": [
+    {
+      "id": "memory-fund",
+      "label": "A · Fondo de recuerdos / luna de miel",
+      "strategy": "Efecto anclaje a experiencias",
+      "text": "Nuestro hogar ya cuenta con todo lo indispensable; nuestro mayor anhelo ahora es coleccionar memorias. Si deseas acompañar nuestro inicio de esta manera, tu aportación sumará directamente a nuestra luna de miel y primeros pasos juntos."
+    },
+    {
+      "id": "comfort-normalization",
+      "label": "B · Normalización y comodidad",
+      "strategy": "Prueba social y cortesía orientada a comodidad",
+      "text": "Pensando en la comodidad de quienes nos han preguntado cómo hacernos un presente sin preocuparse por traslados ni logística el día del evento, dejamos a su disposición esta opción práctica y directa:"
+    },
+    {
+      "id": "elevated-reciprocity",
+      "label": "C · Reciprocidad elevada",
+      "strategy": "Elegancia desarmante y reciprocidad no exigente",
+      "text": "El regalo más valioso para nosotros es celebrar este día a tu lado. No obstante, si dentro de tu corazón nace tener un detalle adicional, agradecemos infinitamente tu generosidad a través de este medio:"
+    },
+    {
+      "id": "shared-future",
+      "label": "D · Construcción de futuro",
+      "strategy": "Compromiso emocional y validación",
+      "text": "Estamos dando el paso más importante de nuestras vidas y cada detalle cuenta para cimentar nuestras metas. Si decides ser parte de este comienzo, tu gesto quedará grabado en cada proyecto que construyamos."
+    }
+  ]
+}

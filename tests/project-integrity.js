@@ -78,6 +78,59 @@ for(const relative of [
   "docs/EFECTOS_IMAGEN_RC15.md",
   "docs/I18N_RC15.md",
   "tests/rc15-regressions.js",
+  "docs/analysis/ARQUITECTURA_SEAL_RSVP_GIFTS_RC22.md",
+  "docs/release-notes/RELEASE_NOTES_V6_14_2_RC22.md",
+  "tests/rc22-modules.js",
+  "docs/analysis/ADR_QA_ACCEPTANCE_RC23.md",
+  "docs/validation/VALIDACION_RC23.md",
+  "docs/release-notes/RELEASE_NOTES_V6_14_2_RC23.md",
+  "docs/indexes/INDEX_DOCUMENTACION_RC23.md",
+  "tests/rc23-acceptance-contracts.js",
+  "tests/rc23-concurrent-e2e.js",
+  "docs/analysis/ADR_GIFTS_OPTIONAL_BANK_OPENPAY_RC24.md",
+  "docs/validation/VALIDACION_RC24.md",
+  "docs/release-notes/RELEASE_NOTES_V6_14_2_RC24.md",
+  "docs/indexes/INDEX_DOCUMENTACION_RC24.md",
+  "tests/rc24-gifts.js",
+  "tests/rc24-gifts-visual.py",
+  "config/gift-message-presets.json",
+  "src/gift-message-presets.js",
+  "src/gift-settings.js",
+  "docs/analysis/ADR_GIFTS_MULTI_METHOD_PERSUASION_RC25.md",
+  "docs/validation/VALIDACION_RC25.md",
+  "docs/release-notes/RELEASE_NOTES_V6_14_2_RC25.md",
+  "docs/indexes/INDEX_DOCUMENTACION_RC25.md",
+  "tests/rc25-gifts-modular.js",
+  "tests/rc25-gifts-visual.py",
+  "config/gift-persuasion-presets.json",
+  "src/gift-persuasion-presets.js",
+  "tests/visual-acceptance.py",
+  "tests/visual-device-matrix.py",
+  "public/seal-renderer.js",
+  "public/stationery-engine.js",
+  "public/stationery-engine.css",
+  "public/assets/varilla_onfalos_elegante.svg",
+  "config/stationery.json",
+  "src/stationery-config.js",
+  "docs/audits/AUDITORIA_RC27.md",
+  "docs/analysis/ADR_STATIONERY_ENGINE_RC27.md",
+  "docs/validation/VALIDACION_RC27.md",
+  "docs/release-notes/RELEASE_NOTES_V6_14_2_RC27.md",
+  "docs/indexes/INDEX_DOCUMENTACION_RC27.md",
+  "tests/rc27-stationery-engine.js",
+  "public/stationery-studio.html",
+  "public/stationery-studio.css",
+  "public/stationery-studio.js",
+  "src/opening-coordination.js",
+  "docs/analysis/ADR_STATIONERY_STUDIO_RC28.md",
+  "docs/audits/AUDITORIA_RC28.md",
+  "docs/validation/VALIDACION_RC28.md",
+  "docs/release-notes/RELEASE_NOTES_V6_14_2_RC28.md",
+  "docs/indexes/INDEX_DOCUMENTACION_RC28.md",
+  "tests/rc28-stationery-studio.js",
+  "config/seals.json",
+  "src/seal-config.js",
+  "src/openpay-gifts.js",
   "public/showcase.html",
   "public/showcase.js",
   "public/sandbox.html",
@@ -215,7 +268,7 @@ for(const expected of ["kids-party","anniversary","baptism","first-communion"]){
   assert.ok(eventTypes.some(type=>type.id===expected),`Falta el tipo de evento ${expected}.`);
 }
 const themes=JSON.parse(read("config/themes.json"));
-assert.equal(themes.length,59,"La base conserva 52 plantillas y el add-on suma 7 sin sustituir ninguna.");
+assert.equal(themes.length,64,"La base conserva 52 plantillas y los add-ons suman 12 sin sustituir ninguna.");
 assert.equal(new Set(themes.map(theme=>theme.id)).size,themes.length,"Las plantillas deben tener identificadores únicos.");
 const themeDesigns=loadThemeDesigns(themes,path.join(root,"public","styles.css"));
 assert.equal(themeDesigns.size,themes.length,"Cada plantilla debe tener una paleta de impresión derivada de su CSS.");
@@ -234,7 +287,7 @@ for(const theme of themes){
   assert.ok(publicApp.includes(`'${theme.photoStyle}'`),`${theme.id} usa el estilo fotográfico no reconocido ${theme.photoStyle}.`);
   assert.ok(publicStyles.includes(`[data-photo-style=${theme.photoStyle}]`),`${theme.id} no tiene comportamiento CSS para ${theme.photoStyle}.`);
 }
-for(const id of ["destination-passport","eternal-rose","cinematic-journey","petal-letter","achievement-path","family-memories","daisy-paper-orbit","daisy-meadow-air","daisy-editorial-light","daisy-shadow-studio","wedding-gazette","vintage-parchment","sage-photo-editorial","olive-universe","olive-nectar","blue-breeze-aurora","botanical-cosmos"]){
+for(const id of ["destination-passport","eternal-rose","cinematic-journey","petal-letter","achievement-path","family-memories","daisy-paper-orbit","daisy-meadow-air","daisy-editorial-light","daisy-shadow-studio","wedding-gazette","vintage-parchment","sage-photo-editorial","olive-universe","olive-nectar","blue-breeze-aurora","botanical-cosmos","powder-blue-letter","gala-marquee","celestial-constellation","blush-heart-letter","gran-reserva"]){
   assert.ok(themes.some(theme=>theme.id===id),`Falta la plantilla requerida ${id}.`);
 }
 const protectedBrands=/Disney|Pixar|Zootopia|Toy Story|Bluey|Paw Patrol|Marvel|Nintendo/i;
@@ -264,7 +317,7 @@ assert.match(read("public/sandbox.html"),/Empieza sin registro/);
 assert.match(read("src/server.js"),/VALUES\(\?,\?,'courtesy'/,"Las concesiones manuales deben registrarse como cortesía.");
 assert.match(read("src/server.js"),/DESIGN_PRODUCT_REQUIRED/,"El servidor debe impedir experiencias no adquiridas.");
 const experienceConfig=JSON.parse(read("config/experiences.json"));
-for(const id of ["rose-bloom","particle-heart","daisy-bloom","ivory-seal","newspaper-fold","vintage-parchment","olive-universe-orbit","olive-nectar-seal","blue-aurora-reveal","botanical-cosmos-orbit"]){assert.ok(experienceConfig.openings.some(item=>item.id===id),`Falta la apertura ${id}.`);}
+for(const id of ["rose-bloom","particle-heart","daisy-bloom","ivory-seal","newspaper-fold","vintage-parchment","olive-universe-orbit","olive-nectar-seal","blue-aurora-reveal","botanical-cosmos-orbit","powder-blue-seal","gala-curtain","constellation-veil","blush-heart-emblem","reserve-uncork"]){assert.ok(experienceConfig.openings.some(item=>item.id===id),`Falta la apertura ${id}.`);}
 for(const id of ["cinematic-depth","focus-strip","editorial-masonry","memories-orbit"]){assert.ok(experienceConfig.galleries.some(item=>item.id===id),`Falta la galería ${id}.`);}
 assert.match(read("src/server.js"),/status:"pending_payment"/,"El carrito no debe acreditarse antes de confirmar el pago.");
 assert.match(read("public/admin.html"),/id="commerceProductGrid"/,"Mi negocio debe contener el catálogo único.");

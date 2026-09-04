@@ -1,0 +1,396 @@
+{
+  "summary": {
+    "deviceMatrix": [
+      [
+        320,
+        568
+      ],
+      [
+        360,
+        800
+      ],
+      [
+        390,
+        844
+      ],
+      [
+        412,
+        915
+      ],
+      [
+        768,
+        1024
+      ],
+      [
+        1440,
+        900
+      ]
+    ],
+    "cases": 30,
+    "failures": 0,
+    "maxOverflow": 0
+  },
+  "results": [
+    {
+      "theme": "powder-blue-letter",
+      "opening": "powder-blue-seal",
+      "viewport": [
+        320,
+        568
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "theme": "powder-blue-letter",
+      "opening": "powder-blue-seal",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "theme": "powder-blue-letter",
+      "opening": "powder-blue-seal",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "theme": "powder-blue-letter",
+      "opening": "powder-blue-seal",
+      "viewport": [
+        412,
+        915
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "theme": "powder-blue-letter",
+      "opening": "powder-blue-seal",
+      "viewport": [
+        768,
+        1024
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "theme": "powder-blue-letter",
+      "opening": "powder-blue-seal",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "theme": "gala-marquee",
+      "opening": "gala-curtain",
+      "viewport": [
+        320,
+        568
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "theme": "gala-marquee",
+      "opening": "gala-curtain",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "theme": "gala-marquee",
+      "opening": "gala-curtain",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "theme": "gala-marquee",
+      "opening": "gala-curtain",
+      "viewport": [
+        412,
+        915
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "theme": "gala-marquee",
+      "opening": "gala-curtain",
+      "viewport": [
+        768,
+        1024
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "theme": "gala-marquee",
+      "opening": "gala-curtain",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "theme": "celestial-constellation",
+      "opening": "constellation-veil",
+      "viewport": [
+        320,
+        568
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "theme": "celestial-constellation",
+      "opening": "constellation-veil",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "theme": "celestial-constellation",
+      "opening": "constellation-veil",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "theme": "celestial-constellation",
+      "opening": "constellation-veil",
+      "viewport": [
+        412,
+        915
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "theme": "celestial-constellation",
+      "opening": "constellation-veil",
+      "viewport": [
+        768,
+        1024
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "theme": "celestial-constellation",
+      "opening": "constellation-veil",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "theme": "blush-heart-letter",
+      "opening": "blush-heart-emblem",
+      "viewport": [
+        320,
+        568
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "theme": "blush-heart-letter",
+      "opening": "blush-heart-emblem",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "theme": "blush-heart-letter",
+      "opening": "blush-heart-emblem",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "theme": "blush-heart-letter",
+      "opening": "blush-heart-emblem",
+      "viewport": [
+        412,
+        915
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "theme": "blush-heart-letter",
+      "opening": "blush-heart-emblem",
+      "viewport": [
+        768,
+        1024
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "theme": "blush-heart-letter",
+      "opening": "blush-heart-emblem",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "theme": "gran-reserva",
+      "opening": "reserve-uncork",
+      "viewport": [
+        320,
+        568
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "theme": "gran-reserva",
+      "opening": "reserve-uncork",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "theme": "gran-reserva",
+      "opening": "reserve-uncork",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "theme": "gran-reserva",
+      "opening": "reserve-uncork",
+      "viewport": [
+        412,
+        915
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "theme": "gran-reserva",
+      "opening": "reserve-uncork",
+      "viewport": [
+        768,
+        1024
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "theme": "gran-reserva",
+      "opening": "reserve-uncork",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "overlap": false,
+      "errors": [],
+      "ok": true
+    }
+  ],
+  "failures": []
+}

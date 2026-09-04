@@ -228,6 +228,22 @@ CREATE TABLE IF NOT EXISTS guests (
   FOREIGN KEY(event_id) REFERENCES events(id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS gift_contributions (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  event_id INTEGER NOT NULL,
+  provider TEXT NOT NULL,
+  provider_reference TEXT NOT NULL,
+  amount_cents INTEGER NOT NULL,
+  currency TEXT NOT NULL DEFAULT 'MXN',
+  status TEXT NOT NULL,
+  donor_name TEXT,
+  donor_email TEXT,
+  message TEXT,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  UNIQUE(provider,provider_reference),
+  FOREIGN KEY(event_id) REFERENCES events(id) ON DELETE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS rsvps (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   guest_id INTEGER NOT NULL UNIQUE,
@@ -414,6 +430,7 @@ CREATE INDEX IF NOT EXISTS idx_floor_zones_event ON event_floor_zones(event_id,o
 CREATE INDEX IF NOT EXISTS idx_seating_event_table ON seating_assignments(event_id,table_id,seat_index);
 CREATE INDEX IF NOT EXISTS idx_sessions_user_expiry ON sessions(user_id,expires_at);
 CREATE INDEX IF NOT EXISTS idx_rsvps_guest ON rsvps(guest_id);
+CREATE INDEX IF NOT EXISTS idx_gift_contributions_event ON gift_contributions(event_id,created_at);
 CREATE INDEX IF NOT EXISTS idx_photo_batches_event_status ON photo_batches(event_id,status,created_at);
 CREATE INDEX IF NOT EXISTS idx_message_queue_event_status ON message_queue(event_id,status,created_at);
 CREATE UNIQUE INDEX IF NOT EXISTS idx_message_queue_provider_id ON message_queue(provider_message_id) WHERE provider_message_id IS NOT NULL;
@@ -508,7 +525,7 @@ db.prepare("SELECT id,event_type,settings_json FROM events").all().forEach(event
     settings.qrDesign={showFamilies:false,...(settings.qrDesign||{})};
     settings.physicalInvitation={templateId:"auto-theme",...(settings.physicalInvitation||{})};
     settings.presentation={
-      openingStyle:"wax-envelope",
+      openingStyle:"unified-envelope",
       experienceMode:"auto",
       motionLevel:"balanced",
       openingEyebrow:"Una invitación para ti",

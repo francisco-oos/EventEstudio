@@ -1,0 +1,225 @@
+{
+  "version": 2,
+  "defaults": {
+    "enabled": true,
+    "autoMonogram": true,
+    "initial1": "",
+    "initial2": "",
+    "connector": "&",
+    "topText": "",
+    "bottomText": "",
+    "font": "Cormorant Garamond",
+    "fontSize": 104,
+    "kerning": 1.5,
+    "verticalOffset": 0,
+    "borderStyle": "organic",
+    "ornament": "none",
+    "material": "theme",
+    "customColor": "#7a1128",
+    "reliefDepth": 7,
+    "reliefMode": "engraved",
+    "specular": 55,
+    "quality": "balanced",
+    "customized": false
+  },
+  "fonts": [
+    {
+      "id": "Cormorant Garamond",
+      "label": "Cormorant Garamond",
+      "family": "Cormorant Garamond, Georgia, serif"
+    },
+    {
+      "id": "Cinzel Decorative",
+      "label": "Cinzel Decorative",
+      "family": "Cinzel Decorative, Georgia, serif"
+    },
+    {
+      "id": "Playfair Display",
+      "label": "Playfair Display",
+      "family": "Playfair Display, Georgia, serif"
+    },
+    {
+      "id": "Great Vibes",
+      "label": "Great Vibes",
+      "family": "Great Vibes, cursive"
+    },
+    {
+      "id": "Pinyon Script",
+      "label": "Pinyon Script",
+      "family": "Pinyon Script, cursive"
+    },
+    {
+      "id": "Alex Brush",
+      "label": "Alex Brush",
+      "family": "Alex Brush, cursive"
+    }
+  ],
+  "borders": [
+    {
+      "id": "classic",
+      "label": "Circular clásica"
+    },
+    {
+      "id": "organic",
+      "label": "Cera orgánica"
+    },
+    {
+      "id": "melted",
+      "label": "Derretida fluida"
+    }
+  ],
+  "ornaments": [
+    {
+      "id": "none",
+      "label": "Minimalista"
+    },
+    {
+      "id": "laurel",
+      "label": "Corona de laurel"
+    },
+    {
+      "id": "fleur",
+      "label": "Flor de lis"
+    },
+    {
+      "id": "stars",
+      "label": "Estrellas"
+    },
+    {
+      "id": "quadrant",
+      "label": "Cuadrante vintage"
+    }
+  ],
+  "materials": [
+    {
+      "id": "theme",
+      "label": "Color de la plantilla",
+      "theme": true
+    },
+    {
+      "id": "burgundy",
+      "label": "Rojo Borgoña",
+      "light": "#a8324a",
+      "mid": "#7a1128",
+      "dark": "#3d0912",
+      "metallic": false
+    },
+    {
+      "id": "gold",
+      "label": "Oro Antiguo",
+      "light": "#f0d387",
+      "mid": "#b8892f",
+      "dark": "#7a541a",
+      "metallic": true
+    },
+    {
+      "id": "silver",
+      "label": "Plata / Peltre",
+      "light": "#eef1f3",
+      "mid": "#a7b0b8",
+      "dark": "#5c646b",
+      "metallic": true
+    },
+    {
+      "id": "rose-gold",
+      "label": "Oro Rosa",
+      "light": "#f3c9c0",
+      "mid": "#c68f7d",
+      "dark": "#8a5548",
+      "metallic": true
+    },
+    {
+      "id": "bottle-green",
+      "label": "Verde Botella",
+      "light": "#4c8067",
+      "mid": "#1f4f3a",
+      "dark": "#0e2c1f",
+      "metallic": false
+    },
+    {
+      "id": "midnight-blue",
+      "label": "Azul Medianoche",
+      "light": "#4a5a8a",
+      "mid": "#232f57",
+      "dark": "#111a33",
+      "metallic": false
+    },
+    {
+      "id": "charcoal",
+      "label": "Negro Carbón",
+      "light": "#5a5a5a",
+      "mid": "#2b2b2b",
+      "dark": "#121212",
+      "metallic": false
+    },
+    {
+      "id": "custom",
+      "label": "Personalizado",
+      "custom": true
+    }
+  ],
+  "qualityLevels": [
+    {
+      "id": "lite",
+      "label": "Ligero"
+    },
+    {
+      "id": "balanced",
+      "label": "Equilibrado"
+    },
+    {
+      "id": "full",
+      "label": "Alta calidad"
+    }
+  ],
+  "controls": {
+    "fontSize": {
+      "min": 40,
+      "max": 170,
+      "step": 1
+    },
+    "kerning": {
+      "min": -4,
+      "max": 22,
+      "step": 0.5
+    },
+    "verticalOffset": {
+      "min": -60,
+      "max": 60,
+      "step": 1
+    },
+    "reliefDepth": {
+      "min": 2,
+      "max": 16,
+      "step": 1
+    },
+    "specular": {
+      "min": 10,
+      "max": 100,
+      "step": 1,
+      "suffix": "%"
+    }
+  },
+  "connectorSuggestions": [
+    "&",
+    "+",
+    "×",
+    "·",
+    "•",
+    "♥",
+    "∞",
+    "/",
+    "—",
+    "|"
+  ],
+  "reliefModes": [
+    {
+      "id": "engraved",
+      "label": "Grabado / hundido"
+    },
+    {
+      "id": "embossed",
+      "label": "Elevado / realzado"
+    }
+  ]
+}

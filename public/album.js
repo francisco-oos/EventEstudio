@@ -52,6 +52,13 @@ async function loadAlbumTheme(){
     if(!response.ok)return;
     const settings=await response.json();
     document.body.className=`simple-page album-page theme-${settings.themeId||'romantic-wine'}`;
+    const palette=settings._palette||{};
+    ['bg','paper','ink','muted','accent','accentText','gold','line','accentContrast'].forEach(key=>{
+      const value=palette[key];
+      const cssKey=key==='accentContrast'?'accent-contrast':key==='accentText'?'accent-text':key;
+      if(/^#[0-9a-f]{6}$/i.test(String(value||'')))document.body.style.setProperty(`--${cssKey}`,value);
+    });
+    document.body.dataset.surfaceTexture=String(settings._surfaceTexture||'none');
     document.documentElement.style.setProperty('--font-heading',fontMap[settings.typography?.heading]||fontMap.georgia);
     document.documentElement.style.setProperty('--font-body',fontMap[settings.typography?.body]||fontMap.system);
     document.body.style.fontFamily='var(--font-body)';

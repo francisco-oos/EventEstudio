@@ -1,0 +1,83 @@
+{
+  "version": 1,
+  "maxVisible": 6,
+  "presets": [
+    {
+      "id": "warm-wishes",
+      "label": "Cálido y cercano",
+      "eventTypes": ["*"],
+      "principles": ["empatía", "calidez", "autonomía"],
+      "text": "Con mucho cariño, que esta nueva etapa esté llena de alegría, tranquilidad y recuerdos que siempre quieran volver a contar."
+    },
+    {
+      "id": "gratitude-presence",
+      "label": "Agradecimiento",
+      "eventTypes": ["*"],
+      "principles": ["gratitud", "reciprocidad no condicionada"],
+      "text": "Gracias por permitirnos compartir este momento con ustedes. Les deseamos todo lo bonito que una etapa así merece."
+    },
+    {
+      "id": "shared-memory",
+      "label": "Recuerdo compartido",
+      "eventTypes": ["*"],
+      "principles": ["pertenencia", "memoria compartida"],
+      "text": "Nos alegra mucho ser parte de este día. Que lo vivido hoy sea apenas uno de muchos recuerdos hermosos por venir."
+    },
+    {
+      "id": "future-oriented",
+      "label": "Buenos deseos",
+      "eventTypes": ["*"],
+      "principles": ["proyección positiva", "empatía"],
+      "text": "Que todo lo que viene encuentre siempre motivos para celebrar, personas para acompañarse y momentos para agradecer."
+    },
+    {
+      "id": "wedding-choice",
+      "label": "Para boda o aniversario",
+      "eventTypes": ["wedding", "anniversary"],
+      "principles": ["compromiso", "vínculo", "afecto"],
+      "text": "Que sigan eligiéndose con cariño, paciencia y la misma alegría con la que hoy celebramos su historia."
+    },
+    {
+      "id": "wedding-adventure",
+      "label": "Nueva aventura juntos",
+      "eventTypes": ["wedding", "anniversary"],
+      "principles": ["proyecto compartido", "optimismo"],
+      "text": "Que esta nueva aventura juntos esté llena de complicidad, aprendizajes, risas y muchísimos momentos que valga la pena guardar."
+    },
+    {
+      "id": "birthday-new-year",
+      "label": "Cumpleaños",
+      "eventTypes": ["birthday", "kids-party"],
+      "principles": ["celebración", "identidad positiva"],
+      "text": "Que este nuevo año de vida llegue con grandes momentos, personas bonitas y muchas razones para sonreír y celebrar."
+    },
+    {
+      "id": "xv-new-stage",
+      "label": "XV años",
+      "eventTypes": ["xv"],
+      "principles": ["identidad", "nueva etapa", "apoyo social"],
+      "text": "Que esta nueva etapa esté llena de sueños propios, personas que te impulsen y experiencias que recuerdes siempre con una sonrisa."
+    },
+    {
+      "id": "family-blessing",
+      "label": "Familiar y afectuoso",
+      "eventTypes": ["baby-shower", "baptism", "first-communion", "kids-party"],
+      "principles": ["cuidado", "vínculo familiar", "empatía"],
+      "text": "Que este día quede rodeado de cariño y que cada etapa que venga encuentre una familia unida para acompañarla y celebrarla."
+    },
+    {
+      "id": "graduation-future",
+      "label": "Graduación",
+      "eventTypes": ["graduation"],
+      "principles": ["reconocimiento", "autoeficacia", "proyección positiva"],
+      "text": "Que este logro sea el comienzo de nuevos retos, oportunidades y decisiones de las que siempre puedas sentir orgullo."
+    },
+    {
+      "id": "professional-congratulations",
+      "label": "Profesional",
+      "eventTypes": ["corporate"],
+      "principles": ["reconocimiento", "respeto", "proyección positiva"],
+      "text": "Muchas felicidades por este momento. Que sea el inicio de nuevas oportunidades, buenos proyectos y motivos para seguir creciendo."
+    }
+  ]
+}

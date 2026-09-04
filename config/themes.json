@@ -1601,5 +1601,153 @@
     "motif": "branch",
     "defaultExperience": "story",
     "minPlan": "premium"
+  },
+  {
+    "id": "powder-blue-letter",
+    "name": "Carta azul empolvada",
+    "description": "Azul hielo, papel perlado y un monograma sellado para una invitación etérea y luminosa.",
+    "className": "theme-powder-blue-letter",
+    "preview": "❄",
+    "tags": [
+      "azul",
+      "carta",
+      "sobre",
+      "sellado",
+      "etéreo"
+    ],
+    "eventTypes": [
+      "wedding",
+      "baptism",
+      "first-communion",
+      "anniversary",
+      "custom"
+    ],
+    "layoutFamily": "editorial",
+    "layoutLabel": "Carta sellada en azul empolvado",
+    "motionPreset": "subtle",
+    "motionLabel": "Apertura suave de sobre",
+    "photoStyle": "linen",
+    "photoStyleLabel": "Retrato con marco suave",
+    "motif": "stamp",
+    "defaultExperience": "classic",
+    "minPlan": "basic"
+  },
+  {
+    "id": "gala-marquee",
+    "name": "Función de gala",
+    "description": "Cortinas de teatro, marquesina iluminada y contrastes dramáticos para una invitación tipo premiere.",
+    "className": "theme-gala-marquee",
+    "preview": "✺",
+    "tags": [
+      "gala",
+      "teatro",
+      "marquesina",
+      "premiere",
+      "cortina"
+    ],
+    "eventTypes": [
+      "wedding",
+      "xv",
+      "graduation",
+      "corporate",
+      "custom"
+    ],
+    "layoutFamily": "cinematic",
+    "layoutLabel": "Escenario y marquesina de estreno",
+    "motionPreset": "balanced",
+    "motionLabel": "Telón y luces de gala",
+    "photoStyle": "cover",
+    "photoStyleLabel": "Fotografía protagónica de estreno",
+    "motif": "light",
+    "defaultExperience": "story",
+    "minPlan": "premium"
+  },
+  {
+    "id": "celestial-constellation",
+    "name": "Constelación eterna",
+    "description": "Azul medianoche, estrellas doradas y trazos orbitales para una invitación romántica inspirada en el cielo nocturno.",
+    "className": "theme-celestial-constellation",
+    "preview": "✦",
+    "tags": [
+      "constelación",
+      "estrellas",
+      "noche",
+      "celestial",
+      "azul"
+    ],
+    "eventTypes": [
+      "wedding",
+      "anniversary",
+      "xv",
+      "custom"
+    ],
+    "layoutFamily": "celestial",
+    "layoutLabel": "Constelación editorial nocturna",
+    "motionPreset": "balanced",
+    "motionLabel": "Órbitas y destellos lentos",
+    "photoStyle": "orbit",
+    "photoStyleLabel": "Retratos en arco celeste",
+    "motif": "star",
+    "defaultExperience": "story",
+    "minPlan": "premium"
+  },
+  {
+    "id": "blush-heart-letter",
+    "name": "Carta corazón blush",
+    "description": "Rosa empolvado, corazón central y detalles delicados para una invitación romántica y suave.",
+    "className": "theme-blush-heart-letter",
+    "preview": "♡",
+    "tags": [
+      "corazón",
+      "blush",
+      "rosa",
+      "romántica",
+      "carta"
+    ],
+    "eventTypes": [
+      "wedding",
+      "anniversary",
+      "xv",
+      "baby-shower",
+      "custom"
+    ],
+    "layoutFamily": "storybook",
+    "layoutLabel": "Carta romántica con emblema corazón",
+    "motionPreset": "subtle",
+    "motionLabel": "Latidos y caída suave",
+    "photoStyle": "portrait",
+    "photoStyleLabel": "Portarretrato romántico",
+    "motif": "rose",
+    "defaultExperience": "classic",
+    "minPlan": "basic"
+  },
+  {
+    "id": "gran-reserva",
+    "name": "Gran reserva",
+    "description": "Burdeos, crema y acentos dorados inspirados en vino de guarda, viñedos y celebración madura.",
+    "className": "theme-gran-reserva",
+    "preview": "🍷",
+    "tags": [
+      "vino",
+      "burdeos",
+      "reserva",
+      "viñedo",
+      "editorial"
+    ],
+    "eventTypes": [
+      "wedding",
+      "anniversary",
+      "corporate",
+      "custom"
+    ],
+    "layoutFamily": "editorial",
+    "layoutLabel": "Reserva editorial de celebración",
+    "motionPreset": "balanced",
+    "motionLabel": "Descorche visual suave",
+    "photoStyle": "postcard",
+    "photoStyleLabel": "Fotografía protagonista estilo etiqueta",
+    "motif": "stamp",
+    "defaultExperience": "story",
+    "minPlan": "premium"
   }
 ]

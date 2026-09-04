@@ -87,7 +87,7 @@ async function main(){
   const eventSettings=(await request("/api/admin/settings",{token,eventId})).data;
   const degraded=await request(`/api/config/${encodeURIComponent(eventSettings._event.slug)}?preview=1`,{token});
   assert.equal(degraded.response.status,200,JSON.stringify(degraded.data));
-  assert.equal(degraded.data.presentation.openingStyle,"wax-envelope","Un derecho vencido no debe publicar la apertura premium.");
+  assert.equal(degraded.data.presentation.openingStyle,"unified-envelope","Un derecho vencido no debe publicar la apertura premium.");
   assert.equal(degraded.data.presentation.galleryStyle,"classic","Un derecho vencido no debe publicar el álbum premium.");
   const blockedExperience=await request("/api/admin/settings",{method:"PUT",token,eventId,json:{presentation:{openingStyle:"rose-bloom"}}});
   assert.equal(blockedExperience.response.status,403);
@@ -112,7 +112,7 @@ async function main(){
   const revokedRose=await request(`/api/admin/events/${eventId}/grants/${roseCourtesy.data.id}`,{method:"DELETE",token:owner.token});
   assert.equal(revokedRose.response.status,200,JSON.stringify(revokedRose.data));
   const revokedRosePublic=await request(`/api/config/${encodeURIComponent(eventSettings._event.slug)}?preview=1`,{token});
-  assert.equal(revokedRosePublic.data.presentation.openingStyle,"wax-envelope");
+  assert.equal(revokedRosePublic.data.presentation.openingStyle,"unified-envelope");
 
   await addAndPay({token,eventId,productId:cinematicExperience.id});
   const activatedCinematic=await request("/api/admin/settings",{method:"PUT",token,eventId,json:{presentation:{openingStyle:"wax-envelope",galleryStyle:"cinematic-depth"}}});

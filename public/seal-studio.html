@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>EventStudio · Estudio de sellos</title>
+  <link rel="stylesheet" href="/seal-studio.css?v=6.14.2-rc.26">
+</head>
+<body>
+<main class="seal-studio-shell">
+  <aside class="seal-studio-panel">
+    <div class="seal-studio-heading">
+      <a class="back-link" href="/admin.html">Volver al panel</a>
+      <h1>Estudio de sellos de cera</h1>
+      <p>Diseña el sello vectorial y aplícalo directamente a la invitación del evento activo.</p>
+      <div id="sealEventContext" class="event-context" aria-live="polite">Cargando evento…</div>
+    </div>
+
+    <div class="seal-studio-fields">
+      <label class="checkbox-field"><input id="sealAutoMonogram" type="checkbox"> Generar iniciales automáticamente desde el evento</label>
+      <div class="field-pair">
+        <label>Inicial 1<input id="sealInitial1" maxlength="2" autocomplete="off"></label>
+        <label>Inicial 2<input id="sealInitial2" maxlength="2" autocomplete="off"></label>
+      </div>
+      <label>Conector<select id="sealConnector"><option value="&">&amp;</option><option value="+">+</option><option value="none">Ninguno</option></select></label>
+      <label>Texto superior<input id="sealTopText" maxlength="32" autocomplete="off"></label>
+      <label>Texto inferior<input id="sealBottomText" maxlength="32" autocomplete="off"></label>
+      <label>Tipografía<select id="sealFont"></select></label>
+      <label>Tamaño<input id="sealFontSize" type="range" min="40" max="170"></label>
+      <label>Espaciado<input id="sealKerning" type="range" min="-4" max="22" step="0.5"></label>
+      <label>Desplazamiento vertical<input id="sealVerticalOffset" type="range" min="-60" max="60"></label>
+      <label>Borde<select id="sealBorder"></select></label>
+      <label>Ornamento<select id="sealOrnament"></select></label>
+      <label>Material<select id="sealMaterial"></select></label>
+      <label id="sealCustomColorField">Color personalizado<input id="sealCustomColor" type="color"></label>
+      <label>Profundidad<input id="sealRelief" type="range" min="2" max="16"></label>
+      <label>Relieve<select id="sealReliefMode"><option value="engraved">Grabado</option><option value="embossed">Realzado</option></select></label>
+      <label>Brillo<input id="sealSpecular" type="range" min="10" max="100"></label>
+      <label>Calidad<select id="sealQuality"></select></label>
+    </div>
+
+    <div class="seal-studio-actions">
+      <button id="sealApply" class="primary apply-event" type="button" disabled>Aplicar este sello a mi evento</button>
+      <button id="sealReset" type="button">Restaurar cambios</button>
+      <button id="sealCopy" type="button">Copiar SVG</button>
+      <button id="sealDownload" type="button">Descargar SVG</button>
+    </div>
+    <p class="apply-note">Al aplicar, se guarda el diseño completo y las aperturas compatibles utilizarán este sello en la invitación.</p>
+    <p id="sealStudioStatus" role="status" aria-live="polite"></p>
+  </aside>
+  <section class="seal-studio-stage" aria-label="Vista previa del sello">
+    <div class="preview-caption" id="sealPreviewCaption">Vista previa</div>
+    <div id="sealStudioPreview"></div>
+  </section>
+</main>
+<script src="/seal-renderer.js?v=6.14.2-rc.26"></script>
+<script src="/seal-studio.js?v=6.14.2-rc.26"></script>
+</body>
+</html>

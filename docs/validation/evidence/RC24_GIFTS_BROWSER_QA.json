@@ -1,0 +1,309 @@
+{
+  "cases": [
+    {
+      "name": "bank-only",
+      "viewport": [
+        390,
+        844
+      ],
+      "bankVisible": true,
+      "bankRows": [
+        "Banco",
+        "BBVA",
+        "Titular",
+        "Ariana y Francisco",
+        "CLABE",
+        "012345678901234567",
+        "Número de cuenta",
+        "99887766",
+        "Indicaciones",
+        "Usar el nombre del invitado como referencia"
+      ],
+      "openpayVisible": false,
+      "amount": "",
+      "amountPlaceholder": "Escribe el monto",
+      "messageVisible": true,
+      "suggestions": [],
+      "overflow": 0,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "name": "openpay-empty-suggestion",
+      "viewport": [
+        390,
+        844
+      ],
+      "bankVisible": true,
+      "bankRows": [
+        "Banco",
+        "BBVA",
+        "Titular",
+        "Ariana y Francisco",
+        "CLABE",
+        "012345678901234567",
+        "Número de cuenta",
+        "99887766",
+        "Indicaciones",
+        "Usar el nombre del invitado como referencia"
+      ],
+      "openpayVisible": true,
+      "amount": "",
+      "amountPlaceholder": "Escribe el monto que deseas regalar",
+      "messageVisible": true,
+      "suggestions": [
+        "Cálido y cercano",
+        "Agradecimiento",
+        "Recuerdo compartido",
+        "Buenos deseos",
+        "Escribir mi propio mensaje"
+      ],
+      "overflow": 0,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "name": "openpay-fixed-suggestion",
+      "viewport": [
+        390,
+        844
+      ],
+      "bankVisible": true,
+      "bankRows": [
+        "Banco",
+        "BBVA",
+        "Titular",
+        "Ariana y Francisco",
+        "CLABE",
+        "012345678901234567",
+        "Número de cuenta",
+        "99887766",
+        "Indicaciones",
+        "Usar el nombre del invitado como referencia"
+      ],
+      "openpayVisible": true,
+      "amount": "1500",
+      "amountPlaceholder": "Monto sugerido",
+      "messageVisible": true,
+      "suggestions": [
+        "Cálido y cercano",
+        "Agradecimiento",
+        "Recuerdo compartido",
+        "Buenos deseos",
+        "Escribir mi propio mensaje"
+      ],
+      "overflow": 0,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "name": "messages-disabled",
+      "viewport": [
+        390,
+        844
+      ],
+      "bankVisible": true,
+      "bankRows": [
+        "Banco",
+        "BBVA",
+        "Titular",
+        "Ariana y Francisco",
+        "CLABE",
+        "012345678901234567",
+        "Número de cuenta",
+        "99887766",
+        "Indicaciones",
+        "Usar el nombre del invitado como referencia"
+      ],
+      "openpayVisible": true,
+      "amount": "",
+      "amountPlaceholder": "Escribe el monto que deseas regalar",
+      "messageVisible": false,
+      "suggestions": [],
+      "overflow": 0,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "name": "bank-disabled",
+      "viewport": [
+        390,
+        844
+      ],
+      "bankVisible": false,
+      "bankRows": [
+        "Banco",
+        "BBVA",
+        "Titular",
+        "Ariana y Francisco",
+        "CLABE",
+        "012345678901234567",
+        "Número de cuenta",
+        "99887766",
+        "Indicaciones",
+        "Usar el nombre del invitado como referencia"
+      ],
+      "openpayVisible": false,
+      "amount": "",
+      "amountPlaceholder": "Escribe el monto",
+      "messageVisible": true,
+      "suggestions": [],
+      "overflow": 0,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "name": "bank-only",
+      "viewport": [
+        1440,
+        900
+      ],
+      "bankVisible": true,
+      "bankRows": [
+        "Banco",
+        "BBVA",
+        "Titular",
+        "Ariana y Francisco",
+        "CLABE",
+        "012345678901234567",
+        "Número de cuenta",
+        "99887766",
+        "Indicaciones",
+        "Usar el nombre del invitado como referencia"
+      ],
+      "openpayVisible": false,
+      "amount": "",
+      "amountPlaceholder": "Escribe el monto",
+      "messageVisible": true,
+      "suggestions": [],
+      "overflow": 0,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "name": "openpay-empty-suggestion",
+      "viewport": [
+        1440,
+        900
+      ],
+      "bankVisible": true,
+      "bankRows": [
+        "Banco",
+        "BBVA",
+        "Titular",
+        "Ariana y Francisco",
+        "CLABE",
+        "012345678901234567",
+        "Número de cuenta",
+        "99887766",
+        "Indicaciones",
+        "Usar el nombre del invitado como referencia"
+      ],
+      "openpayVisible": true,
+      "amount": "",
+      "amountPlaceholder": "Escribe el monto que deseas regalar",
+      "messageVisible": true,
+      "suggestions": [
+        "Cálido y cercano",
+        "Agradecimiento",
+        "Recuerdo compartido",
+        "Buenos deseos",
+        "Escribir mi propio mensaje"
+      ],
+      "overflow": 0,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "name": "openpay-fixed-suggestion",
+      "viewport": [
+        1440,
+        900
+      ],
+      "bankVisible": true,
+      "bankRows": [
+        "Banco",
+        "BBVA",
+        "Titular",
+        "Ariana y Francisco",
+        "CLABE",
+        "012345678901234567",
+        "Número de cuenta",
+        "99887766",
+        "Indicaciones",
+        "Usar el nombre del invitado como referencia"
+      ],
+      "openpayVisible": true,
+      "amount": "1500",
+      "amountPlaceholder": "Monto sugerido",
+      "messageVisible": true,
+      "suggestions": [
+        "Cálido y cercano",
+        "Agradecimiento",
+        "Recuerdo compartido",
+        "Buenos deseos",
+        "Escribir mi propio mensaje"
+      ],
+      "overflow": 0,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "name": "messages-disabled",
+      "viewport": [
+        1440,
+        900
+      ],
+      "bankVisible": true,
+      "bankRows": [
+        "Banco",
+        "BBVA",
+        "Titular",
+        "Ariana y Francisco",
+        "CLABE",
+        "012345678901234567",
+        "Número de cuenta",
+        "99887766",
+        "Indicaciones",
+        "Usar el nombre del invitado como referencia"
+      ],
+      "openpayVisible": true,
+      "amount": "",
+      "amountPlaceholder": "Escribe el monto que deseas regalar",
+      "messageVisible": false,
+      "suggestions": [],
+      "overflow": 0,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "name": "bank-disabled",
+      "viewport": [
+        1440,
+        900
+      ],
+      "bankVisible": false,
+      "bankRows": [
+        "Banco",
+        "BBVA",
+        "Titular",
+        "Ariana y Francisco",
+        "CLABE",
+        "012345678901234567",
+        "Número de cuenta",
+        "99887766",
+        "Indicaciones",
+        "Usar el nombre del invitado como referencia"
+      ],
+      "openpayVisible": false,
+      "amount": "",
+      "amountPlaceholder": "Escribe el monto",
+      "messageVisible": true,
+      "suggestions": [],
+      "overflow": 0,
+      "errors": [],
+      "ok": true
+    }
+  ],
+  "failures": []
+}

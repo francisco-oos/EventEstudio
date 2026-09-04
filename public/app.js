@@ -252,9 +252,109 @@ function setupTemplateMotion(){
   }),{threshold:.08,rootMargin:'0px 0px -6%'});
   document.querySelectorAll('main .section:not(.hidden)').forEach(section=>observer.observe(section));
 }
+
+function openingDefinition(style){return (settings?._experiences?.openings||[]).find(item=>item.id===String(style||''))||null;}
+function openingSupportsSeal(style){return openingDefinition(style)?.seal?.compatible===true;}
+function openingSealContentMode(style){return openingDefinition(style)?.seal?.contentMode||'monogram';}
+function themeSupportsFinalSeal(themeId){return /(storybook-seal|olive-nectar|olive-universe|powder-blue-letter|romantic-wine|enchanted-letter|reserve|gran-reserva)/.test(String(themeId||''));}
+function activeStationerySealColor(){
+  const unified=settings?.presentation?.openingStyle===settings?._stationeryCatalog?.openingId;
+  const candidates=unified
+    ?[settings?.stationery?.sealColor,settings?._palette?.accent,settings?._palette?.gold]
+    :[settings?._palette?.accent,settings?._palette?.gold];
+  const value=candidates.map(item=>String(item||'')).find(item=>/^#[0-9a-f]{6}$/i.test(item));
+  return value||'';
+}
+function sealDateParts(){
+  const source=settings?.event?.dateTime||settings?.event?.date||settings?.event?.dateAt||settings?._event?.date||'';
+  const date=source?new Date(source):null;
+  if(!date||Number.isNaN(date.getTime()))return null;
+  const locale=activeLocale||document.documentElement.lang||'es';
+  return {day:new Intl.DateTimeFormat(locale,{day:'numeric'}).format(date),month:new Intl.DateTimeFormat(locale,{month:'long'}).format(date).toUpperCase(),year:new Intl.DateTimeFormat(locale,{year:'numeric'}).format(date)};
+}
+function finalHeroSealDefinition(style){
+  const seal=sealDefinitionForOpening(style);
+  const themeId=String(settings?._theme?.id||settings?.themeId||'');
+  if(/powder-blue|blue-aurora|frost|ice/.test(`${style||''} ${themeId}`))seal.material=seal.material&&seal.material!=='theme'?seal.material:'silver';
+  if(/olive|nectar|reserve|wine|storybook/.test(`${style||''} ${themeId}`)&&(!seal.ornament||seal.ornament==='none'))seal.ornament='laurel';
+  return seal;
+}
+function renderFinalHeroSeal(style){
+  const host=$('heroWaxSeal');
+  if(!host)return;
+  const themeId=String(settings?._theme?.id||settings?.themeId||'');
+  const visible=settings?.seal?.enabled!==false&&(openingSupportsSeal(style)||themeSupportsFinalSeal(themeId));
+  host.classList.toggle('hidden',!visible);
+  $('heroContent')?.classList.toggle('has-template-seal',visible);
+  if(!visible){host.innerHTML='';return;}
+  const renderer=window.EventStudioWaxSeal;
+  if(!renderer?.renderInto)return;
+  renderer.renderInto(host,finalHeroSealDefinition(style),{displayName:settings?.couple?.displayName||settings?.event?.title||'Nuestro evento',eventTitle:settings?.event?.title||'',themeColor:activeStationerySealColor(),seed:`final-seal:${settings?.event?.slug||settings?.event?.eventId||'eventstudio'}:${style||themeId}`,idPrefix:`final-seal-${String(style||themeId||'default').replace(/[^a-z0-9-]/gi,'')}`},settings?._sealCatalog||{});
+}
+function sealDefinitionForOpening(style){
+  const base={...(settings?.seal||{})};
+  /* Un sello diseñado por el usuario es la fuente de verdad. Las sugerencias
+     temáticas sólo completan sellos que nunca han sido personalizados. */
+  if(base.customized===true)return base;
+  if(style===settings?._stationeryCatalog?.openingId){
+    const recipe=(settings?._stationeryCatalog?.presets||[]).find(item=>item.id===settings?.stationery?.presetId);
+    if(recipe?.seal)Object.assign(base,recipe.seal);
+  }
+  const themeId=String(settings?._theme?.id||'');
+  const id=`${style||''} ${themeId}`;
+  if(base.material==='theme'||!base.material){
+    if(/powder-blue|blue-aurora|frost|ice/.test(id))base.material='silver';
+    else if(/gala-curtain|gala-marquee|reserve|gran-reserva|wine/.test(id))base.material='gold';
+    else if(/constellation|celestial|cosmos|night/.test(id))base.material='midnight-blue';
+    else if(/blush-heart|heart|romantic|rose/.test(id))base.material='burgundy';
+    else base.material='theme';
+  }
+  if(base.ornament==='none'||!base.ornament){
+    if(/constellation|celestial|cosmos/.test(id))base.ornament='stars';
+    else if(/reserve|gran-reserva|wine/.test(id))base.ornament='laurel';
+  }
+  return base;
+}
+function renderOpeningSeal(opening,style){
+  const seal=opening?.querySelector('.opening-seal');
+  if(!seal||settings?.seal?.enabled===false)return;
+  const renderer=window.EventStudioWaxSeal;
+  if(!renderer?.renderInto)return;
+  const displayName=settings?.couple?.displayName||settings?.event?.title||'EventStudio';
+  let definition=sealDefinitionForOpening(style);
+  if(openingSealContentMode(style)==='date'){
+    const dateParts=sealDateParts();
+    if(dateParts)definition={...definition,autoMonogram:false,initial1:dateParts.day,initial2:'',connector:'none',topText:dateParts.month,bottomText:dateParts.year,fontSize:definition.fontSize||90,kerning:1};
+  }
+  renderer.renderInto(seal,definition,{
+    displayName,eventTitle:settings?.event?.title||'',themeColor:activeStationerySealColor(),
+    seed:`${settings?.event?.eventId||settings?.event?.slug||displayName}:${style}`,idPrefix:`opening-seal-${String(style||'default').replace(/[^a-z0-9-]/gi,'')}`
+  },settings?._sealCatalog||{});
+}
+function renderUnifiedEnvelope(opening,style){
+  const mount=$('stationeryOpeningMount');
+  const unified=style==='unified-envelope';
+  opening?.classList.toggle('uses-unified-envelope',unified);
+  if(!mount)return;
+  mount.hidden=!unified;
+  if(!unified){mount.replaceChildren();return;}
+  const renderer=window.EventStudioStationery;
+  if(!renderer?.renderInto)return;
+  const displayName=presentedName(settings?.couple?.displayName||settings?.event?.title||'');
+  renderer.renderInto(mount,settings?.stationery||{}, {
+    openingStyle:style,
+    displayName,
+    eventTitle:settings?.event?.title||'',
+    dateLabel:localizedDateLabel(),
+    headingFont:fontMap[settings?.typography?.heading]||fontMap.georgia,
+    seed:`${settings?.event?.eventId||settings?.event?.slug||displayName}:stationery`,
+    idPrefix:`stationery-${String(settings?.event?.eventId||settings?.event?.slug||'event').replace(/[^a-z0-9-]/gi,'')}`,
+    sealCatalog:settings?._sealCatalog||{}
+  },settings?._stationeryCatalog||{},sealDefinitionForOpening(style));
+}
 function setupInvitationOpening(){
   const allowed=new Set((settings?._experiences?.openings||[]).map(item=>item.id).filter(id=>id!=='none'));
-  const style=String(settings?.presentation?.openingStyle||'wax-envelope');
+  const style=String(settings?.presentation?.openingStyle||'unified-envelope');
   const opening=$('invitationOpening');
   const forceMotion=forceMotionRequested();
   document.body.classList.toggle('force-motion-preview',forceMotion);
@@ -262,9 +362,12 @@ function setupInvitationOpening(){
   document.body.dataset.openingUsed='true';
   $('openInvitationBtn')?.classList.add('hidden');
   opening.className=`invitation-opening opening-${style}`;
+  renderUnifiedEnvelope(opening,style);
+  if(style!=='unified-envelope')renderOpeningSeal(opening,style);
   $('openingEyebrow').textContent=translateKnown(settings.presentation?.openingEyebrow||'Una invitación para ti');
   applyPresentedName($('openingCouple'),settings.couple?.displayName||settings.event?.title||'Nuestro evento');
   $('openingDate').textContent=localizedDateLabel();
+  $('openingDate').classList.toggle('hidden',style==='particle-heart');
   $('openingGuest').textContent=currentGuest?.family_name?`${t('specialFor')} ${presentedName(currentGuest.family_name)}`:t('specialShare');
   const openingAction=translateKnown(settings.presentation?.openButton||'Abrir invitación');
   const openingButton=$('openingEnvelopeButton');
@@ -272,7 +375,8 @@ function setupInvitationOpening(){
     openingButton.disabled=false;
     openingButton.removeAttribute('aria-hidden');
     openingButton.classList.remove('opening-action-consumed');
-    openingButton.querySelector('strong').textContent=openingAction;
+    const openingActionLabel=$('openingActionLabel');
+    if(openingActionLabel)openingActionLabel.textContent=openingAction;
     openingButton.setAttribute('aria-label',openingAction);
   }
   opening.classList.remove('hidden','is-opening','rose-bloom-playing');
@@ -286,19 +390,17 @@ function setupInvitationOpening(){
   let openingAutoOpenTimer=0;
   const playOpeningMusic=async()=>{try{if(settings.media?.musicSource==='upload')await playUploadedMusic();if(settings.media?.musicSource==='spotify')requestSpotifyPlayback();}catch{}};
   const envelopeTiming={
-    'wax-envelope':{replay:3900,normal:3600},
-    'floral-envelope':{replay:4100,normal:3800},
-    'minimal-envelope':{replay:4300,normal:4000},
-    'cinematic-fold':{replay:4400,normal:4100},
-    'ivory-seal':{replay:4600,normal:4300},
+    'unified-envelope':{replay:4600,normal:4300},
     /* Add-on de plantillas: sólo se agregan tiempos de salida. El controlador,
        listeners y flujo de reproducción quedan exactamente en RC21. */
     'newspaper-fold':{replay:4700,normal:4400},
     'vintage-parchment':{replay:4900,normal:4600},
     'olive-universe-orbit':{replay:5000,normal:4700},
-    'olive-nectar-seal':{replay:4700,normal:4400},
     'blue-aurora-reveal':{replay:4800,normal:4500},
     'botanical-cosmos-orbit':{replay:5100,normal:4800},
+    'gala-curtain':{replay:4850,normal:4550},
+    'constellation-veil':{replay:5050,normal:4750},
+    'reserve-uncork':{replay:4950,normal:4650},
     'particle-heart':{replay:4100,normal:3800}
   };
   const defaultFinishDelay=()=>{
@@ -482,7 +584,8 @@ async function load(){
   if(settings.features?.gifts===false)$('giftSection')?.classList.add('hidden');
   else renderGift();
   if(settings.features?.dressCode===false)$('dressSection')?.classList.add('hidden');
-  if(settings.features?.rsvp===false)$('rsvpSection')?.classList.add('hidden');
+  const hasPersonalInvitation=Boolean(new URLSearchParams(location.search).get('i'));
+  if(settings.features?.rsvp===false||settings.rsvp?.enabled===false||!hasPersonalInvitation)$('rsvpSection')?.classList.add('hidden');
 
   if(settings.media?.heroImage){
     $('hero').style.backgroundImage=`linear-gradient(rgba(0,0,0,.33),rgba(0,0,0,.33)),url('${settings.media.heroImage}')`;
@@ -508,6 +611,7 @@ async function load(){
 
   countdown();
   await invite();
+  renderFinalHeroSeal(String(settings?.presentation?.openingStyle||'unified-envelope'));
   setupInvitationOpening();
   await loadPhotoMessages(eventSlug);
   setupTemplateMotion();
@@ -708,7 +812,154 @@ function renderSpotify(){
   });
 }
 
-function renderGift(){const g=settings.gifts||{};$('giftTitle').textContent=localizedContent('gifts.title',translateKnown(g.title||'Regalos'));$('giftMessage').textContent=localizedContent('gifts.message',g.message||'');$('giftDescription').textContent=localizedContent('gifts.description',g.description||'');$('bankInfo').textContent=g.mode==='bank-transfer'||g.mode==='mixed'?(g.bankInfo||''):'';const giftUrl=safeExternalUrl(g.link);if(giftUrl&&(g.mode==='registry'||g.mode==='mixed')){configureExternalLink($('giftLink'),giftUrl);$('giftLink').textContent=g.linkLabel||t('giftRegistry');$('giftLink').classList.remove('hidden');}else $('giftLink').classList.add('hidden');if(g.mode==='no-gifts')$('giftSection').classList.add('no-gifts');}
+function giftMethodState(g){
+  if(g?.enabled===false)return {cashEnvelopes:false,registry:false,bankTransfer:false};
+  const methods=g?.methods&&typeof g.methods==='object'?g.methods:{};
+  const mode=g?.mode||'cash-envelopes';
+  return {
+    cashEnvelopes:methods.cashEnvelopes?.enabled??(mode==='cash-envelopes'),
+    registry:methods.registry?.enabled??(mode==='registry'||mode==='mixed'),
+    bankTransfer:methods.bankTransfer?.enabled??(g?.bankInfoEnabled===true||mode==='bank-transfer'||mode==='mixed')
+  };
+}
+
+function renderCashEnvelope(g,methods){
+  const wrap=$('cashEnvelopeWrap'),text=$('cashEnvelopeInstructions');
+  const instructions=String(g?.methods?.cashEnvelopes?.instructions||g?.cashEnvelopeInstructions||((g?.mode==='cash-envelopes')?g?.description:'')||'').trim();
+  const show=methods.cashEnvelopes===true;
+  if(text)text.textContent=instructions;
+  wrap?.classList.toggle('hidden',!show);
+}
+
+function renderGiftBankDetails(g,methods){
+  const bank=g.bank&&typeof g.bank==='object'?g.bank:{};
+  const rows=[
+    ['Banco',bank.bankName],
+    ['Titular',bank.accountHolder],
+    ['CLABE',bank.clabe],
+    ['Número de cuenta',bank.accountNumber],
+    ['Concepto sugerido',bank.referenceConcept],
+    ['Indicaciones',bank.instructions]
+  ].filter(([,value])=>String(value||'').trim());
+  const legacy=String(g.bankInfo||'').trim();
+  const showBank=methods.bankTransfer===true&&(rows.length>0||legacy);
+  const motivational=String(bank.motivationalMessage||'').trim();
+  const persuasion=$('bankPersuasionMessage');
+  if(persuasion){persuasion.textContent=motivational;persuasion.classList.toggle('hidden',!showBank||!motivational);}
+  const list=$('bankInfoList');
+  if(list){
+    list.replaceChildren();
+    for(const [label,value] of rows){
+      const dt=document.createElement('dt');dt.textContent=label;
+      const dd=document.createElement('dd');dd.textContent=String(value);
+      list.append(dt,dd);
+    }
+  }
+  const legacyNode=$('bankInfoLegacy');
+  if(legacyNode){
+    legacyNode.textContent=rows.length?'' : legacy;
+    legacyNode.classList.toggle('hidden',!showBank||rows.length>0||!legacy);
+  }
+  $('bankInfoWrap')?.classList.toggle('hidden',!showBank);
+  return showBank;
+}
+
+function renderGiftMessageSuggestions(presets){
+  const container=$('openpayGiftMessageSuggestions');
+  if(!container)return;
+  container.replaceChildren();
+  const items=Array.isArray(presets)?presets:[];
+  for(const item of items){
+    if(!item?.text)continue;
+    const button=document.createElement('button');
+    button.type='button';button.className='gift-message-suggestion';button.textContent=item.label||'Usar mensaje sugerido';
+    button.addEventListener('click',()=>{const field=$('openpayGiftMessage');if(field){field.value=String(item.text).slice(0,500);field.focus();}});
+    container.appendChild(button);
+  }
+  if(items.length){
+    const custom=document.createElement('button');custom.type='button';custom.className='gift-message-suggestion custom';custom.textContent='Escribir mi propio mensaje';
+    custom.addEventListener('click',()=>{const field=$('openpayGiftMessage');if(field){field.value='';field.focus();}});
+    container.appendChild(custom);
+  }
+  container.classList.toggle('hidden',container.childElementCount===0);
+}
+
+function renderGift(){
+  const g=settings.gifts||{},methods=giftMethodState(g);
+  $('giftTitle').textContent=localizedContent('gifts.title',translateKnown(g.title||'Regalos'));
+  $('giftMessage').textContent=localizedContent('gifts.message',g.message||'');
+  $('giftDescription').textContent=localizedContent('gifts.description',g.description||'');
+  renderCashEnvelope(g,methods);
+  const showBank=renderGiftBankDetails(g,methods);
+
+  const giftUrl=safeExternalUrl(g.link);
+  const showRegistry=methods.registry===true&&Boolean(giftUrl);
+  const registryWrap=$('giftRegistryWrap');
+  registryWrap?.classList.toggle('hidden',!showRegistry);
+  if(showRegistry){configureExternalLink($('giftLink'),giftUrl);$('giftLink').textContent=g.linkLabel||t('giftRegistry');$('giftLink').classList.remove('hidden');}
+  else $('giftLink')?.classList.add('hidden');
+
+  const showOpenpay=g.openpay?.enabled===true;
+  $('openpayGiftWrap')?.classList.toggle('hidden',!showOpenpay);
+  if(showOpenpay){
+    const amountInput=$('openpayGiftAmount');
+    const cents=Number(g.openpay?.suggestedAmountCents);
+    const hasSuggested=Number.isFinite(cents)&&cents>=1000;
+    if(amountInput){
+      amountInput.value=hasSuggested?String(cents/100):'';
+      amountInput.readOnly=hasSuggested&&g.openpay?.allowCustomAmount===false;
+      amountInput.placeholder=hasSuggested?'Monto sugerido':'Escribe el monto que deseas regalar';
+    }
+    const messageEnabled=g.openpay?.messageEnabled!==false;
+    $('openpayGiftMessageField')?.classList.toggle('hidden',!messageEnabled);
+    renderGiftMessageSuggestions(messageEnabled?settings._giftMessagePresets:[]);
+  }else renderGiftMessageSuggestions([]);
+
+  const anyMethod=methods.cashEnvelopes||showRegistry||showBank||showOpenpay;
+  $('giftSection')?.classList.toggle('hidden',!anyMethod);
+  $('giftSection')?.classList.toggle('no-gifts',!anyMethod);
+}
+
+let openpayClientConfig=null,openpayScriptsPromise=null,openpayDeviceSessionId='';
+function loadExternalScript(src,id){
+  const existing=document.getElementById(id);if(existing)return existing.dataset.loaded==='true'?Promise.resolve():new Promise((resolve,reject)=>{existing.addEventListener('load',resolve,{once:true});existing.addEventListener('error',reject,{once:true});});
+  return new Promise((resolve,reject)=>{const script=document.createElement('script');script.id=id;script.src=src;script.async=true;script.addEventListener('load',()=>{script.dataset.loaded='true';resolve();},{once:true});script.addEventListener('error',()=>reject(new Error('No se pudo cargar Openpay.')),{once:true});document.head.appendChild(script);});
+}
+async function ensureOpenpayClient(){
+  if(openpayClientConfig&&window.OpenPay)return openpayClientConfig;
+  const slug=settings?.event?.slug;if(!slug)throw new Error('Evento sin enlace público.');
+  const response=await fetch(`/api/gifts/openpay/config/${encodeURIComponent(slug)}`,{cache:'no-store'});const config=await response.json().catch(()=>({}));if(!response.ok)throw new Error(config.error||'Openpay no está disponible.');
+  if(!openpayScriptsPromise)openpayScriptsPromise=(async()=>{await loadExternalScript('https://resources.openpay.mx/lib/openpay-js/1.2.38/openpay.v1.min.js','openpay-client-sdk');await loadExternalScript('https://resources.openpay.mx/lib/openpay-data-js/1.2.38/openpay-data.v1.min.js','openpay-device-sdk');})();
+  await openpayScriptsPromise;if(!window.OpenPay)throw new Error('Openpay no pudo inicializarse.');
+  window.OpenPay.setId(config.merchantId);window.OpenPay.setApiKey(config.publicKey);window.OpenPay.setSandboxMode(Boolean(config.sandbox));
+  openpayClientConfig=config;
+  if(config.messageEnabled!==false&&Array.isArray(config.messagePresets))renderGiftMessageSuggestions(config.messagePresets);
+  const amountInput=$('openpayGiftAmount');
+  if(amountInput){
+    const cents=Number(config.suggestedAmountCents),hasSuggested=Number.isFinite(cents)&&cents>=1000;
+    amountInput.value=hasSuggested?String(cents/100):'';
+    amountInput.readOnly=hasSuggested&&config.allowCustomAmount===false;
+    amountInput.placeholder=hasSuggested?'Monto sugerido':'Escribe el monto que deseas regalar';
+  }
+  return config;
+}
+function openpayTokenFromForm(form){return new Promise((resolve,reject)=>window.OpenPay.token.extractFormAndCreate(form,response=>resolve(response.data),response=>reject(new Error(response?.data?.description||response?.message||'No se pudo tokenizar la tarjeta.'))));}
+$('openpayGiftStartBtn')?.addEventListener('click',async()=>{
+  const form=$('openpayGiftForm'),statusEl=$('openpayGiftStatus');
+  try{if(statusEl)statusEl.textContent='Preparando pago seguro…';await ensureOpenpayClient();openpayDeviceSessionId=window.OpenPay.deviceData.setup('openpayGiftForm','openpayDeviceSessionId');form?.classList.remove('hidden');$('openpayGiftStartBtn')?.classList.add('hidden');if(statusEl)statusEl.textContent='';}
+  catch(error){if(statusEl)statusEl.textContent=error.message;}
+});
+$('openpayGiftForm')?.addEventListener('submit',async event=>{
+  event.preventDefault();const button=$('openpayGiftSubmitBtn'),statusEl=$('openpayGiftStatus');if(button)button.disabled=true;
+  try{
+    await ensureOpenpayClient();if(!openpayDeviceSessionId)openpayDeviceSessionId=window.OpenPay.deviceData.setup('openpayGiftForm','openpayDeviceSessionId');
+    if(statusEl)statusEl.textContent='Protegiendo datos de tarjeta…';const token=await openpayTokenFromForm(event.currentTarget);
+    const amountCents=Math.round(Number($('openpayGiftAmount')?.value||0)*100);
+    const response=await fetch('/api/gifts/openpay/charge',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({eventSlug:settings.event.slug,tokenId:token.id,deviceSessionId:openpayDeviceSessionId,amountCents,name:$('openpayGiftName')?.value||'',email:$('openpayGiftEmail')?.value||'',message:$('openpayGiftMessage')?.value||''})});
+    const data=await response.json().catch(()=>({}));if(!response.ok)throw new Error(data.error||'No se pudo procesar el regalo.');
+    event.currentTarget.reset();renderGift();event.currentTarget.classList.add('hidden');$('openpayGiftStartBtn')?.classList.remove('hidden');if(statusEl)statusEl.textContent='Regalo recibido. Gracias por tu mensaje y tu detalle.';
+  }catch(error){if(statusEl)statusEl.textContent=error.message;}finally{if(button)button.disabled=false;}
+});
 function renderGallery(){
   const ordered=[...galleryItems.slice(galleryIndex),...galleryItems.slice(0,galleryIndex)];
   const gallery=$('gallery');

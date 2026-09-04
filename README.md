@@ -1,16 +1,44 @@
-# EventStudio 6.14.2-rc.21
+# EventStudio 6.14.2-rc.30
 
-Candidata correctiva construida sobre la RC20 entregada por el propietario. RC13 se consultó únicamente como referencia del orden visual de los sobres. RC21 corrige la autorización de “Probar efectos”, evita la superposición del corazón, añade Flor nocturna original y amplía la matriz de invitaciones sin reescribir módulos aprobados.
+Candidata de QA construida sobre RC29. Conserva la ventana avanzada con paridad del generador maestro y corrige la integración pública de nombre, paleta y lacre.
 
-## Cambios principales RC21
+## Cambios principales RC30
+
+- `Sobre personalizable` mantiene la ventana independiente y la apariencia/flujo del generador maestro.
+- Nombres, fecha y tipografía continúan heredándose del evento.
+- El CTA `Abrir invitación` tiene un nodo explícito y ya no puede sobrescribir el nombre renderizado dentro de la tarjeta.
+- Al aplicar un `unified-envelope` personalizado, su paleta pasa automáticamente a invitación pública, portal de fotos, QR e impresión; ya no existe un segundo checkbox que permita una aplicación parcial.
+- Las demás aperturas visibles conservan la paleta default/configurada de la plantilla y no heredan una papelería guardada anteriormente.
+- Los 64 temas conservan sus colores por defecto en variables base; sus reglas visuales consumen esos tokens para que `_palette` pueda recolorear la plantilla sin duplicaciones bloqueantes.
+- El lacre generado centralmente sustituye el cierre equivalente de plantillas como `storybook-seal` en lugar de mostrarse junto al sello histórico.
+- El QR usa la misma paleta efectiva cuando el sobre personalizado es la identidad activa; impresión y fotos consumen la misma resolución de servidor.
+- La animación de abrir/cerrar el sobre mediante clic directo permanece intacta.
+- Regresión específica: `tests/rc30-stationery-delivery-sync.js`; QA visual pública: `tests/rc30-public-envelope-visual.py`; QA visual del estudio: `tests/rc28-stationery-studio-visual.py`.
+- Referencia vigente: `docs/indexes/INDEX_DOCUMENTACION_RC30.md`.
+- Puertas finales de promoción: `npm ci`, `npm test`, `npm run test:visual`, `npm run audit` y `npm audit --audit-level=moderate`. En este entorno el árbol se recibió sin `node_modules`; `npm test` se detiene en `better-sqlite3`. Consultar `docs/validation/VALIDACION_RC30.md`.
+
+### Cambios heredados RC25
+
+- Lluvia de sobres, mesa de regalos y transferencia bancaria usan toggles independientes y pueden coexistir.
+- Openpay permanece desacoplado y puede combinarse con cualquier método o funcionar como única alternativa.
+- Lluvia de sobres tiene instrucciones propias del buzón físico.
+- Transferencia incorpora Banco, Titular, CLABE, Número de cuenta, Concepto sugerido e indicaciones opcionales.
+- El anfitrión puede seleccionar uno de cuatro mensajes motivadores desde catálogo o escribir uno personalizado.
+- La dedicatoria que escribe el invitado durante un pago Openpay se conserva como flujo independiente.
+- Compatibilidad con `gifts.mode` de eventos anteriores mediante normalización y modo legado derivado.
+- Nueva regresión lógica y visual RC25 para métodos individuales, combinados y ninguno.
+- Referencia histórica RC25: `docs/indexes/INDEX_DOCUMENTACION_RC25.md`.
+- Las puertas finales de release incluyen `npm test`, `npm run test:rc27`, `npm run test:rc28`, `npm run test:rc29`, `npm run test:rc30`, `npm run test:visual`, `npm run audit` y `npm audit --audit-level=moderate`.
+
+### Capacidades heredadas y preservadas
 
 - “Probar efectos”, preview de tema/Store/carrito y replay usan enlaces temporales autorizados por evento.
 - Owner/developer conservan acceso técnico; un cliente puede probar un producto público sin adquirirlo ni guardarlo.
 - Corazón de partículas mide el espacio entre texto y acción en lugar de usar coordenadas rígidas.
 - Flor nocturna original se integra como experiencia separada, con tres flores de cuatro pétalos y colores configurables.
 - Se conserva el orden de capas de RC13 con las cadencias legibles de RC20 (3.6–4.3 s para sobres).
-- Matriz efectiva de 59 plantillas, 16 aperturas, registro, publicación, invitación, RSVP, cortesías y base importada.
-- Índice vigente: `docs/indexes/INDEX_DOCUMENTACION_RC21.md`.
+- Matriz efectiva actual de 64 plantillas, 13 mecánicas independientes y un motor de sobre unificado, además de registro, publicación, invitación, RSVP, cortesías y módulos RC22.
+- El historial RC21 permanece disponible en `docs/indexes/INDEX_DOCUMENTACION_RC21.md`.
 
 ## Principios de esta candidata
 
@@ -106,7 +134,13 @@ En Windows PowerShell, usa `npm.cmd` si la política impide ejecutar `npm.ps1`.
 - Para Mercado Pago: `PAYMENT_PROVIDER=mercadopago`, `MERCADOPAGO_ACCESS_TOKEN` y `MERCADOPAGO_WEBHOOK_SECRET`; configurar el webhook HTTPS `/api/payments/mercadopago/webhook`.
 - Para WhatsApp Cloud, completar las variables `WHATSAPP_*` descritas en `.env.example`; una configuración parcial permanece bloqueada.
 
-## Validación RC21
+## Validación RC30
+
+Los contratos específicos de RC30, las regresiones RC27–RC29 y la QA visual del estudio pasaron. El estudio cubre 16/16 presets, 15/15 materiales, dos viewports y cinco escenarios de permisos. La prueba pública reproduce el caso reportado y confirma nombre correcto, paleta del sobre aplicada, un solo lacre y restauración de defaults al usar otra apertura.
+
+La suite completa `npm test` no se marca como PASS en este paquete: el árbol de intercambio no contiene `node_modules` y se detiene al cargar `better-sqlite3` en `tests/data-safety.js`. La promoción a producción exige repetir las puertas completas después de `npm ci`. Ver `docs/validation/VALIDACION_RC30.md`.
+
+## Histórico: Validación RC21
 
 Pruebas automatizadas pasadas en esta entrega:
 
@@ -119,17 +153,18 @@ La suite incluye contratos de todas las aperturas, preferencias de movimiento, r
 
 ## Documentación
 
-Índice vigente: [`docs/indexes/INDEX_DOCUMENTACION_RC21.md`](docs/indexes/INDEX_DOCUMENTACION_RC21.md)
+Índice vigente: [`docs/indexes/INDEX_DOCUMENTACION_RC30.md`](docs/indexes/INDEX_DOCUMENTACION_RC30.md)
 
 Documentos clave:
 
-- `docs/audits/AUDITORIA_RC21.md`
-- `docs/validation/VALIDACION_RC21.md`
-- `docs/release-notes/RELEASE_NOTES_V6_14_2_RC21.md`
-- `docs/traceability/MATRIZ_TRAZABILIDAD_RC21.md`
-- `docs/analysis/DECISIONES_TECNICAS_RC21.md`
-- `docs/analysis/INVESTIGACION_ANIMACIONES_TIENDA_RC20.md`
-- `docs/security/SEGURIDAD_RC21.md`
+- `docs/analysis/ADR_STATIONERY_DELIVERY_SYNC_RC30.md`
+- `docs/audits/AUDITORIA_RC30.md`
+- `docs/validation/VALIDACION_RC30.md`
+- `docs/release-notes/RELEASE_NOTES_V6_14_2_RC30.md`
+- `docs/validation/evidence/RC30_PUBLIC_ENVELOPE_VISUAL.json`
+- `docs/validation/evidence/RC30_STATIONERY_INDEX_PARITY_VISUAL.json`
+
+El historial anterior, incluida la línea RC21 de seguridad/producción, permanece bajo `docs/` y conserva su valor como antecedente.
 
 ## Nota sobre tipografías en el paquete de intercambio
 

@@ -1,0 +1,40 @@
+{
+  "cases": 2,
+  "failures": 0,
+  "results": [
+    {
+      "opening": "unified-envelope",
+      "errors": [],
+      "cardName": "Ariana y Francisco",
+      "cta": "Abrir invitación",
+      "vars": {
+        "bg": "#203126",
+        "paper": "#f5f0df",
+        "ink": "#33402f",
+        "muted": "#0d1712",
+        "accent": "#7a3344",
+        "gold": "#b49355",
+        "line": "#0d1712"
+      },
+      "invitationOpen": true,
+      "heroSealCount": 1,
+      "legacySealDisplay": "none",
+      "heroBg": "color(srgb 0.960784 0.941177 0.87451 / 0.9)",
+      "ok": true
+    },
+    {
+      "opening": "gala-curtain",
+      "errors": [],
+      "vars": {
+        "bg": "#eee8db",
+        "paper": "#fffdf8",
+        "ink": "#302d26",
+        "muted": "#766f63",
+        "accent": "#a77c12",
+        "gold": "#c8a551",
+        "line": "#ddd1bb"
+      },
+      "ok": true
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "summary": {
+    "cases": 2,
+    "failures": 0,
+    "minFps": 59.99368487527629,
+    "avgFps": 59.998421468113435,
+    "maxP95IntervalMs": 16.700000000000045,
+    "restrictedProfile": {
+      "applyDisabled": true,
+      "status": "Tu perfil puede consultar el diseño, pero no modificar las plantillas de este evento.",
+      "errors": [],
+      "ok": true
+    }
+  },
+  "rows": [
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "inherited": {
+        "names": "Andrea & Mateo",
+        "date": "18 de diciembre de 2026",
+        "font": "Cormorant"
+      },
+      "materialCount": 15,
+      "sealSvg": 1,
+      "fps": {
+        "fps": 59.99368487527629,
+        "p95Interval": 16.700000000000045,
+        "frames": 38
+      },
+      "overflow": 0,
+      "previewOpen": true,
+      "putKeys": [
+        "presentation",
+        "seal",
+        "stationery"
+      ],
+      "openingStyle": "unified-envelope",
+      "customized": true,
+      "sync": true,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "viewport": [
+        1440,
+        900
+      ],
+      "inherited": {
+        "names": "Andrea & Mateo",
+        "date": "18 de diciembre de 2026",
+        "font": "Cormorant"
+      },
+      "materialCount": 15,
+      "sealSvg": 1,
+      "fps": {
+        "fps": 60.003158060950575,
+        "p95Interval": 16.700000000000045,
+        "frames": 38
+      },
+      "overflow": 0,
+      "previewOpen": true,
+      "putKeys": [
+        "presentation",
+        "seal",
+        "stationery"
+      ],
+      "openingStyle": "unified-envelope",
+      "customized": true,
+      "sync": true,
+      "errors": [],
+      "ok": true
+    }
+  ],
+  "failures": []
+}

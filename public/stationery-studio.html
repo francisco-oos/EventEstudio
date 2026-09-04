@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>EventStudio · Estudio avanzado de sobres</title>
+  <link rel="stylesheet" href="/stationery-engine.css?v=6.14.2-rc.30">
+  <link rel="stylesheet" href="/stationery-studio.css?v=6.14.2-rc.30">
+</head>
+<body class="stationery-studio-page force-motion-preview">
+  <div id="view-editor" data-settings-endpoint="/api/admin/settings" data-features-endpoint="/api/admin/features">
+    <nav class="sidebar-nav" aria-label="Herramientas del estudio">
+      <button class="nav-btn active" type="button" data-tab="formats"><span class="nav-icon" aria-hidden="true">✉️</span>Sobres</button>
+      <button class="nav-btn" type="button" data-tab="materials"><span class="nav-icon" aria-hidden="true">🧵</span>Texturas</button>
+      <button class="nav-btn" type="button" data-tab="settings"><span class="nav-icon" aria-hidden="true">⚙️</span>Ajustes</button>
+      <button class="nav-btn" type="button" data-tab="seals"><span class="nav-icon" aria-hidden="true">🔴</span>Lacre 3D</button>
+      <button class="nav-btn" type="button" data-tab="frames"><span class="nav-icon" aria-hidden="true">🖼️</span>Marcos</button>
+      <button class="nav-btn" type="button" data-tab="dividers"><span class="nav-icon" aria-hidden="true">〰️</span>Divisores</button>
+      <button class="nav-btn" type="button" data-tab="liners"><span class="nav-icon" aria-hidden="true">✨</span>Liners</button>
+      <button class="nav-btn" type="button" data-tab="laces"><span class="nav-icon" aria-hidden="true">🎀</span>Encajes</button>
+      <button class="nav-btn" type="button" data-tab="stamps"><span class="nav-icon" aria-hidden="true">📮</span>Postales</button>
+    </nav>
+
+    <aside class="sidebar-panel" id="panel-container" aria-label="Controles de personalización"></aside>
+
+    <main class="main-stage" id="stageArea">
+      <div class="studio-context-chip" aria-live="polite">
+        <a href="/admin.html" class="studio-back">Volver al panel</a>
+        <span id="contextEvent">Cargando evento</span>
+      </div>
+
+      <div class="stationery-preview studio-preview" id="stationeryStudioPreview">
+        <div class="stationery-mount" id="stationeryStudioMount" aria-label="Sobre personalizado"></div>
+      </div>
+
+      <p class="stage-hint" id="stageHint">Haz clic sobre el sobre para abrir o cerrar</p>
+
+      <div class="studio-apply-dock">
+        <div class="studio-apply-copy">
+          <strong id="studioDirtyState">Cargando configuración</strong>
+          <span id="studioStatus" role="status" aria-live="polite"></span>
+        </div>
+        <button class="action-btn" id="restoreStudioBtn" type="button">Restaurar cambios</button>
+        <button class="action-btn primary" id="applyStudioBtn" type="button" disabled>Aplicar a la invitación</button>
+      </div>
+    </main>
+  </div>
+
+  <script src="/seal-renderer.js?v=6.14.2-rc.30"></script>
+  <script src="/stationery-engine.js?v=6.14.2-rc.30"></script>
+  <script src="/stationery-studio.js?v=6.14.2-rc.30"></script>
+</body>
+</html>

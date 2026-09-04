@@ -14,6 +14,6 @@ Toda la documentación se concentra bajo `docs/`; la raíz de `docs/` conserva �
 - `traceability/`: requisito → implementación → evidencia → estado.
 - `validation/`: pruebas ejecutadas, bloqueadas y pendientes.
 
-Referencia vigente: `indexes/INDEX_DOCUMENTACION_RC21.md`.
+Referencia vigente: `indexes/INDEX_DOCUMENTACION_RC30.md`.
 
-Los documentos históricos se conservan porque registran decisiones y regresiones previas; no deben interpretarse como la fuente de verdad de la versión actual cuando contradigan un documento RC21.
+Los documentos históricos se conservan porque registran decisiones y regresiones previas; no deben interpretarse como la fuente de verdad de la versión actual cuando contradigan un documento RC30.

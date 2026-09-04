@@ -1,6 +1,6 @@
 {
   "name": "eventstudio",
-  "version": "6.14.2-rc.21",
+  "version": "6.14.2-rc.30",
   "private": true,
   "description": "Plataforma multi-evento para invitaciones, confirmaciones, organización, música, fotografías, impresión y reportes.",
   "main": "src/server.js",
@@ -12,7 +12,7 @@
     "start": "node src/server.js",
     "local": "node scripts/iniciar-local.js",
     "seed": "node src/seed.js",
-    "test": "node tests/project-integrity.js && node tests/source-references.js && node tests/mobile-ui.js && node tests/local-network.js && node tests/rc14-regressions.js && node tests/data-safety.js && node tests/security-database.js && node tests/commerce-migration.js && npm run test:production-migration && node tests/origin-policy.js && node tests/security-headers.js && node tests/commerce-journeys.js && npm run test:functional-parity && node tests/smoke.js && node tests/restore.js && npm run test:rc15 && npm run test:rc15.1 && npm run test:rc17 && npm run test:rc19 && npm run test:animations && npm run test:rc20 && npm run test:rc21",
+    "test": "node tests/project-integrity.js && node tests/source-references.js && node tests/mobile-ui.js && node tests/local-network.js && node tests/rc14-regressions.js && node tests/data-safety.js && node tests/security-database.js && node tests/commerce-migration.js && npm run test:production-migration && node tests/origin-policy.js && node tests/security-headers.js && node tests/commerce-journeys.js && npm run test:functional-parity && node tests/smoke.js && node tests/restore.js && npm run test:rc15 && npm run test:rc15.1 && npm run test:rc17 && npm run test:rc19 && npm run test:animations && npm run test:rc20 && npm run test:rc21 && npm run test:rc22 && npm run test:rc23 && npm run test:rc24 && npm run test:rc25 && npm run test:rc27 && npm run test:rc28 && npm run test:rc29 && npm run test:rc30",
     "test:rc15": "node tests/rc15-regressions.js",
     "test:rc15.1": "node tests/rc15-1-login-hotfix.js",
     "audit": "node scripts/audit-project.js",
@@ -24,7 +24,16 @@
     "test:security": "node tests/security-database.js && node tests/security-adversarial.js && node tests/security-headers.js && node tests/origin-policy.js && node tests/data-safety.js && node tests/restore.js && node tests/rc20-permissions.js && node tests/payments-mercadopago.js && node tests/whatsapp-readiness.js",
     "test:functional-parity": "node tests/functional-parity-security-r1.js",
     "test:production-migration": "node tests/legacy-v0-production-migration.js",
-    "test:production-reset": "node tests/production-reset-keep-users.js"
+    "test:production-reset": "node tests/production-reset-keep-users.js",
+    "test:rc22": "node tests/rc22-modules.js",
+    "test:rc23": "node tests/rc23-acceptance-contracts.js && node tests/rc23-concurrent-e2e.js",
+    "test:visual": "python3 tests/visual-acceptance.py && python3 tests/visual-device-matrix.py && python3 tests/rc24-gifts-visual.py && python3 tests/rc25-gifts-visual.py && python3 tests/rc28-stationery-studio-visual.py && python3 tests/rc30-public-envelope-visual.py",
+    "test:rc24": "node tests/rc24-gifts.js",
+    "test:rc25": "node tests/rc25-gifts-modular.js",
+    "test:rc27": "node tests/rc27-stationery-engine.js",
+    "test:rc28": "node tests/rc28-stationery-studio.js",
+    "test:rc29": "node tests/rc29-stationery-index-parity.js",
+    "test:rc30": "node tests/rc30-stationery-delivery-sync.js"
   },
   "dependencies": {
     "adm-zip": "^0.6.0",

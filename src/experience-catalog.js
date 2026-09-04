@@ -31,7 +31,12 @@ module.exports=Object.freeze({
   openingProductMap:productMap(catalog.openings),
   galleryProductMap:productMap(catalog.galleries),
   publicCatalog:Object.freeze({
-    openings:catalog.openings.map(({id,label,commercial,colorControl})=>({id,label,commercial:Boolean(commercial),colorControl:colorControl||null})),
+    openings:catalog.openings.filter(item=>!item.hidden).map(({id,label,commercial,colorControl,colorControls,editor,seal})=>({
+      id,label,commercial:Boolean(commercial),colorControl:colorControl||null,
+      colorControls:Array.isArray(colorControls)?Object.freeze([...colorControls]):(colorControl?Object.freeze([colorControl]):Object.freeze([])),
+      editor:editor&&typeof editor==="object"?Object.freeze({...editor}):null,
+      seal:seal&&typeof seal==="object"?Object.freeze({...seal}):null
+    })),
     galleries:catalog.galleries.map(({id,label,commercial})=>({id,label,commercial:Boolean(commercial)})),
     motionLevels:catalog.motionLevels.map(({id,label})=>({id,label}))
   })

@@ -30,12 +30,41 @@
   },
   "gifts": {
     "mode": "cash-envelopes",
-    "title": "Lluvia de sobres",
+    "title": "Regalos",
     "message": "Su presencia es lo más importante para nosotros.",
-    "description": "Si desean tener un detalle con nosotros, durante la celebración encontrarán sobres en las mesas y un buzón especial donde podrán depositarlos.",
+    "description": "",
     "link": "",
     "linkLabel": "Ver mesa de regalos",
-    "bankInfo": ""
+    "bankInfo": "",
+    "bankInfoEnabled": false,
+    "openpay": {
+      "enabled": false,
+      "suggestedAmountCents": null,
+      "allowCustomAmount": true,
+      "messageEnabled": true
+    },
+    "bank": {
+      "bankName": "",
+      "accountHolder": "",
+      "clabe": "",
+      "accountNumber": "",
+      "instructions": "",
+      "referenceConcept": "",
+      "persuasionPresetId": "",
+      "persuasionCustomText": ""
+    },
+    "methods": {
+      "cashEnvelopes": {
+        "enabled": true,
+        "instructions": "Si desean tener un detalle con nosotros, durante la celebración encontrarán sobres en las mesas y un buzón especial donde podrán depositarlos."
+      },
+      "registry": {
+        "enabled": false
+      },
+      "bankTransfer": {
+        "enabled": false
+      }
+    }
   },
   "menus": {
     "adultOptions": [
@@ -129,7 +158,7 @@
     "sameLocation": true
   },
   "presentation": {
-    "openingStyle": "wax-envelope",
+    "openingStyle": "unified-envelope",
     "experienceMode": "auto",
     "motionLevel": "balanced",
     "galleryStyle": "classic",
@@ -155,6 +184,27 @@
     "floralPetalColor": "#f7f3de",
     "floralCenterColor": "#d8ad61"
   },
+  "stationery": {
+    "enabled": true,
+    "customized": false,
+    "syncDesignTokens": false,
+    "presetId": "wax-envelope",
+    "formatId": "v-flap",
+    "materialId": "smooth-paper",
+    "textureStrength": 62,
+    "outerColor": "#6f7860",
+    "innerColor": "#49513f",
+    "cardColor": "#fffaf3",
+    "textColor": "#40372f",
+    "ornamentColor": "#c3a15c",
+    "sealColor": "#8f3140",
+    "linerId": "mudejar",
+    "overlayId": "none",
+    "stampId": "none",
+    "frameId": "imperial-basic",
+    "dividerId": "diamond-classic",
+    "fontMode": "event"
+  },
   "creativeBrief": {
     "protagonist": "",
     "milestone": "",
@@ -170,6 +220,7 @@
     "guestMessage": "El álbum está temporalmente en mantenimiento. Puedes intentarlo nuevamente más tarde."
   },
   "rsvp": {
+    "enabled": true,
     "closeAt": "",
     "allowChanges": true,
     "allowFlexibleComposition": false
@@ -232,5 +283,27 @@
     "billing": "hidden",
     "customDomains": "hidden",
     "developerTools": "hidden"
+  },
+  "seal": {
+    "enabled": true,
+    "autoMonogram": true,
+    "initial1": "",
+    "initial2": "",
+    "connector": "&",
+    "topText": "",
+    "bottomText": "",
+    "font": "Cormorant Garamond",
+    "fontSize": 104,
+    "kerning": 1.5,
+    "verticalOffset": 0,
+    "borderStyle": "organic",
+    "ornament": "none",
+    "material": "theme",
+    "customColor": "#7a1128",
+    "reliefDepth": 7,
+    "reliefMode": "engraved",
+    "specular": 55,
+    "quality": "balanced",
+    "customized": false
   }
 }

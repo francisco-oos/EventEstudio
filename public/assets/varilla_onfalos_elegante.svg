@@ -1,0 +1,49 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 120" width="100%" height="100%" role="img" aria-label="Varilla Onfalós de madera y bronce">
+  <defs>
+    <linearGradient id="woodGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#3c1e08"/>
+      <stop offset="25%" stop-color="#72411e"/>
+      <stop offset="55%" stop-color="#8e5529"/>
+      <stop offset="75%" stop-color="#552c10"/>
+      <stop offset="100%" stop-color="#231105"/>
+    </linearGradient>
+    <linearGradient id="goldGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#896424"/>
+      <stop offset="20%" stop-color="#ffd875"/>
+      <stop offset="45%" stop-color="#fff4be"/>
+      <stop offset="65%" stop-color="#dfa943"/>
+      <stop offset="85%" stop-color="#9a6e1a"/>
+      <stop offset="100%" stop-color="#4d3509"/>
+    </linearGradient>
+    <radialGradient id="goldBall" cx="35%" cy="35%" r="65%">
+      <stop offset="0%" stop-color="#ffffff"/>
+      <stop offset="30%" stop-color="#ffe28a"/>
+      <stop offset="60%" stop-color="#cf9833"/>
+      <stop offset="85%" stop-color="#7e520d"/>
+      <stop offset="100%" stop-color="#3b2403"/>
+    </radialGradient>
+    <filter id="shadow" x="-5%" y="-30%" width="110%" height="180%">
+      <feDropShadow dx="0" dy="6" stdDeviation="5" flood-color="#000000" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+  <g filter="url(#shadow)">
+    <rect x="90" y="44" width="720" height="32" rx="16" fill="url(#woodGrad)" stroke="#1a0c03" stroke-width="1.5"/>
+    <rect x="92" y="47" width="716" height="5" rx="2.5" fill="#ffffff" opacity="0.22"/>
+    <g transform="translate(10 0)">
+      <rect x="80" y="40" width="14" height="40" rx="3" fill="url(#goldGrad)" stroke="#52380a"/>
+      <ellipse cx="80" cy="60" rx="4" ry="20" fill="url(#goldGrad)"/>
+      <path d="M64 36c4 8 8 12 12 10v28c-4-2-8 2-12 10Z" fill="url(#goldGrad)" stroke="#4a3006"/>
+      <ellipse cx="44" cy="60" rx="20" ry="22" fill="url(#goldBall)" stroke="#5e3e09" stroke-width="1.2"/>
+      <path d="M24 54c-6 3-10 5-14 6 4 1 8 3 14 6Z" fill="url(#goldGrad)" stroke="#4a3006"/>
+      <circle cx="10" cy="60" r="4.5" fill="url(#goldBall)" stroke="#3e2604" stroke-width=".8"/>
+    </g>
+    <g transform="translate(890 0) scale(-1 1)">
+      <rect x="80" y="40" width="14" height="40" rx="3" fill="url(#goldGrad)" stroke="#52380a"/>
+      <ellipse cx="80" cy="60" rx="4" ry="20" fill="url(#goldGrad)"/>
+      <path d="M64 36c4 8 8 12 12 10v28c-4-2-8 2-12 10Z" fill="url(#goldGrad)" stroke="#4a3006"/>
+      <ellipse cx="44" cy="60" rx="20" ry="22" fill="url(#goldBall)" stroke="#5e3e09" stroke-width="1.2"/>
+      <path d="M24 54c-6 3-10 5-14 6 4 1 8 3 14 6Z" fill="url(#goldGrad)" stroke="#4a3006"/>
+      <circle cx="10" cy="60" r="4.5" fill="url(#goldBall)" stroke="#3e2604" stroke-width=".8"/>
+    </g>
+  </g>
+</svg>

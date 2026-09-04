@@ -295,8 +295,10 @@ async function load(){
     if($('panelEventName'))$('panelEventName').textContent=settings._event?.name||'Evento';
     if($('publicEventBtn')){
       const slug=settings._event?.slug;
-      $('publicEventBtn').href=slug?`/e/${encodeURIComponent(slug)}`:'#';$('publicEventBtn').rel='noopener';
+      const relativeUrl=slug?`/e/${encodeURIComponent(slug)}`:'';
+      $('publicEventBtn').href=relativeUrl||'#';$('publicEventBtn').rel='noopener';
       $('publicEventBtn').classList.toggle('disabled-link',!slug);
+      if($('publicEventUrl'))$('publicEventUrl').value=relativeUrl?new URL(relativeUrl,location.origin).href:'';
     }
 
     applyDashboardStats(dashboard);
@@ -385,107 +387,70 @@ function renderMedia(containerId,items,type){
 }
 
 
-const GIFT_PRESETS=[
-  {
-    mode:"cash-envelopes",
-    title:"Lluvia de sobres",
-    message:"Su presencia es lo más importante para nosotros.",
-    description:"Si desean tener un detalle con nosotros, encontrarán sobres en las mesas y un buzón especial donde podrán depositarlos.",
-    link:"",
-    linkLabel:"",
-    bankInfo:"",
-    icon:"✉"
-  },
-  {
-    mode:"registry",
-    title:"Mesa de regalos",
-    message:"Hemos preparado una mesa de regalos para quienes deseen acompañarnos con un detalle.",
-    description:"Pueden consultar nuestras opciones en el siguiente enlace.",
-    link:"",
-    linkLabel:"Ver mesa de regalos",
-    bankInfo:"",
-    icon:"🎁"
-  },
-  {
-    mode:"bank-transfer",
-    title:"Transferencia",
-    message:"Su presencia es nuestro mejor regalo.",
-    description:"Para quienes deseen hacernos un obsequio, dejamos disponibles los siguientes datos.",
-    link:"",
-    linkLabel:"",
-    bankInfo:"",
-    icon:"◈"
-  },
-  {
-    mode:"mixed",
-    title:"Opciones de regalo",
-    message:"Su presencia es lo más importante para nosotros.",
-    description:"Si desean tener un detalle, pueden elegir la opción que les resulte más cómoda.",
-    link:"",
-    linkLabel:"Ver mesa de regalos",
-    bankInfo:"",
-    icon:"♡"
-  },
-  {
-    mode:"no-gifts",
-    title:"El mejor regalo es compartir",
-    message:"Lo más importante para nosotros es contar con su presencia.",
-    description:"No es necesario llevar ningún obsequio.",
-    link:"",
-    linkLabel:"",
-    bankInfo:"",
-    icon:"✦"
+function renderGiftMessageSuggestionPreview(){
+  const container=$('giftMessageAdminPreview');
+  if(!container)return;
+  const presets=Array.isArray(settings?._giftMessagePresets)?settings._giftMessagePresets:[];
+  container.innerHTML=presets.map(item=>`<article><strong>${esc(item.label||'Sugerencia')}</strong><p>${esc(item.text||'')}</p></article>`).join('');
+}
+
+function giftPersuasionCatalog(){
+  return Array.isArray(settings?._giftPersuasionPresets)?settings._giftPersuasionPresets:[];
+}
+
+function renderGiftPersuasionOptions(){
+  const select=$('giftBankPersuasionPreset');
+  if(!select)return;
+  const current=select.value||settings?.gifts?.bank?.persuasionPresetId||'';
+  const options=[
+    '<option value="">Sin mensaje motivador</option>',
+    ...giftPersuasionCatalog().map(item=>`<option value="${esc(item.id)}">${esc(item.label)}</option>`),
+    '<option value="custom">Mensaje personalizado</option>'
+  ];
+  select.innerHTML=options.join('');
+  select.value=[...select.options].some(option=>option.value===current)?current:'';
+}
+
+function updateGiftPersuasionFields(){
+  const select=$('giftBankPersuasionPreset');
+  const preview=$('giftBankPersuasionPreview');
+  const customField=$('giftBankPersuasionCustomField');
+  const presetId=select?.value||'';
+  customField?.classList.toggle('hidden',presetId!=='custom');
+  if(!preview)return;
+  const preset=giftPersuasionCatalog().find(item=>item.id===presetId);
+  const customText=String($('giftBankPersuasionCustom')?.value||'').trim();
+  const text=presetId==='custom'?customText:(preset?.text||'');
+  const strategy=presetId==='custom'?'Mensaje definido por el anfitrión':(preset?.strategy||'');
+  preview.replaceChildren();
+  if(text){
+    const strong=document.createElement('strong');strong.textContent=strategy;
+    const paragraph=document.createElement('p');paragraph.textContent=text;
+    preview.append(strong,paragraph);
   }
-];
+  preview.classList.toggle('hidden',!text);
+}
 
 function updateGiftFields(){
-  const mode=$('giftMode')?.value||'cash-envelopes';
-  const showRegistry=mode==='registry'||mode==='mixed';
-  const showBank=mode==='bank-transfer'||mode==='mixed';
+  const cashEnabled=$('giftCashEnabled')?.checked===true;
+  const registryEnabled=$('giftRegistryEnabled')?.checked===true;
+  const bankEnabled=$('giftBankInfoEnabled')?.checked===true;
+  const openpayEnabled=$('giftOpenpayEnabled')?.checked===true;
+  const messageEnabled=openpayEnabled&&$('giftOpenpayMessageEnabled')?.checked===true;
 
-  $('giftLinkField')?.classList.toggle('hidden',!showRegistry);
-  $('giftLinkLabelField')?.classList.toggle('hidden',!showRegistry);
-  $('giftBankField')?.classList.toggle('hidden',!showBank);
+  $('giftCashOptions')?.classList.toggle('hidden',!cashEnabled);
+  $('giftRegistryOptions')?.classList.toggle('hidden',!registryEnabled);
+  $('giftBankField')?.classList.toggle('hidden',!bankEnabled);
+  $('giftOpenpayOptions')?.classList.toggle('hidden',!openpayEnabled);
+  $('giftMessageSuggestionPreview')?.classList.toggle('hidden',!messageEnabled);
+  if(messageEnabled)renderGiftMessageSuggestionPreview();
+  if(bankEnabled)updateGiftPersuasionFields();
 }
 
 function renderGiftPresets(){
-  const grid=$('giftPresetGrid');
-  if(!grid)return;
-
-  const activeMode=$('giftMode')?.value||settings.gifts?.mode||'cash-envelopes';
-
-  grid.innerHTML=GIFT_PRESETS.map(preset=>`
-    <article class="gift-preset-card ${preset.mode===activeMode?'selected':''}">
-      <span class="gift-preset-icon">${preset.icon}</span>
-      <div>
-        <h3>${esc(preset.title)}</h3>
-        <p>${esc(preset.description)}</p>
-      </div>
-      <button class="secondary-btn gift-preset-button" type="button" data-mode="${esc(preset.mode)}">
-        ${preset.mode===activeMode?'Seleccionado':'Usar opción'}
-      </button>
-    </article>
-  `).join('');
-
-  grid.querySelectorAll('.gift-preset-button').forEach(button=>{
-    button.addEventListener('click',()=>{
-      const preset=GIFT_PRESETS.find(item=>item.mode===button.dataset.mode);
-      if(!preset)return;
-
-      setValue('giftMode',preset.mode);
-      setValue('giftTitle',preset.title);
-      setValue('giftMessage',preset.message);
-      setValue('giftDescription',preset.description);
-      setValue('giftLink',preset.link);
-      setValue('giftLinkLabel',preset.linkLabel);
-      setValue('giftBankInfo',preset.bankInfo);
-
-      updateGiftFields();
-      renderGiftPresets();
-    });
-  });
-
+  renderGiftPersuasionOptions();
   updateGiftFields();
+  updateGiftPersuasionFields();
 }
 
 function setValue(id,value){
@@ -495,6 +460,22 @@ function setValue(id,value){
 function setChecked(id,value){
   const element=$(id);
   if(element)element.checked=!!value;
+}
+function mergeSettingsResponse(next){
+  if(!next||typeof next!=="object")return settings;
+  const metadata=Object.fromEntries(Object.entries(settings||{}).filter(([key])=>key.startsWith("_")));
+  settings={...settings,...metadata,...next};
+  return settings;
+}
+function applyEventPalette(element){
+  if(!element)return;
+  const palette=settings?._themePalette||{};
+  ['bg','paper','ink','muted','accent','accentText','gold','line','accentContrast'].forEach(key=>{
+    const value=palette[key];
+    const cssKey=key==='accentContrast'?'accent-contrast':key==='accentText'?'accent-text':key;
+    if(/^#[0-9a-f]{6}$/i.test(String(value||'')))element.style.setProperty(`--${cssKey}`,value);
+  });
+  element.dataset.surfaceTexture=String(settings?._surfaceTexture||'none');
 }
 function automaticDateLabel(dateValue){
   const match=String(dateValue||'').match(/^(\d{4})-(\d{2})-(\d{2})$/);
@@ -545,9 +526,9 @@ function fillSettings(){
   setValue('experienceModeSelect',settings.presentation?.experienceMode||'auto');
   setValue('motionLevelSelect',settings.presentation?.motionLevel||'balanced');
   setValue('galleryStyleSelect',settings.presentation?.galleryStyle||'classic');
-  setValue('rosePetalColor',settings.presentation?.rosePetalColor||'#b70f36');
-  setValue('floralPetalColor',settings.presentation?.floralPetalColor||'#f7f3de');
-  setValue('floralCenterColor',settings.presentation?.floralCenterColor||'#d8ad61');
+  setValue('rosePetalColor',settings.presentation?.rosePetalColor||'');
+  setValue('floralPetalColor',settings.presentation?.floralPetalColor||'');
+  setValue('floralCenterColor',settings.presentation?.floralCenterColor||'');
   setValue('creativeProtagonist',settings.creativeBrief?.protagonist||'');
   setValue('creativeMilestone',settings.creativeBrief?.milestone||'');
   setValue('creativeTheme',settings.creativeBrief?.theme||'');
@@ -564,13 +545,37 @@ function fillSettings(){
   renderTranslationEditor();
 
   const gift=settings.gifts||{};
-  setValue('giftMode',gift.mode||'cash-envelopes');
-  setValue('giftTitle',gift.title||gift.cashTitle||'');
+  const methods=gift.methods||{};
+  const legacyMode=gift.mode||'cash-envelopes';
+  const cashEnabled=methods.cashEnvelopes?.enabled??(legacyMode==='cash-envelopes');
+  const registryEnabled=methods.registry?.enabled??(legacyMode==='registry'||legacyMode==='mixed');
+  const bankEnabled=methods.bankTransfer?.enabled??(gift.bankInfoEnabled===true||legacyMode==='bank-transfer'||legacyMode==='mixed');
+  setValue('giftTitle',gift.title||gift.cashTitle||'Regalos');
   setValue('giftMessage',gift.message||'');
   setValue('giftDescription',gift.description||gift.cashDescription||'');
+  setChecked('giftCashEnabled',cashEnabled);
+  setValue('giftCashInstructions',methods.cashEnvelopes?.instructions||gift.cashEnvelopeInstructions||((legacyMode==='cash-envelopes')?gift.description:'')||'');
+  setChecked('giftRegistryEnabled',registryEnabled);
   setValue('giftLink',gift.link||'');
   setValue('giftLinkLabel',gift.linkLabel||'');
-  setValue('giftBankInfo',gift.bankInfo||'');
+  const bank=gift.bank||{};
+  setChecked('giftBankInfoEnabled',bankEnabled);
+  setValue('giftBankName',bank.bankName||'');
+  setValue('giftBankHolder',bank.accountHolder||'');
+  setValue('giftBankClabe',bank.clabe||'');
+  setValue('giftBankAccount',bank.accountNumber||'');
+  setValue('giftBankReferenceConcept',bank.referenceConcept||'');
+  setValue('giftBankInstructions',bank.instructions||gift.bankInfo||'');
+  setValue('giftBankPersuasionPreset',bank.persuasionPresetId||'');
+  setValue('giftBankPersuasionCustom',bank.persuasionCustomText||'');
+  setChecked('giftOpenpayEnabled',gift.openpay?.enabled===true);
+  setValue('giftOpenpaySuggestedAmount',gift.openpay?.suggestedAmountCents==null?'':Number(gift.openpay.suggestedAmountCents)/100);
+  setChecked('giftOpenpayAllowCustom',gift.openpay?.suggestedAmountCents==null?true:gift.openpay?.allowCustomAmount!==false);
+  setChecked('giftOpenpayMessageEnabled',gift.openpay?.messageEnabled!==false);
+  renderGiftPersuasionOptions();
+  setValue('giftBankPersuasionPreset',bank.persuasionPresetId||'');
+  updateGiftFields();
+  updateGiftPersuasionFields();
 
   const venues=settings.venues||{};
   setChecked('samePlace',venues.samePlace!==false);
@@ -589,6 +594,7 @@ function fillSettings(){
 
   setValue('accessibilityOptions',(settings.accessibility?.options||[]).join('\n'));
   setValue('accessibilityHelp',settings.accessibility?.helpText||'');
+  setChecked('rsvpEnabled',settings.rsvp?.enabled!==false);
   const closeAt=settings.rsvp?.closeAt?new Date(settings.rsvp.closeAt):null;
   setValue('rsvpCloseAt',closeAt&&!Number.isNaN(closeAt.getTime())?new Date(closeAt.getTime()-closeAt.getTimezoneOffset()*60000).toISOString().slice(0,16):'');
   const seatReleaseAt=settings.rsvp?.seatReleaseAt?new Date(settings.rsvp.seatReleaseAt):null;
@@ -607,8 +613,6 @@ function fillSettings(){
   setValue('dashboardTitleText',labels.dashboardTitle||'Resumen del evento');
   setValue('dashboardDescriptionText',labels.dashboardDescription||'Consulta asistencia, necesidades y recursos del evento activo.');
 
-
-
   renderHeroMediaPreview();
   renderMedia('settingsGallery',settings.media?.gallery||[],'gallery');
   renderMedia('dressSettingsGallery',settings.dressCode?.referenceImages||[],'dress');
@@ -626,16 +630,58 @@ function fillSettings(){
   setChecked('qrUseThemeColors',qrDesign.useInvitationColors!==false);
   setValue('physicalTemplateSelect',settings.physicalInvitation?.templateId||'auto-theme');
   populateExperienceSelectors();
-  setValue('openingStyleSelect',settings.presentation?.openingStyle||'wax-envelope');
+  setValue('openingStyleSelect',settings.presentation?.openingStyle||defaultOpeningId());
   updateDesignProductControls();
   updateQrMockup();
 }
 
+function stationeryCatalog(){return settings?._stationeryCatalog||{};}
+function defaultOpeningId(){return stationeryCatalog().openingId||experienceOptions().openings?.[0]?.id||"";}
+function selectedOpeningDefinition(){
+  const selected=$('openingStyleSelect')?.value||settings.presentation?.openingStyle||'';
+  return (experienceOptions().openings||[]).find(item=>item.id===selected)||null;
+}
+function stationeryPresetLabel(){
+  const catalog=stationeryCatalog(),presetId=settings.stationery?.presetId||catalog.defaults?.presetId;
+  return (catalog.presets||[]).find(item=>item.id===presetId)?.label||presetId||'Configuración predeterminada';
+}
+function refreshStationeryLaunchCard(){
+  const card=$('stationeryLaunchCard'),opening=selectedOpeningDefinition(),editor=opening?.editor;
+  const editable=editor?.type==='stationery-studio'&&Boolean(editor.path);
+  card?.classList.toggle('hidden',!editable);
+  if(!editable)return;
+  const displayName=$('displayName')?.value||settings.couple?.displayName||settings._event?.name||'';
+  const dateLabel=$('dateLabel')?.value||settings.event?.dateLabel||'';
+  const headingLabel=$('headingFont')?.selectedOptions?.[0]?.textContent||settings.typography?.heading||'Tipografía del evento';
+  if($('stationeryLaunchNames'))$('stationeryLaunchNames').textContent=displayName||'—';
+  if($('stationeryLaunchDate'))$('stationeryLaunchDate').textContent=dateLabel||'—';
+  if($('stationeryLaunchFont'))$('stationeryLaunchFont').textContent=headingLabel;
+  if($('stationeryLaunchPreset'))$('stationeryLaunchPreset').textContent=stationeryPresetLabel();
+  const state=$('stationeryLaunchState');
+  if(state){
+    const customized=settings.stationery?.customized===true,synced=settings.stationery?.syncDesignTokens===true;
+    state.textContent=customized?(synced?'Aplicado y sincronizado':'Aplicado sin sincronización global'):'Listo para personalizar';
+    state.className=`status-pill ${customized?'confirmed':'pending'}`;
+  }
+  const link=$('openStationeryStudioBtn');
+  if(link){
+    const url=new URL(editor.path,window.location.origin);
+    if(eventId)url.searchParams.set('eventId',String(eventId));
+    link.href=`${url.pathname}${url.search}`;
+    link.textContent=editor.label||'Abrir estudio avanzado';
+    link.setAttribute('aria-disabled',String(!eventId));
+  }
+  const hint=$('stationeryLaunchHint');
+  if(hint){
+    hint.textContent='El estudio avanzado hereda nombres, fecha y tipografía del evento. Los cambios sólo se vuelven globales al usar Aplicar a la invitación.';
+    if(featureAccess.templates!==true&&!['owner','developer'].includes(currentUser?.role))hint.textContent='Tu perfil puede abrir el estudio en modo de consulta, pero la aplicación de cambios requiere acceso a Plantillas.';
+  }
+}
 function experienceOptions(){return settings?._experiences||publicCatalog?.experiences||{openings:[],galleries:[],motionLevels:[]};}
 function populateExperienceSelectors(){
   const catalog=experienceOptions();
   const fill=(id,items,current)=>{const select=$(id);if(!select||!items?.length)return;select.innerHTML=items.map(item=>`<option value="${esc(item.id)}">${esc(item.label)}${item.commercial?' · Store':''}</option>`).join('');if(items.some(item=>item.id===current))select.value=current;};
-  fill('openingStyleSelect',catalog.openings,settings.presentation?.openingStyle||'wax-envelope');
+  fill('openingStyleSelect',catalog.openings,settings.presentation?.openingStyle||defaultOpeningId());
   fill('galleryStyleSelect',catalog.galleries,settings.presentation?.galleryStyle||'classic');
   fill('motionLevelSelect',catalog.motionLevels,settings.presentation?.motionLevel||'balanced');
 }
@@ -644,13 +690,14 @@ function updateDesignProductControls(){
   const opening=$('openingStyleSelect'),gallery=$('galleryStyleSelect'),catalog=experienceOptions();
   for(const item of catalog.openings||[]){const option=opening?.querySelector(`option[value="${CSS.escape(item.id)}"]`);if(option&&item.commercial)option.disabled=!platformUser&&!designAccess.opening?.[item.id];}
   for(const item of catalog.galleries||[]){const option=gallery?.querySelector(`option[value="${CSS.escape(item.id)}"]`);if(option&&item.commercial)option.disabled=!platformUser&&!designAccess.gallery?.[item.id];}
-  if(opening?.selectedOptions?.[0]?.disabled)opening.value='wax-envelope';
+  if(opening?.selectedOptions?.[0]?.disabled)opening.value=defaultOpeningId();
   if(gallery?.selectedOptions?.[0]?.disabled)gallery.value='classic';
-  $('rosePetalColorField')?.classList.toggle('hidden',opening?.value!=='rose-bloom');
-  const floralOpeningsRc19=['daisy-bloom','luminous-garden'];
-  const usesFloralPalette=[...floralOpeningsRc19,'night-flower-original'].includes(opening?.value);
-  $('floralPetalColorField')?.classList.toggle('hidden',!usesFloralPalette);
-  $('floralCenterColorField')?.classList.toggle('hidden',!usesFloralPalette);
+  const canEditTemplates=platformUser||featureAccess.templates===true;
+  if($('saveOpeningStyleBtn'))$('saveOpeningStyleBtn').disabled=!canEditTemplates;
+  const activeOpening=(catalog.openings||[]).find(item=>item.id===opening?.value);
+  const colorControls=new Set(activeOpening?.colorControls||[]);
+  ['rosePetalColor','floralPetalColor','floralCenterColor'].forEach(key=>$(key+'Field')?.classList.toggle('hidden',!colorControls.has(key)));
+  refreshStationeryLaunchCard();
 }
 
 
@@ -714,6 +761,7 @@ function updateQrMockup(){
   const mockup=$('qrPhysicalMockup');
   if(mockup){
     mockup.className=`qr-physical-mockup qr-mockup-${template.mockup}`;
+    applyEventPalette(mockup);
   }
 
   if($('activeQrTemplateName'))$('activeQrTemplateName').textContent=template.name;
@@ -741,31 +789,71 @@ function renderPhysicalInvitationStudio(){
   if($('physicalPreviewEvent'))$('physicalPreviewEvent').textContent=presentedName($('displayName')?.value||settings.couple?.displayName||settings._event?.name||'Evento activo');
   if($('physicalPreviewGuest'))$('physicalPreviewGuest').textContent=presentedName(selected?.family_name||'Selecciona un invitado');
   const template=$('physicalTemplateSelect')?.value||settings.physicalInvitation?.templateId||'auto-theme';
-  if($('physicalInvitePreview'))$('physicalInvitePreview').className=`physical-invite-mini-preview template-${template} theme-${settings.themeId||'romantic-wine'}`;
+  if($('physicalInvitePreview')){
+    $('physicalInvitePreview').className=`physical-invite-mini-preview template-${template} theme-${settings.themeId||'romantic-wine'}`;
+    applyEventPalette($('physicalInvitePreview'));
+  }
   if($('downloadPhysicalInviteBtn'))$('downloadPhysicalInviteBtn').disabled=!selected;
 }
 
 $('physicalGuestSelect')?.addEventListener('change',renderPhysicalInvitationStudio);
-$('openingStyleSelect')?.addEventListener('change',updateDesignProductControls);
-$('saveOpeningStyleBtn')?.addEventListener('click',async()=>{
-  const presentation={
+function presentationDraftFromForm(){
+  const fallbackOpening=defaultOpeningId();
+  return {
     ...(settings.presentation||{}),
-    openingStyle:$('openingStyleSelect')?.value||'wax-envelope',
+    openingStyle:$('openingStyleSelect')?.value||fallbackOpening,
     experienceMode:$('experienceModeSelect')?.value||'auto',
     motionLevel:$('motionLevelSelect')?.value||'balanced',
     galleryStyle:$('galleryStyleSelect')?.value||'classic',
-    rosePetalColor:$('rosePetalColor')?.value||settings.presentation?.rosePetalColor||'#b70f36',
-    floralPetalColor:$('floralPetalColor')?.value||settings.presentation?.floralPetalColor||'#f7f3de',
-    floralCenterColor:$('floralCenterColor')?.value||settings.presentation?.floralCenterColor||'#d8ad61'
+    rosePetalColor:$('rosePetalColor')?.value||settings.presentation?.rosePetalColor||'',
+    floralPetalColor:$('floralPetalColor')?.value||settings.presentation?.floralPetalColor||'',
+    floralCenterColor:$('floralCenterColor')?.value||settings.presentation?.floralCenterColor||''
   };
-  const response=await api('/api/admin/settings',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({presentation})});
-  const data=await response.json().catch(()=>({}));
-  if(!response.ok)return status(data.error||'No se pudo guardar la apertura.',false);
-  settings.presentation=data.settings?.presentation||presentation;
-  status('Apertura, recorrido y nivel de movimiento guardados.');
+}
+function refreshOpenInvitationPreview(){
+  const frame=$('openingPreviewFrame');
+  if(!frame||frame.src==='about:blank')return;
+  try{const url=new URL(frame.src,window.location.origin);url.searchParams.set('_',String(Date.now()));frame.src=`${url.pathname}${url.search}`;}catch{}
+}
+async function saveOpeningSelection(){
+  const button=$('saveOpeningStyleBtn');if(!button)return;
+  button.disabled=true;status('Guardando entrada animada…');
+  try{
+    const response=await api('/api/admin/settings',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({presentation:presentationDraftFromForm()})});
+    const data=await response.json().catch(()=>({}));
+    if(!response.ok)throw new Error(data.error||'No se pudo guardar la entrada animada.');
+    mergeSettingsResponse(data.settings||{presentation:presentationDraftFromForm()});
+    setValue('openingStyleSelect',settings.presentation?.openingStyle||defaultOpeningId());
+    updateDesignProductControls();applyDynamicPresentation();updateQrMockup();renderPhysicalInvitationStudio();refreshOpenInvitationPreview();
+    status('Entrada animada guardada y coordinación visual actualizada.');
+  }catch(error){status(error.message||'No se pudo guardar la entrada animada.',false);}
+  finally{button.disabled=!(featureAccess.templates===true||(['owner','developer'].includes(currentUser?.role)&&!supportClientView));}
+}
+async function reloadStationeryStateFromServer(){
+  if(!eventId)return;
+  try{
+    const response=await api('/api/admin/settings',{cache:'no-store'});
+    const data=await readJson(response,'Actualización del estudio de sobres');
+    mergeSettingsResponse(data);
+    setValue('openingStyleSelect',settings.presentation?.openingStyle||defaultOpeningId());
+    updateDesignProductControls();applyDynamicPresentation();updateQrMockup();renderPhysicalInvitationStudio();refreshOpenInvitationPreview();
+    status('El estudio avanzado aplicó la nueva configuración del sobre.');
+  }catch(error){status(error.message||'No se pudo refrescar la configuración aplicada por el estudio.',false);}
+}
+$('openingStyleSelect')?.addEventListener('change',updateDesignProductControls);
+$('saveOpeningStyleBtn')?.addEventListener('click',saveOpeningSelection);
+['displayName','dateLabel','headingFont'].forEach(id=>$(id)?.addEventListener('input',refreshStationeryLaunchCard));
+try{
+  const stationeryChannel=new BroadcastChannel('eventstudio-stationery');
+  stationeryChannel.addEventListener('message',event=>{if(Number(event.data?.eventId)===Number(eventId))void reloadStationeryStateFromServer();});
+}catch{}
+window.addEventListener('storage',event=>{
+  if(event.key!=='eventstudio:stationery-applied'||!event.newValue)return;
+  try{const signal=JSON.parse(event.newValue);if(Number(signal.eventId)===Number(eventId))void reloadStationeryStateFromServer();}catch{}
 });
+
 $('previewOpeningBtn')?.addEventListener('click',async()=>{
-  const selected=$('openingStyleSelect')?.value||'wax-envelope';
+  const selected=$('openingStyleSelect')?.value||defaultOpeningId();
   if(selected==='none')return status('Selecciona una apertura antes de probarla.',false);
   const eventSlug=settings._event?.slug;
   if(!eventSlug)return status('El evento activo todavía no tiene un enlace de vista previa.',false);
@@ -1451,7 +1539,7 @@ $('settingsForm').onsubmit=async event=>{
       options:value('accessibilityOptions').split('\n').map(x=>x.trim()).filter(Boolean),
       helpText:value('accessibilityHelp')
     },
-    rsvp:{closeAt:value('rsvpCloseAt')?new Date(value('rsvpCloseAt')).toISOString():'',seatReleaseAt:value('rsvpSeatReleaseAt')?new Date(value('rsvpSeatReleaseAt')).toISOString():'',allowChanges:checked('rsvpAllowChanges'),allowFlexibleComposition:checked('rsvpFlexibleComposition')},
+    rsvp:{enabled:checked('rsvpEnabled'),closeAt:value('rsvpCloseAt')?new Date(value('rsvpCloseAt')).toISOString():'',seatReleaseAt:value('rsvpSeatReleaseAt')?new Date(value('rsvpSeatReleaseAt')).toISOString():'',allowChanges:checked('rsvpAllowChanges'),allowFlexibleComposition:checked('rsvpFlexibleComposition')},
     photoPolicy:{...(settings.photoPolicy||{}),messageMaxLength:Math.max(0,Math.min(2000,Number(value('photoMessageMaxLength')||500)))},
     media:{...(settings.media||{})},
     eventMeta:{eventType:value('eventTypeSelect')||'custom'},
@@ -1489,7 +1577,49 @@ $('settingsForm').onsubmit=async event=>{
   status('Configuración guardada.');
 };
 
-$('saveGiftBtn').onclick=async()=>{const body={gifts:{mode:$('giftMode').value,title:$('giftTitle').value,message:$('giftMessage').value,description:$('giftDescription').value,link:$('giftLink').value,linkLabel:$('giftLinkLabel').value,bankInfo:$('giftBankInfo').value}};const r=await api('/api/admin/settings',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const data=await r.json().catch(()=>({}));status(r.ok?'Modalidad de regalos guardada.':(data.error||'No se pudo guardar.'),r.ok);if(r.ok){settings=data.settings||settings;renderGiftPresets();}};
+$('saveGiftBtn').onclick=async()=>{
+  const clabe=String($('giftBankClabe')?.value||'').replace(/\D/g,'');
+  if(clabe&&clabe.length!==18)return status('La CLABE debe contener exactamente 18 dígitos o dejarse vacía.',false);
+  const suggestedRaw=String($('giftOpenpaySuggestedAmount')?.value||'').trim();
+  const suggestedAmountCents=suggestedRaw===''?null:Math.round(Number(suggestedRaw)*100);
+  if(suggestedAmountCents!==null&&(!Number.isFinite(suggestedAmountCents)||suggestedAmountCents<1000||suggestedAmountCents>50000000))return status('El monto sugerido debe estar entre $10 y $500,000 MXN o dejarse vacío.',false);
+  const allowCustomAmount=suggestedAmountCents===null?true:$('giftOpenpayAllowCustom')?.checked!==false;
+  const cashEnabled=$('giftCashEnabled')?.checked===true;
+  const registryEnabled=$('giftRegistryEnabled')?.checked===true;
+  const bankEnabled=$('giftBankInfoEnabled')?.checked===true;
+  const openpayEnabled=$('giftOpenpayEnabled')?.checked===true;
+  const activeLegacy=[cashEnabled?'cash-envelopes':'',registryEnabled?'registry':'',bankEnabled?'bank-transfer':''].filter(Boolean);
+  const legacyMode=activeLegacy.length===0?(openpayEnabled?'mixed':'no-gifts'):(activeLegacy.length===1?activeLegacy[0]:'mixed');
+  const body={gifts:{
+    mode:legacyMode,
+    title:$('giftTitle').value,
+    message:$('giftMessage').value,
+    description:$('giftDescription').value,
+    methods:{
+      cashEnvelopes:{enabled:cashEnabled,instructions:$('giftCashInstructions')?.value||''},
+      registry:{enabled:registryEnabled},
+      bankTransfer:{enabled:bankEnabled}
+    },
+    link:$('giftLink').value,
+    linkLabel:$('giftLinkLabel').value,
+    bankInfoEnabled:bankEnabled,
+    bank:{
+      bankName:$('giftBankName')?.value||'',
+      accountHolder:$('giftBankHolder')?.value||'',
+      clabe,
+      accountNumber:$('giftBankAccount')?.value||'',
+      referenceConcept:$('giftBankReferenceConcept')?.value||'',
+      instructions:$('giftBankInstructions')?.value||'',
+      persuasionPresetId:$('giftBankPersuasionPreset')?.value||'',
+      persuasionCustomText:$('giftBankPersuasionCustom')?.value||''
+    },
+    openpay:{enabled:openpayEnabled,suggestedAmountCents,allowCustomAmount,messageEnabled:$('giftOpenpayMessageEnabled')?.checked!==false}
+  }};
+  const r=await api('/api/admin/settings',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
+  const data=await r.json().catch(()=>({}));
+  status(r.ok?'Modalidad de regalos guardada.':(data.error||'No se pudo guardar.'),r.ok);
+  if(r.ok){settings=data.settings||settings;fillSettings();renderGiftPresets();updateGiftFields();}
+};
 $('testInviteBtn').onclick=async()=>{const adults=Number(prompt('Adultos permitidos para la prueba:',2));const children=Number(prompt('Niños permitidos para la prueba:',1));const family=prompt('Nombre que verá la invitación:','Familia de prueba')||'Familia de prueba';const r=await api('/api/admin/developer/test-invitation',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({adults,children,family_name:family})}),d=await r.json();if(!r.ok)return status(d.error,false);$('testInviteResult').innerHTML=`<strong>Invitación de prueba lista</strong><div><a class="primary-btn" target="_blank" href="${d.url}">Abrir prueba</a><button class="secondary-btn" id="copyTestUrl">Copiar enlace</button></div>`;$('testInviteResult').classList.remove('hidden');$('copyTestUrl').onclick=async()=>{await navigator.clipboard.writeText(d.url);status('Enlace de prueba copiado.');};};
 
 function mediaUploadKey(){
@@ -3708,7 +3838,6 @@ async function restoreSession(){
 }
 loadPublicPlans().catch(error=>{console.error(error);if($('loginStatus'))$('loginStatus').textContent=error.message||'No se pudo cargar el catálogo de acceso.';});
 restoreSession().catch(error=>{console.error(error);if($('loginStatus'))$('loginStatus').textContent=error.message||'No se pudo restaurar la sesión.';});
-
 async function loadPlatformSummary(){
   if(!['owner','developer'].includes(currentUser?.role))return;
   const r=await api('/api/admin/platform-summary');
@@ -3995,6 +4124,13 @@ $('accountLocale')?.addEventListener('change',async event=>{
   status(data.locale==='en'?'Interface language updated.':data.locale==='pt'?'Idioma da interface atualizado.':'Idioma de la interfaz actualizado.');
 });
 
+
+$('copyPublicEventUrlBtn')?.addEventListener('click',async()=>{
+  const url=$('publicEventUrl')?.value||'';
+  if(!url)return status('El evento todavía no tiene un enlace público.',false);
+  try{await navigator.clipboard.writeText(url);status('Enlace público copiado.');}
+  catch{status('No se pudo copiar automáticamente. Selecciona el enlace y cópialo manualmente.',false);}
+});
 async function createEventForCurrentUser(){
   const available=eventTypes.length?eventTypes:[{id:'wedding',name:'Boda'},{id:'xv',name:'XV años'},{id:'birthday',name:'Cumpleaños'},{id:'corporate',name:'Empresarial'},{id:'graduation',name:'Graduación'},{id:'custom',name:'Personalizado'}];
   $('newEventType').innerHTML=available.map(item=>`<option value="${esc(item.id)}">${item.icon||'◆'} ${esc(item.name)}</option>`).join('');
@@ -4021,9 +4157,15 @@ $('newEventForm')?.addEventListener('submit',async event=>{
 if($('createClientEventBtn'))$('createClientEventBtn').onclick=createEventForCurrentUser;
 if($('newEventBtn'))$('newEventBtn').onclick=createEventForCurrentUser;
 
-$('giftMode')?.addEventListener('change',()=>{
-  updateGiftFields();
-  renderGiftPresets();
+$('giftCashEnabled')?.addEventListener('change',updateGiftFields);
+$('giftRegistryEnabled')?.addEventListener('change',updateGiftFields);
+$('giftBankInfoEnabled')?.addEventListener('change',updateGiftFields);
+$('giftOpenpayEnabled')?.addEventListener('change',updateGiftFields);
+$('giftOpenpayMessageEnabled')?.addEventListener('change',updateGiftFields);
+$('giftBankPersuasionPreset')?.addEventListener('change',updateGiftPersuasionFields);
+$('giftBankPersuasionCustom')?.addEventListener('input',updateGiftPersuasionFields);
+$('giftOpenpaySuggestedAmount')?.addEventListener('input',event=>{
+  if(String(event.target.value||'').trim()==='')setChecked('giftOpenpayAllowCustom',true);
 });
 
 

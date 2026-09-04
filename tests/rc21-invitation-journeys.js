@@ -62,7 +62,7 @@ async function main(){
 
   const clientPreview=await previewLink(restrictedClient.token,restrictedEvent.id);
   const clientBlocked=await request(`/api/config/${encodeURIComponent(restrictedEvent.slug)}?previewToken=${encodeURIComponent(clientPreview)}&previewOpening=night-flower-original&opening=1&forceMotion=1`);
-  assert.equal(clientBlocked.data.presentation.openingStyle,"wax-envelope","Un preview cliente no debe conceder una experiencia interna.");
+  assert.equal(clientBlocked.data.presentation.openingStyle,"unified-envelope","Un preview cliente no debe conceder una experiencia interna.");
   const clientPublicPreview=await request(`/api/config/${encodeURIComponent(restrictedEvent.slug)}?previewToken=${encodeURIComponent(clientPreview)}&previewOpening=particle-heart&opening=1&forceMotion=1`);
   assert.equal(clientPublicPreview.data.presentation.openingStyle,"particle-heart","La tienda cliente debe poder probar un producto público sin adquirirlo.");
   assert.equal((await request("/api/admin/features",{token:restrictedClient.token,eventId:restrictedEvent.id})).data.designAccess.opening["particle-heart"],false,"Probar no debe conceder el producto.");

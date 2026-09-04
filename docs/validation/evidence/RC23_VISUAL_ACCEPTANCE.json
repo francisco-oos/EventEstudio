@@ -1,0 +1,1467 @@
+{
+  "summary": {
+    "templateViewports": [
+      [
+        390,
+        844
+      ],
+      [
+        1440,
+        900
+      ]
+    ],
+    "templateCases": 128,
+    "templateFailures": 0,
+    "maxTemplateOverflow": 0,
+    "openingCases": 22,
+    "openingFailures": 0,
+    "minOpeningFps": 48.46526655896608,
+    "avgOpeningFps": 59.47695383777654,
+    "maxOpeningP95IntervalMs": 16.80000000000001,
+    "maxOpeningCls": 0,
+    "maxOpeningOverflow": 0
+  },
+  "templates": [
+    {
+      "theme": "romantic-wine",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "botanical-ivory",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "midnight-gold",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "terracotta-sunset",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "minimal-pearl",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "mayan-elegance",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "rose-garden",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "ocean-silk",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "lavender-dream",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "black-tie",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "mexican-bougainvillea",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "forest-candlelight",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "editorial-arch",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "lavender-couture",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "cinematic-vows",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "storybook-seal",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "botanical-scroll",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "welcome-clouds",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "rose-blue-surprise",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "festive-confetti",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "enchanted-letter",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "paw-parade",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "dino-expedition",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "cosmic-adventure",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "undersea-friends",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "rainbow-playground",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "construction-party",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "little-racer",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "sweet-circus",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "enchanted-woodland",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "pixel-quest",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "teddy-moon",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "stork-watercolor",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "garden-reveal",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "confetti-reveal",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "photo-scrapbook",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "travel-postcard",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "cinema-premiere",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "magazine-cover",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "celestial-blessing",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "linen-cross",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "sage-communion",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "destination-passport",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "eternal-rose",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "cinematic-journey",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "petal-letter",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "achievement-path",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "family-memories",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "daisy-paper-orbit",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "daisy-meadow-air",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "daisy-editorial-light",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "daisy-shadow-studio",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "wedding-gazette",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "vintage-parchment",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "sage-photo-editorial",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "olive-universe",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "olive-nectar",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "blue-breeze-aurora",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "botanical-cosmos",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "powder-blue-letter",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "gala-marquee",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "celestial-constellation",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "blush-heart-letter",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "gran-reserva",
+      "viewport": [
+        390,
+        844
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "romantic-wine",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "botanical-ivory",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "midnight-gold",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "terracotta-sunset",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "minimal-pearl",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "mayan-elegance",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "rose-garden",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "ocean-silk",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "lavender-dream",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "black-tie",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "mexican-bougainvillea",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "forest-candlelight",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "editorial-arch",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "lavender-couture",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "cinematic-vows",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "storybook-seal",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "botanical-scroll",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "welcome-clouds",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "rose-blue-surprise",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "festive-confetti",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "enchanted-letter",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "paw-parade",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "dino-expedition",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "cosmic-adventure",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "undersea-friends",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "rainbow-playground",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "construction-party",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "little-racer",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "sweet-circus",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "enchanted-woodland",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "pixel-quest",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "teddy-moon",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "stork-watercolor",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "garden-reveal",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "confetti-reveal",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "photo-scrapbook",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "travel-postcard",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "cinema-premiere",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "magazine-cover",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "celestial-blessing",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "linen-cross",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "sage-communion",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "destination-passport",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "eternal-rose",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "cinematic-journey",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "petal-letter",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "achievement-path",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "family-memories",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "daisy-paper-orbit",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "daisy-meadow-air",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "daisy-editorial-light",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "daisy-shadow-studio",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "wedding-gazette",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "vintage-parchment",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "sage-photo-editorial",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "olive-universe",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "olive-nectar",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "blue-breeze-aurora",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "botanical-cosmos",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "powder-blue-letter",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "gala-marquee",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "celestial-constellation",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "blush-heart-letter",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    },
+    {
+      "theme": "gran-reserva",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "ok": true
+    }
+  ],
+  "openings": [
+    {
+      "opening": "unified-envelope",
+      "overflow": 0,
+      "overlap": false,
+      "cls": 0,
+      "fps": {
+        "fps": 48.46526655896608,
+        "p95Interval": 16.80000000000001,
+        "frames": 21
+      },
+      "errors": [],
+      "ok": true
+    },
+    {
+      "opening": "wax-envelope",
+      "overflow": 0,
+      "overlap": false,
+      "cls": 0,
+      "fps": {
+        "fps": 60.018467220683284,
+        "p95Interval": 16.700000000000045,
+        "frames": 26
+      },
+      "errors": [],
+      "ok": true
+    },
+    {
+      "opening": "floral-envelope",
+      "overflow": 0,
+      "overlap": false,
+      "cls": 0,
+      "fps": {
+        "fps": 60.004615739672275,
+        "p95Interval": 16.799999999999983,
+        "frames": 26
+      },
+      "errors": [],
+      "ok": true
+    },
+    {
+      "opening": "minimal-envelope",
+      "overflow": 0,
+      "overlap": false,
+      "cls": 0,
+      "fps": {
+        "fps": 60.00461573967229,
+        "p95Interval": 16.700000000000045,
+        "frames": 26
+      },
+      "errors": [],
+      "ok": true
+    },
+    {
+      "opening": "cinematic-fold",
+      "overflow": 0,
+      "overlap": false,
+      "cls": 0,
+      "fps": {
+        "fps": 60.0184672206833,
+        "p95Interval": 16.80000000000001,
+        "frames": 26
+      },
+      "errors": [],
+      "ok": true
+    },
+    {
+      "opening": "ivory-seal",
+      "overflow": 0,
+      "overlap": false,
+      "cls": 0,
+      "fps": {
+        "fps": 60.00461573967229,
+        "p95Interval": 16.700000000000045,
+        "frames": 26
+      },
+      "errors": [],
+      "ok": true
+    },
+    {
+      "opening": "rose-bloom",
+      "overflow": 0,
+      "overlap": false,
+      "cls": 0,
+      "fps": {
+        "fps": 59.99077065066912,
+        "p95Interval": 16.799999999999983,
+        "frames": 26
+      },
+      "errors": [],
+      "ok": true
+    },
+    {
+      "opening": "daisy-bloom",
+      "overflow": 0,
+      "overlap": false,
+      "cls": 0,
+      "fps": {
+        "fps": 60.004615739672275,
+        "p95Interval": 16.700000000000045,
+        "frames": 26
+      },
+      "errors": [],
+      "ok": true
+    },
+    {
+      "opening": "luminous-garden",
+      "overflow": 0,
+      "overlap": false,
+      "cls": 0,
+      "fps": {
+        "fps": 60.00461573967229,
+        "p95Interval": 16.700000000000045,
+        "frames": 26
+      },
+      "errors": [],
+      "ok": true
+    },
+    {
+      "opening": "night-flower-original",
+      "overflow": 0,
+      "overlap": false,
+      "cls": 0,
+      "fps": {
+        "fps": 59.99077065066912,
+        "p95Interval": 16.80000000000001,
+        "frames": 26
+      },
+      "errors": [],
+      "ok": true
+    },
+    {
+      "opening": "particle-heart",
+      "overflow": 0,
+      "overlap": false,
+      "cls": 0,
+      "fps": {
+        "fps": 60.004615739672275,
+        "p95Interval": 16.700000000000045,
+        "frames": 26
+      },
+      "errors": [],
+      "ok": true
+    },
+    {
+      "opening": "newspaper-fold",
+      "overflow": 0,
+      "overlap": false,
+      "cls": 0,
+      "fps": {
+        "fps": 60.00461573967229,
+        "p95Interval": 16.700000000000045,
+        "frames": 26
+      },
+      "errors": [],
+      "ok": true
+    },
+    {
+      "opening": "vintage-parchment",
+      "overflow": 0,
+      "overlap": false,
+      "cls": 0,
+      "fps": {
+        "fps": 59.99077065066912,
+        "p95Interval": 16.700000000000045,
+        "frames": 26
+      },
+      "errors": [],
+      "ok": true
+    },
+    {
+      "opening": "olive-universe-orbit",
+      "overflow": 0,
+      "overlap": false,
+      "cls": 0,
+      "fps": {
+        "fps": 60.004615739672275,
+        "p95Interval": 16.700000000000045,
+        "frames": 26
+      },
+      "errors": [],
+      "ok": true
+    },
+    {
+      "opening": "olive-nectar-seal",
+      "overflow": 0,
+      "overlap": false,
+      "cls": 0,
+      "fps": {
+        "fps": 59.99077065066912,
+        "p95Interval": 16.700000000000045,
+        "frames": 26
+      },
+      "errors": [],
+      "ok": true
+    },
+    {
+      "opening": "blue-aurora-reveal",
+      "overflow": 0,
+      "overlap": false,
+      "cls": 0,
+      "fps": {
+        "fps": 60.00461573967229,
+        "p95Interval": 16.80000000000001,
+        "frames": 26
+      },
+      "errors": [],
+      "ok": true
+    },
+    {
+      "opening": "botanical-cosmos-orbit",
+      "overflow": 0,
+      "overlap": false,
+      "cls": 0,
+      "fps": {
+        "fps": 60.004615739672275,
+        "p95Interval": 16.799999999999955,
+        "frames": 26
+      },
+      "errors": [],
+      "ok": true
+    },
+    {
+      "opening": "powder-blue-seal",
+      "overflow": 0,
+      "overlap": false,
+      "cls": 0,
+      "fps": {
+        "fps": 60.004615739672275,
+        "p95Interval": 16.80000000000001,
+        "frames": 26
+      },
+      "errors": [],
+      "ok": true
+    },
+    {
+      "opening": "gala-curtain",
+      "overflow": 0,
+      "overlap": false,
+      "cls": 0,
+      "fps": {
+        "fps": 60.00461573967229,
+        "p95Interval": 16.80000000000001,
+        "frames": 26
+      },
+      "errors": [],
+      "ok": true
+    },
+    {
+      "opening": "constellation-veil",
+      "overflow": 0,
+      "overlap": false,
+      "cls": 0,
+      "fps": {
+        "fps": 59.99077065066912,
+        "p95Interval": 16.799999999999955,
+        "frames": 26
+      },
+      "errors": [],
+      "ok": true
+    },
+    {
+      "opening": "blush-heart-emblem",
+      "overflow": 0,
+      "overlap": false,
+      "cls": 0,
+      "fps": {
+        "fps": 59.99077065066913,
+        "p95Interval": 16.700000000000045,
+        "frames": 26
+      },
+      "errors": [],
+      "ok": true
+    },
+    {
+      "opening": "reserve-uncork",
+      "overflow": 0,
+      "overlap": false,
+      "cls": 0,
+      "fps": {
+        "fps": 59.99077065066912,
+        "p95Interval": 16.80000000000001,
+        "frames": 26
+      },
+      "errors": [],
+      "ok": true
+    }
+  ],
+  "failures": []
+}
