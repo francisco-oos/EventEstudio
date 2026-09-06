@@ -5295,11 +5295,29 @@ function synchronizeSealFromRecipe(currentSeal,recipe){
   return normalizeSeal(currentSeal||{}, {material:"theme",customColor:p.accent,customized:true});
 }
 
+const PRESENTATION_PHOTO_IDS=new Set(designEngine.photoPresentations.map(item=>item.id));
+const PRESENTATION_MOTION_TIMELINE_IDS=new Set(designEngine.motionTimelines.map(item=>item.id));
+const PRESENTATION_HEADING_FONT_IDS=new Set((designEngine.typographyPresets.heading||[]).map(item=>item.id));
+const PRESENTATION_BODY_FONT_IDS=new Set((designEngine.typographyPresets.body||[]).map(item=>item.id));
+const PRESENTATION_TYPOGRAPHY_SCALES=new Set(designEngine.typographyPresets.scales||[]);
+const PRESENTATION_NAME_CASES=new Set(designEngine.typographyPresets.nameCases||[]);
+const PRESENTATION_TEXTURES=new Set(["none","paper","linen","soft-grain","wash"]);
 function normalizeDesignRecipeIntent(incoming,fallback,presentationOverrides={}){
   const requestedOpening=cleanText(presentationOverrides.openingStyle||incoming?.design?.openingId||"",80);
   const requestedGallery=cleanText(presentationOverrides.galleryStyle||incoming?.design?.galleryStyleId||"",80);
   const requestedExperience=cleanText(presentationOverrides.experienceMode||incoming?.design?.experienceMode||"",20);
   const requestedMotion=cleanText(presentationOverrides.motionLevel||incoming?.design?.motionPreset||"",20);
+  // El panel "Diseño" también expone presentación fotográfica, textura, secuencia
+  // de movimiento y tipografía como filtros de nivel evento: deben combinarse con
+  // cualquier Recipe que se abra después, igual que apertura/álbum/movimiento,
+  // en vez de quedarse pegados sólo a la plantilla donde se ajustaron.
+  const requestedPhoto=cleanText(presentationOverrides.photoPresentationId||incoming?.design?.photoPresentationId||"",80);
+  const requestedTexture=cleanText(presentationOverrides.texture||incoming?.design?.texture||"",20);
+  const requestedMotionTimeline=cleanText(presentationOverrides.motionTimelineId||incoming?.design?.motionTimelineId||"",80);
+  const requestedHeadingFont=cleanText(presentationOverrides.headingFont||incoming?.design?.typography?.heading||"",40);
+  const requestedBodyFont=cleanText(presentationOverrides.bodyFont||incoming?.design?.typography?.body||"",40);
+  const requestedTypographyScale=cleanText(presentationOverrides.typographyScale||incoming?.design?.typography?.scale||"",20);
+  const requestedNameCase=cleanText(presentationOverrides.nameCase||incoming?.design?.typography?.nameCase||"",20);
   const openingProps={};
   for(const key of ["rosePetalColor","floralPetalColor","floralCenterColor"]){
     const value=String(presentationOverrides[key]||incoming?.design?.openingProps?.[key]||"").trim().toLowerCase();
@@ -5310,6 +5328,15 @@ function normalizeDesignRecipeIntent(incoming,fallback,presentationOverrides={})
     ...(experienceCatalog.galleryIds.has(requestedGallery)?{galleryStyleId:requestedGallery}:{}),
     ...(["auto","classic","story","poster","gallery"].includes(requestedExperience)?{experienceMode:requestedExperience}:{}),
     ...(experienceCatalog.motionLevelIds.has(requestedMotion)?{motionPreset:requestedMotion}:{}),
+    ...(PRESENTATION_PHOTO_IDS.has(requestedPhoto)?{photoPresentationId:requestedPhoto}:{}),
+    ...(PRESENTATION_TEXTURES.has(requestedTexture)?{texture:requestedTexture}:{}),
+    ...(PRESENTATION_MOTION_TIMELINE_IDS.has(requestedMotionTimeline)?{motionTimelineId:requestedMotionTimeline}:{}),
+    typography:{...(incoming?.design?.typography||{}),
+      ...(PRESENTATION_HEADING_FONT_IDS.has(requestedHeadingFont)?{heading:requestedHeadingFont}:{}),
+      ...(PRESENTATION_BODY_FONT_IDS.has(requestedBodyFont)?{body:requestedBodyFont}:{}),
+      ...(PRESENTATION_TYPOGRAPHY_SCALES.has(requestedTypographyScale)?{scale:requestedTypographyScale}:{}),
+      ...(PRESENTATION_NAME_CASES.has(requestedNameCase)?{nameCase:requestedNameCase}:{})
+    },
     openingProps:{...(incoming?.design?.openingProps||{}),...openingProps}
   }},fallback);
 }
