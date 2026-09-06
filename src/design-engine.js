@@ -195,7 +195,12 @@ function normalizeRecipe(input={},fallbackRecipe=null){
       heroMedia:{
         // enabled=false evita descargar una foto de portada que el diseño oculta.
         // Se conserva true por defecto para no romper Recipes históricas.
-        enabled:design.heroMedia?.enabled===false?false:(fallbackDesign.heroMedia?.enabled===false?false:true),
+        // Un valor explícito recibido del cliente (true o false) siempre gana sobre
+        // el borrador anterior; sólo se usa el fallback cuando el cliente no envía
+        // el campo. Antes, un fallback en false pisaba un "true" recién elegido por
+        // el usuario (p. ej. al activar "Mostrar fotografía de portada"), por lo que
+        // el cambio nunca llegaba a persistirse.
+        enabled:design.heroMedia?.enabled!==undefined?design.heroMedia.enabled!==false:(fallbackDesign.heroMedia?.enabled!==false),
         layout:["background","split-left","split-right"].includes(design.heroMedia?.layout)?design.heroMedia.layout:(["background","split-left","split-right"].includes(fallbackDesign.heroMedia?.layout)?fallbackDesign.heroMedia.layout:"background"),
         fit:["cover","contain"].includes(design.heroMedia?.fit)?design.heroMedia.fit:(["cover","contain"].includes(fallbackDesign.heroMedia?.fit)?fallbackDesign.heroMedia.fit:"cover"),
         positionX:clamp(design.heroMedia?.positionX,0,100,clamp(fallbackDesign.heroMedia?.positionX,0,100,50)),
