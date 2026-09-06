@@ -1,0 +1,12 @@
+{
+  "version": "6.16.0-rc.39",
+  "sha256": "db17a6ea42cc7346b5b823e4c71e0bda80ff49129957a1cf88de0304e2a6c258",
+  "quick_check": "ok",
+  "user_version": 614210,
+  "tables": 43,
+  "users": 4,
+  "events": 2,
+  "guests": 26,
+  "photos": 0,
+  "subscriptions": 5
+}

@@ -11,7 +11,7 @@ const catalog=require("../config/gift-message-presets.json");
 const presets=require("../src/gift-message-presets");
 const {normalizeBankDetails,normalizeSuggestedAmountCents,normalizeOpenpayOptions,hasBankDetails}=require("../src/gift-settings");
 
-const rcNumber=Number((pkg.version.match(/^6\.14\.2-rc\.(\d+)$/)||[])[1]);
+const rcNumber=Number((pkg.version.match(/-rc\.(\d+)$/)||[])[1]);
 assert.ok(rcNumber>=24,"Las regresiones RC24 deben conservarse en candidatas posteriores.");
 assert.equal(defaults.gifts.bankInfoEnabled,false);
 assert.equal(defaults.gifts.openpay.enabled,false);

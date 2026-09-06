@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+  <g fill="none" stroke="var(--es-color-line, #2C3E50)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Rama Superior -->
+    <path d="M50,150 Q200,50 350,150" />
+    <path d="M100,115 Q120,95 140,110 Q120,125 100,115 Z" />
+    <path d="M180,85 Q200,65 220,80 Q200,95 180,85 Z" />
+    <path d="M260,85 Q280,65 300,80 Q280,95 260,85 Z" />
+    <path d="M320,115 Q340,95 360,110 Q340,125 320,115 Z" />
+    
+    <!-- Rama Inferior -->
+    <path d="M50,250 Q200,350 350,250" />
+    <path d="M100,285 Q120,305 140,290 Q120,275 100,285 Z" />
+    <path d="M180,315 Q200,335 220,320 Q200,305 180,315 Z" />
+    <path d="M260,315 Q280,335 300,320 Q280,305 260,315 Z" />
+    <path d="M320,285 Q340,305 360,290 Q340,275 320,285 Z" />
+  </g>
+</svg>

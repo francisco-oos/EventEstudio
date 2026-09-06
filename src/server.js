@@ -18,6 +18,7 @@ const themes=require("../config/themes.json");
 const qrTemplates=require("../config/qr-templates.json");
 const eventTypes=require("../config/event-types.json");
 const defaultSettings=require("../config/default-settings.json");
+const commercialPlans=require("../config/commercial-plans.json");
 const experienceCatalog=require("./experience-catalog");
 const {catalog:featureCatalog,normalizeFeatureSettings,featureDecision,featureOverview}=require("./features");
 const {log,audit}=require("./logger");
@@ -33,6 +34,7 @@ const {
   normalizeStationery,
   legacyPresetForOpening,
   isLegacyEnvelopeOpening,
+  presetById:stationeryPresetById,
   designTokens:stationeryDesignTokens,
   surfaceTexture:stationerySurfaceTexture
 }=require("./stationery-config");
@@ -41,6 +43,7 @@ const backups=require("./backup");
 const restore=require("./restore");
 const {numberSetting}=require("./config");
 const {validateImageStructure}=require("./media-validation");
+const designEngine=require("./design-engine");
 
 /* Archiver 8 expone clases ESM/CommonJS en lugar de la antigua función fábrica.
    Este adaptador conserva compatibilidad con ambas formas para que la exportación
@@ -172,7 +175,9 @@ app.use(helmet({
     "upgrade-insecure-requests":IS_PRODUCTION?[]:null
   }}
 }));
-app.use(compression());
+/* Nivel 1 reduce el tiempo de CPU bajo ráfagas administrativas sin desactivar
+   compresión ni aumentar de forma relevante los payloads JSON/HTML habituales. */
+app.use(compression({level:1,threshold:"2kb"}));
 app.use(express.json({limit:"4mb",verify:(req,_res,buffer)=>{req.rawBody=Buffer.from(buffer);}}));
 app.use(express.urlencoded({extended:true}));
 app.use((req,res,next)=>{
@@ -513,6 +518,21 @@ function designAccessForEvent(event,{platform=false}={}){
     gallery:Object.fromEntries(Object.entries(DESIGN_PRODUCT_KEYS.gallery).map(([style,key])=>[style,platform||keys.has(key)]))
   };
 }
+function designCapabilitiesFor(user,event){
+  const role=String(user?.role||"public");
+  const platformUser=["owner","developer"].includes(role);
+  const templatesAllowed=Boolean(event&&(platformUser||eventFeatureDecision(event,"templates",{role}).allowed));
+  return {
+    view:Boolean(event),
+    editDraft:templatesAllowed,
+    editStationery:templatesAllowed,
+    previewDraft:templatesAllowed,
+    apply:templatesAllowed,
+    saveTemplate:platformUser,
+    publishCatalog:platformUser,
+    manageCatalog:platformUser
+  };
+}
 function eventFeatureDecision(event,key,{role="public",forceClientView=false}={}){
   const context=commercialFeatureContext(event);
   return featureDecision(settingsOf(event),key,{
@@ -543,19 +563,47 @@ function existingFile(file){
   try{return Boolean(file&&fs.statSync(file).isFile());}catch{return false;}
 }
 
+function publicUploadUrl(file){
+  if(!file)return "";
+  const uploadsRoot=path.resolve(uploadsDir),resolved=path.resolve(file);
+  if(resolved===uploadsRoot||!resolved.startsWith(`${uploadsRoot}${path.sep}`))return "";
+  const relative=path.relative(uploadsRoot,resolved).split(path.sep).map(part=>encodeURIComponent(part)).join("/");
+  return `/uploads/${relative}`;
+}
+
+/* RC41 · Reconciliación conservadora de medios restaurados. Una copia/ZIP puede
+   contener el mismo archivo subido con otro prefijo timestamp-hash aunque la BD
+   conserve el nombre anterior. Si el archivo exacto falta y existe UN SOLO
+   candidato con el mismo nombre original dentro del mismo directorio, se usa
+   como alias de lectura. Nunca se modifica la BD ni se adivina entre candidatos. */
+function storedUploadOriginalName(value){
+  const file=mediaPathFromUrl(value);if(!file)return "";
+  let base=path.basename(file);try{base=decodeURIComponent(base);}catch{}
+  const match=base.match(/^\d{10,}-[0-9a-f]{6,}-(.+)$/i);
+  return match?.[1]||"";
+}
+function resolveStoredMedia(value){
+  const raw=String(value||"").trim(),storedPath=mediaPathFromUrl(raw);
+  if(!storedPath||storedPath===path.resolve(uploadsDir))return null;
+  if(existingFile(storedPath))return {path:storedPath,url:publicUploadUrl(storedPath),recovered:false,originalUrl:raw};
+  const original=storedUploadOriginalName(raw);if(!original)return null;
+  const directory=path.dirname(storedPath);
+  let names=[];try{names=fs.readdirSync(directory,{withFileTypes:true}).filter(item=>item.isFile()).map(item=>item.name);}catch{return null;}
+  const candidates=names.filter(name=>{
+    const match=name.match(/^\d{10,}-[0-9a-f]{6,}-(.+)$/i);
+    return match&&match[1].toLocaleLowerCase("en-US")===original.toLocaleLowerCase("en-US");
+  }).map(name=>path.join(directory,name)).filter(existingFile);
+  if(candidates.length!==1)return null;
+  return {path:candidates[0],url:publicUploadUrl(candidates[0]),recovered:true,originalUrl:raw};
+}
+function resolvedLocalMediaUrl(value){return resolveStoredMedia(value)?.url||String(value||"").trim();}
+
 function safePublicMediaUrl(value,{allowHttps=false}={}){
-  const raw=String(value||"").trim();
-  const storedPath=mediaPathFromUrl(raw);
+  const raw=String(value||"").trim(),resolved=resolveStoredMedia(raw);
   /* Una BD restaurada puede conservar referencias a uploads que no viajaron con
      ella. No expongamos URLs locales inexistentes: evita 404 repetidos y vistas
      rotas sin borrar automáticamente la referencia recuperable de la BD. */
-  if(storedPath&&storedPath!==path.resolve(uploadsDir)&&existingFile(storedPath)){
-    const relative=path.relative(path.resolve(uploadsDir),storedPath)
-      .split(path.sep)
-      .map(part=>encodeURIComponent(part))
-      .join("/");
-    return `/uploads/${relative}`;
-  }
+  if(resolved?.url)return resolved.url;
   if(allowHttps){
     try{
       const external=new URL(raw);
@@ -573,8 +621,10 @@ function eventMediaReferenceReport(event){
     ...(settings.media?.gallery||[]).map(url=>({kind:"gallery",url})),
     ...(settings.dressCode?.referenceImages||[]).map(url=>({kind:"dress",url}))
   ].filter(item=>item.url&&mediaPathFromUrl(item.url));
-  const missing=entries.filter(item=>!existingFile(mediaPathFromUrl(item.url)));
-  return {missingCount:missing.length,missing,checkedCount:entries.length};
+  const inspected=entries.map(item=>({...item,resolved:resolveStoredMedia(item.url)}));
+  const missing=inspected.filter(item=>!item.resolved).map(({kind,url})=>({kind,url}));
+  const recovered=inspected.filter(item=>item.resolved?.recovered).map(item=>({kind:item.kind,from:item.url,to:item.resolved.url}));
+  return {missingCount:missing.length,missing,recoveredCount:recovered.length,recovered,checkedCount:entries.length};
 }
 
 function eventMediaPaths(event){
@@ -585,7 +635,7 @@ function eventMediaPaths(event){
     ...(settings.media?.gallery||[]),
     ...(settings.dressCode?.referenceImages||[])
   ].filter(Boolean);
-  const paths=urls.map(mediaPathFromUrl).filter(Boolean);
+  const paths=urls.map(url=>resolveStoredMedia(url)?.path||mediaPathFromUrl(url)).filter(Boolean);
   const photoRows=db.prepare("SELECT stored_name FROM photos WHERE event_id=?").all(event.id);
   photoRows.forEach(row=>paths.push(path.join(guestPhotosDir,row.stored_name)));
   return [...new Set(paths)];
@@ -1050,7 +1100,7 @@ function seatingSnapshot(eventId,{confirmedOnly=false}={}){
 
 function normalizeDesignKit(current={},incoming={}){
   const safe=/^#[0-9a-f]{6}$/i;
-  const keys=["bg","paper","ink","muted","accent","gold","line"];
+  const keys=["bg","paper","ink","muted","accent","accent-dark","gold","line","headingColor","bodyColor"];
   const textures=new Set(["none","paper","linen","soft-grain","wash"]);
   const currentPalette=current?.palette&&typeof current.palette==="object"?current.palette:{};
   const requested=incoming?.palette&&typeof incoming.palette==="object"?incoming.palette:{};
@@ -1068,8 +1118,15 @@ function normalizeDesignKit(current={},incoming={}){
 }
 function themeDescriptor(settings){
   const base=themeDesignFor(themeDesigns,settings?.themeId);
+  const recipe=designEngine.resolveEventRecipe(settings||{});
   const kit=normalizeDesignKit({},settings?.designKit||{});
-  const manualBase=kit.enabled?{...base.palette,...kit.palette}:base.palette;
+  /* RC34: la Recipe es la autoridad cromática predeterminada. El kit manual
+     sólo sobreescribe tokens explícitos y Stationery conserva la autoridad
+     final cuando el sobre unificado está sincronizado. */
+  const recipePalette=recipe?.design?.palette&&typeof recipe.design.palette==="object"
+    ?{...base.palette,...recipe.design.palette}
+    :base.palette;
+  const manualBase=kit.enabled?{...recipePalette,...kit.palette}:recipePalette;
   const stationery=normalizeStationery(settings?.stationery||{},{},{openingStyle:settings?.presentation?.openingStyle});
   /*
      La papelería gobierna todos los tokens únicamente cuando la apertura activa
@@ -1083,8 +1140,11 @@ function themeDescriptor(settings){
   const texture=stationeryLinked?stationerySurfaceTexture(stationery):(kit.enabled?kit.texture:"none");
   return {
     ...base,
+    layoutFamily:recipe?.design?.layoutFamily||base.layoutFamily,
+    motif:recipe?.thumbnail?.motif||base.motif,
     palette:Object.freeze(ensureAccessiblePalette(merged)),
     texture,
+    typography:recipe?.design?.typography||settings?.typography||{},
     coordination:coordinationFor(settings)
   };
 }
@@ -1097,6 +1157,14 @@ function qrPalette(settings){
   return qrDesignOf(settings).useInvitationColors===false
     ?NEUTRAL_PALETTE
     :themeDescriptor(settings).palette;
+}
+
+function qrRasterStyle(settings){
+  const safe=designEngine.scanSafeQrColors(qrPalette(settings),"#ffffff");
+  return {dark:`${safe.foreground}FF`,light:`${safe.background}FF`};
+}
+function qrRasterOptions(settings,{width=1200,margin=4,type}={}){
+  return {width,margin,errorCorrectionLevel:"H",color:qrRasterStyle(settings),...(type?{type}:{})};
 }
 
 const QR_TEMPLATE_IDS=new Set(qrTemplates.map(item=>item.id));
@@ -1278,6 +1346,29 @@ const PDF_FONT_FILES={
 };
 const PDF_CUSTOM_FONTS_AVAILABLE=Object.values(PDF_FONT_FILES).every(file=>fs.existsSync(file));
 
+function pdfTypography(settings={}){
+  const t=normalizeTypography({},settings.typography||{});
+  const headingSerif=new Set(["georgia","baskerville","garamond","didot","classic","great-vibes","cormorant","playfair","cinzel"]);
+  const bodySerif=new Set(["classic","lora","cormorant"]);
+  const headingRole=headingSerif.has(t.heading)?"serif":"sans";
+  const bodyRole=bodySerif.has(t.body)?"serif":"sans";
+  const map=PDF_CUSTOM_FONTS_AVAILABLE
+    ?{serif:{regular:"EventSerif",bold:"EventSerifBold",italic:"EventSerif"},sans:{regular:"EventSans",bold:"EventSansBold",italic:"EventSerif"}}
+    :{serif:{regular:"Times-Roman",bold:"Times-Bold",italic:"Times-Italic"},sans:{regular:"Helvetica",bold:"Helvetica-Bold",italic:"Helvetica-Oblique"}};
+  return {heading:map[headingRole],body:map[bodyRole]};
+}
+function resolvePrintFont(doc,font){
+  const typography=doc._eventStudioTypography;
+  if(!typography)return font;
+  if(["Times","Times-Roman"].includes(font))return typography.heading.regular;
+  if(font==="Times-Bold")return typography.heading.bold;
+  if(font==="Times-Italic")return typography.heading.italic;
+  if(font==="Helvetica")return typography.body.regular;
+  if(font==="Helvetica-Bold")return typography.body.bold;
+  if(font==="Helvetica-Oblique")return typography.body.italic;
+  return font;
+}
+
 function registerPdfFonts(doc){
   if(!PDF_CUSTOM_FONTS_AVAILABLE)return false;
   for(const [name,file] of Object.entries(PDF_FONT_FILES))doc.registerFont(name,file);
@@ -1313,7 +1404,7 @@ function drawBoundedText(doc,text,{x,y,width,height,font="Helvetica",size=10,min
   const value=String(text||"").trim();
   if(!value)return;
   let fitted=size;
-  doc.font(pdfFont(font));
+  doc.font(pdfFont(resolvePrintFont(doc,font)));
   while(fitted>minSize){
     doc.fontSize(fitted);
     if(doc.heightOfString(value,{width,lineGap,characterSpacing})<=height)break;
@@ -1594,6 +1685,7 @@ function colorIsDark(value){
 }
 
 function drawQrCard(doc,{settings,table,families=[],qr,templateId,pageSize,heroPath=null}){
+  doc._eventStudioTypography=pdfTypography(settings);
   const descriptor=themeDescriptor(settings);
   const theme=descriptor.theme;
   const palette=qrPalette(settings);
@@ -1682,7 +1774,93 @@ function primaryEventLocation(settings={}){
   return {title:cleanText(legacy.title||"CEREMONIA Y CELEBRACIÓN",120),name:cleanText(legacy.name||"",180),address:cleanText(legacy.address||"",300),mapsUrl:safeHttpUrl(legacy.mapsUrl||"")};
 }
 
+
+function svgAttributes(raw=""){
+  const out={};
+  for(const match of String(raw).matchAll(/([A-Za-z_:][\w:.-]*)\s*=\s*"([^"]*)"/g))out[match[1]]=match[2];
+  return out;
+}
+function pdfSvgPaint(value,currentColor,fallback="none"){
+  const text=String(value??fallback).trim();
+  if(!text||text==="none")return null;
+  if(text==="currentColor")return currentColor;
+  if(/^#[0-9a-f]{3,8}$/i.test(text)||/^(?:white|black)$/i.test(text))return text;
+  return currentColor;
+}
+function applyPdfSvgTransform(doc,raw){
+  for(const match of String(raw||"").matchAll(/(translate|scale|rotate)\(([^)]+)\)/g)){
+    const values=match[2].trim().split(/[ ,]+/).map(Number).filter(Number.isFinite);
+    if(match[1]==="translate")doc.translate(values[0]||0,values[1]||0);
+    else if(match[1]==="scale")doc.scale(values[0]||1,values[1]??values[0]??1);
+    else if(match[1]==="rotate")doc.rotate(values[0]||0,values.length>=3?{origin:[values[1],values[2]]}:undefined);
+  }
+}
+function drawSvgSubsetOnPdf(doc,svg,{x,y,width,height,color,opacity=.35,rotation=0}={}){
+  const viewBox=String(svg).match(/viewBox="\s*([-\d.]+)\s+([-\d.]+)\s+([\d.]+)\s+([\d.]+)\s*"/i);
+  if(!viewBox)return false;
+  const [minX,minY,vw,vh]=viewBox.slice(1).map(Number);
+  if(!vw||!vh)return false;
+  const scale=Math.min(width/vw,height/vh);
+  const offsetX=x+(width-vw*scale)/2,offsetY=y+(height-vh*scale)/2;
+  doc.save().opacity(Math.max(.03,Math.min(1,opacity))).translate(offsetX,offsetY);
+  if(rotation)doc.rotate(rotation,{origin:[vw*scale/2,vh*scale/2]});
+  doc.scale(scale).translate(-minX,-minY);
+  const stack=[{fill:null,stroke:null,strokeWidth:1,opacity:1,linecap:null}];
+  let groupDepth=0;
+  try{
+    for(const token of String(svg).match(/<\/?g\b[^>]*>|<(?:path|circle|ellipse|rect|line)\b[^>]*\/?\s*>/gi)||[]){
+      if(/^<\/g/i.test(token)){if(groupDepth>0){doc.restore();stack.pop();groupDepth--;}continue;}
+      const openGroup=token.match(/^<g\b([^>]*)>/i);
+      if(openGroup){
+        const attrs=svgAttributes(openGroup[1]);const parent=stack[stack.length-1];
+        const style={...parent,fill:attrs.fill??parent.fill,stroke:attrs.stroke??parent.stroke,strokeWidth:Number(attrs["stroke-width"]??parent.strokeWidth)||1,opacity:Number(attrs.opacity??parent.opacity)||1,linecap:attrs["stroke-linecap"]??parent.linecap};
+        doc.save();applyPdfSvgTransform(doc,attrs.transform);stack.push(style);groupDepth++;continue;
+      }
+      const match=token.match(/^<(path|circle|ellipse|rect|line)\b([^>]*)/i);if(!match)continue;
+      const type=match[1].toLowerCase(),attrs=svgAttributes(match[2]),parent=stack[stack.length-1];
+      const fill=pdfSvgPaint(attrs.fill??parent.fill,color,null),stroke=pdfSvgPaint(attrs.stroke??parent.stroke,color,null);
+      const strokeWidth=Number(attrs["stroke-width"]??parent.strokeWidth)||1;
+      const localOpacity=(Number(attrs.opacity??parent.opacity)||1);
+      doc.save().opacity(Math.max(.03,Math.min(1,localOpacity)));applyPdfSvgTransform(doc,attrs.transform);
+      if(attrs["stroke-linecap"]||parent.linecap)doc.lineCap(attrs["stroke-linecap"]||parent.linecap);
+      doc.lineWidth(strokeWidth);
+      if(type==="path"&&attrs.d)doc.path(attrs.d);
+      else if(type==="circle")doc.circle(Number(attrs.cx)||0,Number(attrs.cy)||0,Math.max(0,Number(attrs.r)||0));
+      else if(type==="ellipse")doc.ellipse(Number(attrs.cx)||0,Number(attrs.cy)||0,Math.max(0,Number(attrs.rx)||0),Math.max(0,Number(attrs.ry)||0));
+      else if(type==="rect"){
+        const rx=Math.max(0,Number(attrs.rx)||0),xx=Number(attrs.x)||0,yy=Number(attrs.y)||0,ww=Math.max(0,Number(attrs.width)||0),hh=Math.max(0,Number(attrs.height)||0);
+        if(rx)doc.roundedRect(xx,yy,ww,hh,rx);else doc.rect(xx,yy,ww,hh);
+      }else if(type==="line")doc.moveTo(Number(attrs.x1)||0,Number(attrs.y1)||0).lineTo(Number(attrs.x2)||0,Number(attrs.y2)||0);
+      if(fill&&stroke)doc.fillAndStroke(fill,stroke);else if(fill)doc.fill(fill);else if(stroke)doc.stroke(stroke);
+      doc.restore();
+    }
+    return true;
+  }finally{
+    while(groupDepth>0){doc.restore();groupDepth--;}
+    doc.restore();
+  }
+}
+function drawRecipePrintAssets(doc,{settings,palette,pageW,pageH}={}){
+  const recipe=designEngine.resolveEventRecipe(settings||{});
+  const manifestById=new Map((designEngine.assetManifest?.assets||[]).map(asset=>[asset.id,asset]));
+  const tone={primary:palette.accent,accent:palette.accent,gold:palette.gold,ink:palette.ink,muted:palette.muted,paper:palette.paper};
+  let drawn=0;
+  for(const instance of (recipe.assets||[]).slice(0,16)){
+    const asset=manifestById.get(instance.assetId);if(!asset?.url||!String(asset.url).startsWith("/"))continue;
+    const assetPath=path.resolve(publicDir,`.${asset.url}`);if(!assetPath.startsWith(publicDir+path.sep)||!fs.existsSync(assetPath))continue;
+    let svg="";try{svg=fs.readFileSync(assetPath,"utf8");}catch{continue;}
+    if(!/^\s*<svg\b/i.test(svg)||svg.length>120000)continue;
+    const size=Math.max(24,Math.min(Math.min(pageW,pageH)*.34,42*Math.max(.35,Number(instance.scale)||1)));
+    const x=pageW*Math.max(0,Math.min(100,Number(instance.x)||50))/100-size/2;
+    const y=pageH*Math.max(0,Math.min(100,Number(instance.y)||50))/100-size/2;
+    const ok=drawSvgSubsetOnPdf(doc,svg,{x,y,width:size,height:size,color:tone[instance.tone]||palette.accent,opacity:Math.min(.48,Math.max(.08,Number(instance.opacity??1)*.48)),rotation:Number(instance.rotation)||0});
+    if(ok)drawn++;
+  }
+  return drawn;
+}
+
 function drawPhysicalInvitation(doc,{settings,guest,qr,heroPath,templateId="auto-theme"}){
+  doc._eventStudioTypography=pdfTypography(settings);
   const descriptor=themeDescriptor(settings);
   const theme=descriptor.theme;
   const palette=descriptor.palette;
@@ -1700,6 +1878,7 @@ function drawPhysicalInvitation(doc,{settings,guest,qr,heroPath,templateId="auto
     doc.rect(0,0,18,pageH).fill(palette.accent);
     doc.rect(pageW-10,0,10,pageH).fill(palette.gold);
   }
+  drawRecipePrintAssets(doc,{settings,palette,pageW,pageH});
   if(templateId==="auto-theme")drawAutoPhysicalMotif(doc,{family:autoFamily,palette,pageW,pageH,theme});
 
   const cover={x:margin,y:margin,w:pageW-margin*2,h:152};
@@ -1966,6 +2145,16 @@ function printableImagePathFromUrl(url){
   return ["image/jpeg","image/png"].includes(detectedImageMime(filePath))?filePath:null;
 }
 
+/* RC38 · Los renderizadores impresos respetan la misma autoridad visual que
+   la invitación web. Si la Recipe activa oculta portada o su media, no se lee
+   ni incrusta una fotografía histórica sólo porque siga vinculada al evento. */
+function printableEventHeroPath(settings={}){
+  const active=designEngine.resolveEventRecipe(settings);
+  const heroSection=(active.sections||[]).find(section=>section.type==="hero");
+  if(heroSection?.visible===false||active.design?.heroMedia?.enabled===false)return null;
+  return printableImagePathFromUrl(settings.media?.heroImage);
+}
+
 function detectedAudioMime(filePath){
   const header=Buffer.alloc(16);
   const descriptor=fs.openSync(filePath,"r");
@@ -2168,6 +2357,14 @@ app.get("/api/public/plans",(_req,res)=>{
 
 app.get("/api/public/seals",(_req,res)=>res.json(sealCatalog));
 app.get("/api/public/stationery",(_req,res)=>res.json(stationeryCatalog));
+app.get("/api/public/design/recipes/:recipeId/thumbnail",(req,res)=>{
+  const recipe=designEngine.catalogRecipe(req.params.recipeId);
+  if(!recipe)return res.status(404).type("text/plain").send("Recipe no encontrada.");
+  const width=Math.min(720,Math.max(180,Number(req.query.width)||360));
+  const height=Math.min(480,Math.max(120,Number(req.query.height)||210));
+  res.set("Cache-Control","public, max-age=300, stale-while-revalidate=3600");
+  res.type("image/svg+xml").send(designEngine.thumbnailSvg(recipe,{width,height}));
+});
 
 app.get("/api/public/catalog",(_req,res)=>{
   const publicThemeProducts=new Map(commerce.allProducts()
@@ -2188,6 +2385,29 @@ app.get("/api/public/catalog",(_req,res)=>{
       .filter(product=>product.public&&product.commercial_status==="available"&&product.readiness_status==="approved"&&["bundle","storage","template_collection"].includes(product.kind))
       .map(product=>({key:product.code,name:product.name,description:product.description,price_cents:product.price_cents,currency:product.currency})),
     eventTypes:eventTypes.map(({id,name,icon,catalogSample})=>({id,name,icon,catalogSample:catalogSample||{}})),
+    recipes:designEngine.recipeCatalog.recipes
+      .filter(recipe=>publicThemeProducts.has(`theme:${recipe.id}`))
+      .map(recipe=>{
+        const legacyTheme=themes.find(theme=>theme.id===recipe.id)||{};
+        const product=publicThemeProducts.get(`theme:${recipe.id}`);
+        const normalized=designEngine.catalogRecipe(recipe.id);
+        return {
+          id:normalized.id,name:normalized.name,description:normalized.description,
+          eventTypes:normalized.eventTypes||[],tags:normalized.tags||[],thumbnail:normalized.thumbnail||{},
+          design:{
+            layoutFamily:normalized.design?.layoutFamily||"classic",
+            palette:normalized.design?.palette||{},
+            typography:normalized.design?.typography||{},
+            colorTheory:normalized.design?.colorTheory||{},
+            texture:normalized.design?.texture||"none",
+            motionTimelineId:normalized.design?.motionTimelineId||"",
+            photoPresentationId:normalized.design?.photoPresentationId||""
+          },
+          minPlan:legacyTheme.minPlan||"starter",
+          price_cents:product?.price_cents||0,currency:product?.currency||"MXN",
+          previewUrl:`/api/public/design/recipes/${encodeURIComponent(normalized.id)}/thumbnail?width=540&height=320`
+        };
+      }),
     themes:themes.filter(theme=>publicThemeProducts.has(`theme:${theme.id}`)).map(({
       id,name,description,className,preview,tags,eventTypes:types,minPlan,
       layoutFamily,layoutLabel,motionPreset,motionLabel,photoStyle,photoStyleLabel,motif,defaultExperience
@@ -2357,6 +2577,7 @@ app.post("/api/admin/commerce/categories",authRequired,ownerOnly,(req,res)=>{
   const sortOrder=Math.max(0,Math.min(10000,Number(req.body.sortOrder)||0));
   const info=db.prepare("INSERT INTO store_categories(code,name,description,icon,sort_order,active) VALUES(?,?,?,?,?,1)")
     .run(code,name,cleanText(req.body.description||"",240),cleanText(req.body.icon||"",12),sortOrder);
+  commerce.invalidateCatalogCache();
   audit(req,"commerce.category_created",{targetType:"store_category",targetId:info.lastInsertRowid,metadata:{code}});
   res.status(201).json({ok:true});
 });
@@ -2372,6 +2593,7 @@ app.put("/api/admin/commerce/categories/:id",authRequired,ownerOnly,(req,res)=>{
   if(!name)return res.status(400).json({error:"La categoría necesita nombre."});
   db.prepare("UPDATE store_categories SET name=?,description=?,icon=?,sort_order=?,active=?,updated_at=CURRENT_TIMESTAMP WHERE id=?")
     .run(name,description,icon,sortOrder,active,id);
+  commerce.invalidateCatalogCache();
   audit(req,"commerce.category_updated",{targetType:"store_category",targetId:id,metadata:{active:Boolean(active)}});
   res.json({ok:true});
 });
@@ -2426,6 +2648,7 @@ app.put("/api/admin/commercial-profiles/:id",authRequired,ownerOnly,(req,res)=>{
     const link=db.prepare("INSERT INTO product_profile_links(product_id,profile_id,sort_order) VALUES(?,?,?)");
     curatedProductIds.forEach((productId,index)=>link.run(productId,id,index));
   })();
+  commerce.invalidateCatalogCache();
   audit(req,"commercial_profile.updated",{targetType:"customer_profile",targetId:id,metadata:{active:Boolean(active),catalogMode,curatedProductIds}});
   res.json({ok:true});
 });
@@ -2457,6 +2680,7 @@ app.post("/api/admin/commerce/plans",authRequired,ownerOnly,(req,res)=>{
     code,name,cleanText(req.body.tagline||"",240),price,duration,maxEvents,maxGuests,maxStorage,retentionDays,maxPublishedEvents,publicationPolicy,
     booleanValue(req.body.public)?1:0,booleanValue(req.body.featured)?1:0,sortOrder
   );
+  commerce.invalidateCatalogCache();
   audit(req,"commerce.plan_created",{targetType:"plan",targetId:info.lastInsertRowid,metadata:{code,priceCents:price}});
   res.status(201).json({ok:true,plan:commercialPlanRows().find(plan=>plan.id===Number(info.lastInsertRowid))});
 });
@@ -2512,6 +2736,7 @@ app.post("/api/admin/commerce/products",authRequired,ownerOnly,(req,res)=>{
     categoryIds.forEach((categoryId,index)=>link.run(productId,categoryId,index));
     return productId;
   })();
+  commerce.invalidateCatalogCache();
   audit(req,"commerce.product_created",{targetType:"product",targetId:id,metadata:{code,kind,readiness,priceCents:price,grants,eventTypes:productEventTypes}});
   res.status(201).json({ok:true,product:serializedProduct(commerce.allProducts().find(item=>item.id===id))});
 });
@@ -2573,6 +2798,7 @@ app.put("/api/admin/commerce/products/:id",authRequired,ownerOnly,(req,res)=>{
       categoryIds.forEach((categoryId,index)=>link.run(id,categoryId,index));
     }
   })();
+  commerce.invalidateCatalogCache();
   audit(req,"commerce.product_updated",{targetType:"product",targetId:id,metadata:{state,readiness,priceCents:price,public:Boolean(isPublic),categoryIds,grants,eventTypes:productEventTypes,storageMb}});
   res.json({ok:true,product:serializedProduct(commerce.allProducts().find(item=>item.id===id))});
 });
@@ -2634,6 +2860,7 @@ app.put("/api/admin/commerce/plans/:id",authRequired,ownerOnly,(req,res)=>{
     const link=db.prepare("INSERT INTO plan_products(plan_id,product_id) VALUES(?,?)");
     productIds.forEach(productId=>link.run(id,productId));
   })();
+  commerce.invalidateCatalogCache();
   audit(req,"commerce.plan_updated",{targetType:"plan",targetId:id,metadata:{productIds,priceCents:price}});
   res.json({ok:true,plan:commercialPlanRows().find(plan=>plan.id===id)});
 });
@@ -2651,6 +2878,7 @@ app.delete("/api/admin/commerce/plans/:id",authRequired,ownerOnly,(req,res)=>{
     db.prepare("DELETE FROM plan_products WHERE plan_id=?").run(id);
     db.prepare("DELETE FROM plans WHERE id=?").run(id);
   })();
+  commerce.invalidateCatalogCache();
   audit(req,"commerce.plan_deleted",{targetType:"plan",targetId:id,metadata:{code:plan.code}});
   res.json({ok:true});
 });
@@ -3868,12 +4096,63 @@ app.get("/api/admin/guests/whatsapp-batch",authRequired,eventAllowed,featureRequ
 function publicConfig(event,{preview=false,platformPreview=false,catalogPreview=false,previewOptions={}}={}){
   const settings=settingsOf(event);
   const publicDesignAccess=designAccessForEvent(event);
-  let openingPreviewApplied=false,galleryPreviewApplied=false;
+  let openingPreviewApplied=false,galleryPreviewApplied=false,draftDesignPreviewApplied=false,catalogThemePresentationApplied=false;
   if(preview){
+    if(previewOptions.designMode==="draft"){
+      const workflow=designWorkflowState(settings);
+      settings.designRecipe=workflow.draftRecipe;
+      if(workflow.draftStationery)settings.stationery=workflow.draftStationery;
+      if(workflow.draftSeal)settings.seal=workflow.draftSeal;
+      const draftOpeningProps=workflow.draftRecipe.design?.openingProps||{};
+      const draftOpeningColors=Object.fromEntries(["rosePetalColor","floralPetalColor","floralCenterColor"]
+        .map(key=>[key,String(draftOpeningProps[key]||"").trim().toLowerCase()])
+        .filter(([,value])=>/^#[0-9a-f]{6}$/i.test(value)));
+      settings.presentation={...(settings.presentation||{}),
+        openingStyle:workflow.draftRecipe.design?.openingId||settings.presentation?.openingStyle,
+        galleryStyle:workflow.draftRecipe.design?.galleryStyleId||settings.presentation?.galleryStyle,
+        experienceMode:workflow.draftRecipe.design?.experienceMode||settings.presentation?.experienceMode,
+        motionLevel:workflow.draftRecipe.design?.motionPreset||settings.presentation?.motionLevel,
+        ...draftOpeningColors
+      };
+      settings.typography=normalizeTypography(settings.typography,workflow.draftRecipe.design?.typography||{});
+      settings.designKit={...(settings.designKit||{}),enabled:true,palette:{...(settings.designKit?.palette||{}),...(workflow.draftRecipe.design?.palette||{})},texture:workflow.draftRecipe.design?.texture||"none"};
+      /* Una vista DRAFT autenticada es deliberadamente una simulación: debe
+         mostrar también aperturas/galerías Store todavía no adquiridas. Apply
+         seguirá aplicando los derechos reales del evento. */
+      draftDesignPreviewApplied=true;
+    }
     const requestedTheme=themes.find(item=>item.id===previewOptions.themeId);
     const themeProduct=requestedTheme?commerce.allProducts().find(product=>product.code===`theme:${requestedTheme.id}`):null;
-    if(requestedTheme&&themeProduct?.public&&themeProduct.commercial_status==="available"&&themeProduct.readiness_status==="approved"
-      &&(themeProduct.eventTypes.includes("*")||themeProduct.eventTypes.includes(event.event_type||"custom")))settings.themeId=requestedTheme.id;
+    const themeCompatible=Boolean(requestedTheme&&(!Array.isArray(requestedTheme.eventTypes)||requestedTheme.eventTypes.includes("*")||requestedTheme.eventTypes.includes(event.event_type||"custom")));
+    const catalogThemeAllowed=Boolean(themeProduct?.public&&themeProduct.commercial_status==="available"&&themeProduct.readiness_status==="approved"
+      &&(themeProduct.eventTypes.includes("*")||themeProduct.eventTypes.includes(event.event_type||"custom")));
+    /* RC38: un propietario/desarrollador que abre una vista previa autorizada
+       debe ver la Recipe solicitada aunque el producto todavía no esté
+       publicado. Antes el iframe caía silenciosamente en la plantilla ACTIVE y
+       daba la impresión de que todas las miniaturas eran la misma. */
+    if(requestedTheme&&themeCompatible&&(platformPreview||catalogThemeAllowed)){
+      settings.themeId=requestedTheme.id;
+      const previewRecipe=designEngine.catalogRecipe(requestedTheme.id);
+      if(previewRecipe){
+        settings.designRecipe={...previewRecipe,source:"catalog"};
+        settings.designKit={...(settings.designKit||{}),enabled:true,palette:{...(previewRecipe.design?.palette||{})},texture:previewRecipe.design?.texture||"none"};
+        settings.typography=normalizeTypography(settings.typography,previewRecipe.design?.typography||{});
+        settings.presentation=normalizePresentation(settings.presentation||{}, {
+          openingStyle:previewRecipe.design?.openingId||"none",
+          galleryStyle:previewRecipe.design?.galleryStyleId||"classic",
+          experienceMode:previewRecipe.design?.experienceMode||"auto",
+          motionLevel:previewRecipe.design?.motionPreset||"subtle",
+          rosePetalColor:previewRecipe.design?.openingProps?.rosePetalColor,
+          floralPetalColor:previewRecipe.design?.openingProps?.floralPetalColor,
+          floralCenterColor:previewRecipe.design?.openingProps?.floralCenterColor
+        });
+        if(String(previewRecipe.design?.openingId||"")===String(stationeryCatalog.openingId||"")){
+          settings.stationery=synchronizeStationeryFromRecipe(settings.stationery||{},previewRecipe,{resetPreset:true});
+          settings.seal=synchronizeSealFromRecipe(settings.seal||{},previewRecipe);
+        }
+        catalogThemePresentationApplied=true;
+      }
+    }
     const opening=String(previewOptions.opening||"");
     const previewableOpenings=new Set([...experienceCatalog.openingIds].filter(id=>id!=="none"));
     const openingProductCode=experienceCatalog.openingProductMap[opening];
@@ -3886,8 +4165,25 @@ function publicConfig(event,{preview=false,platformPreview=false,catalogPreview=
          temporal. Por ello puede ensayar una apertura autorizada sin tener que
          guardarla primero ni conceder derechos comerciales. */
       settings.presentation={...(settings.presentation||{}),openingStyle:opening};
+      const previewColors={};
+      for(const [target,key] of [["rosePetalColor","rosePetalColor"],["floralPetalColor","floralPetalColor"],["floralCenterColor","floralCenterColor"]]){
+        const value=String(previewOptions[key]||"").trim().toLowerCase();
+        if(/^#[0-9a-f]{6}$/i.test(value))previewColors[target]=value;
+      }
+      settings.presentation={...(settings.presentation||{}),...previewColors};
+      /* RC40: si el filtro superior fuerza Sobre personalizable sobre una
+         Recipe cuyo opening nativo era otro, el sobre debe heredar la paleta y
+         textura de ESA Recipe, no arrastrar el último sobre del evento. */
+      if(String(opening)===String(stationeryCatalog.openingId||"")&&settings.designRecipe){
+        settings.stationery=synchronizeStationeryFromRecipe(settings.stationery||{},settings.designRecipe,{resetPreset:true});
+        settings.seal=synchronizeSealFromRecipe(settings.seal||{},settings.designRecipe);
+      }
       openingPreviewApplied=true;
     }
+    const previewExperience=String(previewOptions.experienceMode||"");
+    if(["auto","classic","story","poster","gallery"].includes(previewExperience))settings.presentation={...(settings.presentation||{}),experienceMode:previewExperience};
+    const previewMotion=String(previewOptions.motionLevel||"");
+    if(experienceCatalog.motionLevelIds.has(previewMotion))settings.presentation={...(settings.presentation||{}),motionLevel:previewMotion};
     const gallery=String(previewOptions.gallery||"");
     const galleryProductCode=experienceCatalog.galleryProductMap[gallery];
     const galleryProduct=galleryProductCode?commerce.allProducts().find(product=>product.code===galleryProductCode):null;
@@ -3914,12 +4210,15 @@ function publicConfig(event,{preview=false,platformPreview=false,catalogPreview=
   if(!publicFeatures.thematicExperience){
     settings.presentation={...(settings.presentation||{}),experienceMode:"classic",motionLevel:"still"};
   }
+  const activePlatformOverrides=new Set(Array.isArray(settings.designState?.platformExperienceOverrides?.items)?settings.designState.platformExperienceOverrides.items:[]);
   const currentOpening=settings.presentation?.openingStyle;
-  const previewOpeningBypass=openingPreviewApplied&&String(previewOptions.opening||"")===currentOpening;
-  if(!previewOpeningBypass&&DESIGN_PRODUCT_KEYS.opening[currentOpening]&&!publicDesignAccess.opening[currentOpening])settings.presentation.openingStyle=stationeryCatalog.openingId;
+  const previewOpeningBypass=draftDesignPreviewApplied||catalogThemePresentationApplied||(openingPreviewApplied&&String(previewOptions.opening||"")===currentOpening);
+  const activeOpeningPlatformOverride=activePlatformOverrides.has(`opening:${currentOpening}`);
+  if(!previewOpeningBypass&&!activeOpeningPlatformOverride&&DESIGN_PRODUCT_KEYS.opening[currentOpening]&&!publicDesignAccess.opening[currentOpening])settings.presentation.openingStyle=stationeryCatalog.openingId;
   const currentGallery=settings.presentation?.galleryStyle;
-  const previewGalleryBypass=galleryPreviewApplied&&String(previewOptions.gallery||"")===currentGallery;
-  if(!previewGalleryBypass&&DESIGN_PRODUCT_KEYS.gallery[currentGallery]&&!publicDesignAccess.gallery[currentGallery])settings.presentation.galleryStyle="classic";
+  const previewGalleryBypass=draftDesignPreviewApplied||catalogThemePresentationApplied||(galleryPreviewApplied&&String(previewOptions.gallery||"")===currentGallery);
+  const activeGalleryPlatformOverride=activePlatformOverrides.has(`gallery:${currentGallery}`);
+  if(!previewGalleryBypass&&!activeGalleryPlatformOverride&&DESIGN_PRODUCT_KEYS.gallery[currentGallery]&&!publicDesignAccess.gallery[currentGallery])settings.presentation.galleryStyle="classic";
   const effectiveOpening=settings.presentation?.openingStyle;
   settings.stationery=normalizeStationery(settings.stationery||{},{},{openingStyle:effectiveOpening});
   if(isLegacyEnvelopeOpening(effectiveOpening))settings.presentation.openingStyle=stationeryCatalog.openingId;
@@ -3957,7 +4256,21 @@ function publicConfig(event,{preview=false,platformPreview=false,catalogPreview=
     settings.agenda.items=settings.agenda.items.map(item=>({...item,mapsUrl:safeHttpUrl(item.mapsUrl)}));
   }
   if(!preview)delete settings.developer;
+  delete settings.designState;
   const branding=platformSetting("branding",{});
+  const publicDesignRecipe=designEngine.publicRecipe(settings,publicFeatures);
+  /* La proyección pública refleja la apertura efectiva después de aplicar los
+     derechos comerciales, no la intención no adquirida guardada en la Recipe. */
+  publicDesignRecipe.design.openingId=String(settings.presentation?.openingStyle||"none");
+  publicDesignRecipe.design.experienceMode=String(settings.presentation?.experienceMode||publicDesignRecipe.design.experienceMode||"auto");
+  publicDesignRecipe.design.motionPreset=String(settings.presentation?.motionLevel||publicDesignRecipe.design.motionPreset||"subtle");
+  publicDesignRecipe.design.galleryStyleId=String(settings.presentation?.galleryStyle||publicDesignRecipe.design.galleryStyleId||"classic");
+  publicDesignRecipe.design.openingProps={
+    ...(publicDesignRecipe.design.openingProps||{}),
+    ...Object.fromEntries(["rosePetalColor","floralPetalColor","floralCenterColor"]
+      .map(key=>[key,String(settings.presentation?.[key]||"").toLowerCase()])
+      .filter(([,value])=>/^#[0-9a-f]{6}$/i.test(value)))
+  };
   return {
     ...settings,
     _experiences:experienceCatalog.publicCatalog,
@@ -3971,16 +4284,23 @@ function publicConfig(event,{preview=false,platformPreview=false,catalogPreview=
       attributionOnInvitation:branding.attributionOnInvitation!==false
     }},
     _theme:{
-      id:selectedTheme.id||settings.themeId||"romantic-wine",
-      layoutFamily:selectedTheme.layoutFamily||"classic",
-      motionPreset:selectedTheme.motionPreset||"subtle",
-      photoStyle:selectedTheme.photoStyle||"cards",
-      motif:selectedTheme.motif||"spark",
+      id:publicDesignRecipe.id||selectedTheme.id||settings.themeId||"custom",
+      layoutFamily:publicDesignRecipe.design?.layoutFamily||"classic",
+      motionPreset:publicDesignRecipe.design?.motionPreset||"subtle",
+      photoStyle:publicDesignRecipe.design?.photoPresentationId||"arch-clean",
+      motif:publicDesignRecipe.thumbnail?.motif||"spark",
       defaultExperience:selectedTheme.defaultExperience||"classic"
     },
     _palette:themeDescriptor(settings).palette,
-    _surfaceTexture:themeDescriptor(settings).texture||"none",
+    _surfaceTexture:themeDescriptor(settings).texture,
     _openingCoordination:themeDescriptor(settings).coordination,
+    _designRecipe:publicDesignRecipe,
+    _assetManifest:designEngine.assetsForRecipe(publicDesignRecipe),
+    /* Metadato mínimo de preview para que el renderer pueda mostrar bloques de
+       diseño que normalmente requieren un enlace personalizado (por ejemplo
+       RSVP) sin inventar un invitado ni conceder funcionalidad comercial. */
+    _preview:{enabled:Boolean(preview),designMode:cleanText(previewOptions.designMode||"",20),catalogTheme:Boolean(catalogThemePresentationApplied)},
+    _designEngine:{schema:"eventstudio.design-recipe.v2",catalogVersion:designEngine.recipeCatalog.version,hash:designEngine.recipeHash(designEngine.resolveEventRecipe(settings))},
     _revision:revision,
     event:{...settings.event,slug:event.slug,eventId:event.id,eventType:event.event_type}
   };
@@ -3993,7 +4313,7 @@ app.get("/api/config/:slug",(req,res)=>{
   const platformPreview=access.platform,catalogPreview=access.catalog;
   const allowed=eventFeatureDecision(event,"invitation",{role:"public"}).allowed;
   if((!event.published||!allowed)&&!preview)return res.status(404).json({error:"Evento no publicado.",code:"EVENT_NOT_PUBLISHED"});
-  res.json(publicConfig(event,{preview,platformPreview,catalogPreview,previewOptions:{themeId:cleanText(req.query.previewTheme||"",80),opening:cleanText(req.query.previewOpening||"",60),gallery:cleanText(req.query.previewGallery||"",60)}}));
+  res.json(publicConfig(event,{preview,platformPreview,catalogPreview,previewOptions:{designMode:cleanText(req.query.designMode||"",20),themeId:cleanText(req.query.previewTheme||"",80),opening:cleanText(req.query.previewOpening||"",60),gallery:cleanText(req.query.previewGallery||"",60),experienceMode:cleanText(req.query.previewExperience||"",20),motionLevel:cleanText(req.query.previewMotion||"",20),rosePetalColor:cleanText(req.query.previewRosePetal||"",20),floralPetalColor:cleanText(req.query.previewFloralPetal||"",20),floralCenterColor:cleanText(req.query.previewFloralCenter||"",20)}}));
 });
 app.get("/api/config",(req,res)=>{
   const event=eventByHostname(req.hostname)
@@ -4004,7 +4324,7 @@ app.get("/api/config",(req,res)=>{
   if((!event.published||!eventFeatureDecision(event,"invitation",{role:"public"}).allowed)&&!preview){
     return res.status(404).json({error:"Evento no publicado.",code:"EVENT_NOT_PUBLISHED"});
   }
-  res.json(publicConfig(event,{preview,platformPreview,catalogPreview,previewOptions:{themeId:cleanText(req.query.previewTheme||"",80),opening:cleanText(req.query.previewOpening||"",60),gallery:cleanText(req.query.previewGallery||"",60)}}));
+  res.json(publicConfig(event,{preview,platformPreview,catalogPreview,previewOptions:{designMode:cleanText(req.query.designMode||"",20),themeId:cleanText(req.query.previewTheme||"",80),opening:cleanText(req.query.previewOpening||"",60),gallery:cleanText(req.query.previewGallery||"",60),experienceMode:cleanText(req.query.previewExperience||"",20),motionLevel:cleanText(req.query.previewMotion||"",20),rosePetalColor:cleanText(req.query.previewRosePetal||"",20),floralPetalColor:cleanText(req.query.previewFloralPetal||"",20),floralCenterColor:cleanText(req.query.previewFloralCenter||"",20)}}));
 });
 app.get("/api/invitation/token/:token",(req,res)=>{
   const row=db.prepare(`
@@ -4579,8 +4899,14 @@ app.get("/api/admin/settings",authRequired,eventAllowed,(req,res)=>{
   }
 
   const descriptor=themeDescriptor(settings);
+  const projectedMedia={...(settings.media||{}),
+    heroImage:resolvedLocalMediaUrl(settings.media?.heroImage||""),
+    music:resolvedLocalMediaUrl(settings.media?.music||""),
+    gallery:(settings.media?.gallery||[]).map(resolvedLocalMediaUrl)
+  };
+  const projectedDressCode={...(settings.dressCode||{}),referenceImages:(settings.dressCode?.referenceImages||[]).map(resolvedLocalMediaUrl)};
   res.json({
-    ...settings,
+    ...settings,media:projectedMedia,dressCode:projectedDressCode,
     _event:{
       id:event.id,
       slug:event.slug,
@@ -4589,7 +4915,7 @@ app.get("/api/admin/settings",authRequired,eventAllowed,(req,res)=>{
       owner_user_id:event.owner_user_id,
       published:event.published
     },
-    _permissions:{platformUser},
+    _permissions:{platformUser,design:designCapabilitiesFor(req.user,event)},
     _experiences:experienceCatalog.publicCatalog,
     _sealCatalog:sealCatalog,
     _stationeryCatalog:stationeryCatalog,
@@ -4598,7 +4924,8 @@ app.get("/api/admin/settings",authRequired,eventAllowed,(req,res)=>{
     _themePalette:descriptor.palette,
     _surfaceTexture:descriptor.texture||"none",
     _openingCoordination:descriptor.coordination,
-    _designAccess:designAccessForEvent(event,{platform:platformUser}),
+    _designAccess:designAccessForEvent(event),
+    _designPreviewAccess:designAccessForEvent(event,{platform:platformUser}),
     _mediaHealth:eventMediaReferenceReport(event)
   });
 });
@@ -4610,6 +4937,7 @@ app.get("/api/admin/features",authRequired,eventAllowed,(req,res)=>{
   const overview=eventFeatureOverview(req.event,{role:req.user.role,forceClientView});
   res.json({
     role:req.user.role,planCode:context.planCode,view:forceClientView?"client":"platform",
+    designCapabilities:forceClientView?designCapabilitiesFor({role:"client"},req.event):designCapabilitiesFor(req.user,req.event),
     origins:forceClientView||!platformUser?context.access.origins:[],
     designAccess:designAccessForEvent(req.event,{platform:platformUser&&!forceClientView}),
     features:platformUser&&!forceClientView
@@ -4788,6 +5116,28 @@ app.put("/api/admin/settings",authRequired,eventAllowed,(req,res)=>{
   };
 
   const normalized=normalizeFeatureSettings(next);
+  /* RC35: los editores especializados no mantienen una segunda verdad de
+     presentación. Cualquier cambio válido de apertura/recorrido/movimiento/
+     galería actualiza también la Recipe persistida del evento. */
+  if(can("templates")&&normalized.designRecipe&&req.body.presentation&&typeof req.body.presentation==="object"){
+    const fallbackRecipe=designEngine.resolveEventRecipe({...normalized,designRecipe:null});
+    const openingProps={...(normalized.designRecipe.design?.openingProps||{})};
+    for(const key of ["rosePetalColor","floralPetalColor","floralCenterColor"]){
+      const value=String(normalized.presentation?.[key]||"").trim().toLowerCase();
+      if(/^#[0-9a-f]{6}$/i.test(value))openingProps[key]=value;
+    }
+    normalized.designRecipe=designEngine.normalizeRecipe({
+      ...normalized.designRecipe,
+      design:{
+        ...(normalized.designRecipe.design||{}),
+        ...(experienceCatalog.openingIds.has(normalized.presentation?.openingStyle)?{openingId:normalized.presentation.openingStyle}:{}),
+        ...(experienceCatalog.galleryIds.has(normalized.presentation?.galleryStyle)?{galleryStyleId:normalized.presentation.galleryStyle}:{}),
+        ...(experienceCatalog.motionLevelIds.has(normalized.presentation?.motionLevel)?{motionPreset:normalized.presentation.motionLevel}:{}),
+        ...(["auto","classic","story","poster","gallery"].includes(normalized.presentation?.experienceMode)?{experienceMode:normalized.presentation.experienceMode}:{}),
+        openingProps
+      }
+    },fallbackRecipe);
+  }
   saveSettings(event.id,normalized);
   audit(req,"settings.updated",{eventId:event.id,targetType:"event",targetId:event.id,metadata:{sections:Object.keys(req.body||{}).slice(0,30)}});
 
@@ -4844,6 +5194,418 @@ app.delete("/api/admin/media/missing",authRequired,eventAllowed,(req,res)=>{
   res.json({ok:true,removed,settings:{...settings,_mediaHealth:eventMediaReferenceReport(updatedEvent)}});
 });
 
+/* Design Engine V5: datos del evento, Recipe, derechos y estados de publicación
+   permanecen separados. El borrador sólo se hace público mediante Aplicar. */
+function designClone(value){return JSON.parse(JSON.stringify(value??{}));}
+function designWorkflowState(settings={}){
+  const activeRecipe=designEngine.resolveEventRecipe(settings);
+  const raw=settings.designState&&typeof settings.designState==="object"?settings.designState:{};
+  const hasStoredDraft=Boolean(raw.draftRecipe&&typeof raw.draftRecipe==="object");
+  const draftRecipe=hasStoredDraft?designEngine.normalizeRecipe(raw.draftRecipe,activeRecipe):designClone(activeRecipe);
+  const activeRevision=Math.max(1,Math.round(Number(raw.activeRevision)||1));
+  const draftRevision=Math.max(activeRevision,Math.round(Number(raw.draftRevision)||activeRevision));
+  const activeHash=designEngine.recipeHash(activeRecipe),draftHash=designEngine.recipeHash(draftRecipe);
+  const stationeryChanged=Boolean(raw.draftStationery)&&JSON.stringify(raw.draftStationery)!==JSON.stringify(settings.stationery||{});
+  const sealChanged=Boolean(raw.draftSeal)&&JSON.stringify(raw.draftSeal)!==JSON.stringify(settings.seal||{});
+  return {
+    activeRecipe,draftRecipe,activeHash,draftHash,activeRevision,draftRevision,
+    draftUpdatedAt:raw.draftUpdatedAt||null,activeUpdatedAt:raw.activeUpdatedAt||null,
+    lastAppliedDraftRevision:Number(raw.lastAppliedDraftRevision)||null,
+    draftStationery:raw.draftStationery?designClone(raw.draftStationery):null,
+    draftSeal:raw.draftSeal?designClone(raw.draftSeal):null,
+    hasStoredDraft,
+    hasUnappliedChanges:hasStoredDraft&&(activeHash!==draftHash||stationeryChanged||sealChanged||Number(raw.lastAppliedDraftRevision)!==draftRevision)
+  };
+}
+function designStatePayload(state){
+  return {
+    draftRevision:state.draftRevision,activeRevision:state.activeRevision,
+    draftUpdatedAt:state.draftUpdatedAt,activeUpdatedAt:state.activeUpdatedAt,
+    draftHash:state.draftHash,activeHash:state.activeHash,
+    hasUnappliedChanges:Boolean(state.hasUnappliedChanges)
+  };
+}
+
+/* RC39 · La Recipe vuelve a ser la autoridad de la identidad visual.
+   Stationery puede editarse como herramienta especializada, pero cada guardado
+   sincroniza ambos sentidos para impedir que un sobre personalizado antiguo
+   pinte encima de una Recipe nueva o de una armonía recién generada. */
+function designHex(value,fallback="#ffffff"){
+  const normalized=String(value||"").trim().toLowerCase();
+  return /^#[0-9a-f]{6}$/i.test(normalized)?normalized:fallback;
+}
+function blendDesignHex(left,right,amount=.5){
+  const parse=value=>{
+    const hex=designHex(value,"#000000").slice(1);
+    return [0,2,4].map(offset=>parseInt(hex.slice(offset,offset+2),16));
+  };
+  const a=parse(left),b=parse(right),t=Math.max(0,Math.min(1,Number(amount)||0));
+  return `#${a.map((value,index)=>Math.round(value+(b[index]-value)*t).toString(16).padStart(2,"0")).join("")}`;
+}
+// RC39: una Recipe curada define también su punto de partida de papelería; no debe heredar accidentalmente el último sobre ACTIVE.
+function stationeryPresetForRecipe(recipe={}){
+  const explicit={
+    "romantic-wine":"wax-envelope",
+    "storybook-seal":"wax-envelope",
+    "olive-nectar":"olive-nectar-seal",
+    "powder-blue-letter":"powder-blue-seal",
+    "botanica-elegante-gemini":"ivory-seal"
+  };
+  const baseId=String(recipe.id||"").replace(/^event-\d+-/,"");
+  return explicit[baseId]||"wax-envelope";
+}
+// RC39/41: proyecta tokens de Recipe al motor especializado de Stationery sin crear un segundo sistema de color.
+function synchronizeStationeryFromRecipe(currentStationery,recipe,{resetPreset=false}={}){
+  if(String(recipe?.design?.openingId||"")!==String(stationeryCatalog.openingId||""))return currentStationery||null;
+  const p=ensureAccessiblePalette(recipe?.design?.palette||{}),presetId=resetPreset?stationeryPresetForRecipe(recipe):String(currentStationery?.presetId||stationeryPresetForRecipe(recipe));
+  const preset=stationeryPresetById(presetId)||stationeryPresetById(stationeryCatalog.defaults?.presetId)||{};
+  const base=resetPreset?{...stationeryCatalog.defaults,...preset,presetId}:{...(currentStationery||{}),presetId};
+  /* Muchas Recipes comparten el preset geométrico wax-envelope. Para que una
+     plantilla prediseñada no parezca el mismo sobre repetido, su textura visual
+     también deriva del texture token de la Recipe cuando cargamos el punto de
+     partida. Las ediciones manuales posteriores conservan material/liner. */
+  const texture=String(recipe?.design?.texture||"none");
+  const genericPreset=presetId===String(stationeryCatalog.defaults?.presetId||"wax-envelope");
+  const textureMaterial={none:"smooth-paper",paper:"smooth-paper",linen:"cinematic-linen","soft-grain":"ivory-fiber",wash:"blue-aurora"};
+  const textureLiner={none:"mudejar",paper:"none",linen:"mudejar","soft-grain":"damask",wash:"aurora-wave"};
+  const textureStrength={none:46,paper:55,linen:68,"soft-grain":62,wash:58};
+  const identity=resetPreset&&genericPreset?{
+    materialId:textureMaterial[texture]||base.materialId,
+    linerId:textureLiner[texture]||base.linerId,
+    textureStrength:textureStrength[texture]??base.textureStrength
+  }:{};
+  return normalizeStationery(base,{
+    ...base,...identity,enabled:true,customized:true,syncDesignTokens:true,fontMode:"event",
+    outerColor:blendDesignHex(p.bg||p.paper,p.accent,.18),
+    innerColor:blendDesignHex(p.paper||p.bg,p.accent,.27),
+    cardColor:p.paper,
+    textColor:p.ink,
+    ornamentColor:p.gold,
+    sealColor:p.accent
+  },{openingStyle:stationeryCatalog.openingId});
+}
+// RC39: la edición manual de sobre/lacre vuelve al DRAFT de la Recipe para mantener una sola fuente de verdad visual.
+function synchronizeRecipeFromStationery(recipe,stationery){
+  if(String(recipe?.design?.openingId||"")!==String(stationeryCatalog.openingId||""))return recipe;
+  const tokens=stationeryDesignTokens(stationery),palette=ensureAccessiblePalette({...recipe.design.palette,...tokens});
+  return designEngine.normalizeRecipe({...recipe,design:{...recipe.design,palette,colorTheory:{...(recipe.design.colorTheory||{}),seed:palette.accent||recipe.design.colorTheory?.seed||"#6b4d3b",familyId:"stationery-custom"}}},recipe);
+}
+function synchronizeSealFromRecipe(currentSeal,recipe){
+  const p=ensureAccessiblePalette(recipe?.design?.palette||{});
+  return normalizeSeal(currentSeal||{}, {material:"theme",customColor:p.accent,customized:true});
+}
+
+function normalizeDesignRecipeIntent(incoming,fallback,presentationOverrides={}){
+  const requestedOpening=cleanText(presentationOverrides.openingStyle||incoming?.design?.openingId||"",80);
+  const requestedGallery=cleanText(presentationOverrides.galleryStyle||incoming?.design?.galleryStyleId||"",80);
+  const requestedExperience=cleanText(presentationOverrides.experienceMode||incoming?.design?.experienceMode||"",20);
+  const requestedMotion=cleanText(presentationOverrides.motionLevel||incoming?.design?.motionPreset||"",20);
+  const openingProps={};
+  for(const key of ["rosePetalColor","floralPetalColor","floralCenterColor"]){
+    const value=String(presentationOverrides[key]||incoming?.design?.openingProps?.[key]||"").trim().toLowerCase();
+    if(/^#[0-9a-f]{6}$/i.test(value))openingProps[key]=value;
+  }
+  return designEngine.normalizeRecipe({...incoming,design:{...(incoming?.design||{}),
+    ...(experienceCatalog.openingIds.has(requestedOpening)?{openingId:isLegacyEnvelopeOpening(requestedOpening)?stationeryCatalog.openingId:requestedOpening}:{}),
+    ...(experienceCatalog.galleryIds.has(requestedGallery)?{galleryStyleId:requestedGallery}:{}),
+    ...(["auto","classic","story","poster","gallery"].includes(requestedExperience)?{experienceMode:requestedExperience}:{}),
+    ...(experienceCatalog.motionLevelIds.has(requestedMotion)?{motionPreset:requestedMotion}:{}),
+    openingProps:{...(incoming?.design?.openingProps||{}),...openingProps}
+  }},fallback);
+}
+
+app.get("/api/admin/design/catalog",authRequired,eventAllowed,(req,res)=>{
+  const event=currentEvent(req);
+  const recipeQuery=cleanText(req.query.q||"",80);
+  const recipesPage=designEngine.catalog({eventType:event?.event_type||"",query:recipeQuery,offset:Number(req.query.offset||0),limit:Number(req.query.limit||24)});
+  const assetsPage=designEngine.assetCatalog({offset:0,limit:24});
+  res.json({
+    schema:"eventstudio.design-catalog.v1",
+    recipes:recipesPage,
+    assetCategories:assetsPage.categories,
+    components:designEngine.componentCatalog.components,
+    photoPresentations:designEngine.photoPresentations,
+    motionTimelines:designEngine.motionTimelines,
+    printLayouts:designEngine.printLayouts,
+    qrFrames:designEngine.qrFrames,
+    paletteFamilies:designEngine.paletteFamilies,
+    typographyPresets:designEngine.typographyPresets,
+    layoutFamilies:designEngine.layoutFamilies,
+    colorHarmonies:designEngine.colorHarmonies,
+    qa:designEngine.validateCatalog()
+  });
+});
+
+app.post("/api/admin/design/palette",authRequired,eventAllowed,(req,res)=>{
+  const seed=cleanText(req.body?.seed||"",20);
+  const harmony=cleanText(req.body?.harmony||"complementary",40);
+  const palette=designEngine.generateHarmoniousPalette(seed,harmony);
+  const audit=designEngine.paletteAudit(palette);
+  res.json({palette,audit,colorTheory:{seed:/^#[0-9a-f]{6}$/i.test(seed)?seed.toLowerCase():palette.accent,harmony:designEngine.colorHarmonies.includes(harmony)?harmony:"complementary"}});
+});
+
+app.get("/api/admin/design/assets",authRequired,eventAllowed,(req,res)=>{
+  res.json(designEngine.assetCatalog({category:cleanText(req.query.category||"",60),query:cleanText(req.query.q||"",80),offset:Number(req.query.offset||0),limit:Number(req.query.limit||24)}));
+});
+
+app.get("/api/admin/design/recipes/:id",authRequired,eventAllowed,(req,res)=>{
+  const event=currentEvent(req);
+  const recipe=designEngine.catalogRecipe(cleanText(req.params.id||"",100));
+  if(!recipe)return res.status(404).json({error:"Recipe no encontrada.",code:"RECIPE_NOT_FOUND"});
+  if(recipe.eventTypes?.length&&!recipe.eventTypes.includes(event?.event_type||"custom"))return res.status(409).json({error:"La Recipe no es compatible con este tipo de evento.",code:"RECIPE_EVENT_TYPE_MISMATCH"});
+  res.json({recipe,hash:designEngine.recipeHash(recipe)});
+});
+
+app.get("/api/admin/design/recipes/:id/thumbnail",authRequired,eventAllowed,(req,res)=>{
+  const event=currentEvent(req);
+  const recipe=designEngine.catalogRecipe(cleanText(req.params.id||"",100));
+  if(!recipe)return res.status(404).json({error:"Recipe no encontrada.",code:"RECIPE_NOT_FOUND"});
+  if(recipe.eventTypes?.length&&!recipe.eventTypes.includes(event?.event_type||"custom"))return res.status(409).json({error:"La Recipe no es compatible con este tipo de evento.",code:"RECIPE_EVENT_TYPE_MISMATCH"});
+  res.type("image/svg+xml").set("Cache-Control","private,max-age=300").send(designEngine.thumbnailSvg(recipe));
+});
+
+app.get("/api/admin/design/recipe",authRequired,eventAllowed,(req,res)=>{
+  const event=currentEvent(req);
+  const current=settingsOf(event);
+  const state=designWorkflowState(current);
+  res.json({
+    recipe:state.draftRecipe,activeRecipe:state.activeRecipe,hash:state.draftHash,activeHash:state.activeHash,
+    source:state.hasStoredDraft?"draft":(current.designRecipe?"active-fallback":"legacy-adapter"),
+    thumbnailUrl:`/api/admin/design/thumbnail?hash=${state.draftHash}`,
+    state:designStatePayload(state),draftStationery:state.draftStationery,draftSeal:state.draftSeal,
+    capabilities:designCapabilitiesFor(req.user,event)
+  });
+});
+
+app.get("/api/admin/design/thumbnail",authRequired,eventAllowed,(req,res)=>{
+  const event=currentEvent(req);const recipe=designWorkflowState(settingsOf(event)).draftRecipe;
+  res.type("image/svg+xml").set("Cache-Control","no-store").send(designEngine.thumbnailSvg(recipe));
+});
+
+app.post("/api/admin/design/thumbnail",authRequired,eventAllowed,(req,res)=>{
+  const event=currentEvent(req);const fallback=designEngine.resolveEventRecipe(settingsOf(event));
+  const recipe=designEngine.normalizeRecipe(req.body?.recipe||{},fallback);
+  res.type("image/svg+xml").set("Cache-Control","no-store").send(designEngine.thumbnailSvg(recipe));
+});
+
+app.post("/api/admin/design/recommend-package",authRequired,eventAllowed,(req,res)=>{
+  const event=currentEvent(req);const fallback=designEngine.resolveEventRecipe(settingsOf(event));
+  const recipe=designEngine.normalizeRecipe(req.body?.recipe||fallback,fallback);
+  const desired=new Set(["invitation"]);
+  for(const section of recipe.sections||[]){
+    if(section.visible===false)continue;
+    const component=designEngine.componentCatalog.components.find(item=>item.type===section.type);
+    if(component?.requiredFeature)desired.add(component.requiredFeature);
+  }
+  const clientOverview=eventFeatureOverview(event,{role:"client",forceClientView:true});
+  const allowed=new Set(clientOverview.filter(item=>item.allowed).map(item=>item.key));
+  const missing=[...desired].filter(key=>!allowed.has(key));
+  const publicPlans=(commercialPlans.plans||[]).filter(plan=>plan.public).map(plan=>{
+    const covered=plan.includesAllAvailable?featureCatalog.map(item=>item.key):[...(plan.included||[])];
+    const covers=desired.size===0||[...desired].every(key=>covered.includes(key));
+    return {...plan,covered,covers};
+  }).filter(plan=>plan.covers).sort((a,b)=>Number(a.priceCents||0)-Number(b.priceCents||0));
+  const recommended=publicPlans[0]||null;
+  const addonMap=new Map();
+  for(const addon of commercialPlans.addons||[]){
+    const grants=[...(addon.grants||[]),addon.key].filter(Boolean);
+    grants.forEach(key=>{const current=addonMap.get(key);if(!current||Number(addon.priceCents||0)<Number(current.priceCents||0))addonMap.set(key,addon);});
+  }
+  const addonIds=new Set(),uncovered=[];
+  for(const key of missing){const addon=addonMap.get(key);if(addon)addonIds.add(addon.key);else uncovered.push(key);}
+  const selectedAddons=(commercialPlans.addons||[]).filter(addon=>addonIds.has(addon.key));
+  const addonCostCents=selectedAddons.reduce((sum,item)=>sum+Number(item.priceCents||0),0);
+  const desiredList=[...desired];
+  const extraFeatures=recommended?recommended.covered.filter(key=>!desired.has(key)):[];
+  res.json({
+    desiredFeatures:desiredList,missingFeatures:missing,currentPlanCode:commercialFeatureContext(event).planCode,
+    individual:{available:uncovered.length===0,addons:selectedAddons.map(({key,name,priceCents})=>({key,name,priceCents})),priceCents:addonCostCents,uncovered},
+    recommendation:recommended?{code:recommended.code,name:recommended.name,priceCents:Number(recommended.priceCents||0),extraFeatures:extraFeatures.slice(0,12),desiredCount:desiredList.length}:null
+  });
+});
+
+app.put("/api/admin/design/recipe",authRequired,eventAllowed,(req,res)=>{
+  const event=currentEvent(req);if(!event)return res.status(404).json({error:"Evento no encontrado."});
+  const capabilities=designCapabilitiesFor(req.user,event),platformUser=capabilities.manageCatalog;
+  if(!capabilities.editDraft)return res.status(403).json({error:"Tu cuenta no tiene activo el constructor de diseño.",code:"TEMPLATES_REQUIRED"});
+  const current=settingsOf(event),workflow=designWorkflowState(current),fallback=workflow.draftRecipe;
+  const expectedRevision=Number(req.body?.expectedRevision);
+  if(Number.isFinite(expectedRevision)&&expectedRevision!==workflow.draftRevision){
+    return res.status(409).json({error:"El borrador cambió en otra sesión. Recarga antes de continuar.",code:"DESIGN_DRAFT_CONFLICT",state:designStatePayload(workflow)});
+  }
+  let incoming=req.body?.recipe;
+  const selectedCatalogRecipe=Boolean(req.body?.catalogRecipeId);
+  if(req.body?.catalogRecipeId){
+    const catalogId=cleanText(req.body.catalogRecipeId,100);
+    const catalogRecipe=designEngine.catalogRecipe(catalogId);
+    if(!catalogRecipe)return res.status(404).json({error:"Recipe no encontrada.",code:"RECIPE_NOT_FOUND"});
+    if(catalogRecipe.eventTypes?.length&&!catalogRecipe.eventTypes.includes(event.event_type||"custom"))return res.status(409).json({error:"La Recipe no es compatible con este tipo de evento.",code:"RECIPE_EVENT_TYPE_MISMATCH"});
+    /* La vista previa del catálogo es libre, pero aplicar una Recipe comercial no
+       puede saltarse el Store mediante una llamada directa a la API. */
+    if(!platformUser){
+      const theme=themes.find(item=>item.id===catalogId);
+      const product=commerce.allProducts().find(item=>item.code===`theme:${catalogId}`);
+      if(!theme||!product)return res.status(403).json({error:"Este diseño no está disponible para tu cuenta.",code:"THEME_REQUIRED"});
+      const entitlement=eventEntitlement(event),access=commerce.accessForEvent(event,entitlement);
+      const owned=commerce.productOwnedForEvent(product,event,entitlement,access);
+      if(!owned&&!commerce.themeAllowed(theme,event,entitlement)){
+        return res.status(403).json({error:"Puedes previsualizar este diseño, pero debes adquirirlo o activar un paquete que lo incluya para aplicarlo.",code:"THEME_REQUIRED",productId:product.id,price_cents:Number(product.price_cents||0)});
+      }
+    }
+    incoming={...catalogRecipe,id:`event-${event.id}-${catalogRecipe.id}`,source:"custom",status:"draft"};
+  }
+  if(!incoming||typeof incoming!=="object")return res.status(400).json({error:"Recipe inválida.",code:"RECIPE_REQUIRED"});
+  const presentationOverrides=req.body?.presentationOverrides&&typeof req.body.presentationOverrides==="object"?req.body.presentationOverrides:{};
+  const recipe=normalizeDesignRecipeIntent(incoming,fallback,presentationOverrides);
+  /* Elegir una Recipe del catálogo debe cargar su punto de partida completo.
+     Si usa el sobre unificado, coordinamos preset y colores con ESA Recipe; al
+     editar luego la paleta, conservamos la geometría elegida pero actualizamos
+     sus tokens. Así una personalización antigua nunca contamina otra plantilla. */
+  let draftStationery=workflow.draftStationery||current.stationery||null;
+  let draftSeal=workflow.draftSeal||current.seal||null;
+  if(String(recipe.design?.openingId||"")===String(stationeryCatalog.openingId||"")){
+    draftStationery=synchronizeStationeryFromRecipe(draftStationery,recipe,{resetPreset:selectedCatalogRecipe});
+    if(selectedCatalogRecipe)draftSeal=synchronizeSealFromRecipe(draftSeal,recipe);
+  }
+  const recipeHash=designEngine.recipeHash(recipe);
+  const sameDraft=recipeHash===workflow.draftHash
+    &&JSON.stringify(draftStationery||null)===JSON.stringify(workflow.draftStationery||current.stationery||null)
+    &&JSON.stringify(draftSeal||null)===JSON.stringify(workflow.draftSeal||current.seal||null);
+  if(sameDraft)return res.json({ok:true,recipe:workflow.draftRecipe,hash:workflow.draftHash,state:designStatePayload(workflow),capabilities,alreadySaved:true});
+  const now=new Date().toISOString(),draftRevision=workflow.draftRevision+1;
+  const next={...current,designState:{...(current.designState||{}),draftRecipe:recipe,draftStationery,draftSeal,draftRevision,activeRevision:workflow.activeRevision,draftUpdatedAt:now,lastAppliedDraftRevision:workflow.lastAppliedDraftRevision}};
+  saveSettings(event.id,normalizeFeatureSettings(next));
+  const nextState=designWorkflowState(next);
+  audit(req,"design.draft_saved",{eventId:event.id,targetType:"event",targetId:event.id,metadata:{recipeId:recipe.id,hash:nextState.draftHash,draftRevision,sections:recipe.sections.length,assets:recipe.assets.length}});
+  res.json({ok:true,recipe,hash:nextState.draftHash,state:designStatePayload(nextState),capabilities});
+});
+
+app.get("/api/admin/design/stationery-draft",authRequired,eventAllowed,(req,res)=>{
+  const event=currentEvent(req),current=settingsOf(event),workflow=designWorkflowState(current);
+  const draftSettings={...current,designRecipe:workflow.draftRecipe,
+    stationery:workflow.draftStationery||current.stationery,
+    seal:workflow.draftSeal||current.seal,
+    presentation:{...(current.presentation||{}),openingStyle:workflow.draftRecipe.design?.openingId||current.presentation?.openingStyle}
+  };
+  const descriptor=themeDescriptor(draftSettings),platformUser=["owner","developer"].includes(req.user.role);
+  res.json({...draftSettings,_event:{id:event.id,slug:event.slug,name:event.name,event_type:event.event_type,owner_user_id:event.owner_user_id,published:event.published},
+    _permissions:{platformUser,design:designCapabilitiesFor(req.user,event)},_experiences:experienceCatalog.publicCatalog,_sealCatalog:sealCatalog,_stationeryCatalog:stationeryCatalog,
+    _themePalette:descriptor.palette,_surfaceTexture:descriptor.texture||"none",_openingCoordination:descriptor.coordination,_designState:designStatePayload(workflow)});
+});
+
+app.put("/api/admin/design/stationery-draft",authRequired,eventAllowed,(req,res)=>{
+  const event=currentEvent(req),capabilities=designCapabilitiesFor(req.user,event);
+  if(!capabilities.editStationery)return res.status(403).json({error:"Tu perfil no puede editar la papelería de este evento.",code:"TEMPLATES_REQUIRED"});
+  const current=settingsOf(event),workflow=designWorkflowState(current),expectedRevision=Number(req.body?.expectedRevision);
+  if(Number.isFinite(expectedRevision)&&expectedRevision!==workflow.draftRevision)return res.status(409).json({error:"El borrador cambió en otra sesión. Recarga antes de guardar el sobre.",code:"DESIGN_DRAFT_CONFLICT",state:designStatePayload(workflow)});
+  const stationery=normalizeStationery(workflow.draftStationery||current.stationery,req.body?.stationery||{},{openingStyle:stationeryCatalog.openingId});
+  const seal=normalizeSeal(workflow.draftSeal||current.seal,req.body?.seal||{});
+  const openingRecipe=designEngine.normalizeRecipe({...workflow.draftRecipe,design:{...(workflow.draftRecipe.design||{}),openingId:stationeryCatalog.openingId}},workflow.draftRecipe);
+  /* Guardar desde el Estudio de sobres es una edición explícita de color: sus
+     tokens se proyectan de vuelta a la Recipe para que sitio, QR, impresión y
+     constructor muestren la misma identidad y no dos fuentes de verdad. */
+  const recipe=synchronizeRecipeFromStationery(openingRecipe,stationery);
+  const sameDraft=designEngine.recipeHash(recipe)===workflow.draftHash
+    &&JSON.stringify(stationery||null)===JSON.stringify(workflow.draftStationery||current.stationery||null)
+    &&JSON.stringify(seal||null)===JSON.stringify(workflow.draftSeal||current.seal||null);
+  if(sameDraft)return res.json({ok:true,settings:{stationery,seal,presentation:{openingStyle:stationeryCatalog.openingId}},recipe:workflow.draftRecipe,state:designStatePayload(workflow),alreadySaved:true});
+  const now=new Date().toISOString(),draftRevision=workflow.draftRevision+1;
+  const next={...current,designState:{...(current.designState||{}),draftRecipe:recipe,draftStationery:stationery,draftSeal:seal,draftRevision,activeRevision:workflow.activeRevision,draftUpdatedAt:now,lastAppliedDraftRevision:workflow.lastAppliedDraftRevision}};
+  saveSettings(event.id,normalizeFeatureSettings(next));
+  const nextState=designWorkflowState(next);
+  audit(req,"design.stationery_draft_saved",{eventId:event.id,targetType:"event",targetId:event.id,metadata:{draftRevision,recipeId:recipe.id}});
+  res.json({ok:true,settings:{stationery,seal,presentation:{openingStyle:stationeryCatalog.openingId}},recipe,state:designStatePayload(nextState)});
+});
+
+app.post("/api/admin/design/discard",authRequired,eventAllowed,(req,res)=>{
+  const event=currentEvent(req),capabilities=designCapabilitiesFor(req.user,event);
+  if(!capabilities.editDraft)return res.status(403).json({error:"Tu perfil no puede modificar este borrador.",code:"TEMPLATES_REQUIRED"});
+  const expectedRevision=Number(req.body?.expectedRevision);
+  let outcome;
+  try{
+    outcome=db.transaction(()=>{
+      const fresh=db.prepare("SELECT * FROM events WHERE id=?").get(event.id),current=settingsOf(fresh),workflow=designWorkflowState(current);
+      if(Number.isFinite(expectedRevision)&&expectedRevision!==workflow.draftRevision){const error=new Error("DESIGN_DRAFT_CONFLICT");error.workflow=workflow;throw error;}
+      if(!workflow.hasUnappliedChanges)return {alreadyDiscarded:true,workflow};
+      const draftRevision=workflow.draftRevision+1,now=new Date().toISOString();
+      const next={...current,designState:{...(current.designState||{}),draftRecipe:workflow.activeRecipe,
+        draftStationery:designClone(current.stationery||{}),draftSeal:designClone(current.seal||{}),
+        draftRevision,activeRevision:workflow.activeRevision,draftUpdatedAt:now,
+        activeUpdatedAt:workflow.activeUpdatedAt,lastAppliedDraftRevision:draftRevision}};
+      const normalized=normalizeFeatureSettings(next);
+      db.prepare("UPDATE events SET settings_json=?,updated_at=CURRENT_TIMESTAMP WHERE id=?").run(JSON.stringify(normalized),event.id);
+      return {alreadyDiscarded:false,workflow:designWorkflowState(normalized)};
+    })();
+  }catch(error){
+    if(error.message==="DESIGN_DRAFT_CONFLICT")return res.status(409).json({error:"El borrador cambió en otra sesión. Recarga antes de descartarlo.",code:"DESIGN_DRAFT_CONFLICT",state:designStatePayload(error.workflow)});
+    throw error;
+  }
+  audit(req,outcome.alreadyDiscarded?"design.discard_idempotent":"design.draft_discarded",{eventId:event.id,targetType:"event",targetId:event.id,metadata:{draftRevision:outcome.workflow.draftRevision,activeRevision:outcome.workflow.activeRevision}});
+  res.json({ok:true,alreadyDiscarded:outcome.alreadyDiscarded,recipe:outcome.workflow.draftRecipe,
+    draftStationery:outcome.workflow.draftStationery,draftSeal:outcome.workflow.draftSeal,state:designStatePayload(outcome.workflow)});
+});
+
+app.post("/api/admin/design/apply",authRequired,eventAllowed,(req,res)=>{
+  const event=currentEvent(req),capabilities=designCapabilitiesFor(req.user,event);
+  if(!capabilities.apply)return res.status(403).json({error:"Tu perfil no puede aplicar este diseño.",code:"TEMPLATES_REQUIRED"});
+  const platformUser=capabilities.manageCatalog,expectedRevision=Number(req.body?.expectedRevision);
+  let outcome;
+  try{
+    outcome=db.transaction(()=>{
+      const fresh=db.prepare("SELECT * FROM events WHERE id=?").get(event.id),current=settingsOf(fresh),workflow=designWorkflowState(current);
+      if(Number.isFinite(expectedRevision)&&expectedRevision!==workflow.draftRevision){const error=new Error("DESIGN_DRAFT_CONFLICT");error.workflow=workflow;throw error;}
+      if(workflow.lastAppliedDraftRevision===workflow.draftRevision&&!workflow.hasUnappliedChanges)return {alreadyApplied:true,workflow,pendingEntitlements:[]};
+      const recipe=workflow.draftRecipe,next={...current,designRecipe:recipe};
+      next.designKit={...(current.designKit||{}),enabled:true,palette:{...recipe.design.palette},texture:recipe.design.texture||"none"};
+      next.presentation=normalizePresentation(current.presentation||{}, {experienceMode:recipe.design.experienceMode||current.presentation?.experienceMode||"auto",motionLevel:recipe.design.motionPreset||current.presentation?.motionLevel||"subtle",rosePetalColor:recipe.design.openingProps?.rosePetalColor,floralPetalColor:recipe.design.openingProps?.floralPetalColor,floralCenterColor:recipe.design.openingProps?.floralCenterColor});
+      next.typography=normalizeTypography(current.typography,recipe.design.typography||{});
+      if(workflow.draftStationery)next.stationery=normalizeStationery(current.stationery,workflow.draftStationery,{openingStyle:stationeryCatalog.openingId});
+      if(workflow.draftSeal)next.seal=normalizeSeal(current.seal,workflow.draftSeal);
+      /* El propietario/desarrollador de plataforma necesita validar el producto
+         completo sin comprarse a sí mismo cada experiencia. Ese override sólo se
+         crea en este endpoint autenticado/auditado y NO concede propiedad comercial
+         al evento. Los clientes siguen sujetos a sus derechos adquiridos. */
+      const access=designAccessForEvent(fresh),pendingEntitlements=[],platformOverrides=[];
+      const opening=String(recipe.design.openingId||"none"),gallery=String(recipe.design.galleryStyleId||"classic");
+      if(experienceCatalog.openingIds.has(opening)){
+        const gated=Boolean(DESIGN_PRODUCT_KEYS.opening[opening]);
+        if(!gated||access.opening[opening]||platformUser){next.presentation.openingStyle=opening;if(gated&&!access.opening[opening]&&platformUser)platformOverrides.push(`opening:${opening}`);}
+        else pendingEntitlements.push(`opening:${opening}`);
+      }
+      if(experienceCatalog.galleryIds.has(gallery)){
+        const gated=Boolean(DESIGN_PRODUCT_KEYS.gallery[gallery]);
+        if(!gated||access.gallery[gallery]||platformUser){next.presentation.galleryStyle=gallery;if(gated&&!access.gallery[gallery]&&platformUser)platformOverrides.push(`gallery:${gallery}`);}
+        else pendingEntitlements.push(`gallery:${gallery}`);
+      }
+      const legacyTheme=recipe.compatibility?.legacyThemeId;if(legacyTheme&&themes.some(item=>item.id===legacyTheme))next.themeId=legacyTheme;
+      const now=new Date().toISOString(),activeRevision=workflow.activeRevision+1;
+      next.designState={...(current.designState||{}),draftRecipe:recipe,draftRevision:workflow.draftRevision,activeRevision,activeUpdatedAt:now,lastAppliedDraftRevision:workflow.draftRevision,
+        platformExperienceOverrides:platformUser&&platformOverrides.length?{items:platformOverrides,appliedBy:req.user.id,appliedAt:now}:null,
+        ...(workflow.draftStationery?{draftStationery:workflow.draftStationery}:{}),...(workflow.draftSeal?{draftSeal:workflow.draftSeal}:{})};
+      const normalized=normalizeFeatureSettings(next);
+      db.prepare("UPDATE events SET settings_json=?,updated_at=CURRENT_TIMESTAMP WHERE id=?").run(JSON.stringify(normalized),event.id);
+      return {alreadyApplied:false,workflow:designWorkflowState(normalized),pendingEntitlements,platformOverrides,recipe,appliedPresentation:normalized.presentation};
+    })();
+  }catch(error){
+    if(error.message==="DESIGN_DRAFT_CONFLICT")return res.status(409).json({error:"El borrador cambió en otra sesión. Recarga antes de aplicar.",code:"DESIGN_DRAFT_CONFLICT",state:designStatePayload(error.workflow)});
+    throw error;
+  }
+  audit(req,outcome.alreadyApplied?"design.apply_idempotent":"design.applied",{eventId:event.id,targetType:"event",targetId:event.id,metadata:{draftRevision:outcome.workflow.draftRevision,activeRevision:outcome.workflow.activeRevision,pendingEntitlements:outcome.pendingEntitlements,platformOverrides:outcome.platformOverrides||[]}});
+  res.json({ok:true,alreadyApplied:outcome.alreadyApplied,recipe:outcome.recipe||outcome.workflow.activeRecipe,hash:outcome.workflow.activeHash,state:designStatePayload(outcome.workflow),pendingEntitlements:outcome.pendingEntitlements,platformOverrides:outcome.platformOverrides||[],
+    appliedPresentation:outcome.appliedPresentation||{openingStyle:outcome.workflow.activeRecipe.design?.openingId||"none",galleryStyle:outcome.workflow.activeRecipe.design?.galleryStyleId||"classic",experienceMode:outcome.workflow.activeRecipe.design?.experienceMode||"auto",motionLevel:outcome.workflow.activeRecipe.design?.motionPreset||"subtle"}});
+});
+
+app.post("/api/admin/design/catalog-recipes",authRequired,eventAllowed,(req,res)=>{
+  const capabilities=designCapabilitiesFor(req.user,req.event);
+  if(!capabilities.saveTemplate)return res.status(403).json({error:"Sólo un perfil de plataforma puede guardar o publicar plantillas de catálogo.",code:"PLATFORM_DESIGN_REQUIRED"});
+  const current=settingsOf(req.event),workflow=designWorkflowState(current),recipe=designEngine.normalizeRecipe(req.body?.recipe||workflow.draftRecipe,workflow.draftRecipe);
+  const status=req.body?.status==="published"?"published":"draft",stored=platformSetting("designCatalogRecipes",{items:[]}),items=Array.isArray(stored.items)?stored.items.slice(0,199):[];
+  const id=`platform-${Date.now().toString(36)}-${crypto.randomBytes(3).toString("hex")}`,entry={id,name:cleanText(req.body?.name||recipe.name||"Plantilla sin nombre",120),status,recipe:{...recipe,id,status},createdBy:req.user.id,createdAt:new Date().toISOString()};
+  items.unshift(entry);savePlatformSetting("designCatalogRecipes",{schema:"eventstudio.design-platform-catalog.v1",items},req.user.id);
+  audit(req,status==="published"?"design.catalog_published":"design.template_saved",{eventId:req.event.id,targetType:"design_catalog_recipe",targetId:id,metadata:{recipeHash:designEngine.recipeHash(recipe)}});
+  res.status(201).json({ok:true,entry});
+});
+
 app.get("/api/admin/event-types",authRequired,(_req,res)=>res.json(eventTypes));
 
 app.get("/api/admin/themes",authRequired,eventAllowed,(req,res)=>{
@@ -4864,9 +5626,14 @@ app.get("/api/admin/themes",authRequired,eventAllowed,(req,res)=>{
     })
     .map(theme=>{
       const product=products.get(`theme:${theme.id}`);
+      const recipeSummary=designEngine.catalogRecipe(theme.id);
       return {
         ...theme,
         palette:themeDesignFor(themeDesigns,theme.id).palette,
+        recipeOpeningId:recipeSummary?.design?.openingId||"none",
+        recipeLayoutFamily:recipeSummary?.design?.layoutFamily||theme.layoutFamily||"classic",
+        recipeMoods:recipeSummary?.moods||[],
+        recipeTags:recipeSummary?.tags||[],
         allowed:(platformUser&&!forceClientView)||commerce.productOwnedForEvent(product,req.event,eventEntitlement(req.event),commerce.accessForEvent(req.event,eventEntitlement(req.event)))||commerce.themeAllowed(theme,req.event,eventEntitlement(req.event)),
         productId:product?.id||null,
         price_cents:Number(product?.price_cents||0),
@@ -5694,8 +6461,8 @@ app.get("/api/admin/venue-report.xlsx",authRequired,eventAllowed,featureRequired
  }catch(error){next(error);}
 });
 app.get("/api/admin/qr-templates",authRequired,(_req,res)=>res.json(qrTemplates));
-app.get("/api/admin/qr",authRequired,eventAllowed,featureRequired("qrCards"),async(req,res)=>{const e=currentEvent(req),table=cleanText(req.query.table,120);const url=albumUrl(e,table),dataUrl=await QRCode.toDataURL(url,{margin:4,width:900,errorCorrectionLevel:"H"});res.json({table,url,dataUrl});});
-app.get("/api/admin/qr.png",authRequired,eventAllowed,featureRequired("qrCards"),async(req,res)=>{const e=currentEvent(req),table=cleanText(req.query.table,120);const b=await QRCode.toBuffer(albumUrl(e,table),{type:"png",margin:4,width:1400,errorCorrectionLevel:"H"});res.setHeader("Content-Disposition",`attachment; filename="${table?`qr-${sanitize(table)}`:"qr-general"}.png"`);res.type("png").send(b);});
+app.get("/api/admin/qr",authRequired,eventAllowed,featureRequired("qrCards"),async(req,res)=>{const e=currentEvent(req),settings=settingsOf(e),table=cleanText(req.query.table,120);const url=albumUrl(e,table),dataUrl=await QRCode.toDataURL(url,qrRasterOptions(settings,{margin:4,width:900}));res.json({table,url,dataUrl,palette:qrPalette(settings)});});
+app.get("/api/admin/qr.png",authRequired,eventAllowed,featureRequired("qrCards"),async(req,res)=>{const e=currentEvent(req),settings=settingsOf(e),table=cleanText(req.query.table,120);const b=await QRCode.toBuffer(albumUrl(e,table),qrRasterOptions(settings,{type:"png",margin:4,width:1400}));res.setHeader("Content-Disposition",`attachment; filename="${table?`qr-${sanitize(table)}`:"qr-general"}.png"`);res.type("png").send(b);});
 app.get("/api/admin/qr-card.pdf",authRequired,eventAllowed,featureRequired("qrCards"),async(req,res,next)=>{
   try{
     const event=currentEvent(req);
@@ -5706,9 +6473,9 @@ app.get("/api/admin/qr-card.pdf",authRequired,eventAllowed,featureRequired("qrCa
     const table=cleanText(req.query.table,120);
     const template=qrTemplates.find(item=>item.id===templateId)||qrTemplates[0];
     const size=qrPageSize(template.format);
-    const heroPath=printableImagePathFromUrl(settings.media?.heroImage);
+    const heroPath=printableEventHeroPath(settings);
     const url=albumUrl(event,table);
-    const qr=await QRCode.toBuffer(url,{width:1200,margin:4,errorCorrectionLevel:"H"});
+    const qr=await QRCode.toBuffer(url,qrRasterOptions(settings,{width:1200,margin:4}));
     const pdf=await renderPdfBuffer({size,margin:0},doc=>{
       drawQrCard(doc,{settings,table:table||"QR general",families:qrFamilies(event.id,table),qr,templateId,pageSize:template.format,heroPath});
     });
@@ -5729,8 +6496,8 @@ app.get("/api/admin/physical-invitation.pdf",authRequired,eventAllowed,featureRe
     const settings=settingsOf(event);
     const requestedTemplate=String(req.query.template||settings.physicalInvitation?.templateId||"auto-theme");
     const templateId=PHYSICAL_TEMPLATE_IDS.has(requestedTemplate)?requestedTemplate:"auto-theme";
-    const qr=await QRCode.toBuffer(invitationUrl(event,guest.token),{width:900,margin:3,errorCorrectionLevel:"H"});
-    const heroPath=printableImagePathFromUrl(settings.media?.heroImage);
+    const qr=await QRCode.toBuffer(invitationUrl(event,guest.token),qrRasterOptions(settings,{width:900,margin:3}));
+    const heroPath=printableEventHeroPath(settings);
     const pdf=await renderPdfBuffer({
       size:[360,504],
       margin:0,
@@ -5750,7 +6517,7 @@ app.get("/api/admin/qr-set.pdf",authRequired,eventAllowed,featureRequired("qrCar
     const requestedTemplate=String(req.query.template||design.templateId||"classic-holder");
     const templateId=QR_TEMPLATE_IDS.has(requestedTemplate)?requestedTemplate:design.templateId;
     const template=qrTemplates.find(item=>item.id===templateId)||qrTemplates[0];
-    const heroPath=printableImagePathFromUrl(settings.media?.heroImage);
+    const heroPath=printableEventHeroPath(settings);
     ensureEventTables(event.id);
     const tables=db.prepare("SELECT name FROM event_tables WHERE event_id=? ORDER BY order_index,id")
       .all(event.id).map(row=>row.name);
@@ -5761,7 +6528,7 @@ app.get("/api/admin/qr-set.pdf",authRequired,eventAllowed,featureRequired("qrCar
         if(index>0)doc.addPage({size,margin:0});
         const table=list[index];
         const url=albumUrl(event,table==="QR general"?"":table);
-        const qr=await QRCode.toBuffer(url,{width:1200,margin:4,errorCorrectionLevel:"H"});
+        const qr=await QRCode.toBuffer(url,qrRasterOptions(settings,{width:1200,margin:4}));
         drawQrCard(doc,{settings,table,families:qrFamilies(event.id,table==="QR general"?"":table),qr,templateId,pageSize:template.format,heroPath});
       }
     });

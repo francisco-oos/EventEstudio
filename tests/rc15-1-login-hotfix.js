@@ -2,7 +2,7 @@ const assert=require('node:assert/strict');
 const fs=require('node:fs');
 const pkg=require('../package.json');
 const admin=fs.readFileSync(require('node:path').join(__dirname,'../public/admin.js'),'utf8');
-assert.match(pkg.version,/^6\.14\.2-rc\.\d+(?:\.\d+)?$/);
+assert.match(pkg.version,/^6\.(?:14\.2|15\.0|16\.0)-rc\.\d+(?:\.\d+)?$/);
 assert.match(admin,/staticI18nObserver\.disconnect\(\)/,'El traductor debe desconectar el observer mientras modifica el DOM.');
 assert.match(admin,/if\(translated!==current\)option\.textContent=translated/,'Los option no deben reescribirse si el texto no cambió.');
 assert.match(admin,/staticI18nObserver\.observe\(document\.body,STATIC_I18N_OBSERVER_OPTIONS\)/,'El observer debe reactivarse tras traducir.');

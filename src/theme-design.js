@@ -63,19 +63,58 @@ function readableNeutral(background,{minimum=4.5,preferMuted=false}={}){
   return candidates.find(candidate=>contrastRatio(candidate,background)>=minimum)||"#1f1f1f";
 }
 
+function accessibleAcrossSurfaces(foreground,surfaces,{minimum=4.5,preferMuted=false}={}){
+  const original=normalizeHex(foreground)||(preferMuted?"#5f5b56":"#1f1f1f");
+  const backgrounds=surfaces.map(normalizeHex).filter(Boolean);
+  if(backgrounds.length&&backgrounds.every(background=>contrastRatio(original,background)>=minimum))return original;
+  const candidates=[];
+  for(const target of ["#000000","#ffffff"]){
+    for(let step=1;step<=24;step++){
+      const amount=step/24,candidate=blendHex(original,target,amount);
+      if(backgrounds.every(background=>contrastRatio(candidate,background)>=minimum)){
+        candidates.push({candidate,amount});
+        break;
+      }
+    }
+  }
+  candidates.sort((left,right)=>left.amount-right.amount);
+  if(candidates[0])return candidates[0].candidate;
+  const neutralCandidates=preferMuted
+    ?["#5f5b56","#4f4b47","#3f3d39","#2c2b29","#ffffff"]
+    :["#242321","#171717","#ffffff"];
+  return neutralCandidates.find(candidate=>backgrounds.every(background=>contrastRatio(candidate,background)>=minimum))
+    ||readableNeutral(backgrounds[0]||"#ffffff",{minimum,preferMuted});
+}
+
 function ensureAccessiblePalette(input){
   const palette={...input};
   const paper=normalizeHex(palette.paper)||"#ffffff";
   const bg=normalizeHex(palette.bg)||paper;
+  const surfaces=[paper,bg];
   const ink=normalizeHex(palette.ink)||readableNeutral(paper);
   const muted=normalizeHex(palette.muted)||ink;
-  palette.ink=contrastRatio(ink,paper)>=4.5?ink:readableNeutral(paper);
-  palette.muted=contrastRatio(muted,paper)>=4.5?muted:readableNeutral(paper,{preferMuted:true});
   const accent=normalizeHex(palette.accent)||"#5f625e";
+  const gold=normalizeHex(palette.gold)||"#a28d68";
+  palette.bg=bg;
+  palette.paper=paper;
+  palette.ink=accessibleAcrossSurfaces(ink,surfaces,{minimum:4.5});
+  palette.muted=accessibleAcrossSurfaces(muted,surfaces,{minimum:4.5,preferMuted:true});
+  palette.headingColor=accessibleAcrossSurfaces(normalizeHex(palette.headingColor)||palette.ink,surfaces,{minimum:4.5});
+  palette.bodyColor=accessibleAcrossSurfaces(normalizeHex(palette.bodyColor)||palette.muted,surfaces,{minimum:4.5,preferMuted:true});
   palette.accent=accent;
-  palette.accentText=accessibleColorVariant(accent,paper,{minimum:4.5});
-  palette.accentContrast=contrastRatio("#ffffff",accent)>=4.5?"#ffffff":readableNeutral(accent);
+  palette.accentText=accessibleAcrossSurfaces(accent,surfaces,{minimum:4.5});
+  palette.gold=gold;
+  palette.goldText=accessibleAcrossSurfaces(gold,surfaces,{minimum:4.5});
+  palette.paperContrast=contrastRatio(palette.ink,paper)>=4.5?palette.ink:readableNeutral(paper);
   palette.bgContrast=contrastRatio(palette.ink,bg)>=4.5?palette.ink:readableNeutral(bg);
+  palette.accentContrast=contrastRatio("#ffffff",accent)>=4.5?"#ffffff":readableNeutral(accent);
+  palette.goldContrast=contrastRatio("#ffffff",gold)>=4.5?"#ffffff":readableNeutral(gold);
+  Object.assign(palette,{
+    background:bg,textPrimary:palette.ink,textSecondary:palette.bodyColor,textMuted:palette.muted,
+    accentSecondary:normalizeHex(palette["accent-dark"])||gold,textOnAccent:palette.accentContrast,
+    textOnPaper:palette.paperContrast,textOnBackground:palette.bgContrast,highlight:gold,
+    linkColor:palette.accentText,ctaBackground:accent,ctaText:palette.accentContrast,borderColor:normalizeHex(palette.line)||"#d8d2ca"
+  });
   return palette;
 }
 
@@ -143,5 +182,6 @@ module.exports={
   printFamilyFor,
   contrastRatio,
   accessibleColorVariant,
+  accessibleAcrossSurfaces,
   ensureAccessiblePalette
 };

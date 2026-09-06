@@ -158,12 +158,87 @@ function storageDatabasePath(){
   return path.join(dataDir,"wedding.db");
 }
 
-function inspectDatabaseState(databasePath=storageDatabasePath()){
+function databaseSidecarPaths(databasePath){
+  return [`${databasePath}-wal`,`${databasePath}-shm`,`${databasePath}-journal`]
+    .filter(candidate=>fs.existsSync(candidate));
+}
+
+function localBackupRoot(databasePath){
+  if(process.env.BACKUPS_DIR)return path.resolve(process.env.BACKUPS_DIR);
+  return path.join(path.dirname(path.dirname(databasePath)),"backups");
+}
+
+function verifyStandaloneDatabase(databasePath,Database){
+  const before=fs.statSync(databasePath);
+  const tempDir=fs.mkdtempSync(path.join(os.tmpdir(),"eventstudio-db-check-"));
+  const copyPath=path.join(tempDir,"wedding.db");
+  let copy;
+  try{
+    fs.copyFileSync(databasePath,copyPath);
+    const after=fs.statSync(databasePath);
+    if(before.size!==after.size||before.mtimeMs!==after.mtimeMs){
+      throw new Error("La base cambió durante la verificación; cierra cualquier otra instancia de EventStudio y vuelve a intentar.");
+    }
+    /* La copia temporal se abre con escritura permitida únicamente para que SQLite
+       pueda crear sus archivos internos WAL/SHM en el directorio temporal. Nunca se
+       modifica el archivo original durante esta comprobación. */
+    copy=new Database(copyPath,{fileMustExist:true});
+    const tables=new Set(copy.prepare("SELECT name FROM sqlite_master WHERE type='table'").all().map(row=>row.name));
+    if(!tables.has("users")||!tables.has("events"))return false;
+    return copy.pragma("quick_check",{simple:true})==="ok";
+  }finally{
+    try{copy?.close();}catch{}
+    try{fs.rmSync(tempDir,{recursive:true,force:true});}catch{}
+  }
+}
+
+function quarantineDatabaseSidecars(databasePath,sidecars){
+  const stamp=new Date().toISOString().replace(/[:.]/g,"-");
+  const quarantineDir=path.join(localBackupRoot(databasePath),"local-sidecar-quarantine",stamp);
+  fs.mkdirSync(quarantineDir,{recursive:true});
+  const moved=[];
+  try{
+    for(const sidecar of sidecars){
+      const destination=path.join(quarantineDir,path.basename(sidecar));
+      fs.renameSync(sidecar,destination);
+      moved.push({source:sidecar,destination});
+    }
+  }catch(error){
+    for(const item of moved.reverse()){
+      try{fs.renameSync(item.destination,item.source);}catch{}
+    }
+    throw new Error(
+      `No se pudieron aislar los archivos auxiliares SQLite. `+
+      `Cierra cualquier otra instancia de EventStudio y vuelve a intentar: ${error.message}`
+    );
+  }
+  return quarantineDir;
+}
+
+function integrityFailure(error){
+  return /quick_check|database disk image is malformed|database.*corrupt|malformed/i.test(String(error?.message||error||""));
+}
+
+function tryRecoverLocalSidecarCollision(databasePath,error,Database){
+  if(!integrityFailure(error))return null;
+  const sidecars=databaseSidecarPaths(databasePath);
+  if(!sidecars.length)return null;
+  if(!verifyStandaloneDatabase(databasePath,Database))return null;
+  const quarantineDir=quarantineDatabaseSidecars(databasePath,sidecars);
+  console.warn("\nSe detectaron archivos auxiliares SQLite incompatibles con la base principal.");
+  console.warn(`La base principal pasó quick_check de forma aislada. Se conservaron los sidecars en: ${quarantineDir}`);
+  console.warn("EventStudio reintentará el arranque usando la base principal verificada.\n");
+  return {quarantineDir,sidecars};
+}
+
+function inspectDatabaseState(databasePath=storageDatabasePath(),options={}){
   if(!fs.existsSync(databasePath)){
     return {state:"missing",databasePath,needsDemo:true,users:0,events:0};
   }
-  const Database=require("better-sqlite3");
+  const Database=options.DatabaseCtor||require("better-sqlite3");
+  const allowSidecarRecovery=options.allowSidecarRecovery!==false;
   let database;
+  let failure=null;
   try{
     database=new Database(databasePath,{readonly:true,fileMustExist:true});
     const tables=new Set(database.prepare("SELECT name FROM sqlite_master WHERE type='table'").all().map(row=>row.name));
@@ -184,10 +259,21 @@ function inspectDatabaseState(databasePath=storageDatabasePath()){
       partial:(users===0)!==(events===0)
     };
   }catch(error){
-    throw new Error(`No se usará ni resembrará la base ${databasePath}: ${error.message}`);
+    failure=error;
   }finally{
     try{database?.close();}catch{}
   }
+  if(allowSidecarRecovery){
+    try{
+      const recovery=tryRecoverLocalSidecarCollision(databasePath,failure,Database);
+      if(recovery){
+        return inspectDatabaseState(databasePath,{DatabaseCtor:Database,allowSidecarRecovery:false});
+      }
+    }catch(recoveryError){
+      throw new Error(`No se usará ni resembrará la base ${databasePath}: ${recoveryError.message}`);
+    }
+  }
+  throw new Error(`No se usará ni resembrará la base ${databasePath}: ${failure.message}`);
 }
 
 function databaseNeedsDemo(databasePath=storageDatabasePath()){
@@ -428,6 +514,10 @@ module.exports={
   resolvePort,
   localUrls,
   inspectDatabaseState,
+  databaseSidecarPaths,
+  verifyStandaloneDatabase,
+  quarantineDatabaseSidecars,
+  tryRecoverLocalSidecarCollision,
   databaseNeedsDemo,
   npmInvocation,
   requestRuntimeAsset,

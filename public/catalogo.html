@@ -11,7 +11,7 @@
   <meta name="twitter:title" content="Diseña, prueba y organiza tu evento · EventStudio">
   <meta name="twitter:description" content="Plantillas, RSVP, fotografías, QR, mesas y experiencias en una sola plataforma para eventos.">
   <title>Plantillas y paquetes · EventStudio</title>
-  <link rel="stylesheet" href="/styles.css?v=6.14.2-rc.30">
+  <link rel="stylesheet" href="/styles.css?v=6.16.0-rc.41">
 </head>
 <body class="catalog-page">
   <header class="catalog-nav">
@@ -27,46 +27,57 @@
   <main>
     <section class="catalog-hero">
       <div>
-        <p class="eyebrow">Invitaciones que también organizan</p>
-        <h1>Tu temática convertida en una invitación que cobra vida.</h1>
-        <p>Empieza con un enlace animado, fotos, datos y música desde $199 MXN. Agrega RSVP, invitados, programa, álbum o mesas únicamente cuando los necesites.</p>
+        <p class="eyebrow">Diseña primero · decide servicios después</p>
+        <h1>Una invitación única sin empezar desde cero.</h1>
+        <p>Parte de un diseño profesional, personaliza colores, tipografías, composición y detalles visuales, y activa únicamente los servicios que tu evento realmente necesite.</p>
         <div class="catalog-hero-actions">
-          <a id="heroTrialCta" class="primary-btn" href="/sandbox.html">Crea tu diseño ahora</a>
-          <a class="secondary-btn" href="/muestra.html?theme=paw-parade&event=kids-party">Ver una muestra</a>
+          <a id="heroTrialCta" class="primary-btn" href="/sandbox.html">Diseñar mi invitación</a>
+          <a class="secondary-btn" href="#plantillas">Explorar diseños</a>
+        </div>
+        <div class="catalog-value-pills" aria-label="Cómo funciona EventStudio">
+          <span>Diseño editable</span><span>Servicios independientes</span><span>Una identidad en todos los formatos</span>
         </div>
         <p id="registrationNotice" class="catalog-notice hidden"></p>
       </div>
-      <div class="catalog-hero-cards" aria-label="Ejemplos de celebraciones">
-        <article class="hero-sample theme-cinematic-vows"><span>Boda</span><strong>Nuestra historia</strong><small>Una noche para recordar</small></article>
-        <article class="hero-sample theme-welcome-clouds"><span>Baby shower</span><strong>Una dulce espera</strong><small>Bienvenida con amor</small></article>
-        <article class="hero-sample theme-festive-confetti"><span>Cumpleaños</span><strong>¡Celebremos!</strong><small>Color, música y alegría</small></article>
+      <div class="catalog-hero-studio" aria-label="Vista interactiva del constructor">
+        <div class="catalog-live-card">
+          <div class="catalog-live-toolbar"><span>Vista previa</span><button id="heroRecipeNext" type="button" aria-label="Mostrar otro diseño">Siguiente diseño</button></div>
+          <div id="heroRecipePreview" class="catalog-live-preview" aria-live="polite"></div>
+          <div class="catalog-live-meta"><strong id="heroRecipeName">Cargando diseño…</strong><small id="heroRecipeMeta">Diseño editable</small></div>
+        </div>
+        <aside class="catalog-seal-demo" aria-label="Demostración de sello de lacre">
+          <div id="landingSealPreview" class="catalog-seal-preview"></div>
+          <label>Color del lacre<input id="landingSealColor" type="color" value="#7b4b56"></label>
+          <label>Iniciales<input id="landingSealInitials" type="text" maxlength="3" value="ES" autocomplete="off"></label>
+          <small>El mismo lenguaje visual puede propagarse a sobre, QR y papelería.</small>
+        </aside>
       </div>
     </section>
 
     <section class="catalog-proof" aria-label="Ventajas principales">
-      <span>✓ <strong id="catalogThemeCount">—</strong> diseños estructurales</span>
+      <span>✓ <strong id="catalogThemeCount">—</strong> diseños editables</span>
       <span>✓ <strong id="catalogEventCount">—</strong> tipos de celebración</span>
-      <span>✓ Sin editor complicado</span>
+      <span>✓ Personaliza sin romper el diseño</span>
       <span>✓ Español · English · Português</span>
     </section>
 
     <section class="catalog-section express-product-section">
       <div class="catalog-section-heading">
-        <div><p class="eyebrow">Producto mínimo</p><h2>Temática Express: sólo lo indispensable</h2></div>
-        <p>El cliente entrega contexto, fotografías y música. EventStudio aplica una estructura segura y adaptable; no necesita editar cada pantalla ni esperar una generación de IA.</p>
+        <div><p class="eyebrow">Empieza simple</p><h2>Usa un diseño listo o hazlo tuyo</h2></div>
+        <p>Cada muestra es un diseño construido con los mismos elementos y componentes del editor. Puedes conservarla tal cual o modificarla sin crear otra plantilla estática.</p>
       </div>
       <div class="express-flow" aria-label="Cómo funciona Temática Express">
-        <article><span>1</span><strong>Describe</strong><p>Protagonista, ocasión, temática, tono y datos.</p></article>
-        <article><span>2</span><strong>Selecciona</strong><p>Una estructura visual, fotos y música propia o enlace.</p></article>
-        <article><span>3</span><strong>Comparte</strong><p>Un enlace animado listo para teléfono y computadora.</p></article>
+        <article><span>1</span><strong>Elige</strong><p>Parte de un diseño recomendado para tu celebración.</p></article>
+        <article><span>2</span><strong>Personaliza</strong><p>Colores, fuentes, elementos, composición, texturas y movimiento.</p></article>
+        <article><span>3</span><strong>Activa</strong><p>Publica y agrega RSVP, galería, mesas u otros servicios cuando los necesites.</p></article>
       </div>
-      <p class="express-note">RSVP no es obligatorio en Express. El propietario puede habilitarlo después como complemento o promoción sin crear otra invitación.</p>
+      <p class="express-note">Tu diseño no depende del paquete. Si activas un servicio después, EventStudio puede mostrarlo usando la configuración visual que ya habías preparado.</p>
     </section>
 
     <section id="plantillas" class="catalog-section">
       <div class="catalog-section-heading">
-        <div><p class="eyebrow">Biblioteca visual</p><h2>Encuentra el diseño por celebración y estilo</h2></div>
-        <p>La plantilla cambia la presentación; tus datos, invitados y confirmaciones permanecen intactos.</p>
+        <div><p class="eyebrow">Biblioteca de diseños</p><h2>Diseños profesionales que siguen siendo tuyos</h2></div>
+        <p>Cada diseño es una combinación editable de elementos, componentes, color, tipografía y movimiento. Tus datos y servicios permanecen independientes.</p>
       </div>
       <div id="catalogEventChips" class="catalog-event-chips" aria-label="Filtrar por celebración"></div>
       <div class="catalog-filters">
@@ -78,16 +89,16 @@
 
     <section id="paquetes" class="catalog-section catalog-plans-section">
       <div class="catalog-section-heading">
-        <div><p class="eyebrow">Precios claros</p><h2>Empieza con lo indispensable</h2></div>
-        <p>Premium muestra todo lo que el propietario mantenga disponible. Los otros planes pueden crecer con complementos.</p>
+        <div><p class="eyebrow">Servicios claros</p><h2>Paga por capacidades, no por mover una flor</h2></div>
+        <p>Diseña la experiencia completa y activa las funciones operativas que necesites. Los paquetes agrupan servicios para ofrecer mejor valor.</p>
       </div>
       <div id="catalogPlanGrid" class="catalog-plan-grid"></div>
     </section>
 
     <section id="complementos" class="catalog-section addon-builder-section">
       <div class="catalog-section-heading">
-        <div><p class="eyebrow">Paquete a la medida</p><h2>Arma una combinación sin pagar por módulos que no usarás</h2></div>
-        <p>El cálculo es informativo. La activación la confirma EventStudio desde el panel del propietario; no hay cargos automáticos.</p>
+        <div><p class="eyebrow">Paquete a la medida</p><h2>Selecciona servicios y deja que EventStudio compare</h2></div>
+        <p>Combina únicamente lo que necesitas. Si un paquete incluye tus selecciones por una diferencia conveniente, el sistema puede recomendarlo sin alterar tu diseño.</p>
       </div>
       <div class="addon-builder">
         <div>
@@ -111,6 +122,7 @@
   </main>
 
   <footer class="catalog-footer"><strong>EventStudio</strong><span>Invitaciones, confirmaciones y operación del evento en un solo lugar.</span><a href="/admin.html">Acceso de clientes</a></footer>
-  <script src="/catalogo.js?v=6.14.2-rc.30"></script>
+  <script src="/seal-renderer.js?v=6.16.0-rc.41"></script>
+  <script src="/catalogo.js?v=6.16.0-rc.41"></script>
 </body>
 </html>

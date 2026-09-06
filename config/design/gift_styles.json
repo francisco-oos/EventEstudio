@@ -1,0 +1,75 @@
+[
+  {
+    "id": "gift-luxury-cards",
+    "label": "Tarjetas de Lujo",
+    "primitive": "info-card",
+    "moods": [
+      "luxury"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "gift-envelope-rain",
+    "label": "Lluvia de Sobres",
+    "primitive": "info-card",
+    "moods": [
+      "classic"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "gift-minimal-text",
+    "label": "Texto Minimalista",
+    "primitive": "minimal-text",
+    "moods": [
+      "minimal"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "gift-botanical-list",
+    "label": "Lista Botánica",
+    "primitive": "info-card",
+    "moods": [
+      "botanical"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "gift-registry-badges",
+    "label": "Insignias de Registro",
+    "primitive": "badge-row",
+    "moods": [
+      "modern"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "gift-wine-label",
+    "label": "Etiqueta de Vino",
+    "primitive": "info-card",
+    "moods": [
+      "wine",
+      "luxury"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "gift-passport-note",
+    "label": "Nota de Pasaporte",
+    "primitive": "minimal-text",
+    "moods": [
+      "travel"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "gift-editorial-block",
+    "label": "Bloque Editorial",
+    "primitive": "minimal-text",
+    "moods": [
+      "editorial"
+    ],
+    "printSupport": true
+  }
+]

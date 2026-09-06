@@ -6,7 +6,7 @@ const root=path.join(__dirname,"..");
 const pkg=require(path.join(root,"package.json"));
 const read=file=>fs.readFileSync(path.join(root,file),"utf8");
 
-assert.match(pkg.version,/^6\.14\.2-rc\.(?:1[7-9]|[2-9]\d+)$/);
+assert.match(pkg.version,/^6\.(?:14\.2|15\.0|16\.0)-rc\.(?:1[7-9]|[2-9]\d+)$/);
 for(const file of ["public/admin.html","public/index.html","public/album.html","public/catalogo.html","public/muestra.html","public/showcase.html","public/sandbox.html"]){
   assert.ok(read(file).includes(`styles.css?v=${pkg.version}`),`${file} debe invalidar caché CSS.`);
 }

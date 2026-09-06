@@ -1,0 +1,31 @@
+
+> eventstudio@6.16.0-rc.39 test
+> node tests/project-integrity.js && node tests/source-references.js && node tests/mobile-ui.js && node tests/local-network.js && node tests/rc14-regressions.js && node tests/data-safety.js && node tests/security-database.js && node tests/commerce-migration.js && npm run test:production-migration && node tests/origin-policy.js && node tests/security-headers.js && node tests/commerce-journeys.js && npm run test:functional-parity && node tests/smoke.js && node tests/restore.js && npm run test:rc15 && npm run test:rc15.1 && npm run test:rc17 && npm run test:rc19 && npm run test:animations && npm run test:rc20 && npm run test:rc21 && npm run test:rc22 && npm run test:rc23 && npm run test:rc24 && npm run test:rc25 && npm run test:rc27 && npm run test:rc28 && npm run test:rc29 && npm run test:rc30 && npm run test:rc31 && npm run test:rc32 && npm run test:rc33 && npm run test:rc34 && npm run test:rc35 && npm run test:rc36 && npm run test:rc38 && npm run test:rc39 && npm run test:v5
+
+✓ Nombre, textos multi-evento, lanzadores y configuración validados
+✓ Referencias DOM, recursos estáticos y funciones declaradas validados
+✓ Panel móvil, bloqueo del menú, tablas, tipografía y sincronización de apertura validados
+✓ Detección de red local y acceso móvil validados
+✓ Regresiones específicas 6.14.2-rc.14 verificadas
+node:internal/modules/cjs/loader:1404
+  throw err;
+  ^
+
+Error: Cannot find module 'better-sqlite3'
+Require stack:
+- /mnt/data/eventstudio_work/EventEstudio/tests/data-safety.js
+    at Function._resolveFilename (node:internal/modules/cjs/loader:1401:15)
+    at defaultResolveImpl (node:internal/modules/cjs/loader:1057:19)
+    at resolveForCJSWithHooks (node:internal/modules/cjs/loader:1062:22)
+    at Function._load (node:internal/modules/cjs/loader:1211:37)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)
+    at Module.require (node:internal/modules/cjs/loader:1487:12)
+    at require (node:internal/modules/helpers:135:16)
+    at Object.<anonymous> (/mnt/data/eventstudio_work/EventEstudio/tests/data-safety.js:9:16)
+    at Module._compile (node:internal/modules/cjs/loader:1730:14) {
+  code: 'MODULE_NOT_FOUND',
+  requireStack: [ '/mnt/data/eventstudio_work/EventEstudio/tests/data-safety.js' ]
+}
+
+Node.js v22.16.0

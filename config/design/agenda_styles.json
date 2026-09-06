@@ -1,0 +1,95 @@
+[
+  {
+    "id": "agenda-vertical-luxury",
+    "label": "Vertical con Horas Doradas",
+    "primitive": "vertical-list",
+    "moods": [
+      "luxury",
+      "classic"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "agenda-horizontal-timeline",
+    "label": "Línea de Tiempo Horizontal",
+    "primitive": "horizontal-timeline",
+    "moods": [
+      "modern"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "agenda-ticket-rows",
+    "label": "Filas Tipo Boleto",
+    "primitive": "ticket-rows",
+    "moods": [
+      "travel"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "agenda-roman-list",
+    "label": "Lista Numerales Romanos",
+    "primitive": "vertical-list",
+    "moods": [
+      "editorial",
+      "wine"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "agenda-icons-grid",
+    "label": "Cuadrícula con Iconos",
+    "primitive": "icons-grid",
+    "moods": [
+      "playful",
+      "modern"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "agenda-editorial-columns",
+    "label": "Columnas Editoriales",
+    "primitive": "icons-grid",
+    "moods": [
+      "editorial"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "agenda-dotted-schedule",
+    "label": "Cronograma Punteado",
+    "primitive": "dotted-schedule",
+    "moods": [
+      "minimal"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "agenda-program-booklet",
+    "label": "Programa de Folleto",
+    "primitive": "ticket-rows",
+    "moods": [
+      "classic"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "agenda-celestial-orbit",
+    "label": "Órbita Celestial",
+    "primitive": "dotted-schedule",
+    "moods": [
+      "celestial"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "agenda-minimal-stack",
+    "label": "Pila Minimalista",
+    "primitive": "vertical-list",
+    "moods": [
+      "minimal"
+    ],
+    "printSupport": true
+  }
+]

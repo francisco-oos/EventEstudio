@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 600" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+  <g fill="none" stroke-linejoin="round">
+    <!-- Marco de diamante doble -->
+    <polygon points="300,50 550,300 300,550 50,300" stroke="var(--es-color-accent, #D4AF37)" stroke-width="4" />
+    <polygon points="300,80 520,300 300,520 80,300" stroke="var(--es-color-accent, #D4AF37)" stroke-width="1.5" />
+    
+    <!-- Rosa Inferior Izquierda -->
+    <g transform="translate(100, 400)">
+      <path d="M50,50 C20,20 10,60 30,80 C60,110 90,80 70,50 Z" fill="var(--es-color-secondary, #2E8B57)" opacity="0.8" />
+      <path d="M40,60 C70,90 90,40 60,30 C30,20 20,70 40,60 Z" fill="var(--es-color-secondary, #2E8B57)" opacity="0.6" />
+      <circle cx="70" cy="70" r="30" fill="var(--es-color-primary, #FFB6C1)" stroke="var(--es-color-primary, #FF69B4)" stroke-width="2"/>
+      <path d="M60,60 Q70,50 80,60 Q90,70 80,80 Q70,90 60,80 Q50,70 60,60 Z" fill="var(--es-color-primary, #FF69B4)" opacity="0.5"/>
+      <path d="M65,65 Q70,60 75,65 Q80,70 75,75 Q70,80 65,75 Q60,70 65,65 Z" fill="#FFF" opacity="0.4"/>
+    </g>
+
+    <!-- Rosa Superior Derecha -->
+    <g transform="translate(400, 100) scale(0.8)">
+      <path d="M50,50 C20,20 10,60 30,80 C60,110 90,80 70,50 Z" fill="var(--es-color-secondary, #2E8B57)" opacity="0.8" />
+      <circle cx="70" cy="70" r="30" fill="var(--es-color-primary, #FFB6C1)" stroke="var(--es-color-primary, #FF69B4)" stroke-width="2"/>
+      <path d="M60,60 Q70,50 80,60 Q90,70 80,80 Q70,90 60,80 Q50,70 60,60 Z" fill="var(--es-color-primary, #FF69B4)" opacity="0.5"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,33 @@
+{
+  "rows": [
+    {
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "heroTop": -3264.03125,
+      "ctaVisible": true,
+      "recipeImage": true,
+      "sealSvg": true,
+      "remoteHeroImages": 0,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "heroTop": -1277.03125,
+      "ctaVisible": true,
+      "recipeImage": true,
+      "sealSvg": true,
+      "remoteHeroImages": 0,
+      "errors": [],
+      "ok": true
+    }
+  ],
+  "failures": []
+}

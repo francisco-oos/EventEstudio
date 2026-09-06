@@ -1,0 +1,56 @@
+[
+  {
+    "id": "music-playlist-card",
+    "label": "Tarjeta de Playlist",
+    "primitive": "info-card",
+    "moods": [
+      "modern"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "music-vinyl-badge",
+    "label": "Insignia de Vinil",
+    "primitive": "badge-row",
+    "moods": [
+      "vintage"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "music-note-divider",
+    "label": "Divisor de Notas",
+    "primitive": "minimal-text",
+    "moods": [
+      "classic"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "music-minimal-link",
+    "label": "Enlace Minimalista",
+    "primitive": "minimal-cta",
+    "moods": [
+      "minimal"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "music-editorial-credits",
+    "label": "Créditos Editoriales",
+    "primitive": "minimal-text",
+    "moods": [
+      "editorial"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "music-celebration-dj",
+    "label": "Nota de DJ Festiva",
+    "primitive": "badge-row",
+    "moods": [
+      "playful"
+    ],
+    "printSupport": false
+  }
+]

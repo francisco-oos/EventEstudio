@@ -1,0 +1,22 @@
+EVENTSTUDIO 6.16.0-rc.41 — INICIO DE QA
+
+1) Base: ZIP/BD recibido el 04/09/2026 23:50 aprox.; NO ejecutar seed sobre esa BD.
+2) Sobre personalizable: Recipe conserva geometría de sobre, pero color/material/liner/textura derivan de cada plantilla.
+3) Cambios de Stationery se vacían automáticamente antes de Preview/Apply; Guardar ahora ya no es requisito.
+4) El constructor general parte del diseño ACTIVE cuando no hay borrador pendiente.
+5) Portada: se reutiliza la ya cargada en el evento, con drag y encuadre separado Móvil/Escritorio.
+6) Esta copia tenía la referencia de portada con un nombre de upload antiguo; RC41 encuentra el único JPG equivalente por nombre original sin modificar la BD.
+7) Assets: 31 aprobados; ahora tienen aspect ratio público para que las máscaras no desaparezcan al aplicar.
+8) Cache busting: 6.16.0-rc.41.
+9) `npm ci` no pudo completar en este runtime por timeout; E2E Express sigue BLOCKED_ENV.
+
+GATE EN TU PC / FUTURO ALEYON EXECUTION LAB:
+  npm ci
+  npm run test:preproduction
+  npm audit --audit-level=moderate
+
+Luego completar:
+  docs/checklists/QA_FISICO_FINAL_6.16.0-rc.41.md
+
+Fuente de verdad:
+  docs/indexes/INDEX_DOCUMENTACION_6.16.0-rc.41.md

@@ -1,0 +1,315 @@
+{
+  "version": "6.16.0-rc.39",
+  "generatedAt": "2026-09-04T23:25:50.045055+00:00",
+  "status": "QA_CANDIDATE_ADVANCED",
+  "database": {
+    "version": "6.16.0-rc.39",
+    "sha256": "db17a6ea42cc7346b5b823e4c71e0bda80ff49129957a1cf88de0304e2a6c258",
+    "quick_check": "ok",
+    "user_version": 614210,
+    "tables": 43,
+    "users": 4,
+    "events": 2,
+    "guests": 26,
+    "photos": 0,
+    "subscriptions": 5
+  },
+  "executed": {
+    "jsSyntax": {
+      "status": "PASS",
+      "files": 99
+    },
+    "projectIntegrity": {
+      "status": "PASS"
+    },
+    "sourceReferences": {
+      "status": "PASS"
+    },
+    "designCoherence": {
+      "status": "PASS",
+      "recipes": 65,
+      "presentationCombinations": 175500,
+      "roleProfileProjections": 1300
+    },
+    "controlWiring": {
+      "status": "PASS",
+      "controls": 139
+    },
+    "rc38Hardening": {
+      "status": "PASS",
+      "recipes": 65,
+      "openings": 14
+    },
+    "rc39Static": {
+      "status": "PASS",
+      "recipes": 65
+    },
+    "rc39Visual": {
+      "status": "PASS",
+      "failures": 0,
+      "cases": {
+        "countdownContrast": {
+          "pass": true,
+          "numberRatio": 15.46,
+          "ctaRatio": 15.46,
+          "number": {
+            "color": "rgb(36, 35, 33)",
+            "bg": "rgb(255, 253, 249)"
+          },
+          "cta": {
+            "color": "rgb(36, 35, 33)",
+            "bg": "color(srgb 1 0.992157 0.976471 / 0.96)",
+            "border": "color(srgb 0.607843 0.358118 0.380392)"
+          }
+        },
+        "liveInspectorTitleSize": {
+          "pass": true,
+          "smallPx": 19.84,
+          "largePx": 39.68,
+          "ratio": 2.0
+        },
+        "hiddenServiceCollapses": {
+          "pass": true,
+          "computed": {
+            "display": "none",
+            "height": 0
+          },
+          "gapPx": 0
+        },
+        "publicTitleSizeParity": {
+          "pass": true,
+          "smallPx": 19.84,
+          "largePx": 39.68,
+          "ratio": 2.0
+        },
+        "narrow320": {
+          "pass": true,
+          "innerWidth": 320,
+          "scrollWidth": 320,
+          "boxes": [
+            {
+              "left": 12.796875,
+              "right": 156.390625
+            },
+            {
+              "left": 163.578125,
+              "right": 307.1875
+            },
+            {
+              "left": 12.796875,
+              "right": 156.390625
+            },
+            {
+              "left": 163.578125,
+              "right": 307.1875
+            },
+            {
+              "left": 12.796875,
+              "right": 223.65625
+            }
+          ]
+        },
+        "narrow390": {
+          "pass": true,
+          "innerWidth": 390,
+          "scrollWidth": 390,
+          "boxes": [
+            {
+              "left": 15.59375,
+              "right": 191.390625
+            },
+            {
+              "left": 198.578125,
+              "right": 374.390625
+            },
+            {
+              "left": 15.59375,
+              "right": 191.390625
+            },
+            {
+              "left": 198.578125,
+              "right": 374.390625
+            },
+            {
+              "left": 15.59375,
+              "right": 226.453125
+            }
+          ]
+        }
+      }
+    },
+    "rc39DesignLabCatalog": {
+      "recipes": 65,
+      "cases": 65,
+      "failures": 0,
+      "minHeadingContrast": 11.344705826840887,
+      "minBodyContrast": 4.744593590165697,
+      "maxOverflow": 0
+    },
+    "recipeVisual": {
+      "recipes": 65,
+      "cases": 130,
+      "failures": 0,
+      "maxOverflow": 0,
+      "viewports": [
+        [
+          360,
+          800
+        ],
+        [
+          1440,
+          900
+        ]
+      ]
+    },
+    "readabilityVisual": {
+      "recipes": 65,
+      "cases": 130,
+      "failures": 0,
+      "maxOverflow": 0,
+      "minFontSize": 22,
+      "minPaperContrast": 11.488851533599338,
+      "minBgContrast": 10.8878842531796
+    },
+    "colorParityVisual": {
+      "recipes": 65,
+      "cases": 130,
+      "failures": 0,
+      "minPaperContrast": 11.488851533599338,
+      "minNameContrast": 11.488851533599338,
+      "minAccentContrast": 5.9778776001363045,
+      "maxOverflow": 0
+    },
+    "responsiveFocal": {
+      "status": "PASS",
+      "cases": 9,
+      "failures": 0
+    },
+    "featureMatrix": {
+      "status": "PASS",
+      "patterns": 16,
+      "cases": 32,
+      "failures": 0
+    },
+    "longContent": {
+      "status": "PASS",
+      "layouts": 8,
+      "devices": 8,
+      "cases": 64,
+      "failures": 0
+    },
+    "stationeryVisual": {
+      "cases": 2,
+      "failures": 0,
+      "minFps": 59.99368487527629,
+      "avgFps": 59.998421468113435,
+      "maxP95IntervalMs": 16.700000000000045,
+      "restrictedProfile": {
+        "applyDisabled": true,
+        "status": "Tu perfil puede consultar el diseño, pero no modificar las plantillas de este evento.",
+        "errors": [],
+        "ok": true
+      }
+    },
+    "publicEnvelope": {
+      "cases": 2,
+      "failures": 0,
+      "results": [
+        {
+          "opening": "unified-envelope",
+          "errors": [],
+          "cardName": "Ariana y Francisco",
+          "cta": "Abrir invitación",
+          "vars": {
+            "bg": "#203126",
+            "paper": "#f5f0df",
+            "ink": "#33402f",
+            "muted": "#0d1712",
+            "accent": "#7a3344",
+            "gold": "#b49355",
+            "line": "#0d1712"
+          },
+          "invitationOpen": true,
+          "heroSealCount": 1,
+          "legacySealDisplay": "none",
+          "heroBg": "color(srgb 0.960784 0.941177 0.87451 / 0.9)",
+          "ok": true
+        },
+        {
+          "opening": "gala-curtain",
+          "errors": [],
+          "vars": {
+            "bg": "#eee8db",
+            "paper": "#fffdf8",
+            "ink": "#302d26",
+            "muted": "#766f63",
+            "accent": "#a77c12",
+            "gold": "#c8a551",
+            "line": "#ddd1bb"
+          },
+          "ok": true
+        }
+      ]
+    },
+    "albumVisual": {
+      "rows": [
+        {
+          "viewport": [
+            360,
+            800
+          ],
+          "recipe": "romantic-wine",
+          "layout": "classic",
+          "texture": "linen",
+          "assets": 2,
+          "heading": "Georgia,\"Times New Roman\",serif",
+          "accent": "#571923",
+          "overflow": 0,
+          "title": "Ariana & Francisco",
+          "errors": [],
+          "ok": true
+        },
+        {
+          "viewport": [
+            1440,
+            900
+          ],
+          "recipe": "romantic-wine",
+          "layout": "classic",
+          "texture": "linen",
+          "assets": 2,
+          "heading": "Georgia,\"Times New Roman\",serif",
+          "accent": "#571923",
+          "overflow": 0,
+          "title": "Ariana & Francisco",
+          "errors": [],
+          "ok": true
+        }
+      ],
+      "failures": []
+    }
+  },
+  "blockedEnvironment": {
+    "npmTest": {
+      "status": "BLOCKED_ENV",
+      "reason": "Cannot find module better-sqlite3 because npm dependencies are not installed in this runtime.",
+      "evidence": "RC39_NPM_TEST_BLOCKED.txt"
+    },
+    "serverE2E": [
+      "dynamic auth/roles",
+      "real SQLite server persistence",
+      "multipart photo/audio upload",
+      "payments/Openpay",
+      "WhatsApp",
+      "production migrations",
+      "server stress",
+      "npm audit"
+    ]
+  },
+  "productionGate": [
+    "npm ci",
+    "npm run test:preproduction",
+    "npm audit --audit-level=moderate",
+    "physical QA checklist"
+  ]
+}

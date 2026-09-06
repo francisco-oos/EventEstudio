@@ -21,7 +21,7 @@ function t(key,variables={}){
 function translateKnown(value){return knownPresentation[activeLocale]?.[String(value||'')]||String(value||'');}
 function localeCode(){return localeMeta[activeLocale]?.intl||'es-MX';}
 function slug(){const m=location.pathname.match(/^\/e\/([^/]+)/);return m?decodeURIComponent(m[1]):"";}
-const fontMap={georgia:'Georgia,"Times New Roman",serif',baskerville:'Baskerville,"Palatino Linotype",serif',garamond:'Garamond,"Times New Roman",serif',didot:'Didot,"Bodoni MT",serif',system:'Inter,system-ui,-apple-system,"Segoe UI",sans-serif',humanist:'Trebuchet MS,Segoe UI,sans-serif',classic:'Palatino Linotype,Book Antiqua,serif','great-vibes':'Great Vibes,Georgia,cursive',cormorant:'Cormorant Garamond,Georgia,serif',playfair:'Playfair Display,Georgia,serif',cinzel:'Cinzel,Georgia,serif',lora:'Lora,Georgia,serif',montserrat:'Montserrat,Inter,system-ui,sans-serif'};
+const fontMap={georgia:'Georgia,"Times New Roman",serif',baskerville:'Baskerville,"Palatino Linotype",serif',garamond:'Garamond,"Times New Roman",serif',didot:'Didot,"Bodoni MT",serif',system:'Inter,system-ui,-apple-system,"Segoe UI",sans-serif',humanist:'Trebuchet MS,Segoe UI,sans-serif',classic:'Palatino Linotype,Book Antiqua,serif','great-vibes':'Great Vibes,Georgia,cursive',cormorant:'Cormorant Garamond,Georgia,serif',playfair:'Playfair Display,Georgia,serif',cinzel:'Cinzel,Georgia,serif',lora:'Lora,Georgia,serif',montserrat:'Montserrat,Inter,system-ui,sans-serif','segoe-script':'"Segoe Script","Lucida Handwriting",cursive','lucida-calligraphy':'"Lucida Calligraphy","Segoe Script",cursive','brush-script':'"Brush Script MT","Segoe Script",cursive',bodoni:'"Bodoni MT",Didot,Georgia,serif',century:'"Century Schoolbook",Century,Georgia,serif',candara:'Candara,Calibri,"Segoe UI",sans-serif',bookman:'"Bookman Old Style",Georgia,serif'};
 function titleCaseName(value){
   const minorWords=new Set(['y','e','de','del','la','las','los','familia']);let wordIndex=0;
   return String(value||'').trim().toLocaleLowerCase(localeCode()).split(/([\s-]+)/).map(part=>{
@@ -36,12 +36,50 @@ function presentedName(value){
   if(mode==='title'||mode==='small-caps')return titleCaseName(value);
   return String(value||'');
 }
+function fitSmartEventName(element){
+  if(!element||!element.isConnected)return;
+  element.style.removeProperty('--es-smart-name-size');
+  element.classList.remove('smart-name-single-line','smart-name-multiline');
+  const text=String(element.textContent||'').trim();
+  if(!text)return;
+  const computed=getComputedStyle(element);
+  const baseSize=Math.max(16,parseFloat(computed.fontSize)||48);
+  const parentWidth=Math.max(1,element.parentElement?.clientWidth||element.clientWidth||window.innerWidth);
+  const minSize=Math.max(22,Math.min(34,parentWidth*.075));
+  element.classList.add('smart-name-single-line');
+  const available=Math.max(1,Math.min(parentWidth,element.clientWidth||parentWidth));
+  const needed=Math.max(1,element.scrollWidth);
+  let nextSize=Math.min(baseSize,baseSize*(available/needed)*.965);
+  if(needed<=available)nextSize=baseSize;
+  if(nextSize>=minSize){
+    element.style.setProperty('--es-smart-name-size',`${nextSize.toFixed(2)}px`);
+    return;
+  }
+  element.classList.remove('smart-name-single-line');
+  element.classList.add('smart-name-multiline');
+  element.style.setProperty('--es-smart-name-size',`${Math.max(minSize,baseSize*.58).toFixed(2)}px`);
+  requestAnimationFrame(()=>{
+    if(!element.isConnected)return;
+    const longest=[...text.split(/\s+/)].sort((a,b)=>b.length-a.length)[0]||text;
+    if(longest.length<11)return;
+    const maxWidth=Math.max(1,element.clientWidth||available);
+    if(element.scrollWidth<=maxWidth)return;
+    const current=Math.max(16,parseFloat(getComputedStyle(element).fontSize)||minSize);
+    element.style.setProperty('--es-smart-name-size',`${Math.max(19,current*.88).toFixed(2)}px`);
+  });
+}
+function scheduleSmartNameFit(){
+  requestAnimationFrame(()=>document.querySelectorAll('.smart-event-name').forEach(fitSmartEventName));
+}
 function applyPresentedName(element,value){
   if(!element)return;const mode=settings?.typography?.nameCase||'title';const text=presentedName(value);
   element.textContent=text;element.classList.add('smart-event-name');
   element.classList.toggle('name-case-uppercase',mode==='uppercase');element.classList.toggle('name-case-small-caps',mode==='small-caps');
-  element.classList.toggle('long-name',text.length>28);element.classList.toggle('extra-long-name',text.length>46);
+  element.classList.toggle('long-name',text.length>24);element.classList.toggle('extra-long-name',text.length>40);
+  fitSmartEventName(element);
 }
+let smartNameResizeTimer=0;
+window.addEventListener('resize',()=>{clearTimeout(smartNameResizeTimer);smartNameResizeTimer=setTimeout(scheduleSmartNameFit,90);},{passive:true});
 
 
 function loadSpotifyIframeApi(){
@@ -178,6 +216,11 @@ function localizeStaticUi(){
   if(options?.[1])options[1].text=t('no');
   if($('rsvpSubmitBtn'))$('rsvpSubmitBtn').textContent=t('saveRsvp');
 }
+function recipeSectionVisible(type){
+  const sections=settings?._designRecipe?.sections;
+  return !Array.isArray(sections)||sections.some(section=>section?.type===type&&section.visible!==false);
+}
+
 function presentation(){
   return {
     heroEyebrow:"Evento especial",
@@ -415,7 +458,7 @@ function setupInvitationOpening(){
     if(opening.classList.contains('is-opening'))return;
     opening.classList.add('is-opening');
     window.clearTimeout(openingAutoOpenTimer);
-    window.setTimeout(()=>{opening._particleScene?.destroy?.();opening._roseScene?.destroy?.();opening._daisyScene?.destroy?.();opening._gardenScene?.destroy?.();opening._originalFlowerScene?.destroy?.();opening.classList.add('hidden');document.body.classList.remove('opening-visible','no-scroll','force-motion-preview');document.body.classList.add('invitation-open');$('invitation')?.setAttribute('tabindex','-1');$('invitation')?.focus?.({preventScroll:true});},delay);
+    window.setTimeout(()=>{opening._particleScene?.destroy?.();opening._roseScene?.destroy?.();opening._daisyScene?.destroy?.();opening._gardenScene?.destroy?.();opening._originalFlowerScene?.destroy?.();opening.classList.add('hidden');document.body.classList.remove('opening-visible','no-scroll','force-motion-preview');document.body.classList.add('invitation-open');window.EventStudioDesignEngine?.activateDeferredHeroMedia?.();const hero=$('hero');if(hero?.dataset?.esDeferredHeroImage){hero.style.backgroundImage=hero.dataset.esDeferredHeroImage;delete hero.dataset.esDeferredHeroImage;}$('invitation')?.setAttribute('tabindex','-1');$('invitation')?.focus?.({preventScroll:true});},delay);
   };
   const startBloom=async({playMusic=true}={})=>{
     const scene=style==='rose-bloom'?opening._roseScene:style==='daisy-bloom'?opening._daisyScene:style==='luminous-garden'?opening._gardenScene:style==='night-flower-original'?opening._originalFlowerScene:null;
@@ -503,7 +546,7 @@ async function load(){
   /* Mantener las variantes de preview al pedir /api/config. RC13 las dejaba
      en la URL de la página, pero no las reenviaba al servidor; por eso una
      plantilla/apertura probada podía mostrar la configuración anterior. */
-  ['previewTheme','previewOpening','previewGallery'].forEach(key=>{
+  ['designMode','previewTheme','previewOpening','previewGallery','previewExperience','previewMotion','previewRosePetal','previewFloralPetal','previewFloralCenter'].forEach(key=>{
     const value=search.get(key);if(value)configQuery.set(key,value);
   });
   const configQueryString=configQuery.toString();
@@ -520,11 +563,12 @@ async function load(){
   const labels=presentation();
 
   document.title=presentedName(settings.couple?.displayName||settings.event?.title||"Invitación");
-  document.body.className=`theme-${settings.themeId||"romantic-wine"}`;
+  document.body.className=settings._designRecipe?"theme-recipe":`theme-${settings.themeId||"romantic-wine"}`;
   const effectivePalette=settings._palette||settings.designKit?.palette||{};
-  ['bg','paper','ink','muted','accent','accentText','gold','line','accentContrast'].forEach(key=>{
+  ['bg','paper','ink','muted','accent','accentText','gold','goldText','line','accentContrast','goldContrast','paperContrast','bgContrast'].forEach(key=>{
     const value=effectivePalette[key];
-    if(/^#[0-9a-f]{6}$/i.test(String(value||'')))document.body.style.setProperty(`--${key==='accentContrast'?'accent-contrast':key==='accentText'?'accent-text':key}`,value);
+    const cssKey={accentContrast:'accent-contrast',accentText:'accent-text',goldText:'gold-text',goldContrast:'gold-contrast',paperContrast:'paper-contrast',bgContrast:'bg-contrast'}[key]||key;
+    if(/^#[0-9a-f]{6}$/i.test(String(value||'')))document.body.style.setProperty(`--${cssKey}`,value);
   });
   document.body.dataset.surfaceTexture=String(settings._surfaceTexture||settings.designKit?.texture||'none');
   setupThemeExperience();
@@ -578,20 +622,49 @@ async function load(){
 
   $('dressTitle').textContent=localizedContent('dressCode.title',settings.dressCode?.title||"");
   $('dressDescription').textContent=localizedContent('dressCode.description',settings.dressCode?.description||"");
-  $('dressGallery').innerHTML=(settings.dressCode?.referenceImages||[])
-    .map(url=>`<img src="${esc(url)}" alt="Referencia de vestimenta">`).join('');
+  const dressVisible=settings.features?.dressCode!==false&&recipeSectionVisible('dress-code');
+  $('dressGallery').innerHTML=dressVisible?(settings.dressCode?.referenceImages||[])
+    .map(url=>`<img src="${esc(url)}" alt="Referencia de vestimenta" loading="lazy" decoding="async">`).join(''):'';
 
   if(settings.features?.gifts===false)$('giftSection')?.classList.add('hidden');
   else renderGift();
-  if(settings.features?.dressCode===false)$('dressSection')?.classList.add('hidden');
+  if(!dressVisible)$('dressSection')?.classList.add('hidden');
   const hasPersonalInvitation=Boolean(new URLSearchParams(location.search).get('i'));
-  if(settings.features?.rsvp===false||settings.rsvp?.enabled===false||!hasPersonalInvitation)$('rsvpSection')?.classList.add('hidden');
-
-  if(settings.media?.heroImage){
-    $('hero').style.backgroundImage=`linear-gradient(rgba(0,0,0,.33),rgba(0,0,0,.33)),url('${settings.media.heroImage}')`;
+  const designPreviewWithoutGuest=Boolean(!hasPersonalInvitation&&settings?._preview?.enabled&&recipeSectionVisible('rsvp'));
+  const rsvpAvailable=settings.features?.rsvp!==false&&settings.rsvp?.enabled!==false;
+  if(!rsvpAvailable||(!hasPersonalInvitation&&!designPreviewWithoutGuest))$('rsvpSection')?.classList.add('hidden');
+  else if(designPreviewWithoutGuest){
+    /* Una vista previa de diseño debe conservar la geometría real del bloque de
+       confirmación aunque no incluya un token de invitado. No habilitamos el
+       formulario: sólo mostramos el estado visual que el diseñador está editando. */
+    $('rsvpSection')?.classList.remove('hidden');
+    $('guestGreeting').textContent=activeLocale==='en'
+      ?'Design preview · the personalized RSVP form appears from a guest link.'
+      :activeLocale==='pt'
+        ?'Prévia de design · o formulário personalizado aparece pelo link do convidado.'
+        :'Vista de diseño · el formulario personalizado aparece desde el enlace del invitado.';
+    $('rsvpForm')?.classList.add('hidden');
+    $('rsvpSection')?.classList.add('design-preview-placeholder');
   }
-  const musicSource=settings.media?.musicSource
-    ||(settings.media?.spotifyUrl?'spotify':settings.media?.music?'upload':'none');
+
+  /* RC40: DesignEngine es la única autoridad de presentación de portada.
+     Evitamos descargar/pintar una foto aquí y volver a sustituirla milisegundos
+     después, lo que podía causar flash, doble trabajo y diferencias con preview. */
+  if(!window.EventStudioDesignEngine){
+    const heroMediaEnabled=recipeSectionVisible('hero')&&settings?._designRecipe?.design?.heroMedia?.enabled!==false;
+    if(heroMediaEnabled&&settings.media?.heroImage){
+      const background=`linear-gradient(rgba(0,0,0,.33),rgba(0,0,0,.33)),url('${String(settings.media.heroImage).replace(/[\'"\\]/g,'')}')`;
+      const hasOpening=String(settings.presentation?.openingStyle||'none')!=='none';
+      if(hasOpening)$('hero').dataset.esDeferredHeroImage=background;
+      else $('hero').style.backgroundImage=background;
+    }else{
+      $('hero')?.style.removeProperty('background-image');
+      if($('hero'))delete $('hero').dataset.esDeferredHeroImage;
+    }
+  }
+  const musicVisible=settings.features?.music!==false&&recipeSectionVisible('music');
+  const musicSource=musicVisible?(settings.media?.musicSource
+    ||(settings.media?.spotifyUrl?'spotify':settings.media?.music?'upload':'none')):'none';
   if(musicSource==='upload'&&settings.media?.music){
     const audio=$('backgroundMusic');
     audio.src=settings.media.music;
@@ -601,9 +674,9 @@ async function load(){
   }else{
     $('musicBtn').classList.add('hidden');
   }
-  if(musicSource==='spotify'&&settings.features?.music!==false)renderSpotify();
+  if(musicSource==='spotify'&&musicVisible)renderSpotify();
 
-  galleryItems=settings.media?.gallery||[];
+  galleryItems=recipeSectionVisible('gallery')?(settings.media?.gallery||[]):[];
   if(galleryItems.length){
     $('gallerySection').classList.remove('hidden');
     renderGallery();
@@ -615,6 +688,10 @@ async function load(){
   setupInvitationOpening();
   await loadPhotoMessages(eventSlug);
   setupTemplateMotion();
+  /* El Design Engine se aplica al final para que la Recipe decida composición,
+     estilos y assets sin interferir con los renderers funcionales existentes. */
+  window.EventStudioDesignEngine?.apply(settings);
+  scheduleSmartNameFit();
 }
 
 async function loadPhotoMessages(eventSlug){
@@ -1145,7 +1222,7 @@ function updateAttendanceFields(){
 }
 function menuCounts(type){const o={};document.querySelectorAll(`[data-menu="${type}"]`).forEach(i=>o[i.dataset.name]=Number(i.value||0));return o;}
 (()=>{const gallery=$('gallery');if(!gallery)return;let gesture=null;
-  gallery.addEventListener('pointerdown',event=>{gesture={id:event.pointerId,x:event.clientX,y:event.clientY,pointerType:event.pointerType};gallery.setPointerCapture?.(event.pointerId);},{passive:true});
+  gallery.addEventListener('pointerdown',event=>{gesture={id:event.pointerId,x:event.clientX,y:event.clientY,pointerType:event.pointerType};if(event.pointerType!=='mouse')gallery.setPointerCapture?.(event.pointerId);},{passive:true});
   gallery.addEventListener('pointerup',event=>{if(!gesture||event.pointerId!==gesture.id)return;const dx=event.clientX-gesture.x,dy=event.clientY-gesture.y;gesture=null;if(Math.abs(dx)>42&&Math.abs(dx)>Math.abs(dy)*1.15){gallerySuppressClickUntil=Date.now()+450;moveGallery(dx<0?1:-1);}},{passive:true});
   gallery.addEventListener('pointercancel',()=>{gesture=null;},{passive:true});
 })();

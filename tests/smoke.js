@@ -422,8 +422,8 @@ async function main() {
     assert.doesNotMatch(JSON.stringify(sanitizedPublicConfig.data),/onerror|onload|javascript:/i);
     assert.match(sanitizedPublicConfig.response.headers.get("cache-control")||"",/no-store/);
     assert.match(sanitizedPublicConfig.data._revision,/^[a-f0-9]{16}$/);
-    const openingBefore=initialSettings.presentation?.openingStyle||"wax-envelope";
-    const openingForSync=openingBefore==="minimal-envelope"?"floral-envelope":"minimal-envelope";
+    const openingBefore=initialSettings.presentation?.openingStyle||"unified-envelope";
+    const openingForSync=openingBefore==="particle-heart"?"unified-envelope":"particle-heart";
     const synchronizedOpening=await request("/api/admin/settings",{
       method:"PUT",token:ownerToken,eventId,json:{presentation:{openingStyle:openingForSync}}
     });
@@ -501,7 +501,7 @@ async function main() {
     assert.deepEqual(typographySettings.data.typography,{
       heading:"great-vibes",body:"montserrat",scale:"comfortable",nameCase:"uppercase"
     });
-    assert.equal(typographySettings.data.presentation.openingStyle,"cinematic-fold");
+    assert.equal(typographySettings.data.presentation.openingStyle,"unified-envelope","Los alias retirados deben normalizarse al sobre unificado.");
     const rejectedTypography=await request("/api/admin/settings",{
       method:"PUT",token:ownerToken,eventId:xvEvent.data.id,
       json:{typography:{heading:"url(javascript:alert(1))",body:"desconocida",nameCase:"lowercase"},presentation:{openingStyle:"script"}}
@@ -511,7 +511,7 @@ async function main() {
     assert.equal(typographySettings.data.typography.heading,"great-vibes");
     assert.equal(typographySettings.data.typography.body,"montserrat");
     assert.equal(typographySettings.data.typography.nameCase,"uppercase");
-    assert.equal(typographySettings.data.presentation.openingStyle,"cinematic-fold");
+    assert.equal(typographySettings.data.presentation.openingStyle,"unified-envelope");
     const deletedXv=await request(`/api/admin/events/${xvEvent.data.id}?mode=permanent`,{method:"DELETE",token:ownerToken,json:{}});
     assert.equal(deletedXv.response.status,200);
 

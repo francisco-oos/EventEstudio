@@ -7,7 +7,7 @@ const path=require("node:path");
 const root=path.join(__dirname,"..");
 const read=file=>fs.readFileSync(path.join(root,file),"utf8");
 const pkg=require("../package.json");
-assert.match(pkg.version,/^6\.14\.2-rc\.(?:2[0-9]|[3-9]\d+)$/,"La regresión RC20 debe seguir ejecutándose en RC21 y posteriores.");
+assert.match(pkg.version,/^6\.(?:14\.2|15\.0|16\.0)-rc\.(?:2[0-9]|[3-9]\d+)$/,"La regresión RC20 debe seguir ejecutándose en RC21 y posteriores.");
 
 for(const file of ["public/admin.html","public/index.html","public/album.html","public/catalogo.html","public/muestra.html","public/showcase.html","public/sandbox.html"]){
   assert.ok(read(file).includes(`styles.css?v=${pkg.version}`),`${file} debe invalidar la caché CSS de la versión actual.`);

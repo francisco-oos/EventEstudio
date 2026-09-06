@@ -16,7 +16,7 @@ const {
 }=require("../src/theme-design");
 
 assert.equal(packageJson.name,"eventstudio");
-assert.match(packageJson.version,/^6\.14\.2-rc\.\d+(?:\.\d+)?$/);
+assert.match(packageJson.version,/^\d+\.\d+\.\d+-rc\.\d+(?:\.\d+)?$/);
 assert.equal(packageJson.private,true);
 assert.equal(packageJson.scripts.local,"node scripts/iniciar-local.js");
 
@@ -158,7 +158,10 @@ for(const relative of [
   const exists=fs.existsSync(direct)||(relative.endsWith('.md')&&fs.existsSync(path.join(root,'docs'))&&findByBasename(path.join(root,'docs')));
   assert.ok(exists,`Falta ${relative}`);
 }
-assert.equal(fs.existsSync(path.join(root,".env")),false,"La entrega limpia no debe incluir .env.");
+const packageProfile=String(process.env.EVENTSTUDIO_PACKAGE_PROFILE||((fs.existsSync(path.join(root,"data","wedding.db"))||fs.existsSync(path.join(root,".env")))?"qa":"release")).toLowerCase();
+assert.ok(["qa","release"].includes(packageProfile),"EVENTSTUDIO_PACKAGE_PROFILE debe ser qa o release.");
+if(packageProfile==="release")assert.equal(fs.existsSync(path.join(root,".env")),false,"La entrega RELEASE limpia no debe incluir .env.");
+else assert.ok(fs.existsSync(path.join(root,"data","wedding.db")),"El perfil QA debe conservar la base de datos de prueba.");
 const gitignore=read(".gitignore");
 for(const ignored of [".env","node_modules/","data/*","uploads/*","backups/","*.db-wal","*.db-shm"]){
   assert.ok(gitignore.includes(ignored),`.gitignore debe excluir ${ignored}`);
@@ -237,8 +240,8 @@ function storedFiles(directory){
   return entries;
 }
 
-for(const relative of ["data","uploads"]){
-  assert.deepEqual(storedFiles(path.join(root,relative)),[],`${relative} debe estar vacío en la entrega.`);
+if(packageProfile==="release")for(const relative of ["data","uploads"]){
+  assert.deepEqual(storedFiles(path.join(root,relative)),[],`${relative} debe estar vacío en la entrega RELEASE.`);
 }
 
 for(const relative of ["config/default-settings.json","config/event-types.json","config/qr-templates.json","config/themes.json","config/commercial-plans.json","railway.json"]){

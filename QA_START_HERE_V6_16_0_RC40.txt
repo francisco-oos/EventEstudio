@@ -1,0 +1,19 @@
+EVENTSTUDIO 6.16.0-rc.40 — INICIO DE QA
+
+1) Esta entrega incluye la BD recibida; no ejecutar seed sobre ella.
+2) La selección superior Apertura/Recorrido/Movimiento/Álbum ahora gobierna las Recipes del catálogo.
+3) Portada: Estudio > Diseño > Portada permite Fondo / Foto izquierda / Foto derecha.
+4) La portada referenciada actualmente por el evento Ariana y Francisco no está físicamente en el ZIP recibido. Debe volver a cargarse si se desea verla.
+5) 12 Assets estáticos de Gemini fueron admitidos; 3 SMIL quedaron en cuarentena.
+6) En este runtime no fue posible instalar dependencias npm; el E2E de servidor sigue BLOCKED_ENV.
+
+GATE EN TU PC:
+  npm ci
+  npm run test:preproduction
+  npm audit --audit-level=moderate
+
+Después completar:
+  docs/checklists/QA_FISICO_FINAL_6.16.0-rc.40.md
+
+Fuente de verdad:
+  docs/indexes/INDEX_DOCUMENTACION_6.16.0-rc.40.md

@@ -1,0 +1,308 @@
+[
+  {
+    "id": "wine-burgundy",
+    "seed": "#7b2438",
+    "harmony": "luxury",
+    "keywords": [
+      "vino",
+      "burdeos",
+      "reserva",
+      "viñedo",
+      "wine",
+      "descorch"
+    ]
+  },
+  {
+    "id": "botanical-jade",
+    "seed": "#3c6b4a",
+    "harmony": "analogous",
+    "keywords": [
+      "jade",
+      "selva",
+      "tropical",
+      "mayan",
+      "botánic",
+      "jardín",
+      "garden",
+      "oliv",
+      "hoja",
+      "leaf",
+      "salvia",
+      "sage"
+    ]
+  },
+  {
+    "id": "midnight-gold",
+    "seed": "#1c2340",
+    "harmony": "dark-luxury",
+    "keywords": [
+      "noche",
+      "medianoche",
+      "midnight",
+      "black tie",
+      "black-tie",
+      "negro",
+      "gala",
+      "estreno",
+      "premiere",
+      "cine",
+      "cinema",
+      "marquesina"
+    ]
+  },
+  {
+    "id": "terracotta-dusk",
+    "seed": "#b56a3c",
+    "harmony": "analogous",
+    "keywords": [
+      "terracota",
+      "atardecer",
+      "sunset",
+      "bohemia",
+      "arena",
+      "desert"
+    ]
+  },
+  {
+    "id": "pearl-minimal",
+    "seed": "#9a9186",
+    "harmony": "monochromatic",
+    "keywords": [
+      "minimal",
+      "perla",
+      "pearl",
+      "limpia",
+      "esencial",
+      "lino",
+      "linen"
+    ]
+  },
+  {
+    "id": "rose-garden",
+    "seed": "#a8546f",
+    "harmony": "analogous",
+    "keywords": [
+      "rosa",
+      "rose",
+      "floral",
+      "blush",
+      "pétal",
+      "petal",
+      "corazón"
+    ]
+  },
+  {
+    "id": "ocean-silk",
+    "seed": "#2e5f6e",
+    "harmony": "split-complementary",
+    "keywords": [
+      "mar",
+      "ocean",
+      "oceánic",
+      "azul",
+      "blue",
+      "agua",
+      "wave",
+      "ola",
+      "silk",
+      "seda"
+    ]
+  },
+  {
+    "id": "lavender-dream",
+    "seed": "#7c6a9c",
+    "harmony": "analogous",
+    "keywords": [
+      "lavanda",
+      "lavender",
+      "lila",
+      "violeta",
+      "couture"
+    ]
+  },
+  {
+    "id": "bougainvillea",
+    "seed": "#c23a72",
+    "harmony": "triadic",
+    "keywords": [
+      "bugambilia",
+      "mexicana",
+      "fiesta",
+      "colorida",
+      "festiv"
+    ]
+  },
+  {
+    "id": "forest-amber",
+    "seed": "#3f5a3a",
+    "harmony": "analogous",
+    "keywords": [
+      "bosque",
+      "forest",
+      "vela",
+      "candlelight",
+      "ámbar",
+      "amber",
+      "íntima"
+    ]
+  },
+  {
+    "id": "editorial-mono",
+    "seed": "#2b2b2e",
+    "harmony": "high-contrast",
+    "keywords": [
+      "editorial",
+      "revista",
+      "magazine",
+      "gaceta",
+      "gazette",
+      "periódico",
+      "portada"
+    ]
+  },
+  {
+    "id": "pastel-cloud",
+    "seed": "#8fb3c9",
+    "harmony": "pastel",
+    "keywords": [
+      "nube",
+      "cloud",
+      "baby shower",
+      "celeste",
+      "pastel",
+      "suave",
+      "cigüeña"
+    ]
+  },
+  {
+    "id": "confetti-pop",
+    "seed": "#e0507a",
+    "harmony": "triadic",
+    "keywords": [
+      "confeti",
+      "confetti",
+      "revelación",
+      "reveal",
+      "cumpleaños",
+      "fiesta",
+      "festive"
+    ]
+  },
+  {
+    "id": "sunny-playroom",
+    "seed": "#e0a63c",
+    "harmony": "triadic",
+    "keywords": [
+      "infantil",
+      "kids",
+      "arcoíris",
+      "rainbow",
+      "construcción",
+      "carreras",
+      "circo",
+      "pixel",
+      "dino",
+      "cósmic",
+      "undersea",
+      "amigos",
+      "osito",
+      "globo"
+    ]
+  },
+  {
+    "id": "vintage-sepia",
+    "seed": "#8a6a45",
+    "harmony": "analogous",
+    "keywords": [
+      "vintage",
+      "pergamino",
+      "parchment",
+      "sepia",
+      "antigu"
+    ]
+  },
+  {
+    "id": "celestial-navy",
+    "seed": "#20264a",
+    "harmony": "complementary",
+    "keywords": [
+      "celestial",
+      "constelación",
+      "constellation",
+      "cosmos",
+      "estrella",
+      "star",
+      "universo",
+      "universe",
+      "órbita",
+      "orbit",
+      "bendición"
+    ]
+  },
+  {
+    "id": "passport-travel",
+    "seed": "#2f5b4f",
+    "harmony": "analogous",
+    "keywords": [
+      "pasaporte",
+      "passport",
+      "viaje",
+      "travel",
+      "postal",
+      "destino",
+      "abordar"
+    ]
+  },
+  {
+    "id": "sage-mediterranean",
+    "seed": "#6d7a4a",
+    "harmony": "analogous",
+    "keywords": [
+      "néctar",
+      "miel",
+      "mediterránea"
+    ]
+  },
+  {
+    "id": "powder-frost",
+    "seed": "#7f95b8",
+    "harmony": "pastel",
+    "keywords": [
+      "empolvad",
+      "powder",
+      "hielo",
+      "perlado",
+      "etéreo",
+      "aurora",
+      "brisa"
+    ]
+  },
+  {
+    "id": "family-earth",
+    "seed": "#7a5b42",
+    "harmony": "analogous",
+    "keywords": [
+      "familia",
+      "family",
+      "raíces",
+      "generaciones"
+    ]
+  },
+  {
+    "id": "scrapbook-cream",
+    "seed": "#a9855f",
+    "harmony": "monochromatic",
+    "keywords": [
+      "álbum",
+      "recorte",
+      "scrapbook",
+      "polaroid"
+    ]
+  },
+  {
+    "id": "default-ivory",
+    "seed": "#7b4b56",
+    "harmony": "complementary",
+    "keywords": []
+  }
+]

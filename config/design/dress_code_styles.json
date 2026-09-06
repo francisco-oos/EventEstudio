@@ -1,0 +1,75 @@
+[
+  {
+    "id": "dress-palette-swatches",
+    "label": "Paleta de Colores",
+    "primitive": "swatches",
+    "moods": [
+      "modern"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "dress-formal-badge",
+    "label": "Insignia Formal",
+    "primitive": "badge-row",
+    "moods": [
+      "luxury",
+      "classic"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "dress-icon-guide",
+    "label": "Guía con Iconos",
+    "primitive": "badge-row",
+    "moods": [
+      "playful"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "dress-editorial-typographic",
+    "label": "Tipográfico Editorial",
+    "primitive": "minimal-text",
+    "moods": [
+      "editorial"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "dress-botanical-note",
+    "label": "Nota Botánica",
+    "primitive": "minimal-text",
+    "moods": [
+      "botanical"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "dress-minimal-line",
+    "label": "Línea Minimalista",
+    "primitive": "minimal-text",
+    "moods": [
+      "minimal"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "dress-passport-visa",
+    "label": "Visa de Pasaporte",
+    "primitive": "badge-row",
+    "moods": [
+      "travel"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "dress-celebration-chips",
+    "label": "Chips de Celebración",
+    "primitive": "swatches",
+    "moods": [
+      "playful"
+    ],
+    "printSupport": false
+  }
+]

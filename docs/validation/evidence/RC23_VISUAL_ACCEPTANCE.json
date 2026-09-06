@@ -15,8 +15,8 @@
     "maxTemplateOverflow": 0,
     "openingCases": 22,
     "openingFailures": 0,
-    "minOpeningFps": 48.46526655896608,
-    "avgOpeningFps": 59.47695383777654,
+    "minOpeningFps": 57.68343331795108,
+    "avgOpeningFps": 59.79357553227001,
     "maxOpeningP95IntervalMs": 16.80000000000001,
     "maxOpeningCls": 0,
     "maxOpeningOverflow": 0
@@ -1182,9 +1182,9 @@
       "overlap": false,
       "cls": 0,
       "fps": {
-        "fps": 48.46526655896608,
-        "p95Interval": 16.80000000000001,
-        "frames": 21
+        "fps": 60.004615739672275,
+        "p95Interval": 16.700000000000045,
+        "frames": 26
       },
       "errors": [],
       "ok": true
@@ -1195,8 +1195,8 @@
       "overlap": false,
       "cls": 0,
       "fps": {
-        "fps": 60.018467220683284,
-        "p95Interval": 16.700000000000045,
+        "fps": 60.004615739672275,
+        "p95Interval": 16.799999999999955,
         "frames": 26
       },
       "errors": [],
@@ -1208,9 +1208,9 @@
       "overlap": false,
       "cls": 0,
       "fps": {
-        "fps": 60.004615739672275,
-        "p95Interval": 16.799999999999983,
-        "frames": 26
+        "fps": 57.68343331795108,
+        "p95Interval": 16.80000000000001,
+        "frames": 25
       },
       "errors": [],
       "ok": true
@@ -1221,7 +1221,7 @@
       "overlap": false,
       "cls": 0,
       "fps": {
-        "fps": 60.00461573967229,
+        "fps": 60.004615739672275,
         "p95Interval": 16.700000000000045,
         "frames": 26
       },
@@ -1234,7 +1234,7 @@
       "overlap": false,
       "cls": 0,
       "fps": {
-        "fps": 60.0184672206833,
+        "fps": 60.004615739672275,
         "p95Interval": 16.80000000000001,
         "frames": 26
       },
@@ -1247,9 +1247,9 @@
       "overlap": false,
       "cls": 0,
       "fps": {
-        "fps": 60.00461573967229,
-        "p95Interval": 16.700000000000045,
-        "frames": 26
+        "fps": 57.69674590353105,
+        "p95Interval": 16.799999999999983,
+        "frames": 25
       },
       "errors": [],
       "ok": true
@@ -1260,8 +1260,8 @@
       "overlap": false,
       "cls": 0,
       "fps": {
-        "fps": 59.99077065066912,
-        "p95Interval": 16.799999999999983,
+        "fps": 60.004615739672275,
+        "p95Interval": 16.700000000000045,
         "frames": 26
       },
       "errors": [],
@@ -1286,7 +1286,7 @@
       "overlap": false,
       "cls": 0,
       "fps": {
-        "fps": 60.00461573967229,
+        "fps": 60.018467220683284,
         "p95Interval": 16.700000000000045,
         "frames": 26
       },
@@ -1312,7 +1312,7 @@
       "overlap": false,
       "cls": 0,
       "fps": {
-        "fps": 60.004615739672275,
+        "fps": 60.018467220683284,
         "p95Interval": 16.700000000000045,
         "frames": 26
       },
@@ -1338,7 +1338,7 @@
       "overlap": false,
       "cls": 0,
       "fps": {
-        "fps": 59.99077065066912,
+        "fps": 60.004615739672275,
         "p95Interval": 16.700000000000045,
         "frames": 26
       },
@@ -1351,7 +1351,7 @@
       "overlap": false,
       "cls": 0,
       "fps": {
-        "fps": 60.004615739672275,
+        "fps": 60.00461573967229,
         "p95Interval": 16.700000000000045,
         "frames": 26
       },
@@ -1365,7 +1365,7 @@
       "cls": 0,
       "fps": {
         "fps": 59.99077065066912,
-        "p95Interval": 16.700000000000045,
+        "p95Interval": 16.799999999999955,
         "frames": 26
       },
       "errors": [],
@@ -1377,8 +1377,8 @@
       "overlap": false,
       "cls": 0,
       "fps": {
-        "fps": 60.00461573967229,
-        "p95Interval": 16.80000000000001,
+        "fps": 60.004615739672275,
+        "p95Interval": 16.700000000000045,
         "frames": 26
       },
       "errors": [],
@@ -1391,7 +1391,7 @@
       "cls": 0,
       "fps": {
         "fps": 60.004615739672275,
-        "p95Interval": 16.799999999999955,
+        "p95Interval": 16.700000000000045,
         "frames": 26
       },
       "errors": [],
@@ -1404,7 +1404,7 @@
       "cls": 0,
       "fps": {
         "fps": 60.004615739672275,
-        "p95Interval": 16.80000000000001,
+        "p95Interval": 16.700000000000045,
         "frames": 26
       },
       "errors": [],
@@ -1412,32 +1412,6 @@
     },
     {
       "opening": "gala-curtain",
-      "overflow": 0,
-      "overlap": false,
-      "cls": 0,
-      "fps": {
-        "fps": 60.00461573967229,
-        "p95Interval": 16.80000000000001,
-        "frames": 26
-      },
-      "errors": [],
-      "ok": true
-    },
-    {
-      "opening": "constellation-veil",
-      "overflow": 0,
-      "overlap": false,
-      "cls": 0,
-      "fps": {
-        "fps": 59.99077065066912,
-        "p95Interval": 16.799999999999955,
-        "frames": 26
-      },
-      "errors": [],
-      "ok": true
-    },
-    {
-      "opening": "blush-heart-emblem",
       "overflow": 0,
       "overlap": false,
       "cls": 0,
@@ -1450,13 +1424,39 @@
       "ok": true
     },
     {
+      "opening": "constellation-veil",
+      "overflow": 0,
+      "overlap": false,
+      "cls": 0,
+      "fps": {
+        "fps": 60.004615739672275,
+        "p95Interval": 16.700000000000045,
+        "frames": 26
+      },
+      "errors": [],
+      "ok": true
+    },
+    {
+      "opening": "blush-heart-emblem",
+      "overflow": 0,
+      "overlap": false,
+      "cls": 0,
+      "fps": {
+        "fps": 60.00461573967229,
+        "p95Interval": 16.799999999999955,
+        "frames": 26
+      },
+      "errors": [],
+      "ok": true
+    },
+    {
       "opening": "reserve-uncork",
       "overflow": 0,
       "overlap": false,
       "cls": 0,
       "fps": {
-        "fps": 59.99077065066912,
-        "p95Interval": 16.80000000000001,
+        "fps": 60.004615739672275,
+        "p95Interval": 16.700000000000045,
         "frames": 26
       },
       "errors": [],

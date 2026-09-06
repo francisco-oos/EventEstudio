@@ -1,0 +1,333 @@
+[
+  {
+    "id": "timeline-cinematic-slow",
+    "label": "Cinemático sereno por capas",
+    "duration": 1500,
+    "steps": [
+      {
+        "target": "background",
+        "animation": "fade",
+        "delay": 0
+      },
+      {
+        "target": "hero",
+        "animation": "maskRise",
+        "delay": 180
+      },
+      {
+        "target": "title",
+        "animation": "staggerLetters",
+        "delay": 420
+      }
+    ]
+  },
+  {
+    "id": "timeline-botanical-bloom",
+    "label": "Crecimiento botánico orgánico",
+    "duration": 1350,
+    "steps": [
+      {
+        "target": "hero",
+        "animation": "bloom",
+        "delay": 0
+      },
+      {
+        "target": "title",
+        "animation": "softRise",
+        "delay": 300
+      },
+      {
+        "target": "sections",
+        "animation": "staggerFade",
+        "delay": 520
+      }
+    ]
+  },
+  {
+    "id": "timeline-editorial-stagger",
+    "label": "Entrada editorial dinámica",
+    "duration": 1050,
+    "steps": [
+      {
+        "target": "title",
+        "animation": "slideRight",
+        "delay": 40
+      },
+      {
+        "target": "hero",
+        "animation": "fade",
+        "delay": 180
+      },
+      {
+        "target": "sections",
+        "animation": "staggerFade",
+        "delay": 340
+      }
+    ]
+  },
+  {
+    "id": "timeline-passport-stamp",
+    "label": "Pasaporte: sello y páginas",
+    "duration": 1200,
+    "steps": [
+      {
+        "target": "hero",
+        "animation": "softRise",
+        "delay": 0
+      },
+      {
+        "target": "title",
+        "animation": "stamp",
+        "delay": 260
+      },
+      {
+        "target": "sections",
+        "animation": "staggerFade",
+        "delay": 480
+      }
+    ]
+  },
+  {
+    "id": "timeline-gala-reveal",
+    "label": "Gala: aparición ceremonial",
+    "duration": 1500,
+    "steps": [
+      {
+        "target": "background",
+        "animation": "fade",
+        "delay": 0
+      },
+      {
+        "target": "hero",
+        "animation": "scaleIn",
+        "delay": 220
+      },
+      {
+        "target": "sections",
+        "animation": "staggerFade",
+        "delay": 650
+      }
+    ]
+  },
+  {
+    "id": "timeline-minimal-clean",
+    "label": "Minimal limpio",
+    "duration": 800,
+    "steps": [
+      {
+        "target": "hero",
+        "animation": "fade",
+        "delay": 0
+      },
+      {
+        "target": "sections",
+        "animation": "softRise",
+        "delay": 200
+      }
+    ]
+  },
+  {
+    "id": "timeline-blur-editorial",
+    "label": "Editorial con desenfoque suave",
+    "duration": 1100,
+    "reducedMotionFallback": "instant-visible",
+    "steps": [
+      {
+        "target": "hero",
+        "animation": "blurReveal",
+        "delay": 0
+      },
+      {
+        "target": "title",
+        "animation": "staggerLetters",
+        "delay": 260
+      },
+      {
+        "target": "sections",
+        "animation": "staggerFade",
+        "delay": 420,
+        "stagger": 60
+      }
+    ]
+  },
+  {
+    "id": "timeline-parallax-soft",
+    "label": "Parallax ligero de entrada",
+    "duration": 1300,
+    "reducedMotionFallback": "instant-visible",
+    "steps": [
+      {
+        "target": "hero",
+        "animation": "parallax-lite",
+        "delay": 0
+      },
+      {
+        "target": "sections",
+        "animation": "parallax-lite",
+        "delay": 200,
+        "stagger": 90
+      }
+    ]
+  },
+  {
+    "id": "timeline-clip-reveal-center",
+    "label": "Revelado central",
+    "duration": 1000,
+    "reducedMotionFallback": "instant-visible",
+    "steps": [
+      {
+        "target": "hero",
+        "animation": "clipReveal",
+        "delay": 0
+      },
+      {
+        "target": "title",
+        "animation": "fade",
+        "delay": 260
+      }
+    ]
+  },
+  {
+    "id": "timeline-rotate-playful",
+    "label": "Entrada juguetona con giro",
+    "duration": 950,
+    "reducedMotionFallback": "instant-visible",
+    "steps": [
+      {
+        "target": "hero",
+        "animation": "rotateIn",
+        "delay": 0
+      },
+      {
+        "target": "sections",
+        "animation": "rotateIn",
+        "delay": 180,
+        "stagger": 50
+      }
+    ]
+  },
+  {
+    "id": "timeline-storybook-fold",
+    "label": "Pliegue de libro de cuentos",
+    "duration": 1250,
+    "reducedMotionFallback": "instant-visible",
+    "steps": [
+      {
+        "target": "hero",
+        "animation": "foldIn",
+        "delay": 0
+      },
+      {
+        "target": "sections",
+        "animation": "foldIn",
+        "delay": 220,
+        "stagger": 80
+      }
+    ]
+  },
+  {
+    "id": "timeline-shimmer-gala",
+    "label": "Destello de gala",
+    "duration": 1200,
+    "reducedMotionFallback": "instant-visible",
+    "steps": [
+      {
+        "target": "background",
+        "animation": "fade",
+        "delay": 0
+      },
+      {
+        "target": "title",
+        "animation": "shimmer",
+        "delay": 200
+      },
+      {
+        "target": "sections",
+        "animation": "shimmer",
+        "delay": 380,
+        "stagger": 70
+      }
+    ]
+  },
+  {
+    "id": "timeline-line-draw-formal",
+    "label": "Trazo de línea formal",
+    "duration": 900,
+    "reducedMotionFallback": "instant-visible",
+    "steps": [
+      {
+        "target": "title",
+        "animation": "lineDraw",
+        "delay": 0
+      },
+      {
+        "target": "sections",
+        "animation": "softRise",
+        "delay": 200,
+        "stagger": 70
+      }
+    ]
+  },
+  {
+    "id": "timeline-slide-left-modern",
+    "label": "Deslizamiento moderno izquierda",
+    "duration": 900,
+    "reducedMotionFallback": "instant-visible",
+    "steps": [
+      {
+        "target": "hero",
+        "animation": "slideLeft",
+        "delay": 0
+      },
+      {
+        "target": "sections",
+        "animation": "slideLeft",
+        "delay": 160,
+        "stagger": 60
+      }
+    ]
+  },
+  {
+    "id": "timeline-drop-celestial",
+    "label": "Descenso celestial",
+    "duration": 1150,
+    "reducedMotionFallback": "instant-visible",
+    "steps": [
+      {
+        "target": "hero",
+        "animation": "softDrop",
+        "delay": 0
+      },
+      {
+        "target": "title",
+        "animation": "shimmer",
+        "delay": 260
+      },
+      {
+        "target": "sections",
+        "animation": "softDrop",
+        "delay": 420,
+        "stagger": 70
+      }
+    ]
+  },
+  {
+    "id": "timeline-mask-horizontal-editorial",
+    "label": "Barrido horizontal editorial",
+    "duration": 1000,
+    "reducedMotionFallback": "instant-visible",
+    "steps": [
+      {
+        "target": "hero",
+        "animation": "maskHorizontal",
+        "delay": 0
+      },
+      {
+        "target": "sections",
+        "animation": "staggerFade",
+        "delay": 260,
+        "stagger": 70
+      }
+    ]
+  }
+]

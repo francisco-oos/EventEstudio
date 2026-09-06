@@ -14,7 +14,7 @@ const {normalizeStationery,designTokens}=require("../src/stationery-config");
 const {coordinationFor,stationeryIsAuthoritative,applyOpeningCoordination}=require("../src/opening-coordination");
 const {loadThemeDesigns,ensureAccessiblePalette,contrastRatio}=require("../src/theme-design");
 
-assert.equal(pkg.version,"6.14.2-rc.30");
+assert.match(pkg.version,/^6\.(?:15|16)\.0-rc\.(?:34|35|36|37|38|39|40|41)$/);
 assert.equal(stationeryCatalog.openingId,"unified-envelope");
 
 const custom=normalizeStationery({}, {
@@ -60,7 +60,9 @@ const studio=read("public/stationery-studio.js");
 assert.match(studio,/syncDesignTokens:true,fontMode:"event"/);
 assert.doesNotMatch(studio,/id="stationerySyncDesignTokens"/);
 assert.match(studio,/Sincronización automática:/);
-assert.match(studio,/Aplicado\. La paleta del sobre coordina invitación, fotos, QR e impresión\./);
+assert.match(studio,/Guardado automático pendiente|Borrador sincronizado/);
+assert.match(studio,/persistDraft\(\{silent:true\}\)/,"El estudio de sobres debe autosalvar DRAFT sin forzar un botón previo a Aplicar.");
+assert.match(studio,/api\/admin\/design\/stationery-draft/);
 
 const css=read("public/styles.css");
 assert.match(css,/\.theme-storybook-seal \.hero-content\.has-template-seal:after\{display:none!important;animation:none!important\}/);

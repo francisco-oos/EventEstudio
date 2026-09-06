@@ -1,0 +1,76 @@
+[
+  {
+    "id": "story-classic-prose",
+    "label": "Prosa Clásica",
+    "primitive": "prose",
+    "moods": [
+      "classic"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "story-timeline-chapters",
+    "label": "Capítulos en Línea de Tiempo",
+    "primitive": "timeline-chapters",
+    "moods": [
+      "editorial"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "story-letter-fold",
+    "label": "Carta Plegada",
+    "primitive": "prose",
+    "moods": [
+      "romantic",
+      "vintage"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "story-quote-editorial",
+    "label": "Cita Editorial",
+    "primitive": "quote",
+    "moods": [
+      "editorial",
+      "luxury"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "story-botanical-note",
+    "label": "Nota Botánica",
+    "primitive": "prose",
+    "moods": [
+      "botanical"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "story-milestone-path",
+    "label": "Camino de Hitos",
+    "primitive": "timeline-chapters",
+    "moods": [
+      "modern"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "story-passport-journal",
+    "label": "Diario de Pasaporte",
+    "primitive": "quote",
+    "moods": [
+      "travel"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "story-celestial-narrative",
+    "label": "Narrativa Celestial",
+    "primitive": "prose",
+    "moods": [
+      "celestial"
+    ],
+    "printSupport": true
+  }
+]

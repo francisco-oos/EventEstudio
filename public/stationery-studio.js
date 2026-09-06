@@ -9,21 +9,23 @@
 const $=id=>document.getElementById(id);
 const query=new URLSearchParams(location.search);
 const requestedEventId=Number(query.get("eventId")||localStorage.getItem("eventId")||0);
+const embedded=query.get("embedded")==="1";
 const FONT_FAMILIES=Object.freeze({
   georgia:'Georgia,"Times New Roman",serif',baskerville:'Baskerville,"Palatino Linotype",serif',garamond:'Garamond,"Times New Roman",serif',didot:'Didot,"Bodoni MT",serif',system:'Inter,system-ui,-apple-system,"Segoe UI",sans-serif',humanist:'"Trebuchet MS","Segoe UI",sans-serif',classic:'"Palatino Linotype","Book Antiqua",serif','great-vibes':'"Great Vibes",Georgia,cursive',cormorant:'"Cormorant Garamond",Georgia,serif',playfair:'"Playfair Display",Georgia,serif',cinzel:'"Cinzel Decorative",Georgia,serif',lora:'Lora,Georgia,serif',montserrat:'Montserrat,Inter,system-ui,sans-serif'
 });
 
 let stationeryCatalog=null,sealCatalog=null,eventSettings=null,eventContext=null,features=null;
-let stationeryState={},sealState={},savedStationery={},savedSeal={},activeTab="formats",dirty=false,canApply=false;
+let stationeryState={},sealState={},savedStationery={},savedSeal={},activeTab="formats",dirty=false,canApply=false,autoSaveTimer=null,saveInFlight=null,localChangeVersion=0;
 
 const esc=value=>String(value??"").replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"}[char]));
 const safeColor=(value,fallback)=>/^#[0-9a-f]{6}$/i.test(String(value||""))?String(value).toLowerCase():fallback;
 const clone=value=>JSON.parse(JSON.stringify(value??{}));
 const eventHeaders=()=>({"x-event-id":String(requestedEventId||"")});
-const endpoint=(name,fallback)=>$("view-editor")?.dataset?.[name]||fallback;
+const endpoint=(name,fallback)=>$("view-editor")?.dataset?.[name]||(requestedEventId&&name==="settingsEndpoint"?"/api/admin/design/stationery-draft":fallback);
 
 function status(message,ok=true){const el=$("studioStatus");if(!el)return;el.textContent=message||"";el.className=message?(ok?"status-ok":"status-error"):"";}
-function setDirty(next=true){dirty=Boolean(next);const el=$("studioDirtyState");if(el){el.textContent=dirty?"Cambios sin aplicar":"Configuración aplicada";el.className=dirty?"dirty":"applied";}if($("applyStudioBtn"))$("applyStudioBtn").disabled=!canApply;}
+// RC39: editar Stationery autosalva DRAFT con debounce; publicar sigue siendo una acción explícita desde "Aplicar cambios".
+function setDirty(next=true,{schedule=true}={}){dirty=Boolean(next);if(dirty)localChangeVersion++;const el=$("studioDirtyState");if(el){el.textContent=dirty?(embedded?"Guardado automático pendiente":"Cambios sin guardar"):"Borrador sincronizado";el.className=dirty?"dirty":"applied";}if($("applyStudioBtn"))$("applyStudioBtn").disabled=!canApply;if(dirty&&schedule&&embedded&&canApply){clearTimeout(autoSaveTimer);autoSaveTimer=setTimeout(()=>persistDraft({silent:true}).catch(()=>{}),900);}}
 function findItem(key,id){return (stationeryCatalog?.[key]||[]).find(item=>item.id===id)||null;}
 function findSealItem(key,id){return (sealCatalog?.[key]||[]).find(item=>item.id===id)||null;}
 function optionMarkup(items,current){return (items||[]).map(item=>`<option value="${esc(item.id)}" ${item.id===current?"selected":""}>${esc(item.label||item.id)}</option>`).join("");}
@@ -92,24 +94,45 @@ function restoreSaved(){stationeryState=clone(savedStationery);sealState=clone(s
 
 async function copySeal(){try{await navigator.clipboard.writeText(window.EventStudioWaxSeal.svgString(sealState,sealContext("copy"),sealCatalog));status("SVG del lacre copiado al portapapeles.");}catch{status("El navegador no permitió copiar el SVG automáticamente.",false);}}
 function downloadSeal(){const svg=window.EventStudioWaxSeal.svgString(sealState,sealContext("export"),sealCatalog),url=URL.createObjectURL(new Blob([svg],{type:"image/svg+xml"})),a=document.createElement("a");a.href=url;a.download="sello-lacre-eventstudio.svg";a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);status("SVG del lacre generado con la configuración actual.");}
-function broadcastApplied(){const detail={eventId:requestedEventId,at:Date.now(),source:"stationery-studio"};try{const channel=new BroadcastChannel("eventstudio-stationery");channel.postMessage(detail);channel.close();}catch{}try{localStorage.setItem("eventstudio:stationery-applied",JSON.stringify(detail));}catch{}}
-async function applyToEvent(){
-  if(!canApply||!requestedEventId)return status("Tu perfil no puede aplicar cambios de papelería a este evento.",false);
-  const button=$("applyStudioBtn");button.disabled=true;status("Guardando sobre, lacre y sincronización de diseño…");
-  try{
+function broadcastApplied(){const detail={eventId:requestedEventId,at:Date.now(),source:"stationery-studio",type:"eventstudio:stationery-draft-saved"};try{const channel=new BroadcastChannel("eventstudio-stationery");channel.postMessage(detail);channel.close();}catch{}try{localStorage.setItem("eventstudio:stationery-draft-saved",JSON.stringify(detail));}catch{}if(embedded&&window.parent!==window)window.parent.postMessage(detail,location.origin);}
+async function persistDraft({silent=false}={}){
+  if(!canApply||!requestedEventId){if(!silent)status("Tu perfil no puede guardar cambios de papelería en este evento.",false);return null;}
+  clearTimeout(autoSaveTimer);
+  if(saveInFlight){await saveInFlight;if(!dirty)return null;}
+  const capturedVersion=localChangeVersion,button=$("applyStudioBtn");if(button&&!silent)button.disabled=true;
+  if(!silent)status("Guardando sobre y lacre en el borrador…");else if($("studioDirtyState"))$("studioDirtyState").textContent="Guardando automáticamente…";
+  saveInFlight=(async()=>{
     stationeryState={...stationeryState,enabled:true,customized:true,syncDesignTokens:true,fontMode:"event"};sealState={...sealState,customized:true};normalizeWorkingState();
     const presentation={...(eventSettings?.presentation||{}),openingStyle:stationeryCatalog.openingId};
-    const response=await fetch(endpoint("settingsEndpoint","/api/admin/settings"),{method:"PUT",credentials:"same-origin",headers:{"Content-Type":"application/json",...eventHeaders()},body:JSON.stringify({presentation,stationery:stationeryState,seal:sealState})});
-    const data=await response.json().catch(()=>({}));if(!response.ok)throw new Error(data.error||"No se pudo aplicar la papelería coordinada.");
-    eventSettings={...(eventSettings||{}),...(data.settings||{}),presentation:{...(eventSettings?.presentation||{}),...(data.settings?.presentation||presentation)}};stationeryState=window.EventStudioStationery.normalize(data.settings?.stationery||stationeryState,stationeryCatalog,{openingStyle:stationeryCatalog.openingId});sealState=window.EventStudioWaxSeal.normalize(data.settings?.seal||sealState,sealCatalog);savedStationery=clone(stationeryState);savedSeal=clone(sealState);setDirty(false);renderAll();broadcastApplied();status("Aplicado. La paleta del sobre coordina invitación, fotos, QR e impresión.");
-  }catch(error){status(error.message||"No se pudo aplicar la configuración.",false);setDirty(true);}finally{button.disabled=!canApply;}
+    let response=await fetch(endpoint("settingsEndpoint","/api/admin/settings"),{method:"PUT",credentials:"same-origin",headers:{"Content-Type":"application/json",...eventHeaders()},body:JSON.stringify({expectedRevision:eventSettings?._designState?.draftRevision,presentation,stationery:stationeryState,seal:sealState})});
+    let data=await response.json().catch(()=>({}));
+    if(response.status===409){
+      const refresh=await fetch(endpoint("settingsEndpoint","/api/admin/settings"),{credentials:"same-origin",headers:eventHeaders(),cache:"no-store"});
+      if(refresh.ok){eventSettings=await refresh.json();response=await fetch(endpoint("settingsEndpoint","/api/admin/settings"),{method:"PUT",credentials:"same-origin",headers:{"Content-Type":"application/json",...eventHeaders()},body:JSON.stringify({expectedRevision:eventSettings?._designState?.draftRevision,presentation,stationery:stationeryState,seal:sealState})});data=await response.json().catch(()=>({}));}
+    }
+    if(!response.ok)throw new Error(data.error||"No se pudo guardar la papelería coordinada.");
+    eventSettings={...(eventSettings||{}),...(data.settings||{}),_designState:data.state||eventSettings?._designState,presentation:{...(eventSettings?.presentation||{}),...(data.settings?.presentation||presentation)}};
+    stationeryState=window.EventStudioStationery.normalize(data.settings?.stationery||stationeryState,stationeryCatalog,{openingStyle:stationeryCatalog.openingId});sealState=window.EventStudioWaxSeal.normalize(data.settings?.seal||sealState,sealCatalog);savedStationery=clone(stationeryState);savedSeal=clone(sealState);
+    if(localChangeVersion===capturedVersion)setDirty(false,{schedule:false});else{dirty=true;clearTimeout(autoSaveTimer);autoSaveTimer=setTimeout(()=>persistDraft({silent:true}).catch(()=>{}),450);}
+    renderAll();broadcastApplied();if(!silent)status("Cambios sincronizados con el borrador. Ya puedes pulsar Aplicar cambios en el Estudio.");return data;
+  })();
+  try{return await saveInFlight;}catch(error){if(!silent)status(error.message||"No se pudo guardar la configuración.",false);else status("El guardado automático falló; puedes usar Guardar ahora.",false);dirty=true;throw error;}finally{saveInFlight=null;if(button)button.disabled=!canApply;}
 }
+async function applyToEvent(){return persistDraft({silent:false});}
+/* RC41 · El contenedor puede forzar un flush antes de Preview/Apply. De este
+   modo un clic inmediato después de mover color/textura no espera al debounce
+   ni aplica el Stationery anterior. La API sólo existe dentro del iframe local. */
+window.EventStudioStationeryStudio={
+  flush:async()=>{if(saveInFlight)await saveInFlight;if(dirty)return persistDraft({silent:true});return null;},
+  isDirty:()=>Boolean(dirty)
+};
 
 async function loadPublicCatalogs(){const [stationeryResponse,sealResponse]=await Promise.all([fetch("/api/public/stationery",{cache:"no-store"}),fetch("/api/public/seals",{cache:"no-store"})]);if(!stationeryResponse.ok||!sealResponse.ok)throw new Error("No se pudieron cargar los catálogos de papelería y lacre.");stationeryCatalog=await stationeryResponse.json();sealCatalog=await sealResponse.json();}
-async function loadEvent(){if(!requestedEventId)return;const [settingsResponse,featuresResponse]=await Promise.all([fetch(endpoint("settingsEndpoint","/api/admin/settings"),{credentials:"same-origin",headers:eventHeaders(),cache:"no-store"}),fetch(endpoint("featuresEndpoint","/api/admin/features"),{credentials:"same-origin",headers:eventHeaders(),cache:"no-store"})]);if(!settingsResponse.ok)return;eventSettings=await settingsResponse.json();eventContext=eventSettings._event||null;if(eventSettings._stationeryCatalog)stationeryCatalog=eventSettings._stationeryCatalog;if(eventSettings._sealCatalog)sealCatalog=eventSettings._sealCatalog;features=featuresResponse.ok?await featuresResponse.json():null;const templates=(features?.features||[]).find(item=>item.key==="templates");canApply=Boolean(eventContext&&(features?.role==="owner"||features?.role==="developer"||templates?.allowed));}
+async function loadEvent(){if(!requestedEventId)return;const [settingsResponse,featuresResponse]=await Promise.all([fetch(endpoint("settingsEndpoint","/api/admin/settings"),{credentials:"same-origin",headers:eventHeaders(),cache:"no-store"}),fetch(endpoint("featuresEndpoint","/api/admin/features"),{credentials:"same-origin",headers:eventHeaders(),cache:"no-store"})]);if(!settingsResponse.ok)return;eventSettings=await settingsResponse.json();eventContext=eventSettings._event||null;if(eventSettings._stationeryCatalog)stationeryCatalog=eventSettings._stationeryCatalog;if(eventSettings._sealCatalog)sealCatalog=eventSettings._sealCatalog;features=featuresResponse.ok?await featuresResponse.json():null;const templates=(features?.features||[]).find(item=>item.key==="templates");canApply=Boolean(eventContext&&(features?.designCapabilities?.editStationery??(features?.role==="owner"||features?.role==="developer"||templates?.allowed)));}
 function initializeState(){const renderer=window.EventStudioStationery,sealRenderer=window.EventStudioWaxSeal,existing=renderer.normalize(eventSettings?.stationery||{},stationeryCatalog,{openingStyle:eventSettings?.presentation?.openingStyle});stationeryState={...existing,syncDesignTokens:existing.customized?existing.syncDesignTokens:true};sealState=sealRenderer.normalize(eventSettings?.seal||sealCatalog.defaults||{},sealCatalog);savedStationery=clone(stationeryState);savedSeal=clone(sealState);setDirty(false);renderAll();if($("applyStudioBtn"))$("applyStudioBtn").disabled=!canApply;if(!eventContext)status("Modo independiente: puedes diseñar y exportar el lacre, pero debes abrir el estudio desde un evento para aplicar cambios.");else if(!canApply)status("Tu perfil puede consultar el diseño, pero no modificar las plantillas de este evento.",false);}
 
 function bindUi(){
+  if(embedded){document.body.classList.add("embedded-mode");const back=document.querySelector(".studio-back");if(back){back.textContent="Volver al Estudio de diseño";back.href="#";back.addEventListener("click",async event=>{event.preventDefault();if(dirty){try{await persistDraft({silent:true});}catch{if(!window.confirm("No se pudo sincronizar el sobre. ¿Volver sin guardar esos últimos cambios?"))return;}}if(window.parent!==window)window.parent.postMessage({type:"eventstudio:stationery-close",eventId:requestedEventId},location.origin);});}if($("applyStudioBtn")){$("applyStudioBtn").textContent="Guardar ahora";$("applyStudioBtn").title="El borrador se guarda automáticamente; usa este botón sólo para forzar el guardado inmediato.";}}
   document.querySelectorAll(".nav-btn").forEach(button=>button.addEventListener("click",()=>{activeTab=button.dataset.tab;document.querySelectorAll(".nav-btn").forEach(item=>item.classList.toggle("active",item===button));renderPanel();}));
   $("panel-container")?.addEventListener("click",event=>{const preset=event.target.closest("[data-preset]");if(preset)return applyPreset(preset.dataset.preset);const choice=event.target.closest("[data-choice-key]");if(choice)return setStationeryKey(choice.dataset.choiceKey,choice.dataset.choiceId,{refreshPanel:true});const exportButton=event.target.closest("[data-export]");if(exportButton)return exportButton.dataset.export==="copy"?copySeal():downloadSeal();});
   const updateFromControl=event=>{const control=event.target.closest("[data-key]");if(!control)return;const value=control.type==="checkbox"?control.checked:control.value,output=control.closest(".ctrl-group")?.querySelector(".value-badge");if(output)output.textContent=`${value}${control.dataset.key==="specular"||control.dataset.key==="textureStrength"?"%":""}`;if(control.dataset.scope==="seal")setSealKey(control.dataset.key,value,control.type,{refreshPanel:["autoMonogram","material"].includes(control.dataset.key)});else setStationeryKey(control.dataset.key,value,{refreshPanel:control.dataset.key==="sealColor"&&activeTab==="seals"});};

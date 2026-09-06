@@ -1,0 +1,1046 @@
+{
+  "schema": "eventstudio.component-catalog.v1",
+  "components": [
+    {
+      "type": "hero",
+      "label": "Portada",
+      "requiredFeature": "invitation",
+      "dataBindings": [
+        "event",
+        "couple",
+        "media.heroImage"
+      ],
+      "styles": [
+        {
+          "id": "hero-classic",
+          "label": "Clásica"
+        },
+        {
+          "id": "hero-editorial",
+          "label": "Editorial"
+        },
+        {
+          "id": "hero-cinematic",
+          "label": "Cinematográfica"
+        },
+        {
+          "id": "hero-botanical",
+          "label": "Botánica"
+        },
+        {
+          "id": "hero-minimal",
+          "label": "Minimalista"
+        }
+      ]
+    },
+    {
+      "type": "countdown",
+      "label": "Cuenta regresiva",
+      "requiredFeature": "invitation",
+      "dataBindings": [
+        "event.dateTime"
+      ],
+      "styles": [
+        {
+          "id": "countdown-classic",
+          "label": "Clásico Cuatro Columnas",
+          "primitive": "grid4",
+          "moods": [
+            "classic",
+            "minimal"
+          ],
+          "printSupport": false
+        },
+        {
+          "id": "countdown-roman",
+          "label": "Romano Editorial",
+          "primitive": "grid4",
+          "moods": [
+            "editorial",
+            "luxury",
+            "wine"
+          ],
+          "printSupport": false
+        },
+        {
+          "id": "countdown-minimal",
+          "label": "Línea Minimalista",
+          "primitive": "minimal-line",
+          "moods": [
+            "minimal",
+            "modern"
+          ],
+          "printSupport": false
+        },
+        {
+          "id": "countdown-flip",
+          "label": "Tarjetas Flip",
+          "primitive": "flip",
+          "moods": [
+            "modern",
+            "cinematic"
+          ],
+          "printSupport": false
+        },
+        {
+          "id": "countdown-circular",
+          "label": "Anillos Circulares",
+          "primitive": "circular",
+          "moods": [
+            "modern",
+            "celestial"
+          ],
+          "printSupport": false
+        },
+        {
+          "id": "countdown-badge-stack",
+          "label": "Insignias en Línea",
+          "primitive": "inline-badge",
+          "moods": [
+            "playful",
+            "editorial"
+          ],
+          "printSupport": false
+        },
+        {
+          "id": "countdown-vintage-ticket",
+          "label": "Boleto Vintage",
+          "primitive": "grid4",
+          "moods": [
+            "vintage",
+            "travel"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "countdown-botanical-vine",
+          "label": "Enredadera Botánica",
+          "primitive": "inline-badge",
+          "moods": [
+            "botanical"
+          ],
+          "printSupport": false
+        },
+        {
+          "id": "countdown-editorial-huge",
+          "label": "Numerales Editoriales",
+          "primitive": "inline-badge",
+          "moods": [
+            "editorial"
+          ],
+          "printSupport": false
+        },
+        {
+          "id": "countdown-neon-tech",
+          "label": "Neón Tecnológico",
+          "primitive": "grid4",
+          "moods": [
+            "modern"
+          ],
+          "printSupport": false
+        },
+        {
+          "id": "countdown-celestial-orbit",
+          "label": "Órbita Celestial",
+          "primitive": "circular",
+          "moods": [
+            "celestial"
+          ],
+          "printSupport": false
+        },
+        {
+          "id": "countdown-passport-stamp",
+          "label": "Sello de Pasaporte",
+          "primitive": "grid4",
+          "moods": [
+            "travel"
+          ],
+          "printSupport": true
+        }
+      ]
+    },
+    {
+      "type": "story",
+      "label": "Historia",
+      "requiredFeature": "invitation",
+      "dataBindings": [
+        "story"
+      ],
+      "styles": [
+        {
+          "id": "story-classic-prose",
+          "label": "Prosa Clásica",
+          "primitive": "prose",
+          "moods": [
+            "classic"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "story-timeline-chapters",
+          "label": "Capítulos en Línea de Tiempo",
+          "primitive": "timeline-chapters",
+          "moods": [
+            "editorial"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "story-letter-fold",
+          "label": "Carta Plegada",
+          "primitive": "prose",
+          "moods": [
+            "romantic",
+            "vintage"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "story-quote-editorial",
+          "label": "Cita Editorial",
+          "primitive": "quote",
+          "moods": [
+            "editorial",
+            "luxury"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "story-botanical-note",
+          "label": "Nota Botánica",
+          "primitive": "prose",
+          "moods": [
+            "botanical"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "story-milestone-path",
+          "label": "Camino de Hitos",
+          "primitive": "timeline-chapters",
+          "moods": [
+            "modern"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "story-passport-journal",
+          "label": "Diario de Pasaporte",
+          "primitive": "quote",
+          "moods": [
+            "travel"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "story-celestial-narrative",
+          "label": "Narrativa Celestial",
+          "primitive": "prose",
+          "moods": [
+            "celestial"
+          ],
+          "printSupport": true
+        }
+      ]
+    },
+    {
+      "type": "venues",
+      "label": "Ubicación",
+      "requiredFeature": "locations",
+      "dataBindings": [
+        "venue",
+        "venues"
+      ],
+      "styles": [
+        {
+          "id": "location-dual-cta",
+          "label": "Tarjeta Dual + Mapa",
+          "primitive": "dual-card",
+          "moods": [
+            "classic"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "location-compass-badge",
+          "label": "Insignia de Brújula",
+          "primitive": "compass-badge",
+          "moods": [
+            "travel",
+            "modern"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "location-ticket-stub",
+          "label": "Talón de Boleto",
+          "primitive": "ticket-stub",
+          "moods": [
+            "travel"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "location-postcard",
+          "label": "Postal de Destino",
+          "primitive": "postcard",
+          "moods": [
+            "travel",
+            "vintage"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "location-minimal-address",
+          "label": "Dirección Minimalista",
+          "primitive": "minimal-address",
+          "moods": [
+            "minimal"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "location-botanical-frame",
+          "label": "Marco Botánico",
+          "primitive": "dual-card",
+          "moods": [
+            "botanical"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "location-split-map",
+          "label": "Panel Dividido",
+          "primitive": "dual-card",
+          "moods": [
+            "modern",
+            "editorial"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "location-passport-stamp",
+          "label": "Sello de Pasaporte",
+          "primitive": "ticket-stub",
+          "moods": [
+            "travel"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "location-editorial-block",
+          "label": "Bloque Editorial",
+          "primitive": "minimal-address",
+          "moods": [
+            "editorial"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "location-celestial-map",
+          "label": "Mapa Celestial",
+          "primitive": "compass-badge",
+          "moods": [
+            "celestial"
+          ],
+          "printSupport": true
+        }
+      ]
+    },
+    {
+      "type": "agenda",
+      "label": "Programa",
+      "requiredFeature": "program",
+      "dataBindings": [
+        "agenda"
+      ],
+      "styles": [
+        {
+          "id": "agenda-vertical-luxury",
+          "label": "Vertical con Horas Doradas",
+          "primitive": "vertical-list",
+          "moods": [
+            "luxury",
+            "classic"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "agenda-horizontal-timeline",
+          "label": "Línea de Tiempo Horizontal",
+          "primitive": "horizontal-timeline",
+          "moods": [
+            "modern"
+          ],
+          "printSupport": false
+        },
+        {
+          "id": "agenda-ticket-rows",
+          "label": "Filas Tipo Boleto",
+          "primitive": "ticket-rows",
+          "moods": [
+            "travel"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "agenda-roman-list",
+          "label": "Lista Numerales Romanos",
+          "primitive": "vertical-list",
+          "moods": [
+            "editorial",
+            "wine"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "agenda-icons-grid",
+          "label": "Cuadrícula con Iconos",
+          "primitive": "icons-grid",
+          "moods": [
+            "playful",
+            "modern"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "agenda-editorial-columns",
+          "label": "Columnas Editoriales",
+          "primitive": "icons-grid",
+          "moods": [
+            "editorial"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "agenda-dotted-schedule",
+          "label": "Cronograma Punteado",
+          "primitive": "dotted-schedule",
+          "moods": [
+            "minimal"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "agenda-program-booklet",
+          "label": "Programa de Folleto",
+          "primitive": "ticket-rows",
+          "moods": [
+            "classic"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "agenda-celestial-orbit",
+          "label": "Órbita Celestial",
+          "primitive": "dotted-schedule",
+          "moods": [
+            "celestial"
+          ],
+          "printSupport": false
+        },
+        {
+          "id": "agenda-minimal-stack",
+          "label": "Pila Minimalista",
+          "primitive": "vertical-list",
+          "moods": [
+            "minimal"
+          ],
+          "printSupport": true
+        }
+      ]
+    },
+    {
+      "type": "gallery",
+      "label": "Galería",
+      "requiredFeature": "gallery",
+      "dataBindings": [
+        "media.gallery"
+      ],
+      "styles": [
+        {
+          "id": "gallery-masonry-default",
+          "label": "Masonry Estándar",
+          "moods": [
+            "classic"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "gallery-carousel-row",
+          "label": "Fila tipo Carrusel",
+          "moods": [
+            "modern"
+          ],
+          "printSupport": false
+        },
+        {
+          "id": "gallery-filmstrip-row",
+          "label": "Fila de Filmina",
+          "moods": [
+            "cinematic"
+          ],
+          "printSupport": false
+        },
+        {
+          "id": "gallery-polaroid-scatter",
+          "label": "Dispersión Polaroid",
+          "moods": [
+            "playful",
+            "romantic"
+          ],
+          "printSupport": false
+        },
+        {
+          "id": "gallery-mosaic-grid",
+          "label": "Mosaico Irregular",
+          "moods": [
+            "modern",
+            "editorial"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "gallery-hero-plus-thumbs",
+          "label": "Hero + Miniaturas",
+          "moods": [
+            "editorial"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "gallery-split-duo",
+          "label": "Dúo Dividido",
+          "moods": [
+            "modern"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "gallery-stacked-deck",
+          "label": "Baraja Apilada",
+          "moods": [
+            "playful"
+          ],
+          "printSupport": false
+        },
+        {
+          "id": "gallery-contact-grid",
+          "label": "Grilla de Contacto",
+          "moods": [
+            "cinematic",
+            "editorial"
+          ],
+          "printSupport": false
+        },
+        {
+          "id": "gallery-magazine-spread",
+          "label": "Doble Página de Revista",
+          "moods": [
+            "editorial",
+            "luxury"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "gallery-full-slider",
+          "label": "Franja a Pantalla Completa",
+          "moods": [
+            "cinematic",
+            "modern"
+          ],
+          "printSupport": false
+        },
+        {
+          "id": "gallery-scrapbook-wall",
+          "label": "Pared de Recortes",
+          "moods": [
+            "romantic",
+            "playful"
+          ],
+          "printSupport": false
+        }
+      ]
+    },
+    {
+      "type": "dress-code",
+      "label": "Vestimenta",
+      "requiredFeature": "dressCode",
+      "dataBindings": [
+        "dressCode"
+      ],
+      "styles": [
+        {
+          "id": "dress-palette-swatches",
+          "label": "Paleta de Colores",
+          "primitive": "swatches",
+          "moods": [
+            "modern"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "dress-formal-badge",
+          "label": "Insignia Formal",
+          "primitive": "badge-row",
+          "moods": [
+            "luxury",
+            "classic"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "dress-icon-guide",
+          "label": "Guía con Iconos",
+          "primitive": "badge-row",
+          "moods": [
+            "playful"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "dress-editorial-typographic",
+          "label": "Tipográfico Editorial",
+          "primitive": "minimal-text",
+          "moods": [
+            "editorial"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "dress-botanical-note",
+          "label": "Nota Botánica",
+          "primitive": "minimal-text",
+          "moods": [
+            "botanical"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "dress-minimal-line",
+          "label": "Línea Minimalista",
+          "primitive": "minimal-text",
+          "moods": [
+            "minimal"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "dress-passport-visa",
+          "label": "Visa de Pasaporte",
+          "primitive": "badge-row",
+          "moods": [
+            "travel"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "dress-celebration-chips",
+          "label": "Chips de Celebración",
+          "primitive": "swatches",
+          "moods": [
+            "playful"
+          ],
+          "printSupport": false
+        }
+      ]
+    },
+    {
+      "type": "rsvp",
+      "label": "Confirmación",
+      "requiredFeature": "rsvp",
+      "dataBindings": [
+        "rsvp"
+      ],
+      "styles": [
+        {
+          "id": "rsvp-elegant-buttons",
+          "label": "Botones Elegantes",
+          "primitive": "cta-card",
+          "moods": [
+            "classic"
+          ],
+          "printSupport": false
+        },
+        {
+          "id": "rsvp-ticket-tear",
+          "label": "Boleto Desprendible",
+          "primitive": "ticket-cta",
+          "moods": [
+            "travel"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "rsvp-form-card",
+          "label": "Tarjeta de Formulario",
+          "primitive": "form-card",
+          "moods": [
+            "modern"
+          ],
+          "printSupport": false
+        },
+        {
+          "id": "rsvp-botanical-envelope",
+          "label": "Sobre Botánico",
+          "primitive": "cta-card",
+          "moods": [
+            "botanical"
+          ],
+          "printSupport": false
+        },
+        {
+          "id": "rsvp-minimal-line",
+          "label": "Línea Minimalista",
+          "primitive": "minimal-cta",
+          "moods": [
+            "minimal"
+          ],
+          "printSupport": false
+        },
+        {
+          "id": "rsvp-celebration-badge",
+          "label": "Insignia de Celebración",
+          "primitive": "cta-card",
+          "moods": [
+            "playful"
+          ],
+          "printSupport": false
+        },
+        {
+          "id": "rsvp-passport-stamp",
+          "label": "Sello de Pasaporte",
+          "primitive": "ticket-cta",
+          "moods": [
+            "travel"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "rsvp-editorial-block",
+          "label": "Bloque Editorial",
+          "primitive": "minimal-cta",
+          "moods": [
+            "editorial"
+          ],
+          "printSupport": false
+        }
+      ]
+    },
+    {
+      "type": "gifts",
+      "label": "Regalos",
+      "requiredFeature": "gifts",
+      "dataBindings": [
+        "gifts"
+      ],
+      "styles": [
+        {
+          "id": "gift-luxury-cards",
+          "label": "Tarjetas de Lujo",
+          "primitive": "info-card",
+          "moods": [
+            "luxury"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "gift-envelope-rain",
+          "label": "Lluvia de Sobres",
+          "primitive": "info-card",
+          "moods": [
+            "classic"
+          ],
+          "printSupport": false
+        },
+        {
+          "id": "gift-minimal-text",
+          "label": "Texto Minimalista",
+          "primitive": "minimal-text",
+          "moods": [
+            "minimal"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "gift-botanical-list",
+          "label": "Lista Botánica",
+          "primitive": "info-card",
+          "moods": [
+            "botanical"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "gift-registry-badges",
+          "label": "Insignias de Registro",
+          "primitive": "badge-row",
+          "moods": [
+            "modern"
+          ],
+          "printSupport": false
+        },
+        {
+          "id": "gift-wine-label",
+          "label": "Etiqueta de Vino",
+          "primitive": "info-card",
+          "moods": [
+            "wine",
+            "luxury"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "gift-passport-note",
+          "label": "Nota de Pasaporte",
+          "primitive": "minimal-text",
+          "moods": [
+            "travel"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "gift-editorial-block",
+          "label": "Bloque Editorial",
+          "primitive": "minimal-text",
+          "moods": [
+            "editorial"
+          ],
+          "printSupport": true
+        }
+      ]
+    },
+    {
+      "type": "qr",
+      "label": "Acceso QR",
+      "requiredFeature": "qrCards",
+      "dataBindings": [
+        "event.publicUrl"
+      ],
+      "styles": [
+        {
+          "id": "qr-card-access",
+          "label": "Pase Digital",
+          "primitive": "qr-card",
+          "moods": [
+            "classic"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "qr-ticket-stub",
+          "label": "Talón de Boleto",
+          "primitive": "qr-ticket",
+          "moods": [
+            "travel"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "qr-passport-stamp",
+          "label": "Sello de Pasaporte",
+          "primitive": "qr-ticket",
+          "moods": [
+            "travel"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "qr-wine-label",
+          "label": "Etiqueta de Vino",
+          "primitive": "qr-card",
+          "moods": [
+            "wine",
+            "luxury"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "qr-minimal-centered",
+          "label": "Centrado Minimalista",
+          "primitive": "qr-minimal",
+          "moods": [
+            "minimal"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "qr-botanical-frame",
+          "label": "Marco Botánico",
+          "primitive": "qr-card",
+          "moods": [
+            "botanical"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "qr-editorial-block",
+          "label": "Bloque Editorial",
+          "primitive": "qr-minimal",
+          "moods": [
+            "editorial"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "qr-celebration-badge",
+          "label": "Insignia de Celebración",
+          "primitive": "qr-ticket",
+          "moods": [
+            "playful"
+          ],
+          "printSupport": true
+        }
+      ]
+    },
+    {
+      "type": "music",
+      "label": "Música",
+      "requiredFeature": "music",
+      "dataBindings": [
+        "media.music",
+        "media.spotifyUrl",
+        "media.musicSource"
+      ],
+      "styles": [
+        {
+          "id": "music-playlist-card",
+          "label": "Tarjeta de Playlist",
+          "primitive": "info-card",
+          "moods": [
+            "modern"
+          ],
+          "printSupport": false
+        },
+        {
+          "id": "music-vinyl-badge",
+          "label": "Insignia de Vinil",
+          "primitive": "badge-row",
+          "moods": [
+            "vintage"
+          ],
+          "printSupport": false
+        },
+        {
+          "id": "music-note-divider",
+          "label": "Divisor de Notas",
+          "primitive": "minimal-text",
+          "moods": [
+            "classic"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "music-minimal-link",
+          "label": "Enlace Minimalista",
+          "primitive": "minimal-cta",
+          "moods": [
+            "minimal"
+          ],
+          "printSupport": false
+        },
+        {
+          "id": "music-editorial-credits",
+          "label": "Créditos Editoriales",
+          "primitive": "minimal-text",
+          "moods": [
+            "editorial"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "music-celebration-dj",
+          "label": "Nota de DJ Festiva",
+          "primitive": "badge-row",
+          "moods": [
+            "playful"
+          ],
+          "printSupport": false
+        }
+      ]
+    },
+    {
+      "type": "footer",
+      "label": "Cierre",
+      "requiredFeature": "invitation",
+      "dataBindings": [
+        "couple",
+        "event"
+      ],
+      "styles": [
+        {
+          "id": "footer-monogram",
+          "label": "Monograma Ceremonial",
+          "primitive": "centered",
+          "moods": [
+            "classic"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "footer-minimal-signoff",
+          "label": "Cierre Minimalista",
+          "primitive": "centered",
+          "moods": [
+            "minimal"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "footer-botanical-close",
+          "label": "Cierre Botánico",
+          "primitive": "centered",
+          "moods": [
+            "botanical"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "footer-editorial-colophon",
+          "label": "Colofón Editorial",
+          "primitive": "colophon",
+          "moods": [
+            "editorial"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "footer-passport-exit",
+          "label": "Sello de Salida",
+          "primitive": "colophon",
+          "moods": [
+            "travel"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "footer-celebration-confetti",
+          "label": "Confeti de Celebración",
+          "primitive": "centered",
+          "moods": [
+            "playful"
+          ],
+          "printSupport": false
+        },
+        {
+          "id": "footer-wine-label",
+          "label": "Etiqueta de Vino",
+          "primitive": "colophon",
+          "moods": [
+            "wine"
+          ],
+          "printSupport": true
+        },
+        {
+          "id": "footer-celestial",
+          "label": "Cierre Celestial",
+          "primitive": "centered",
+          "moods": [
+            "celestial"
+          ],
+          "printSupport": true
+        }
+      ]
+    }
+  ]
+}

@@ -1,4 +1,51 @@
-# EventStudio 6.14.2-rc.30
+# EventStudio 6.16.0-rc.40
+
+## RC40 — Experiencia coherente y portada reutilizable
+
+Las Recipes conservan paleta/textura/composición, mientras Apertura/Recorrido/Movimiento/Álbum seleccionados en el panel gobiernan la experiencia. Se añade portada como fondo o panel lateral, scroll independiente y 12 Assets estáticos auditados. Ver `docs/release-notes/RELEASE_NOTES_6.16.0-rc.40.md`.
+
+## RC37 — V5 Fluidez integral
+
+Esta candidata separa DRAFT/ACTIVE/CATALOG y convierte Panel, Estudio de diseño y Sobre/Lacre en una sola sesión de edición. Añade autosave con estado, CTA explícito de Apply, memoria de contexto, inspector de elementos/bloques, Color Engine semántico compartido, permisos de catálogo granulares e ingest controlado de los dos SVG físicos recibidos de Gemini.
+
+Estado: **candidata QA**. Las suites Node ejecutables pasan; la matriz Playwright, touch real, lector de pantalla, QR impreso y PDF físico permanece `NOT_RUN` y debe completarse antes de cualquier promoción.
+
+Documentación vigente: `docs/indexes/INDEX_DOCUMENTACION_6.16.0-rc.40.md`.
+Inicio de QA: `QA_START_HERE_V6_16_0_RC40.txt`.
+Puerta automatizada disponible: `npm run test:v5`, `npm run test:security`, `npm run test:rc33:e2e` y auditoría con el perfil del paquete.
+
+## RC33 — Design Ecosystem
+
+Esta candidata convierte el crecimiento visual en `Assets + Components + Recipes + Presentation Engines`. Las 64 opciones del catálogo funcionan como Recipes editables; diseño, datos, servicios, comercio y renderizado permanecen desacoplados.
+
+- Color Studio con teoría del color y override completo de tokens.
+- Asset Library con carga bajo demanda y transformaciones X/Y/escala/rotación/z-index/opacidad/tono/motion.
+
+
+## RC36 — Resiliencia SQLite local
+
+- Detecta WAL/SHM/JOURNAL incompatibles dejados por una actualización por sobrescritura.
+- Verifica primero una copia aislada de `wedding.db`.
+- Conserva sidecars incompatibles en cuarentena; nunca los elimina ni ejecuta reseed para recuperarse.
+- La protección se limita al launcher local y no relaja `quick_check` en producción.
+
+## RC35 — Design Studio unificado y paridad cromática
+
+- Design Lab y Stationery se presentan como un solo Design Studio.
+- Stationery conserva su motor especializado pero se monta dentro del mismo workspace.
+- Constructor y publicación comparten `design-color-engine.js` para contraste semántico.
+- El servidor mantiene la validación cromática y sincroniza presentación con Recipe.
+- QA RC35 cubre 64 Recipes en móvil/escritorio, nombres largos, paletas crudas y flujo integrado.
+
+- tipografía, layout, texturas, fotografía, motion y aperturas bajo Recipe.
+- sincronización con invitación, álbum, QR/QR de mesa, papelería y Stationery.
+- música real preservada.
+- entitlements filtran componentes públicos sin destruir la Recipe privada.
+- landing Recipe-first y lacre interactivo.
+- QA Chromium desde 320 px hasta 4K.
+
+Documentación vigente: `docs/indexes/INDEX_DOCUMENTACION_RC36.md`.
+Puerta final local: `npm ci && npm run test:preproduction`.
 
 Candidata de QA construida sobre RC29. Conserva la ventana avanzada con paridad del generador maestro y corrige la integración pública de nombre, paleta y lacre.
 
@@ -14,7 +61,7 @@ Candidata de QA construida sobre RC29. Conserva la ventana avanzada con paridad 
 - El QR usa la misma paleta efectiva cuando el sobre personalizado es la identidad activa; impresión y fotos consumen la misma resolución de servidor.
 - La animación de abrir/cerrar el sobre mediante clic directo permanece intacta.
 - Regresión específica: `tests/rc30-stationery-delivery-sync.js`; QA visual pública: `tests/rc30-public-envelope-visual.py`; QA visual del estudio: `tests/rc28-stationery-studio-visual.py`.
-- Referencia vigente: `docs/indexes/INDEX_DOCUMENTACION_RC30.md`.
+- Referencia histórica RC30: `docs/indexes/INDEX_DOCUMENTACION_RC30.md`.
 - Puertas finales de promoción: `npm ci`, `npm test`, `npm run test:visual`, `npm run audit` y `npm audit --audit-level=moderate`. En este entorno el árbol se recibió sin `node_modules`; `npm test` se detiene en `better-sqlite3`. Consultar `docs/validation/VALIDACION_RC30.md`.
 
 ### Cambios heredados RC25
@@ -134,37 +181,44 @@ En Windows PowerShell, usa `npm.cmd` si la política impide ejecutar `npm.ps1`.
 - Para Mercado Pago: `PAYMENT_PROVIDER=mercadopago`, `MERCADOPAGO_ACCESS_TOKEN` y `MERCADOPAGO_WEBHOOK_SECRET`; configurar el webhook HTTPS `/api/payments/mercadopago/webhook`.
 - Para WhatsApp Cloud, completar las variables `WHATSAPP_*` descritas en `.env.example`; una configuración parcial permanece bloqueada.
 
-## Validación RC30
+## Validación 6.16.0-rc.39
 
-Los contratos específicos de RC30, las regresiones RC27–RC29 y la QA visual del estudio pasaron. El estudio cubre 16/16 presets, 15/15 materiales, dos viewports y cinco escenarios de permisos. La prueba pública reproduce el caso reportado y confirma nombre correcto, paleta del sobre aplicada, un solo lacre y restauración de defaults al usar otra apertura.
+RC39 cierra los hallazgos visuales y de sincronización detectados durante la prueba manual de RC38. Se validaron 65 Recipes, 130 renders Recipe, 130 casos de legibilidad, 130 casos de paridad cromática, 65 vistas del catálogo del Design Lab, 175,500 combinaciones lógicas de presentación, 1,300 proyecciones rol/perfil, 139 controles con wiring verificable, 64 casos de contenido largo, 32 casos de visibilidad por feature y pruebas focales de responsive, Stationery, álbum y apertura pública. En las matrices cubiertas se obtuvo overflow 0.
 
-La suite completa `npm test` no se marca como PASS en este paquete: el árbol de intercambio no contiene `node_modules` y se detiene al cargar `better-sqlite3` en `tests/data-safety.js`. La promoción a producción exige repetir las puertas completas después de `npm ci`. Ver `docs/validation/VALIDACION_RC30.md`.
+RC39 añade paridad Recipe↔apertura↔Stationery, autosave transparente del sobre/lacre antes de Apply, retorno determinista desde Preview, reutilización de datos reales del evento en el canvas, filtrado de referencias multimedia borradas, reutilización de portada existente, colapso real de servicios ocultos, controles tipográficos visibles y Color Studio sobre la paleta efectiva del DRAFT. El propietario/desarrollador puede validar experiencias Store sin conceder derechos comerciales al cliente.
+
+La BD QA incluida pasó `quick_check=ok` y conserva 4 usuarios, 2 eventos y 43 tablas sin ejecutar `seed`. La suite que exige servidor Express real y dependencias npm **no se marca como PASS** en este paquete porque este runtime no dispone de `better-sqlite3` y no pudo completar `npm ci`. Antes de producción ejecutar `npm ci`, `npm run test:preproduction`, `npm audit --audit-level=moderate` y completar el checklist físico RC39. Ver `docs/validation/VALIDACION_6.16.0-rc.39.md`.
+
+### Histórico: Validación RC38
+
+RC38 endureció el Estudio de diseño y la primera paridad amplia entre catálogo, borrador, apertura, invitación pública y Stationery. Sus evidencias se conservan como antecedente; ante discrepancias, prevalecen los documentos RC39.
+
+### Histórico: Validación RC33
+
+RC33 consolidó Recipes/Assets/Components, matrices de entitlement y la primera cobertura visual amplia del Design Lab.
 
 ## Histórico: Validación RC21
 
-Pruebas automatizadas pasadas en esta entrega:
-
-```text
-npm test
-npm run audit
-```
-
-La suite incluye contratos de todas las aperturas, preferencias de movimiento, responsive, autenticación, aislamiento, 1,200 usuarios, perfiles, cortesías, pagos, traducción, WhatsApp, datos, migración, fotos, RSVP, QR/PDF y respaldo/restauración. Consulta `docs/validation/VALIDACION_RC21.md` para evidencia y límites. La inspección visual física en la matriz final de navegadores/dispositivos continúa siendo necesaria antes de promover esta candidata a estable.
+La línea RC21 conserva pruebas de autenticación, aislamiento, 1,200 usuarios, perfiles, cortesías, pagos, traducción, WhatsApp, datos, migración, fotos, RSVP, QR/PDF y respaldo/restauración como antecedente. Consulta `docs/validation/VALIDACION_RC21.md`.
 
 ## Documentación
 
-Índice vigente: [`docs/indexes/INDEX_DOCUMENTACION_RC30.md`](docs/indexes/INDEX_DOCUMENTACION_RC30.md)
+Índice vigente: [`docs/indexes/INDEX_DOCUMENTACION_6.16.0-rc.39.md`](docs/indexes/INDEX_DOCUMENTACION_6.16.0-rc.39.md)
 
 Documentos clave:
 
-- `docs/analysis/ADR_STATIONERY_DELIVERY_SYNC_RC30.md`
-- `docs/audits/AUDITORIA_RC30.md`
-- `docs/validation/VALIDACION_RC30.md`
-- `docs/release-notes/RELEASE_NOTES_V6_14_2_RC30.md`
-- `docs/validation/evidence/RC30_PUBLIC_ENVELOPE_VISUAL.json`
-- `docs/validation/evidence/RC30_STATIONERY_INDEX_PARITY_VISUAL.json`
+- `docs/analysis/ADR_DESIGN_PARITY_DATA_AUTOSAVE_RC39.md`
+- `docs/audits/AUDITORIA_6.16.0-rc.39.md`
+- `docs/validation/VALIDACION_6.16.0-rc.39.md`
+- `docs/traceability/TEST_COVERAGE_MATRIX_6.16.0-rc.39.md`
+- `docs/checklists/QA_FISICO_FINAL_6.16.0-rc.39.md`
+- `docs/release-notes/RELEASE_NOTES_6.16.0-rc.39.md`
+- `docs/validation/evidence/RC39_AUTOMATED_QA_SUMMARY.json`
+- `docs/validation/evidence/RC39_DB_INTEGRITY.json`
+- `docs/validation/evidence/RC39_DESIGN_PARITY_VISUAL.json`
+- `docs/validation/evidence/RC39_DESIGN_LAB_CATALOG_VISUAL.json`
 
-El historial anterior, incluida la línea RC21 de seguridad/producción, permanece bajo `docs/` y conserva su valor como antecedente.
+El historial anterior permanece bajo `docs/` y conserva su valor como antecedente.
 
 ## Nota sobre tipografías en el paquete de intercambio
 

@@ -1,0 +1,20 @@
+EVENTSTUDIO 6.15.0-rc.35 — QA FÍSICO
+
+1. Este paquete QA puede incluir una copia preservada de la BD del evento.
+2. No ejecutes `npm run seed` sobre esa BD.
+3. Instala dependencias con `npm ci`.
+4. Inicia localmente con el flujo habitual del proyecto.
+5. Prueba especialmente:
+   - Administración > Apertura y experiencia.
+   - Sobre personalizable > Design Studio > Editar sobre y lacre.
+   - Regreso al constructor sin abrir otra pestaña.
+   - Aplicar cambios y abrir preview público.
+   - Contraste de nombre/textos con Recipes claras y oscuras.
+   - Nombres largos en apertura y hero.
+   - Música play/pause si asignas una pista.
+   - Galería, RSVP, idioma, QR, Stationery y módulos comprados.
+6. Antes de Railway ejecuta:
+   npm run test:preproduction
+   npm audit --audit-level=moderate
+
+El contenedor de construcción no pudo completar `npm ci` por timeout de red; por eso el E2E servidor/SQLite/checkout sigue siendo un gate local obligatorio antes de producción.

@@ -1,0 +1,156 @@
+{
+  "schema": "eventstudio.typography-presets.v1",
+  "heading": [
+    {
+      "id": "georgia",
+      "label": "Georgia elegante",
+      "css": "Georgia, \"Times New Roman\", serif",
+      "pdfRole": "serif"
+    },
+    {
+      "id": "baskerville",
+      "label": "Baskerville clásica",
+      "css": "Baskerville, \"Palatino Linotype\", serif",
+      "pdfRole": "serif"
+    },
+    {
+      "id": "garamond",
+      "label": "Garamond romántica",
+      "css": "Garamond, \"Times New Roman\", serif",
+      "pdfRole": "serif"
+    },
+    {
+      "id": "didot",
+      "label": "Didot editorial",
+      "css": "Didot, \"Bodoni MT\", serif",
+      "pdfRole": "serif"
+    },
+    {
+      "id": "classic",
+      "label": "Palatino ceremonial",
+      "css": "\"Palatino Linotype\", \"Book Antiqua\", serif",
+      "pdfRole": "serif"
+    },
+    {
+      "id": "great-vibes",
+      "label": "Great Vibes caligráfica",
+      "css": "\"Great Vibes\", Georgia, cursive",
+      "pdfRole": "serif"
+    },
+    {
+      "id": "cormorant",
+      "label": "Cormorant romántica",
+      "css": "\"Cormorant Garamond\", Georgia, serif",
+      "pdfRole": "event-serif"
+    },
+    {
+      "id": "playfair",
+      "label": "Playfair editorial",
+      "css": "\"Playfair Display\", Georgia, serif",
+      "pdfRole": "serif"
+    },
+    {
+      "id": "cinzel",
+      "label": "Cinzel ceremonial",
+      "css": "Cinzel, Georgia, serif",
+      "pdfRole": "serif"
+    },
+    {
+      "id": "segoe-script",
+      "label": "Segoe Script manuscrita",
+      "css": "\"Segoe Script\", \"Lucida Handwriting\", cursive",
+      "pdfRole": "serif"
+    },
+    {
+      "id": "lucida-calligraphy",
+      "label": "Lucida caligráfica",
+      "css": "\"Lucida Calligraphy\", \"Segoe Script\", cursive",
+      "pdfRole": "serif"
+    },
+    {
+      "id": "brush-script",
+      "label": "Brush Script fluida",
+      "css": "\"Brush Script MT\", \"Segoe Script\", cursive",
+      "pdfRole": "serif"
+    },
+    {
+      "id": "bodoni",
+      "label": "Bodoni editorial",
+      "css": "\"Bodoni MT\", Didot, Georgia, serif",
+      "pdfRole": "serif"
+    },
+    {
+      "id": "century",
+      "label": "Century romántica",
+      "css": "\"Century Schoolbook\", Century, Georgia, serif",
+      "pdfRole": "serif"
+    }
+  ],
+  "body": [
+    {
+      "id": "system",
+      "label": "Sistema limpia",
+      "css": "Inter, system-ui, -apple-system, \"Segoe UI\", sans-serif",
+      "pdfRole": "sans"
+    },
+    {
+      "id": "humanist",
+      "label": "Humanista amable",
+      "css": "\"Trebuchet MS\", \"Segoe UI\", sans-serif",
+      "pdfRole": "sans"
+    },
+    {
+      "id": "classic",
+      "label": "Clásica legible",
+      "css": "\"Palatino Linotype\", \"Book Antiqua\", serif",
+      "pdfRole": "serif"
+    },
+    {
+      "id": "lora",
+      "label": "Lora cálida",
+      "css": "Lora, Georgia, serif",
+      "pdfRole": "serif"
+    },
+    {
+      "id": "montserrat",
+      "label": "Montserrat moderna",
+      "css": "Montserrat, Inter, system-ui, sans-serif",
+      "pdfRole": "event-sans"
+    },
+    {
+      "id": "cormorant",
+      "label": "Cormorant elegante",
+      "css": "\"Cormorant Garamond\", Georgia, serif",
+      "pdfRole": "event-serif"
+    },
+    {
+      "id": "candara",
+      "label": "Candara suave",
+      "css": "Candara, Calibri, \"Segoe UI\", sans-serif",
+      "pdfRole": "sans"
+    },
+    {
+      "id": "bookman",
+      "label": "Bookman cálida",
+      "css": "\"Bookman Old Style\", Georgia, serif",
+      "pdfRole": "serif"
+    },
+    {
+      "id": "century",
+      "label": "Century legible",
+      "css": "\"Century Schoolbook\", Century, Georgia, serif",
+      "pdfRole": "serif"
+    }
+  ],
+  "scales": [
+    "compact",
+    "comfortable",
+    "large"
+  ],
+  "nameCases": [
+    "preserve",
+    "title",
+    "uppercase",
+    "small-caps"
+  ]
+}

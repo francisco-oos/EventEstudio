@@ -1,0 +1,74 @@
+[
+  {
+    "id": "rsvp-elegant-buttons",
+    "label": "Botones Elegantes",
+    "primitive": "cta-card",
+    "moods": [
+      "classic"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "rsvp-ticket-tear",
+    "label": "Boleto Desprendible",
+    "primitive": "ticket-cta",
+    "moods": [
+      "travel"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "rsvp-form-card",
+    "label": "Tarjeta de Formulario",
+    "primitive": "form-card",
+    "moods": [
+      "modern"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "rsvp-botanical-envelope",
+    "label": "Sobre Botánico",
+    "primitive": "cta-card",
+    "moods": [
+      "botanical"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "rsvp-minimal-line",
+    "label": "Línea Minimalista",
+    "primitive": "minimal-cta",
+    "moods": [
+      "minimal"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "rsvp-celebration-badge",
+    "label": "Insignia de Celebración",
+    "primitive": "cta-card",
+    "moods": [
+      "playful"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "rsvp-passport-stamp",
+    "label": "Sello de Pasaporte",
+    "primitive": "ticket-cta",
+    "moods": [
+      "travel"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "rsvp-editorial-block",
+    "label": "Bloque Editorial",
+    "primitive": "minimal-cta",
+    "moods": [
+      "editorial"
+    ],
+    "printSupport": false
+  }
+]

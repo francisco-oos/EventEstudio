@@ -1,0 +1,937 @@
+{
+  "devices": [
+    [
+      320,
+      568
+    ],
+    [
+      430,
+      932
+    ],
+    [
+      768,
+      1024
+    ],
+    [
+      1024,
+      768
+    ],
+    [
+      1366,
+      768
+    ],
+    [
+      1920,
+      1080
+    ],
+    [
+      2560,
+      1440
+    ],
+    [
+      3840,
+      2160
+    ]
+  ],
+  "representativeRecipes": 8,
+  "cases": 64,
+  "failures": [],
+  "rows": [
+    {
+      "recipe": "botanical-scroll",
+      "layout": "botanical",
+      "viewport": [
+        320,
+        568
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "daisy-shadow-studio",
+      "layout": "split",
+      "viewport": [
+        320,
+        568
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "photo-scrapbook",
+      "layout": "scrapbook",
+      "viewport": [
+        320,
+        568
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "cinematic-vows",
+      "layout": "cinematic",
+      "viewport": [
+        320,
+        568
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "destination-passport",
+      "layout": "passport",
+      "viewport": [
+        320,
+        568
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "pixel-quest",
+      "layout": "pixel",
+      "viewport": [
+        320,
+        568
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "family-memories",
+      "layout": "family-tree",
+      "viewport": [
+        320,
+        568
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "magazine-cover",
+      "layout": "editorial",
+      "viewport": [
+        320,
+        568
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "botanical-scroll",
+      "layout": "botanical",
+      "viewport": [
+        430,
+        932
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "daisy-shadow-studio",
+      "layout": "split",
+      "viewport": [
+        430,
+        932
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "photo-scrapbook",
+      "layout": "scrapbook",
+      "viewport": [
+        430,
+        932
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "cinematic-vows",
+      "layout": "cinematic",
+      "viewport": [
+        430,
+        932
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "destination-passport",
+      "layout": "passport",
+      "viewport": [
+        430,
+        932
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "pixel-quest",
+      "layout": "pixel",
+      "viewport": [
+        430,
+        932
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "family-memories",
+      "layout": "family-tree",
+      "viewport": [
+        430,
+        932
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "magazine-cover",
+      "layout": "editorial",
+      "viewport": [
+        430,
+        932
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "botanical-scroll",
+      "layout": "botanical",
+      "viewport": [
+        768,
+        1024
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "daisy-shadow-studio",
+      "layout": "split",
+      "viewport": [
+        768,
+        1024
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "photo-scrapbook",
+      "layout": "scrapbook",
+      "viewport": [
+        768,
+        1024
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "cinematic-vows",
+      "layout": "cinematic",
+      "viewport": [
+        768,
+        1024
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "destination-passport",
+      "layout": "passport",
+      "viewport": [
+        768,
+        1024
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "pixel-quest",
+      "layout": "pixel",
+      "viewport": [
+        768,
+        1024
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "family-memories",
+      "layout": "family-tree",
+      "viewport": [
+        768,
+        1024
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "magazine-cover",
+      "layout": "editorial",
+      "viewport": [
+        768,
+        1024
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "botanical-scroll",
+      "layout": "botanical",
+      "viewport": [
+        1024,
+        768
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "daisy-shadow-studio",
+      "layout": "split",
+      "viewport": [
+        1024,
+        768
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "photo-scrapbook",
+      "layout": "scrapbook",
+      "viewport": [
+        1024,
+        768
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "cinematic-vows",
+      "layout": "cinematic",
+      "viewport": [
+        1024,
+        768
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "destination-passport",
+      "layout": "passport",
+      "viewport": [
+        1024,
+        768
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "pixel-quest",
+      "layout": "pixel",
+      "viewport": [
+        1024,
+        768
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "family-memories",
+      "layout": "family-tree",
+      "viewport": [
+        1024,
+        768
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "magazine-cover",
+      "layout": "editorial",
+      "viewport": [
+        1024,
+        768
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "botanical-scroll",
+      "layout": "botanical",
+      "viewport": [
+        1366,
+        768
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "daisy-shadow-studio",
+      "layout": "split",
+      "viewport": [
+        1366,
+        768
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "photo-scrapbook",
+      "layout": "scrapbook",
+      "viewport": [
+        1366,
+        768
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "cinematic-vows",
+      "layout": "cinematic",
+      "viewport": [
+        1366,
+        768
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "destination-passport",
+      "layout": "passport",
+      "viewport": [
+        1366,
+        768
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "pixel-quest",
+      "layout": "pixel",
+      "viewport": [
+        1366,
+        768
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "family-memories",
+      "layout": "family-tree",
+      "viewport": [
+        1366,
+        768
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "magazine-cover",
+      "layout": "editorial",
+      "viewport": [
+        1366,
+        768
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "botanical-scroll",
+      "layout": "botanical",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "daisy-shadow-studio",
+      "layout": "split",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "photo-scrapbook",
+      "layout": "scrapbook",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "cinematic-vows",
+      "layout": "cinematic",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "destination-passport",
+      "layout": "passport",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "pixel-quest",
+      "layout": "pixel",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "family-memories",
+      "layout": "family-tree",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "magazine-cover",
+      "layout": "editorial",
+      "viewport": [
+        1920,
+        1080
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "botanical-scroll",
+      "layout": "botanical",
+      "viewport": [
+        2560,
+        1440
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "daisy-shadow-studio",
+      "layout": "split",
+      "viewport": [
+        2560,
+        1440
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "photo-scrapbook",
+      "layout": "scrapbook",
+      "viewport": [
+        2560,
+        1440
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "cinematic-vows",
+      "layout": "cinematic",
+      "viewport": [
+        2560,
+        1440
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "destination-passport",
+      "layout": "passport",
+      "viewport": [
+        2560,
+        1440
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "pixel-quest",
+      "layout": "pixel",
+      "viewport": [
+        2560,
+        1440
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "family-memories",
+      "layout": "family-tree",
+      "viewport": [
+        2560,
+        1440
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "magazine-cover",
+      "layout": "editorial",
+      "viewport": [
+        2560,
+        1440
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "botanical-scroll",
+      "layout": "botanical",
+      "viewport": [
+        3840,
+        2160
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "daisy-shadow-studio",
+      "layout": "split",
+      "viewport": [
+        3840,
+        2160
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "photo-scrapbook",
+      "layout": "scrapbook",
+      "viewport": [
+        3840,
+        2160
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "cinematic-vows",
+      "layout": "cinematic",
+      "viewport": [
+        3840,
+        2160
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "destination-passport",
+      "layout": "passport",
+      "viewport": [
+        3840,
+        2160
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "pixel-quest",
+      "layout": "pixel",
+      "viewport": [
+        3840,
+        2160
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "family-memories",
+      "layout": "family-tree",
+      "viewport": [
+        3840,
+        2160
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "magazine-cover",
+      "layout": "editorial",
+      "viewport": [
+        3840,
+        2160
+      ],
+      "overflow": 0,
+      "offenders": [],
+      "musicLanguageOverlap": 0,
+      "failed": false,
+      "errors": [],
+      "ok": true
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+[
+  {
+    "id": "qr-card-access",
+    "label": "Pase Digital",
+    "primitive": "qr-card",
+    "moods": [
+      "classic"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "qr-ticket-stub",
+    "label": "Talón de Boleto",
+    "primitive": "qr-ticket",
+    "moods": [
+      "travel"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "qr-passport-stamp",
+    "label": "Sello de Pasaporte",
+    "primitive": "qr-ticket",
+    "moods": [
+      "travel"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "qr-wine-label",
+    "label": "Etiqueta de Vino",
+    "primitive": "qr-card",
+    "moods": [
+      "wine",
+      "luxury"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "qr-minimal-centered",
+    "label": "Centrado Minimalista",
+    "primitive": "qr-minimal",
+    "moods": [
+      "minimal"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "qr-botanical-frame",
+    "label": "Marco Botánico",
+    "primitive": "qr-card",
+    "moods": [
+      "botanical"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "qr-editorial-block",
+    "label": "Bloque Editorial",
+    "primitive": "qr-minimal",
+    "moods": [
+      "editorial"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "qr-celebration-badge",
+    "label": "Insignia de Celebración",
+    "primitive": "qr-ticket",
+    "moods": [
+      "playful"
+    ],
+    "printSupport": true
+  }
+]

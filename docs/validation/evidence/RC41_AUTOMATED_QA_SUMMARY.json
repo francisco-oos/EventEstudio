@@ -1,0 +1,25 @@
+{
+  "version": "6.16.0-rc.41",
+  "status": "qa-candidate-advanced",
+  "syntax": {"javascriptFilesChecked": 101, "failures": 0},
+  "catalog": {"recipes": 65, "assets": 31, "skins": 103, "pass": true},
+  "coherence": {"presentationCombinations": 175500, "roleProfileProjections": 1300, "controlsWired": 139, "pass": true},
+  "visual": {
+    "recipeCases": 130,
+    "recipeFailures": 0,
+    "colorParityCases": 130,
+    "colorParityFailures": 0,
+    "designLabCatalogCases": 65,
+    "responsiveCases": 9,
+    "featureVisibilityCases": 32,
+    "longContentCases": 64,
+    "albumCases": 2,
+    "rc41Cases": 4,
+    "rc41Failures": 0
+  },
+  "stationery": {"rc27ToRc30": "PASS", "visualCases": 2, "profileCases": 5, "minMeasuredFps": 60.0029},
+  "database": {"quickCheck": "ok", "tables": 43, "users": 4, "events": 2, "roles": {"owner":1,"developer":1,"client":2}},
+  "heroRecovery": {"pass": true, "strategy": "same-directory + same-original-name + unique candidate only"},
+  "blocked": ["npm ci / full Express E2E", "npm audit online"],
+  "blockedReason": "dependency installation transport timeout in this runtime"
+}

@@ -806,11 +806,11 @@ button:disabled{opacity:.58;cursor:not-allowed}
 .music-playback-status{position:fixed;right:1rem;bottom:4.8rem;z-index:41;max-width:min(360px,calc(100vw - 2rem));padding:.7rem .9rem;border-radius:12px;color:white;background:#202733;box-shadow:0 10px 30px #0004;font-size:.85rem}
 .name-case-uppercase{text-transform:uppercase}
 .name-case-small-caps{font-variant-caps:small-caps;letter-spacing:.035em}
-.smart-event-name{overflow-wrap:anywhere;text-wrap:balance}
-.hero .smart-event-name.long-name{font-size:clamp(2.5rem,7vw,5rem)}
-.hero .smart-event-name.extra-long-name{font-size:clamp(2rem,5.8vw,4rem)}
-.opening-copy .smart-event-name.long-name{font-size:clamp(2rem,5.8vw,4rem)}
-.opening-copy .smart-event-name.extra-long-name{font-size:clamp(1.7rem,4.8vw,3.2rem)}
+.smart-event-name{width:100%;min-width:0;max-width:100%;font-size:var(--es-smart-name-size,inherit);overflow-wrap:normal;word-break:keep-all;hyphens:none;text-wrap:balance}.smart-event-name.smart-name-single-line{white-space:nowrap}.smart-event-name.smart-name-multiline{white-space:normal}
+.hero .smart-event-name.long-name{font-size:var(--es-smart-name-size,clamp(2.5rem,7vw,5rem))}
+.hero .smart-event-name.extra-long-name{font-size:var(--es-smart-name-size,clamp(2rem,5.8vw,4rem))}
+.opening-copy .smart-event-name.long-name{font-size:var(--es-smart-name-size,clamp(2rem,5.8vw,4rem))}
+.opening-copy .smart-event-name.extra-long-name{font-size:var(--es-smart-name-size,clamp(1.7rem,4.8vw,3.2rem))}
 .workspace-loading #adminApp:not(.hidden) .admin-main:after{content:"Actualizando evento…";position:fixed;inset:0;z-index:900;display:grid;place-items:center;padding:1rem;color:#fff;background:#151b26b8;backdrop-filter:blur(3px);font-size:1.05rem;font-weight:800}
 
 @media(max-width:760px), (hover:none) and (pointer:coarse) and (max-width:1100px){
@@ -932,7 +932,7 @@ button:disabled{opacity:.58;cursor:not-allowed}
 .catalog-languages{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:2rem;background:#e8edf2}.catalog-languages>div:first-child{max-width:650px}.language-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:.8rem}.language-cards article{display:grid;place-items:center;gap:.4rem;aspect-ratio:1;border:1px solid #fff;border-radius:50%;background:#ffffffa8;box-shadow:0 14px 30px #20263310}.language-cards strong{font:600 2.2rem/1 Georgia,serif;color:var(--accent)}.language-cards span{font-size:.78rem;font-weight:800}
 .catalog-footer{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;padding:2rem clamp(1rem,7vw,7rem);background:#151b26;color:#fff}.catalog-footer span{color:#aeb7c7}
 @media(max-width:900px){.catalog-nav nav>a:not(.secondary-btn){display:none}.catalog-hero{grid-template-columns:1fr;padding-top:4rem}.catalog-hero-cards{min-height:450px}.catalog-section-heading,.addon-builder,.catalog-languages{grid-template-columns:1fr}.catalog-plan-grid{grid-template-columns:1fr}.catalog-plan-card.featured{transform:none}.builder-summary{position:static}.builder-addons{grid-template-columns:1fr}}
-@media(max-width:620px){.catalog-hero{min-height:auto}.catalog-hero h1{font-size:clamp(2.7rem,14vw,4.4rem)}.catalog-hero-cards{min-height:380px}.hero-sample{width:220px}.hero-sample:nth-child(1){right:0}.hero-sample:nth-child(2){left:-25px}.hero-sample:nth-child(3){right:8px}.catalog-section{padding:3.5rem .85rem}.catalog-filters,.template-catalog-toolbar,.addon-grant-grid{grid-template-columns:1fr}.catalog-theme-grid{grid-template-columns:1fr}.catalog-plan-grid{grid-template-columns:1fr}.language-cards{gap:.35rem}.language-cards article{border-radius:24px}.register-plan-cards{grid-template-columns:1fr}.register-theme-choice{grid-template-columns:44px 1fr}.register-theme-choice .mini-btn{grid-column:1/-1}.public-language-switcher{top:auto;bottom:max(1rem,env(safe-area-inset-bottom));right:.7rem}.workspace-tools{grid-template-columns:1fr}}
+@media(max-width:620px){.catalog-hero{min-height:auto}.catalog-hero h1{font-size:clamp(2.7rem,14vw,4.4rem)}.catalog-hero-cards{min-height:380px}.hero-sample{width:220px}.hero-sample:nth-child(1){right:0}.hero-sample:nth-child(2){left:-25px}.hero-sample:nth-child(3){right:8px}.catalog-section{padding:3.5rem .85rem}.catalog-filters,.template-catalog-toolbar,.addon-grant-grid{grid-template-columns:1fr}.catalog-theme-grid{grid-template-columns:1fr}.catalog-plan-grid{grid-template-columns:1fr}.language-cards{gap:.35rem}.language-cards article{border-radius:24px}.register-plan-cards{grid-template-columns:1fr}.register-theme-choice{grid-template-columns:44px 1fr}.register-theme-choice .mini-btn{grid-column:1/-1}.public-language-switcher{top:auto;bottom:calc(5rem + env(safe-area-inset-bottom));right:.7rem}.workspace-tools{grid-template-columns:1fr}}
 
 /* Catálogo comercial contextual 6.14.2 RC11. */
 .developer-compact-card{display:flex;align-items:center;gap:1rem;min-height:auto;padding:.75rem 1rem}
@@ -1480,8 +1480,7 @@ body[data-motion="still"]:not(.force-motion-preview) .opening-ivory-seal .openin
 
 /*
    El nombre de la apertura de sobres se dimensiona por el ancho disponible,
-   no sólo por el número de caracteres. Esto corrige nombres como
-   "Ariana y Francisco" sin reducir la tipografía del hero principal.
+   no sólo por el número de caracteres, sin alterar la escala del hero principal.
 */
 :is(.opening-wax-envelope,.opening-floral-envelope,.opening-minimal-envelope,.opening-cinematic-fold,.opening-ivory-seal) .opening-copy{
   width:min(92vw,760px);
@@ -1492,17 +1491,18 @@ body[data-motion="still"]:not(.force-motion-preview) .opening-ivory-seal .openin
 :is(.opening-wax-envelope,.opening-floral-envelope,.opening-minimal-envelope,.opening-cinematic-fold,.opening-ivory-seal) .opening-copy .smart-event-name{
   max-width:100%;
   margin:.06em auto;
-  font-size:clamp(1.9rem,5.2vw,4.15rem);
+  font-size:var(--es-smart-name-size,clamp(1.9rem,5.2vw,4.15rem));
   line-height:1.02;
-  overflow-wrap:break-word;
-  word-break:normal;
+  overflow-wrap:normal;
+  word-break:keep-all;
+  hyphens:none;
   text-wrap:balance;
 }
 :is(.opening-wax-envelope,.opening-floral-envelope,.opening-minimal-envelope,.opening-cinematic-fold,.opening-ivory-seal) .opening-copy .smart-event-name.long-name{
-  font-size:clamp(1.8rem,4.65vw,3.55rem);
+  font-size:var(--es-smart-name-size,clamp(1.8rem,4.65vw,3.55rem));
 }
 :is(.opening-wax-envelope,.opening-floral-envelope,.opening-minimal-envelope,.opening-cinematic-fold,.opening-ivory-seal) .opening-copy .smart-event-name.extra-long-name{
-  font-size:clamp(1.65rem,4.05vw,3rem);
+  font-size:var(--es-smart-name-size,clamp(1.65rem,4.05vw,3rem));
 }
 
 @media(max-width:620px){
@@ -1511,14 +1511,14 @@ body[data-motion="still"]:not(.force-motion-preview) .opening-ivory-seal .openin
     padding-inline:.35rem;
   }
   :is(.opening-wax-envelope,.opening-floral-envelope,.opening-minimal-envelope,.opening-cinematic-fold,.opening-ivory-seal) .opening-copy .smart-event-name{
-    font-size:clamp(1.65rem,8.2vw,2.9rem);
+    font-size:var(--es-smart-name-size,clamp(1.65rem,8.2vw,2.9rem));
     line-height:1.04;
   }
   :is(.opening-wax-envelope,.opening-floral-envelope,.opening-minimal-envelope,.opening-cinematic-fold,.opening-ivory-seal) .opening-copy .smart-event-name.long-name{
-    font-size:clamp(1.55rem,7.4vw,2.55rem);
+    font-size:var(--es-smart-name-size,clamp(1.55rem,7.4vw,2.55rem));
   }
   :is(.opening-wax-envelope,.opening-floral-envelope,.opening-minimal-envelope,.opening-cinematic-fold,.opening-ivory-seal) .opening-copy .smart-event-name.extra-long-name{
-    font-size:clamp(1.45rem,6.6vw,2.25rem);
+    font-size:var(--es-smart-name-size,clamp(1.45rem,6.6vw,2.25rem));
   }
 }
 
@@ -1921,3 +1921,112 @@ body[data-motion="still"]:not(.force-motion-preview) :is(.opening-newspaper-fold
 
 /* Módulo de sello de cera dinámico y regalos opcionales. */
 .opening-seal .wax-seal-svg{width:100%;height:100%;display:block;overflow:visible}.opening-seal:has(.wax-seal-svg){background:transparent!important;box-shadow:none!important;color:inherit}.opening-seal:has(.wax-seal-svg):before{display:none!important}.gift-method-card,.gift-bank-info,.gift-openpay{margin:1.1rem auto 0;max-width:620px;padding:1rem;border:1px solid var(--line);border-radius:16px;background:color-mix(in srgb,var(--paper) 92%,var(--accent) 8%)}.gift-bank-info p{white-space:pre-line;margin:.45rem 0 0}.gift-method-card p{white-space:pre-line;margin:.5rem 0 0}.gift-registry .secondary-btn{margin-top:.75rem}.gift-persuasion-message{margin:.75rem auto .2rem;padding:.75rem .9rem;border-left:3px solid var(--accent);text-align:left;font-style:italic;line-height:1.65;background:color-mix(in srgb,var(--paper) 96%,var(--accent) 4%)}.bank-persuasion-config{display:grid;gap:.55rem}.gift-persuasion-preview{padding:.8rem;border:1px solid var(--line);border-radius:12px;background:var(--paper)}.gift-persuasion-preview p{margin:.3rem 0 0;color:var(--muted);line-height:1.55}.gift-bank-list{display:grid;grid-template-columns:minmax(110px,.4fr) 1fr;gap:.45rem .8rem;margin:.75rem 0 0;text-align:left}.gift-bank-list dt{font-weight:800;color:var(--muted)}.gift-bank-list dd{margin:0;overflow-wrap:anywhere}.gift-openpay form{margin-top:1rem;text-align:left}.gift-message-suggestions{display:flex;flex-wrap:wrap;gap:.55rem;margin:.65rem 0 .35rem}.gift-message-suggestion{appearance:none;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:999px;padding:.55rem .8rem;font-size:.82rem;cursor:pointer}.gift-message-suggestion:hover,.gift-message-suggestion:focus-visible{border-color:var(--accent);outline:none;box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 18%,transparent)}.gift-message-suggestion.custom{border-style:dashed}.gift-message-admin-preview{display:grid;gap:.6rem;margin-top:.65rem}.gift-message-admin-preview article{padding:.75rem;border:1px solid var(--line);border-radius:12px;background:var(--paper)}.gift-message-admin-preview p{margin:.25rem 0 0;color:var(--muted);font-size:.88rem}.public-link-box{display:flex;gap:.55rem;align-items:center;margin-top:1rem;max-width:760px}.public-link-box input{min-width:0;flex:1;background:rgba(255,255,255,.1);color:inherit;border:1px solid rgba(255,255,255,.18);padding:.7rem .8rem;border-radius:10px}.seal-settings-panel{margin-top:1rem}.seal-settings-panel .form-grid{margin-top:.8rem}@media(max-width:720px){.public-link-box{align-items:stretch;flex-direction:column}.gift-openpay .form-grid{grid-template-columns:1fr}}
+
+/* RC32: el catálogo usa miniaturas generadas desde la Recipe activa del catálogo. */
+.recipe-thumbnail-button{position:relative;padding:0!important;overflow:hidden}.recipe-catalog-thumbnail{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}.recipe-thumbnail-overlay{position:absolute;inset:auto .65rem .55rem;z-index:2;padding:.4rem .55rem;border-radius:9px;background:color-mix(in srgb,var(--paper,#fff) 88%,transparent);backdrop-filter:blur(6px);box-shadow:0 5px 18px #0002}.recipe-thumbnail-overlay strong,.recipe-thumbnail-overlay small{display:block;color:var(--ink,#222)}
+
+/* RC33: the collaborative album follows the same Recipe identity as the invitation. */
+.album-page.theme-recipe{background:var(--bg);color:var(--ink)}
+.album-page.theme-recipe .album-upload-card{border:1px solid var(--line);background:color-mix(in srgb,var(--paper) 96%,transparent);box-shadow:0 22px 60px color-mix(in srgb,var(--ink) 10%,transparent)}
+.album-page.theme-recipe .dropzone{border-color:color-mix(in srgb,var(--accent) 42%,var(--line));background:color-mix(in srgb,var(--paper) 92%,var(--accent) 8%)}
+.album-page.theme-recipe[data-layout="editorial"] .album-upload-card{border-left:5px solid var(--accent);border-radius:8px}
+.album-page.theme-recipe[data-layout="botanical"] .album-upload-card{border-radius:44px 12px}
+.album-page.theme-recipe[data-layout="minimal"] .album-upload-card{box-shadow:none;border-inline:0;border-radius:0}
+
+/* RC33: public landing aligned to the Recipe-first design engine. */
+.catalog-hero-studio{display:grid;grid-template-columns:minmax(0,1fr) minmax(160px,.46fr);gap:1rem;align-items:stretch;min-width:0}
+.catalog-live-card,.catalog-seal-demo{border:1px solid color-mix(in srgb,var(--line) 82%,transparent);background:color-mix(in srgb,var(--paper) 92%,transparent);box-shadow:0 28px 80px #20263324;backdrop-filter:blur(14px)}
+.catalog-live-card{display:grid;grid-template-rows:auto 1fr auto;min-height:510px;border-radius:30px;overflow:hidden}
+.catalog-live-toolbar,.catalog-live-meta{display:flex;align-items:center;justify-content:space-between;gap:.8rem;padding:.85rem 1rem}
+.catalog-live-toolbar{border-bottom:1px solid var(--line);font-size:.72rem;font-weight:800;text-transform:uppercase;letter-spacing:.08em}
+.catalog-live-toolbar button{border:1px solid var(--line);border-radius:999px;background:var(--paper);padding:.48rem .72rem;color:var(--ink);font-weight:750}
+.catalog-live-preview{min-height:370px;display:grid;place-items:center;padding:1rem;background:linear-gradient(150deg,color-mix(in srgb,var(--bg) 94%,#fff),color-mix(in srgb,var(--accent) 8%,var(--paper)));overflow:hidden}
+.catalog-live-preview img{display:block;width:100%;height:100%;max-height:390px;object-fit:contain;border-radius:20px;box-shadow:0 20px 50px #20263318}
+.catalog-live-meta{align-items:flex-start;flex-direction:column;border-top:1px solid var(--line)}
+.catalog-live-meta strong{font:700 1.12rem/1.1 Georgia,serif}.catalog-live-meta small{color:var(--muted)}
+.catalog-seal-demo{align-self:end;display:grid;gap:.65rem;padding:1rem;border-radius:26px}
+.catalog-seal-preview{width:min(150px,100%);aspect-ratio:1;margin-inline:auto;display:grid;place-items:center}.catalog-seal-preview svg{width:100%;height:100%;display:block}
+.catalog-seal-demo label{display:grid;grid-template-columns:1fr auto;align-items:center;gap:.5rem;font-size:.72rem;font-weight:800;color:var(--muted)}
+.catalog-seal-demo input[type="color"]{width:42px;height:34px;border:1px solid var(--line);border-radius:10px;background:transparent;padding:2px}
+.catalog-seal-demo input[type="text"]{width:58px;border:1px solid var(--line);border-radius:10px;background:var(--paper);padding:.48rem;text-align:center;text-transform:uppercase;color:var(--ink);font-weight:900}
+.catalog-seal-demo small{line-height:1.45;color:var(--muted)}
+.catalog-value-pills{display:flex;flex-wrap:wrap;gap:.48rem;margin-top:1rem}.catalog-value-pills span{border:1px solid color-mix(in srgb,var(--accent) 25%,var(--line));border-radius:999px;background:color-mix(in srgb,var(--paper) 78%,transparent);padding:.45rem .72rem;font-size:.72rem;font-weight:750;color:var(--muted)}
+.catalog-recipe-visual{padding:0;background:linear-gradient(145deg,var(--paper),var(--bg));overflow:hidden}.catalog-recipe-visual img{width:100%;height:100%;display:block;object-fit:cover}
+.catalog-section:not(#plantillas){content-visibility:auto;contain-intrinsic-size:720px}
+.catalog-theme-card{content-visibility:auto;contain-intrinsic-size:650px}
+@media(max-width:1180px){.catalog-hero{grid-template-columns:minmax(0,1fr) minmax(420px,.88fr);gap:2.4rem}.catalog-hero-studio{grid-template-columns:1fr}.catalog-seal-demo{grid-template-columns:120px 1fr;align-items:center}.catalog-seal-preview{grid-row:1/4}.catalog-seal-demo small{grid-column:2}}
+@media(max-width:900px){.catalog-hero-studio{max-width:720px;width:100%}.catalog-live-card{min-height:460px}.catalog-live-preview{min-height:330px}}
+@media(max-width:620px){.catalog-hero{padding-inline:.9rem}.catalog-live-card{min-height:410px;border-radius:22px}.catalog-live-preview{min-height:285px;padding:.7rem}.catalog-live-toolbar,.catalog-live-meta{padding:.72rem .8rem}.catalog-seal-demo{grid-template-columns:96px 1fr;padding:.8rem;border-radius:20px}.catalog-seal-preview{width:96px}.catalog-value-pills{gap:.35rem}.catalog-value-pills span{font-size:.66rem}.catalog-recipe-visual img{object-fit:contain;background:var(--paper)}}
+
+/* RC33: el álbum colaborativo hereda Assets aprobados de la Recipe sin interferir con la carga de fotografías. */
+.album-hero,.album-upload-card{position:relative;isolation:isolate}
+.album-hero>*:not(.album-design-asset),.album-upload-card>*:not(.album-design-asset){position:relative;z-index:1}
+.album-design-asset{position:absolute;z-index:0;width:72px;height:72px;transform:translate(-50%,-50%) rotate(var(--album-asset-rotation,0deg)) scale(var(--album-asset-scale,1));transform-origin:center;pointer-events:none;object-fit:contain;user-select:none}
+.album-design-asset.is-colorizable{background:currentColor;-webkit-mask:var(--album-asset-url) center/contain no-repeat;mask:var(--album-asset-url) center/contain no-repeat}
+.album-upload-card{overflow:hidden}
+
+
+/* RC34 · contraste semántico Recipe-first */
+body.theme-recipe{color:var(--bg-contrast,var(--ink));background:var(--bg)}
+body.theme-recipe main>.section{color:var(--bg-contrast,var(--ink))}
+body.theme-recipe :is(.personal-card,.story-card,.rsvp-card,.event-card,.upload-card,.agenda-public-card,.design-qr-card){color:var(--paper-contrast,var(--ink))}
+body.theme-recipe .eyebrow{color:var(--gold-text,var(--accent-text,var(--ink)))}
+body.theme-recipe :is(.secondary-btn,.gallery-arrow,.agenda-public-time,.details-action,.spotify-open-link,.link-btn){color:var(--accent-text,var(--ink))}
+body.theme-recipe .hero[data-es-type="hero"]{color:var(--paper-contrast,var(--ink))}
+body.theme-recipe .hero[data-es-type="hero"].es-hero-has-media{color:#fff;text-shadow:0 2px 20px rgba(0,0,0,.55)}
+body.theme-recipe .hero[data-es-type="hero"].es-hero-has-media .eyebrow{color:#fff}
+body.theme-recipe .hero[data-es-type="hero"].es-hero-no-media .hero-message{color:var(--muted)}
+
+
+/* RC34 Recipe recommendation and name-fitting contract */
+.theme-recommendation-line{display:flex;align-items:center;gap:.45rem;flex-wrap:wrap;margin:.5rem 0 .15rem}.theme-recommendation-line small{color:var(--muted);font-size:.68rem}.theme-affinity-badge{display:inline-flex;align-items:center;padding:.24rem .52rem;border-radius:999px;background:color-mix(in srgb,var(--accent) 10%,var(--paper));border:1px solid color-mix(in srgb,var(--accent) 28%,var(--line));color:var(--accent-dark,var(--accent));font-size:.64rem;font-weight:850}.theme-card.selected .theme-affinity-badge{background:color-mix(in srgb,var(--accent) 16%,var(--paper))}
+/* Los nombres del evento nunca se parten dentro de una palabra. El ajuste JS reduce
+   la escala y sólo permite salto entre palabras cuando el ancho disponible lo exige. */
+body.theme-recipe :is(#coupleName,#openingCouple,#footerCouple,#guestName,.smart-event-name),
+body.theme-recipe :is(h1,h2,h3) .smart-event-name,
+.opening-copy .smart-event-name{overflow-wrap:normal!important;word-break:keep-all!important;hyphens:none!important;max-width:100%}
+body.theme-recipe #coupleName{font-size:var(--es-smart-name-size,inherit)!important}
+
+/* RC38 · Panel de apertura estable y búsqueda asistida de diseños. */
+.opening-style-control{grid-template-columns:minmax(250px,1.15fr) minmax(220px,.9fr) minmax(150px,.65fr);align-items:end}.opening-style-copy{align-self:start;min-width:0;max-width:48rem}.opening-style-copy strong{font-size:1rem}.opening-style-copy small{display:block;max-width:46rem;line-height:1.55;margin-top:.25rem;overflow-wrap:normal;word-break:normal}.opening-style-control>label{min-width:0}.opening-style-control select{width:100%;min-width:0}.opening-style-control #openingCompatibilitySummary{grid-column:1/-1;min-width:0;margin:0}.theme-search-assist{position:relative}.theme-search-suggestions{position:absolute;z-index:90;left:0;right:0;top:100%;display:grid;max-height:280px;overflow:auto;border:1px solid var(--line);border-radius:0 0 14px 14px;background:var(--paper);box-shadow:0 16px 38px rgba(38,29,21,.18)}.theme-search-suggestions[hidden]{display:none}.theme-search-suggestions button{border:0;border-bottom:1px solid var(--line);background:transparent;color:var(--ink);text-align:left;padding:.7rem .8rem;cursor:pointer}.theme-search-suggestions button:hover,.theme-search-suggestions button:focus-visible{background:color-mix(in srgb,var(--accent) 8%,var(--paper));outline:none}.theme-card{cursor:pointer}.theme-card:focus-visible{outline:3px solid color-mix(in srgb,var(--accent) 55%,#279ddd);outline-offset:3px}.theme-card .theme-commerce-actions{position:relative;z-index:2}.experience-preview-toolbar .preview-toolbar-actions{flex-wrap:wrap}.experience-preview-toolbar .primary-btn,.experience-preview-toolbar .secondary-btn{white-space:nowrap}
+@media(max-width:980px){.opening-style-control{grid-template-columns:repeat(2,minmax(0,1fr))}.opening-style-copy,.opening-style-control #openingCompatibilitySummary{grid-column:1/-1}}
+@media(max-width:720px){.opening-style-control{grid-template-columns:1fr}.opening-style-copy,.opening-style-control #openingCompatibilitySummary{grid-column:auto}.opening-style-copy small{max-width:none}}
+
+
+/* RC38 · Aperturas: el texto introductorio nunca debe salir del viewport.
+   Se limita sólo la tipografía/caja en pantallas bajas; las mecánicas visuales
+   particulares (flor, sobre, partículas, etc.) conservan sus propias filas. */
+.invitation-opening .opening-copy{box-sizing:border-box;min-width:0;width:min(94vw,760px);max-width:min(94vw,760px);padding-inline:clamp(.35rem,1.8vw,1rem)}
+.invitation-opening .opening-copy :is(.eyebrow,p,h1){max-width:100%;overflow-wrap:anywhere}
+.invitation-opening .opening-copy .eyebrow{line-height:1.25}
+@media(max-height:760px){
+  .invitation-opening{padding-top:max(.55rem,env(safe-area-inset-top));padding-bottom:max(.55rem,env(safe-area-inset-bottom))}
+  .invitation-opening .opening-copy{align-self:end;max-height:30svh;padding-top:.15rem}
+  .invitation-opening .opening-copy h1{font-size:clamp(1.55rem,6.2svh,3.15rem)!important;line-height:1.01!important;margin:.08em 0!important}
+  .invitation-opening .opening-copy .eyebrow{font-size:clamp(.54rem,1.35svh,.68rem)!important;margin:0 0 .15rem!important;letter-spacing:.13em}
+  .invitation-opening .opening-copy p:not(.eyebrow){font-size:clamp(.72rem,1.8svh,.98rem);line-height:1.25}
+}
+@media(max-height:620px){
+  .invitation-opening .opening-copy{max-height:27svh}
+  .invitation-opening .opening-copy h1{font-size:clamp(1.35rem,5.5svh,2.55rem)!important}
+}
+
+/* RC38 · Datos reales y countdowns siempre contenidos. Esto cubre Recipes que
+   usan círculos grandes y previews estrechos sin cambiar la estética desktop. */
+body.theme-recipe #dateLabel,body.theme-recipe .date-label,body.theme-recipe [data-es-type="hero"] :is(h1,h2,h3,p){max-width:100%;overflow-wrap:anywhere}
+body.theme-recipe [data-es-type="countdown"]{box-sizing:border-box;max-width:min(var(--es-section-width,92%),100vw);overflow:hidden}
+body.theme-recipe [data-es-type="countdown"] .countdown{width:100%;max-width:100%;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(.45rem,1.4vw,.9rem)}
+body.theme-recipe [data-es-type="countdown"] .countdown>div{box-sizing:border-box;min-width:0;max-width:100%;padding-inline:clamp(.35rem,1.3vw,.8rem)}
+body.theme-recipe [data-es-type="countdown"] .countdown strong{font-size:clamp(1.45rem,4.5vw,3rem)}
+@media(max-width:700px){
+  body.theme-recipe [data-es-type="countdown"] .countdown{grid-template-columns:repeat(2,minmax(0,1fr))!important}
+  body.theme-recipe [data-es-type="countdown"] .countdown>div{width:100%!important;height:auto!important;min-height:0!important;aspect-ratio:1/1}
+}
+@media(max-width:380px){body.theme-recipe [data-es-type="countdown"] .countdown{gap:.45rem}body.theme-recipe [data-es-type="countdown"] .countdown strong{font-size:1.45rem}}
+
+/* RC39 · Fallback para countdowns Recipe-first cuando el CSS del motor aún se
+   está descargando. Mantiene legible el CTA en fondos oscuros personalizados. */
+body.theme-recipe [data-es-type="countdown"] .calendar-link{
+  background:color-mix(in srgb,var(--paper) 96%,transparent);
+  color:var(--paper-contrast,var(--ink));
+}

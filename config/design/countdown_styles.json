@@ -1,0 +1,118 @@
+[
+  {
+    "id": "countdown-classic",
+    "label": "Clásico Cuatro Columnas",
+    "primitive": "grid4",
+    "moods": [
+      "classic",
+      "minimal"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "countdown-roman",
+    "label": "Romano Editorial",
+    "primitive": "grid4",
+    "moods": [
+      "editorial",
+      "luxury",
+      "wine"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "countdown-minimal",
+    "label": "Línea Minimalista",
+    "primitive": "minimal-line",
+    "moods": [
+      "minimal",
+      "modern"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "countdown-flip",
+    "label": "Tarjetas Flip",
+    "primitive": "flip",
+    "moods": [
+      "modern",
+      "cinematic"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "countdown-circular",
+    "label": "Anillos Circulares",
+    "primitive": "circular",
+    "moods": [
+      "modern",
+      "celestial"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "countdown-badge-stack",
+    "label": "Insignias en Línea",
+    "primitive": "inline-badge",
+    "moods": [
+      "playful",
+      "editorial"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "countdown-vintage-ticket",
+    "label": "Boleto Vintage",
+    "primitive": "grid4",
+    "moods": [
+      "vintage",
+      "travel"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "countdown-botanical-vine",
+    "label": "Enredadera Botánica",
+    "primitive": "inline-badge",
+    "moods": [
+      "botanical"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "countdown-editorial-huge",
+    "label": "Numerales Editoriales",
+    "primitive": "inline-badge",
+    "moods": [
+      "editorial"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "countdown-neon-tech",
+    "label": "Neón Tecnológico",
+    "primitive": "grid4",
+    "moods": [
+      "modern"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "countdown-celestial-orbit",
+    "label": "Órbita Celestial",
+    "primitive": "circular",
+    "moods": [
+      "celestial"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "countdown-passport-stamp",
+    "label": "Sello de Pasaporte",
+    "primitive": "grid4",
+    "moods": [
+      "travel"
+    ],
+    "printSupport": true
+  }
+]

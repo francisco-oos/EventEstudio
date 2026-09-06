@@ -9,7 +9,7 @@ const read=file=>fs.readFileSync(path.join(root,file),"utf8");
 const pkg=require(path.join(root,"package.json"));
 const experiences=require(path.join(root,"config","experiences.json"));
 
-assert.match(pkg.version,/^6\.14\.2-rc\.(?:19|[2-9]\d)$/);
+assert.match(pkg.version,/^6\.(?:14\.2|15\.0|16\.0)-rc\.(?:19|[2-9]\d)$/);
 for(const file of ["public/admin.html","public/index.html","public/album.html","public/catalogo.html","public/muestra.html","public/showcase.html","public/sandbox.html"]){
   assert.ok(read(file).includes(`styles.css?v=${pkg.version}`),`${file} debe invalidar la caché CSS de RC19.`);
 }
@@ -61,7 +61,8 @@ assert.match(admin,/automaticTranslation!==true/);
 assert.match(admin,/\/api\/auth\/me\?optional=1/);
 assert.match(admin,/publicCatalog\?\.experiences\?\.openings\?\.some/);
 assert.doesNotMatch(admin,/product\.code==='experience:rose-bloom'/,"Las vistas previas no deben mantener una lista manual divergente.");
-assert.match(admin,/\['daisy-bloom','luminous-garden'\]/);
+assert.match(admin,/['"]daisy-bloom['"]:\[[^\]]*daisy[^\]]*\]/);
+assert.match(admin,/['"]luminous-garden['"]:\[[^\]]*garden[^\]]*\]/);
 
 const commerce=read("src/commerce-schema.js");
 assert.match(commerce,/code:"experience:luminous-garden"/);

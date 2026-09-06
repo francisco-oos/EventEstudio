@@ -1,0 +1,55 @@
+{
+  "version": "6.16.0-rc.41",
+  "quickCheck": "ok",
+  "tables": 43,
+  "users": 4,
+  "events": 2,
+  "roles": {
+    "client": 2,
+    "developer": 1,
+    "owner": 1
+  },
+  "references": [
+    {
+      "kind": "hero",
+      "state": "recovered",
+      "url": "/uploads/site-media/1788585988969-9695834f-IMG_20250823_101925.jpg",
+      "candidate": "uploads/site-media/1788586875269-3241656b-IMG_20250823_101925.jpg",
+      "originalName": "IMG_20250823_101925.jpg"
+    },
+    {
+      "kind": "music",
+      "state": "exact",
+      "url": "/uploads/site-media/1788536630521-7542997e-Video-Games.mp3",
+      "file": "uploads/site-media/1788536630521-7542997e-Video-Games.mp3"
+    },
+    {
+      "kind": "gallery",
+      "state": "exact",
+      "url": "/uploads/site-media/1788536522763-63530488-IMG_20250823_101925.webp",
+      "file": "uploads/site-media/1788536522763-63530488-IMG_20250823_101925.webp"
+    },
+    {
+      "kind": "gallery",
+      "state": "exact",
+      "url": "/uploads/site-media/1788536522773-50ef96ab-IMG_20250820_192411.webp",
+      "file": "uploads/site-media/1788536522773-50ef96ab-IMG_20250820_192411.webp"
+    },
+    {
+      "kind": "gallery",
+      "state": "exact",
+      "url": "/uploads/site-media/1788536522779-89f630ea-IMG_20250711_143507.webp",
+      "file": "uploads/site-media/1788536522779-89f630ea-IMG_20250711_143507.webp"
+    },
+    {
+      "kind": "dress",
+      "state": "exact",
+      "url": "/uploads/site-media/1788536525358-d3e93e28-vestimenta.jpg",
+      "file": "uploads/site-media/1788536525358-d3e93e28-vestimenta.jpg"
+    }
+  ],
+  "counts": {
+    "recovered": 1,
+    "exact": 5
+  }
+}

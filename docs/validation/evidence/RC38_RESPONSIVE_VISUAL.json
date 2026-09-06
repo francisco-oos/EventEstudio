@@ -1,0 +1,58 @@
+{
+  "viewports": 3,
+  "cases": 9,
+  "failures": 0,
+  "results": [
+    {
+      "viewport": [
+        320,
+        568
+      ],
+      "openingContained": true,
+      "countdownContained": true,
+      "openingControlContained": true,
+      "openingCopyWidth": 300.8,
+      "adminCopyWidth": 262,
+      "countCellWidths": [
+        136.23,
+        136.25,
+        136.23,
+        136.25
+      ]
+    },
+    {
+      "viewport": [
+        390,
+        844
+      ],
+      "openingContained": true,
+      "countdownContained": true,
+      "openingControlContained": true,
+      "openingCopyWidth": 366.59,
+      "adminCopyWidth": 332,
+      "countCellWidths": [
+        168.44,
+        168.45,
+        168.44,
+        168.45
+      ]
+    },
+    {
+      "viewport": [
+        1366,
+        768
+      ],
+      "openingContained": true,
+      "countdownContained": true,
+      "openingControlContained": true,
+      "openingCopyWidth": 760,
+      "adminCopyWidth": 543.47,
+      "countCellWidths": [
+        290,
+        290,
+        290,
+        290
+      ]
+    }
+  ]
+}

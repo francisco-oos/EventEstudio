@@ -1,0 +1,37 @@
+{
+  "rows": [
+    {
+      "viewport": [
+        360,
+        800
+      ],
+      "recipe": "romantic-wine",
+      "layout": "classic",
+      "texture": "linen",
+      "assets": 2,
+      "heading": "Georgia,\"Times New Roman\",serif",
+      "accent": "#571923",
+      "overflow": 0,
+      "title": "Ariana & Francisco",
+      "errors": [],
+      "ok": true
+    },
+    {
+      "viewport": [
+        1440,
+        900
+      ],
+      "recipe": "romantic-wine",
+      "layout": "classic",
+      "texture": "linen",
+      "assets": 2,
+      "heading": "Georgia,\"Times New Roman\",serif",
+      "accent": "#571923",
+      "overflow": 0,
+      "title": "Ariana & Francisco",
+      "errors": [],
+      "ok": true
+    }
+  ],
+  "failures": []
+}

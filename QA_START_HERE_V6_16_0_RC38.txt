@@ -1,0 +1,44 @@
+EVENTSTUDIO 6.16.0-rc.38 — INICIO DE QA
+
+ESTADO
+Candidata QA. Corrige los fallos reportados durante la prueba manual de RC37.
+No se declara Production Ready hasta ejecutar el gate de servidor/dependencias y
+el checklist físico final.
+
+PAQUETE
+EventStudio_6.16.0-rc.38_QA_CON_DATOS.zip
+Incluye la wedding.db recibida. Extraer en carpeta nueva. NO ejecutar npm run seed.
+
+VALIDACION YA EJECUTADA EN EL ENTORNO DE GENERACION
+- 65 Recipes / color AA: PASS
+- 130 renders Recipe: PASS, overflow 0
+- 22 aperturas Chromium: PASS, CLS 0, overflow 0
+- 175,500 combinaciones de presentación: PASS
+- 1,300 proyecciones rol/perfil: PASS
+- 139 botones/controles: PASS de wiring
+- 30 casos matriz de dispositivos: PASS
+- 64 casos contenido largo: PASS
+- 9 casos responsive focales RC38: PASS
+- Stationery/QR/album/browser interactions: PASS
+- wedding.db quick_check: PASS
+
+LIMITACION DEL RUNTIME DE GENERACION
+No hubo DNS hacia registry.npmjs.org; por ello no se pudieron instalar dependencias
+y no se marca PASS el E2E real de servidor/SQLite/uploads/seguridad. Ejecutarlo aquí:
+
+  npm ci
+  npm run test:preproduction
+  npm audit --audit-level=moderate
+
+RECORRIDO PRIORITARIO
+Plantillas > abrir tarjeta > preview correcto > Aplicar > Estudio de diseño >
+buscador/sugerencias > bloques/colores > Apertura > Sobre/Lacre > Vista previa >
+Aplicar > invitación pública > fotos/música > QR/PDF.
+
+DOCUMENTACION
+- docs/indexes/INDEX_DOCUMENTACION_6.16.0-rc.38.md
+- docs/validation/VALIDACION_6.16.0-rc.38.md
+- docs/checklists/QA_FISICO_FINAL_6.16.0-rc.38.md
+
+Los mensajes `unload is not allowed` procedentes de Grammarly no son un error de
+EventStudio. La intervención de imágenes lazy de Edge es esperada.

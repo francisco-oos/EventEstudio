@@ -1,0 +1,36 @@
+EVENTSTUDIO 6.16.0-rc.37 — INICIO DE QA
+
+ESTADO
+Candidata QA. No está declarada Production Ready porque las pruebas de navegador,
+touch real, lector de pantalla, QR impreso y PDF físico siguen NOT_RUN.
+
+PAQUETE QA
+Incluye la wedding.db recibida y preservada. Extraer siempre en carpeta nueva.
+No ejecutar npm run seed. No copiar archivos wedding.db-wal/-shm de otra versión.
+
+INICIO
+1. Verificar el ZIP con SHA256_6.16.0-rc.37.txt.
+2. Respaldar data/wedding.db.
+3. Instalar Node.js 20 o superior.
+4. Ejecutar: npm ci
+5. Ejecutar auditoría QA:
+   Windows PowerShell: $env:EVENTSTUDIO_PACKAGE_PROFILE='qa'; npm run audit
+   Linux/macOS: EVENTSTUDIO_PACKAGE_PROFILE=qa npm run audit
+6. Ejecutar: npm run test:v5
+7. Iniciar: npm run local
+
+RECORRIDO PRIORITARIO
+Panel > Plantillas > Estudio de diseño > Color > Apertura > Sobre/Lacre
+> Volver al constructor > Previsualizar borrador > Aplicar cambios a mi invitación
+> Volver a Plantillas.
+
+La invitación pública no debe cambiar durante autosave; sólo después de Aplicar.
+Las acciones Guardar como plantilla/Publicar catálogo no deben aparecer al cliente.
+
+CHECKLIST COMPLETO
+docs/checklists/QA_FISICO_FINAL_6.16.0-rc.37.md
+
+RESULTADOS AUTOMATIZADOS Y LIMITACIONES
+docs/validation/VALIDACION_6.16.0-rc.37.md
+
+No realizar cobros reales ni envíos reales de WhatsApp durante QA.

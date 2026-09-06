@@ -1,0 +1,479 @@
+[
+  {
+    "id": "arch-clean",
+    "label": "Arco Botánico Clásico",
+    "category": "arches",
+    "status": "approved"
+  },
+  {
+    "id": "polaroid-single",
+    "label": "Polaroid Instantánea con Cinta",
+    "category": "instant",
+    "status": "approved"
+  },
+  {
+    "id": "filmstrip-vertical",
+    "label": "Tira de Película 35mm Perforada",
+    "category": "cinema",
+    "status": "approved"
+  },
+  {
+    "id": "oval-cameo",
+    "label": "Óvalo Ceremonial con Camafeo",
+    "category": "classical",
+    "status": "approved"
+  },
+  {
+    "id": "torn-paper",
+    "label": "Bordes Rasgados Artesanales",
+    "category": "tactile",
+    "status": "approved"
+  },
+  {
+    "id": "editorial-overlap",
+    "label": "Doble Retrato Asimétrico Editorial",
+    "category": "editorial",
+    "status": "approved"
+  },
+  {
+    "id": "double-arch",
+    "label": "Doble Arco Gemelo",
+    "category": "arches",
+    "family": "frame-mask",
+    "status": "approved",
+    "tags": [
+      "arco",
+      "gemelo"
+    ],
+    "moods": [
+      "romantic",
+      "botanical"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "gothic-window",
+    "label": "Ventanal Gótico",
+    "category": "architectural",
+    "family": "frame-mask",
+    "status": "approved",
+    "tags": [
+      "gótico",
+      "arquitectónico"
+    ],
+    "moods": [
+      "dark-luxury",
+      "cinematic"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "celestial-mask",
+    "label": "Máscara Celestial",
+    "category": "classical",
+    "family": "frame-mask",
+    "status": "approved",
+    "tags": [
+      "estrella",
+      "halo"
+    ],
+    "moods": [
+      "celestial"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "botanical-frame",
+    "label": "Marco Botánico Recortado",
+    "category": "organic",
+    "family": "frame-mask",
+    "status": "approved",
+    "tags": [
+      "botánico",
+      "hoja"
+    ],
+    "moods": [
+      "botanical"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "ribbon-frame",
+    "label": "Cinta de Honor en Esquina",
+    "category": "ornamental",
+    "family": "frame-mask",
+    "status": "approved",
+    "tags": [
+      "cinta",
+      "insignia"
+    ],
+    "moods": [
+      "luxury",
+      "playful"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "typographic-mask",
+    "label": "Máscara Tipográfica &",
+    "category": "ornamental",
+    "family": "typographic",
+    "status": "approved",
+    "tags": [
+      "tipografía",
+      "monograma"
+    ],
+    "moods": [
+      "editorial",
+      "romantic"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "irregular-organic",
+    "label": "Silueta Orgánica Irregular",
+    "category": "organic",
+    "family": "irregular",
+    "status": "approved",
+    "tags": [
+      "orgánico",
+      "irregular"
+    ],
+    "moods": [
+      "botanical",
+      "bohemian"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "deckled-paper",
+    "label": "Papel de Borde Deckled",
+    "category": "tactile",
+    "family": "irregular",
+    "status": "approved",
+    "tags": [
+      "papel",
+      "artesanal"
+    ],
+    "moods": [
+      "vintage",
+      "classic"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "postcard",
+    "label": "Postal con Talón",
+    "category": "document",
+    "family": "paper-document",
+    "status": "approved",
+    "tags": [
+      "postal",
+      "viaje"
+    ],
+    "moods": [
+      "travel"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "postage-stamp-photo",
+    "label": "Estampilla Perforada",
+    "category": "document",
+    "family": "paper-document",
+    "status": "approved",
+    "tags": [
+      "estampilla",
+      "postal"
+    ],
+    "moods": [
+      "travel",
+      "vintage"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "wine-label-photo",
+    "label": "Etiqueta Gran Reserva",
+    "category": "document",
+    "family": "paper-document",
+    "status": "approved",
+    "tags": [
+      "vino",
+      "etiqueta"
+    ],
+    "moods": [
+      "wine",
+      "luxury"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "instant-stack",
+    "label": "Pila de Instantáneas",
+    "category": "instant",
+    "family": "instant-film",
+    "status": "approved",
+    "tags": [
+      "polaroid",
+      "pila"
+    ],
+    "moods": [
+      "playful",
+      "romantic"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "filmstrip-horizontal",
+    "label": "Tira de Película Horizontal",
+    "category": "cinema",
+    "family": "instant-film",
+    "status": "approved",
+    "tags": [
+      "cine",
+      "35mm"
+    ],
+    "moods": [
+      "cinematic"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "cinema-frame",
+    "label": "Encuadre Cinemascope",
+    "category": "cinema",
+    "family": "instant-film",
+    "status": "approved",
+    "tags": [
+      "cine",
+      "panorámico"
+    ],
+    "moods": [
+      "cinematic",
+      "dark-luxury"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "negative-film",
+    "label": "Negativo Fotográfico",
+    "category": "cinema",
+    "family": "instant-film",
+    "status": "approved",
+    "tags": [
+      "negativo",
+      "analógico"
+    ],
+    "moods": [
+      "cinematic",
+      "editorial"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "camera-viewfinder",
+    "label": "Visor de Cámara",
+    "category": "cinema",
+    "family": "instant-film",
+    "status": "approved",
+    "tags": [
+      "cámara",
+      "visor"
+    ],
+    "moods": [
+      "cinematic",
+      "modern"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "contact-sheet",
+    "label": "Hoja de Contacto",
+    "category": "cinema",
+    "family": "instant-film",
+    "status": "approved",
+    "tags": [
+      "contacto",
+      "análogo"
+    ],
+    "moods": [
+      "editorial",
+      "cinematic"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "editorial-cutout",
+    "label": "Recorte Editorial Asimétrico",
+    "category": "editorial",
+    "family": "editorial",
+    "status": "approved",
+    "tags": [
+      "editorial",
+      "recorte"
+    ],
+    "moods": [
+      "editorial"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "magazine-cover",
+    "label": "Portada de Revista",
+    "category": "editorial",
+    "family": "editorial",
+    "status": "approved",
+    "tags": [
+      "revista",
+      "portada"
+    ],
+    "moods": [
+      "editorial",
+      "luxury"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "newspaper-column-photo",
+    "label": "Fotografía de Prensa",
+    "category": "editorial",
+    "family": "editorial",
+    "status": "approved",
+    "tags": [
+      "prensa",
+      "gaceta"
+    ],
+    "moods": [
+      "editorial",
+      "vintage"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "full-bleed",
+    "label": "Sangrado Completo",
+    "category": "editorial",
+    "family": "editorial",
+    "status": "approved",
+    "tags": [
+      "inmersivo",
+      "sangrado"
+    ],
+    "moods": [
+      "cinematic",
+      "modern"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "split-screen",
+    "label": "Pantalla Dividida",
+    "category": "editorial",
+    "family": "editorial",
+    "status": "approved",
+    "tags": [
+      "dividido",
+      "moderno"
+    ],
+    "moods": [
+      "editorial",
+      "modern"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "asymmetric-offset",
+    "label": "Desfase Asimétrico",
+    "category": "editorial",
+    "family": "editorial",
+    "status": "approved",
+    "tags": [
+      "asimétrico",
+      "ritmo"
+    ],
+    "moods": [
+      "editorial"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "scrapbook",
+    "label": "Álbum de Recortes",
+    "category": "collage",
+    "family": "collage",
+    "status": "approved",
+    "tags": [
+      "scrapbook",
+      "washi"
+    ],
+    "moods": [
+      "playful",
+      "romantic"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "mosaic",
+    "label": "Mosaico de Momentos",
+    "category": "collage",
+    "family": "collage",
+    "status": "approved",
+    "tags": [
+      "mosaico",
+      "grid"
+    ],
+    "moods": [
+      "modern",
+      "editorial"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "floating-photos",
+    "label": "Fotos Flotantes",
+    "category": "collage",
+    "family": "collage",
+    "status": "approved",
+    "tags": [
+      "flotante",
+      "suave"
+    ],
+    "moods": [
+      "romantic",
+      "celestial"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "phone-frame",
+    "label": "Marco de Teléfono",
+    "category": "device",
+    "family": "device-id",
+    "status": "approved",
+    "tags": [
+      "dispositivo",
+      "moderno"
+    ],
+    "moods": [
+      "modern",
+      "playful"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "passport-photo",
+    "label": "Retrato Tipo Pasaporte",
+    "category": "document",
+    "family": "device-id",
+    "status": "approved",
+    "tags": [
+      "pasaporte",
+      "oficial"
+    ],
+    "moods": [
+      "travel"
+    ],
+    "printSupport": true
+  }
+]

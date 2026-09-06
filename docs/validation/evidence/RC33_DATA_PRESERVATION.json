@@ -1,0 +1,9 @@
+{
+  "database": "wedding.db",
+  "sha256": "865174a02f7436980080db1765c8a4aa42d984619d13eeb7d74c06ad33fcf270",
+  "bytes": 585728,
+  "integrity": "ok",
+  "userVersion": 614210,
+  "counts": {"users": 4, "events": 2, "guests": 26, "rsvps": 0, "photos": 0, "eventGrants": 1, "orders": 0, "orderItems": 0, "subscriptions": 5},
+  "note": "La BD fuente se copia byte por byte al paquete QA. RC33 no requiere una migración destructiva del schema para DesignRecipe v2."
+}

@@ -23,15 +23,19 @@ SEALS=json.loads((ROOT/"config"/"seals.json").read_text(encoding="utf-8"))
 MESSAGE_CATALOG=json.loads((ROOT/"config"/"gift-message-presets.json").read_text(encoding="utf-8"))
 CSS=(PUBLIC/"styles.css").read_text(encoding="utf-8")
 STATIONERY_CSS=(PUBLIC/"stationery-engine.css").read_text(encoding="utf-8")
+DESIGN_CSS=(PUBLIC/"design-engine.css").read_text(encoding="utf-8")
 RENDERERS=(PUBLIC/"experience-renderers.js").read_text(encoding="utf-8")
 SEAL_RENDERER=(PUBLIC/"seal-renderer.js").read_text(encoding="utf-8")
 STATIONERY_ENGINE=(PUBLIC/"stationery-engine.js").read_text(encoding="utf-8")
+DESIGN_COLOR_ENGINE=(PUBLIC/"design-color-engine.js").read_text(encoding="utf-8")
+DESIGN_ENGINE=(PUBLIC/"design-engine.js").read_text(encoding="utf-8")
 APP=(PUBLIC/"app.js").read_text(encoding="utf-8")
 INDEX=(PUBLIC/"index.html").read_text(encoding="utf-8")
 
 BASE=re.sub(r'<link rel="stylesheet" href="/styles\.css\?v=[^"]+">',lambda _m:f"<style>{CSS}</style>",INDEX)
 BASE=re.sub(r'<link rel="stylesheet" href="/stationery-engine\.css\?v=[^"]+">',lambda _m:f"<style>{STATIONERY_CSS}</style>",BASE)
-BASE=re.sub(r'<script src="/experience-renderers\.js\?v=[^"]+"></script><script src="/seal-renderer\.js\?v=[^"]+"></script><script src="/stationery-engine\.js\?v=[^"]+"></script><script src="/app\.js\?v=[^"]+"></script>',"__SCRIPTS__",BASE)
+BASE=re.sub(r'<link rel="stylesheet" href="/design-engine\.css\?v=[^"]+">',lambda _m:f"<style>{DESIGN_CSS}</style>",BASE)
+BASE=re.sub(r'<script src="/experience-renderers\.js\?v=[^"]+"></script><script src="/seal-renderer\.js\?v=[^"]+"></script><script src="/stationery-engine\.js\?v=[^"]+"></script><script src="/design-color-engine\.js\?v=[^"]+"></script><script src="/design-engine\.js\?v=[^"]+"></script><script src="/app\.js\?v=[^"]+"></script>',"__SCRIPTS__",BASE)
 
 
 def config_for(bank_enabled=True,openpay_enabled=True,suggested=None,message_enabled=True):
@@ -78,7 +82,7 @@ def config_for(bank_enabled=True,openpay_enabled=True,suggested=None,message_ena
 def document_html(config):
     payload=json.dumps(config,ensure_ascii=False).replace("</","<\\/")
     prelude=f"<script>window.fetch=async()=>new Response(JSON.stringify({payload}),{{status:200,headers:{{'Content-Type':'application/json'}}}});</script>"
-    scripts=prelude+f"<script>{RENDERERS}</script><script>{SEAL_RENDERER}</script><script>{STATIONERY_ENGINE}</script><script>{APP}</script>"
+    scripts=prelude+f"<script>{RENDERERS}</script><script>{SEAL_RENDERER}</script><script>{STATIONERY_ENGINE}</script><script>{DESIGN_COLOR_ENGINE}</script><script>{DESIGN_ENGINE}</script><script>{APP}</script>"
     return BASE.replace("__SCRIPTS__",scripts)
 
 

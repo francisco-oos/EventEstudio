@@ -1,0 +1,51 @@
+EVENTSTUDIO 6.16.0-rc.39 — INICIO DE QA
+
+ESTADO
+Candidata QA avanzada. Corrige paridad Recipe/Stationery, datos reales, autosave,
+contraste del Design Lab y los hallazgos manuales posteriores a RC38.
+No se declara Production Ready hasta ejecutar el gate real de servidor/dependencias.
+
+PAQUETE
+EventStudio_6.16.0-rc.39_QA_CON_DATOS.zip
+Incluye la wedding.db recibida y preservada. NO ejecutar npm run seed.
+
+VALIDACION EJECUTADA EN EL ENTORNO DE GENERACION
+- 65 Recipes × 2 viewports: 130 renders PASS, overflow 0
+- Readability 130 casos: PASS
+- Color parity 130 casos: PASS
+- Design Lab catálogo 65/65: PASS, overflow 0
+- Contraste mínimo Design Lab: heading ~11.34:1, body ~4.74:1
+- 175,500 combinaciones de presentación: PASS
+- 1,300 proyecciones rol/perfil: PASS
+- 139 botones/controles: PASS de wiring
+- 64 casos de contenido largo: PASS
+- 32 casos de feature visibility: PASS
+- public interactions / Stationery / álbum / sobre: PASS en harness disponible
+- wedding.db: hash preservado + quick_check=ok
+
+CORRECCIONES A COMPROBAR PRIMERO
+1. Tarjeta de catálogo > modal: la Recipe seleccionada debe conservar su aspecto.
+2. Aplicar Recipe: apertura/Stationery no debe heredar un sobre viejo.
+3. Sobre/Lacre: cambiar y pulsar Aplicar sin Guardar borrador manual.
+4. Vista previa > Volver al Estudio: un solo clic, sin pantalla en blanco.
+5. Historia/Ubicación/Programa/Vestimenta: datos reales.
+6. Portada: reutilizar la foto del evento cuando la Recipe la permita.
+7. Desactivar sección/servicio: sin hueco grande.
+8. Sliders/color de título/texto: cambio visible en el bloque activo.
+9. Color Studio: armonía debe reflejarse en el DRAFT y luego en ACTIVE al aplicar.
+10. Owner/developer puede QA Store; cliente continúa sujeto a derechos.
+
+MENSAJES DE CONSOLA
+- Edge lazy-image Intervention: no es un error de EventStudio.
+- Grammarly unload Permissions policy: pertenece a la extensión Grammarly.
+- Fotos que el usuario eliminó: RC39 evita reintentar referencias conocidas como ausentes.
+
+GATE REAL ANTES DE PRODUCCION
+  npm ci
+  npm run test:preproduction
+  npm audit --audit-level=moderate
+
+DOCUMENTACION
+- docs/indexes/INDEX_DOCUMENTACION_6.16.0-rc.39.md
+- docs/validation/VALIDACION_6.16.0-rc.39.md
+- docs/checklists/QA_FISICO_FINAL_6.16.0-rc.39.md

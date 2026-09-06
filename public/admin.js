@@ -58,6 +58,8 @@ function tab(n){
   panel.classList.remove('hidden');button.classList.add('active');setMobileNavigation(false);
   if(n==='photos')void ensurePhotosLoaded();
 }
+function requestedAdminContext(){const params=new URLSearchParams(location.search);return {eventId:Number(params.get('eventId')||0),tab:params.get('tab')||''};}
+function restoreRequestedAdminContext(){const requested=requestedAdminContext();if(requested.tab&&document.querySelector(`[data-tab="${CSS.escape(requested.tab)}"]`))tab(requested.tab);}
 function enhanceResponsiveTables(root=document){
   root.querySelectorAll('.table-wrap table').forEach(table=>{
     const labels=[...table.querySelectorAll('thead th')].map(cell=>cell.textContent.trim());
@@ -107,12 +109,12 @@ async function login(){
       }
       authToken=data.token||'';currentUser=data.user;localStorage.removeItem('authToken');
       if(currentUser.mustChangePassword&&!(await forcePasswordChange(loginPassword)))return;
-      const er=await api('/api/admin/events');events=await er.json();const savedEventId=Number(localStorage.getItem('eventId'));eventId=events.some(e=>e.id===savedEventId)?savedEventId:events[0]?.id;localStorage.setItem('eventId',String(eventId||''));
+      const er=await api('/api/admin/events');events=await er.json();const requestedId=requestedAdminContext().eventId,savedEventId=Number(localStorage.getItem('eventId'));eventId=events.some(e=>e.id===requestedId)?requestedId:(events.some(e=>e.id===savedEventId)?savedEventId:events[0]?.id);localStorage.setItem('eventId',String(eventId||''));
       renderEvents();
       applyRoleUI();
       $('loginScreen').classList.add('hidden');
       $('adminApp').classList.remove('hidden');
-      await load();
+      await load();restoreRequestedAdminContext();
     }
     async function forcePasswordChange(currentPassword=''){
       const current=currentPassword||prompt('Tu contraseña es temporal. Escríbela nuevamente para cambiarla.');if(!current)return false;
@@ -665,15 +667,17 @@ function refreshStationeryLaunchCard(){
   }
   const link=$('openStationeryStudioBtn');
   if(link){
-    const url=new URL(editor.path,window.location.origin);
+    const url=new URL('/design-lab.html',window.location.origin);
     if(eventId)url.searchParams.set('eventId',String(eventId));
+    url.searchParams.set('open','stationery');
     link.href=`${url.pathname}${url.search}`;
-    link.textContent=editor.label||'Abrir estudio avanzado';
+    link.textContent='Editar sobre y lacre en el Estudio de diseño';
+    link.removeAttribute('target');link.removeAttribute('rel');
     link.setAttribute('aria-disabled',String(!eventId));
   }
   const hint=$('stationeryLaunchHint');
   if(hint){
-    hint.textContent='El estudio avanzado hereda nombres, fecha y tipografía del evento. Los cambios sólo se vuelven globales al usar Aplicar a la invitación.';
+    hint.textContent='El editor integrado hereda nombres, fecha y tipografía del evento. Los cambios sólo se vuelven globales al usar Aplicar a la invitación.';
     if(featureAccess.templates!==true&&!['owner','developer'].includes(currentUser?.role))hint.textContent='Tu perfil puede abrir el estudio en modo de consulta, pero la aplicación de cambios requiere acceso a Plantillas.';
   }
 }
@@ -686,19 +690,16 @@ function populateExperienceSelectors(){
   fill('motionLevelSelect',catalog.motionLevels,settings.presentation?.motionLevel||'balanced');
 }
 function updateDesignProductControls(){
-  const platformUser=['owner','developer'].includes(currentUser?.role)&&!supportClientView;
-  const opening=$('openingStyleSelect'),gallery=$('galleryStyleSelect'),catalog=experienceOptions();
-  for(const item of catalog.openings||[]){const option=opening?.querySelector(`option[value="${CSS.escape(item.id)}"]`);if(option&&item.commercial)option.disabled=!platformUser&&!designAccess.opening?.[item.id];}
-  for(const item of catalog.galleries||[]){const option=gallery?.querySelector(`option[value="${CSS.escape(item.id)}"]`);if(option&&item.commercial)option.disabled=!platformUser&&!designAccess.gallery?.[item.id];}
-  if(opening?.selectedOptions?.[0]?.disabled)opening.value=defaultOpeningId();
-  if(gallery?.selectedOptions?.[0]?.disabled)gallery.value='classic';
-  const canEditTemplates=platformUser||featureAccess.templates===true;
-  if($('saveOpeningStyleBtn'))$('saveOpeningStyleBtn').disabled=!canEditTemplates;
+  const opening=$('openingStyleSelect'),catalog=experienceOptions();
+  /* RC34: el selector ya no es un mini-editor independiente. Puede elegir
+     experiencias de catálogo para filtrar/probar Recipes sin concederlas. */
   const activeOpening=(catalog.openings||[]).find(item=>item.id===opening?.value);
   const colorControls=new Set(activeOpening?.colorControls||[]);
   ['rosePetalColor','floralPetalColor','floralCenterColor'].forEach(key=>$(key+'Field')?.classList.toggle('hidden',!colorControls.has(key)));
   refreshStationeryLaunchCard();
+  renderThemes();
 }
+
 
 
 function activeQrTemplate(){
@@ -813,21 +814,14 @@ function presentationDraftFromForm(){
 function refreshOpenInvitationPreview(){
   const frame=$('openingPreviewFrame');
   if(!frame||frame.src==='about:blank')return;
-  try{const url=new URL(frame.src,window.location.origin);url.searchParams.set('_',String(Date.now()));frame.src=`${url.pathname}${url.search}`;}catch{}
-}
-async function saveOpeningSelection(){
-  const button=$('saveOpeningStyleBtn');if(!button)return;
-  button.disabled=true;status('Guardando entrada animada…');
-  try{
-    const response=await api('/api/admin/settings',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({presentation:presentationDraftFromForm()})});
-    const data=await response.json().catch(()=>({}));
-    if(!response.ok)throw new Error(data.error||'No se pudo guardar la entrada animada.');
-    mergeSettingsResponse(data.settings||{presentation:presentationDraftFromForm()});
-    setValue('openingStyleSelect',settings.presentation?.openingStyle||defaultOpeningId());
-    updateDesignProductControls();applyDynamicPresentation();updateQrMockup();renderPhysicalInvitationStudio();refreshOpenInvitationPreview();
-    status('Entrada animada guardada y coordinación visual actualizada.');
-  }catch(error){status(error.message||'No se pudo guardar la entrada animada.',false);}
-  finally{button.disabled=!(featureAccess.templates===true||(['owner','developer'].includes(currentUser?.role)&&!supportClientView));}
+  const slug=settings?._event?.slug,selected=$('openingStyleSelect')?.value||defaultOpeningId();
+  if(!slug||selected==='none')return;
+  /* RC38: reconstruir la URL desde los controles actuales. Recargar solamente
+     el src anterior conservaba parámetros de color obsoletos y daba
+     la impresión de que el selector de color no funcionaba. */
+  const base=`/e/${encodeURIComponent(slug)}?preview=1`;
+  const url=previewUrlFromOptions({previewOpening:selected,...presentationPreviewOptions()},base);
+  if(url)frame.src=replayablePreviewUrl(url);
 }
 async function reloadStationeryStateFromServer(){
   if(!eventId)return;
@@ -840,8 +834,9 @@ async function reloadStationeryStateFromServer(){
     status('El estudio avanzado aplicó la nueva configuración del sobre.');
   }catch(error){status(error.message||'No se pudo refrescar la configuración aplicada por el estudio.',false);}
 }
-$('openingStyleSelect')?.addEventListener('change',updateDesignProductControls);
-$('saveOpeningStyleBtn')?.addEventListener('click',saveOpeningSelection);
+['openingStyleSelect','experienceModeSelect','motionLevelSelect','galleryStyleSelect'].forEach(id=>$(id)?.addEventListener('change',updateDesignProductControls));
+['openingStyleSelect','experienceModeSelect','motionLevelSelect','galleryStyleSelect'].forEach(id=>$(id)?.addEventListener('change',()=>{scheduleDeferredTask('opening-option-preview',refreshOpenInvitationPreview,80);}));
+['rosePetalColor','floralPetalColor','floralCenterColor'].forEach(id=>$(id)?.addEventListener('input',()=>{scheduleDeferredTask('opening-color-preview',refreshOpenInvitationPreview,180);}));
 ['displayName','dateLabel','headingFont'].forEach(id=>$(id)?.addEventListener('input',refreshStationeryLaunchCard));
 try{
   const stationeryChannel=new BroadcastChannel('eventstudio-stationery');
@@ -858,7 +853,7 @@ $('previewOpeningBtn')?.addEventListener('click',async()=>{
   const eventSlug=settings._event?.slug;
   if(!eventSlug)return status('El evento activo todavía no tiene un enlace de vista previa.',false);
   const base=await ensureEventPreviewBaseUrl();
-  const url=previewUrlFromOptions({previewOpening:selected},base);
+  const url=previewUrlFromOptions({previewOpening:selected,...presentationPreviewOptions()},base);
   if(!url)return status('No se pudo crear una vista previa autorizada.',false);
   const frame=$('openingPreviewFrame'),dialog=$('openingPreviewDialog');
   if(!frame||!dialog)return;
@@ -1126,11 +1121,14 @@ function applyDynamicPresentation(){
 }
 
 function updateThemeLivePreview(themeId){
-  /* RC15: la vista grande embebida se sustituyó por un modal. Conservamos esta
-     función como sincronizador ligero para llamadas existentes del formulario. */
+  /* RC40: el acceso rápido a la vista previa debe representar el mismo contrato
+     que el modal del catálogo: Recipe = apariencia y los controles superiores =
+     experiencia. Evita que el botón abra una apertura distinta a la seleccionada. */
   const activeTheme=themeId||settings.themeId||'romantic-wine';
   const slug=settings._event?.slug;
-  if($('openFullPreviewBtn'))$('openFullPreviewBtn').href=slug?`/e/${encodeURIComponent(slug)}?preview=1&previewTheme=${encodeURIComponent(activeTheme)}`:'#';
+  if($('openFullPreviewBtn')){
+    $('openFullPreviewBtn').href=slug?previewUrlFromOptions({previewTheme:activeTheme,...presentationPreviewOptions()},`/e/${encodeURIComponent(slug)}?preview=1`):'#';
+  }
 }
 
 
@@ -1143,7 +1141,49 @@ $('eventDate')?.addEventListener('change',()=>{
 $('restoreDateLabelBtn')?.addEventListener('click',restoreAutomaticDateLabel);
 $('eventTypeSelect')?.addEventListener('change',applyEventTypePreset);
 
+const OPENING_RECIPE_HINTS={
+  'unified-envelope':['classic','editorial','storybook','romantic','luxury','wine','minimal'],
+  'rose-bloom':['rose','romantic','botanical','garden','luxury'],
+  'daisy-bloom':['daisy','botanical','garden','natural','minimal','romantic'],
+  'luminous-garden':['botanical','garden','nature','celestial','romantic'],
+  'night-flower-original':['dark','night','celestial','botanical','cinematic'],
+  'particle-heart':['romantic','cinematic','celebration','luxury'],
+  'newspaper-fold':['editorial','newspaper','gazette','magazine','paper'],
+  'vintage-parchment':['vintage','storybook','paper','classic'],
+  'olive-universe-orbit':['olive','botanical','celestial','cosmos'],
+  'blue-aurora-reveal':['blue','watercolor','celestial','aurora'],
+  'botanical-cosmos-orbit':['botanical','celestial','cosmos','night'],
+  'gala-curtain':['gala','cinematic','luxury','editorial'],
+  'constellation-veil':['celestial','night','romantic','cosmos'],
+  'reserve-uncork':['wine','luxury','editorial','classic']
+};
+function openingRecipeAffinity(theme,openingId){
+  if(!openingId||openingId==='none')return {score:1,label:'Compatible'};
+  if(theme.recipeOpeningId===openingId)return {score:12,label:'Apertura original'};
+  const hints=OPENING_RECIPE_HINTS[openingId]||[];
+  const haystack=[theme.name,theme.description,theme.layoutLabel,theme.recipeLayoutFamily,...(theme.tags||[]),...(theme.recipeTags||[]),...(theme.recipeMoods||[])].join(' ').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('es-MX');
+  const hits=hints.reduce((sum,hint)=>sum+(haystack.includes(hint)?1:0),0);
+  if(openingId==='unified-envelope')return {score:Math.max(4,6+hits),label:hits?'Muy afín':'Compatible con sobre'};
+  if(hits>=2)return {score:8+hits,label:'Muy afín'};
+  if(hits===1)return {score:5,label:'Afín'};
+  return {score:2,label:'Compatible'};
+}
+function presentationPreviewOptions(){
+  const draft=presentationDraftFromForm();
+  return {
+    previewOpening:draft.openingStyle&&draft.openingStyle!=='none'?draft.openingStyle:'',
+    previewGallery:draft.galleryStyle||'',
+    previewExperience:draft.experienceMode||'',
+    previewMotion:draft.motionLevel||'',
+    previewRosePetal:draft.rosePetalColor||'',
+    previewFloralPetal:draft.floralPetalColor||'',
+    previewFloralCenter:draft.floralCenterColor||''
+  };
+}
+
 function renderThemes(){
+  const grid=$('themeGrid');
+  if(!grid)return;
   const eventName=presentedName($('displayName')?.value||settings.couple?.displayName||settings._event?.name||'Evento activo');
   const eventDate=$('dateLabel')?.value||settings.event?.dateLabel||'Fecha por confirmar';
   const typeLabel=eventTypes.find(type=>type.id===settings._event?.event_type)?.name||'este evento';
@@ -1151,47 +1191,46 @@ function renderThemes(){
   const normalizedSearch=value=>String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('es-MX').trim();
   const search=normalizedSearch($('themeSearch')?.value);
   const platformUser=['owner','developer'].includes(currentUser?.role);
+  const selectedOpening=$('openingStyleSelect')?.value||defaultOpeningId();
   const visibleThemes=themes.filter(theme=>{
     const haystack=normalizedSearch([theme.name,theme.description,theme.layoutLabel,theme.photoStyleLabel,theme.motionLabel,...(theme.tags||[])].join(' '));
     return !search||haystack.includes(search);
-  });
-  $('themeGrid').innerHTML=visibleThemes.map(theme=>{
+  }).map(theme=>({...theme,_openingAffinity:openingRecipeAffinity(theme,selectedOpening)}))
+    .sort((left,right)=>(right._openingAffinity.score-left._openingAffinity.score)||left.name.localeCompare(right.name,'es-MX'));
+  const openingLabel=selectedOpeningDefinition()?.label||'Sin apertura';
+  if($('openingCompatibilitySummary'))$('openingCompatibilitySummary').textContent=`${visibleThemes.length} diseños usarán “${openingLabel}” como apertura actual. La plantilla conserva su paleta, textura y composición; Recorrido, Movimiento y Álbum siguen los controles superiores.`;
+  grid.innerHTML=visibleThemes.map(theme=>{
     const minimum=theme.minPlan||'starter';
     const locked=theme.allowed===false;
     const planName={express:'Express',starter:'Esencial',basic:'Plus',premium:'Premium'}[minimum]||minimum;
     return `
     <article class="theme-card ${settings.themeId===theme.id?'selected':''} ${locked?'theme-locked':''}">
-      <button class="theme-preview ${theme.className} preview-theme-button" data-id="${theme.id}" type="button">
-        <span>${theme.preview}</span><strong class="theme-preview-event-name">${esc(eventName)}</strong><small class="theme-preview-event-date">${esc(eventDate)}</small>
+      <button class="theme-preview ${theme.className} preview-theme-button recipe-thumbnail-button" data-id="${theme.id}" type="button">
+        <img class="recipe-catalog-thumbnail" src="/api/admin/design/recipes/${encodeURIComponent(theme.id)}/thumbnail?eventId=${encodeURIComponent(eventId)}" loading="lazy" alt="Vista previa de ${esc(theme.name)}">
+        <span class="recipe-thumbnail-overlay"><strong class="theme-preview-event-name">${esc(eventName)}</strong><small class="theme-preview-event-date">${esc(eventDate)}</small></span>
       </button>
       <div class="theme-card-body">
         <div class="theme-card-title"><h3>${esc(theme.name)}</h3><span class="theme-plan-badge">${esc(planName)}</span></div>
+        <div class="theme-recommendation-line"><span class="theme-affinity-badge">${esc(theme._openingAffinity?.label||'Compatible')}</span><small>Usará: ${esc(openingLabel)}</small></div>
         <p>${esc(theme.description)}</p>
         <div class="theme-structure-list"><span>${esc(theme.layoutLabel||'Composición clásica')}</span><span>${esc(theme.photoStyleLabel||'Fotos en tarjetas')}</span><span>${esc(theme.motionLabel||'Movimiento sutil')}</span></div>
         <div class="theme-tag-list">${(theme.tags||[]).slice(0,3).map(tag=>`<span>${esc(tag)}</span>`).join('')}</div>
-        <div class="theme-commerce-actions"><button class="secondary-btn choose-theme" data-id="${theme.id}" ${locked?'disabled':''}>${locked?'Sólo vista previa':(settings.themeId===theme.id?'Plantilla activa':'Aplicar plantilla')}</button>
+        <div class="theme-commerce-actions"><button class="secondary-btn choose-theme" data-id="${theme.id}" ${locked?'disabled':''}>${locked?'Sólo vista previa':'Ver y aplicar'}</button>
         ${locked&&!platformUser&&theme.productId?`<button class="primary-btn add-theme-cart" data-product-id="${theme.productId}">Agregar · $${(Number(theme.price_cents||0)/100).toLocaleString('es-MX')}</button>`:''}</div>
       </div>
     </article>`;
   }).join('')||'<div class="catalog-empty"><strong>No encontramos una plantilla con esos filtros.</strong><span>Prueba otro tipo de evento o borra la búsqueda.</span></div>';
 
   document.querySelectorAll('.preview-theme-button').forEach(button=>{
-    button.onclick=()=>openThemePreview(button.dataset.id);
+    button.onclick=event=>{event.stopPropagation();openThemePreview(button.dataset.id);};
   });
-
+  document.querySelectorAll('.theme-card').forEach(card=>{
+    const id=card.querySelector('[data-id]')?.dataset.id;if(!id)return;card.tabIndex=0;card.setAttribute('role','button');card.setAttribute('aria-label',`Ver ${themes.find(item=>item.id===id)?.name||'diseño'}`);
+    card.onclick=event=>{if(event.target.closest('.add-theme-cart,.choose-theme'))return;openThemePreview(id);};
+    card.onkeydown=event=>{if((event.key==='Enter'||event.key===' ')&&!event.target.closest('button,a,input,select')){event.preventDefault();openThemePreview(id);}};
+  });
   document.querySelectorAll('.choose-theme').forEach(button=>{
-    button.onclick=async()=>{
-      const response=await api('/api/admin/settings',{
-        method:'PUT',
-        headers:{'Content-Type':'application/json'},
-        body:JSON.stringify({themeId:button.dataset.id})
-      });
-      if(!response.ok)return status('No se pudo aplicar la plantilla.',false);
-      settings.themeId=button.dataset.id;
-      renderThemes();
-      updateThemeLivePreview();
-      status('Plantilla aplicada.');
-    };
+    button.onclick=event=>{event.stopPropagation();openThemePreview(button.dataset.id);};
   });
   document.querySelectorAll('.add-theme-cart').forEach(button=>button.onclick=async()=>{
     const response=await api('/api/store/cart/items',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({productId:Number(button.dataset.productId)})});
@@ -1200,7 +1239,13 @@ function renderThemes(){
     status('Plantilla agregada al carrito. Puedes continuar desde Plan y extras.');
   });
 }
-$('themeSearch')?.addEventListener('input',renderThemes);
+function themeSearchText(value){return String(value||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('es-MX').trim();}
+function renderThemeSearchSuggestions(){const input=$('themeSearch'),box=$('themeSearchSuggestions');if(!input||!box)return;const q=themeSearchText(input.value);if(!q){box.hidden=true;box.innerHTML='';return;}const seen=new Set(),items=[];for(const theme of themes){const values=[theme.name,theme.layoutLabel,theme.photoStyleLabel,theme.motionLabel,...(theme.tags||[])];if(!themeSearchText(values.join(' ')).includes(q))continue;for(const label of values){const text=String(label||'').trim(),key=themeSearchText(text);if(!text||seen.has(key)||(!key.startsWith(q)&&!key.includes(q)))continue;seen.add(key);items.push(text);if(items.length>=8)break;}if(items.length>=8)break;}box.innerHTML=items.map(text=>`<button type="button" role="option" data-theme-suggestion="${esc(text)}">${esc(text)}</button>`).join('');box.hidden=!items.length;box.querySelectorAll('[data-theme-suggestion]').forEach(button=>button.onclick=()=>{input.value=button.dataset.themeSuggestion;box.hidden=true;renderThemes();});}
+$('themeSearch')?.addEventListener('input',()=>{renderThemeSearchSuggestions();scheduleDeferredTask('theme-search-render',renderThemes,90);});
+$('themeSearch')?.addEventListener('keydown',event=>{const box=$('themeSearchSuggestions'),buttons=[...(box?.querySelectorAll('[data-theme-suggestion]')||[])];if(!buttons.length||box.hidden)return;if(event.key==='ArrowDown'){event.preventDefault();buttons[0].focus();}else if(event.key==='Escape')box.hidden=true;});
+$('themeSearchSuggestions')?.addEventListener('keydown',event=>{const buttons=[...event.currentTarget.querySelectorAll('[data-theme-suggestion]')],index=buttons.indexOf(document.activeElement);if(event.key==='ArrowDown'){event.preventDefault();buttons[Math.min(buttons.length-1,index+1)]?.focus();}else if(event.key==='ArrowUp'){event.preventDefault();(index<=0?$('themeSearch'):buttons[index-1])?.focus();}else if(event.key==='Escape'){$('themeSearch').focus();event.currentTarget.hidden=true;}});
+document.addEventListener('pointerdown',event=>{if(!event.target.closest('.theme-search-assist')&&$('themeSearchSuggestions'))$('themeSearchSuggestions').hidden=true;});
+$('openDesignLabBtn')?.addEventListener('click',event=>{event.preventDefault();if(!eventId)return status('Selecciona un evento antes de abrir el constructor.',false);location.assign(`/design-lab.html?eventId=${encodeURIComponent(eventId)}&returnTab=templates&panel=recipes&baseline=active`);});
 
 async function saveLocalization(){
   const defaultLocale=$('defaultLocale')?.value||'es';
@@ -3474,14 +3519,13 @@ function eventPreviewBaseUrl(){
 async function ensureEventPreviewBaseUrl(){
   const slug=eventPreviewSlug();if(!slug||!eventId)return '';
   const cached=eventPreviewBaseUrl();if(cached)return cached;
-  const response=await api('/api/admin/preview-links',{method:'POST',headers:{'Content-Type':'application/json'},body:'{}'});
-  const data=await response.json().catch(()=>({}));
-  if(!response.ok||!data.url){status(data.error||'No se pudo crear la vista previa temporal.',false);return '';}
-  const url=new URL(data.url,window.location.origin);
-  if(url.pathname!==`/e/${encodeURIComponent(slug)}`)return '';
-  const expiresAt=Date.parse(data.expiresAt||'')||Date.now()+Math.max(5,Number(data.expiresInMinutes)||5)*60000;
-  const base=`${url.pathname}${url.search}`;
-  previewLinkCache.set(Number(eventId),{url:base,expiresAt:expiresAt-30000});
+  /* RC38: las vistas dentro del panel usan la sesión autenticada actual. No
+     necesitan crear un preview-link compartible en cada clic. Esto elimina
+     los 401 observados cuando el token/cookie cambiaba y reduce una escritura
+     a SQLite por cada previsualización. Los enlaces compartibles continúan
+     disponibles mediante su endpoint explícito. */
+  const base=`/e/${encodeURIComponent(slug)}?preview=1`;
+  previewLinkCache.set(Number(eventId),{url:base,expiresAt:Date.now()+30*60*1000});
   return base;
 }
 /* Contrato compartido por las vistas de apertura. Mantenerlo centralizado evita
@@ -3536,15 +3580,56 @@ function openStorePreviewDialog(url=storePreviewUrl){
 function closeStorePreview(){
   $('storePreviewDialog')?.close();if($('storePreviewFrame'))$('storePreviewFrame').src='about:blank';
 }
+async function editCatalogTheme(themeId){
+  if(!themeId||!eventId)return;
+  const editButton=$('themePreviewEditBtn');if(editButton)editButton.disabled=true;
+  try{
+    status('Preparando diseño en el Estudio…');
+    let state=await readJson(await api('/api/admin/design/recipe',{cache:'no-store'}),'Estado del diseño');
+    const presentationOverrides=presentationDraftFromForm();
+    let response=await api('/api/admin/design/recipe',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({catalogRecipeId:themeId,presentationOverrides,expectedRevision:state.state?.draftRevision})});
+    if(response.status===409){state=await readJson(await api('/api/admin/design/recipe',{cache:'no-store'}),'Actualización del borrador');response=await api('/api/admin/design/recipe',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({catalogRecipeId:themeId,presentationOverrides,expectedRevision:state.state?.draftRevision})});}
+    await readJson(response,'Preparación del diseño');
+    location.assign(`/design-lab.html?eventId=${encodeURIComponent(eventId)}&returnTab=templates&panel=recipes&baseline=draft`);
+  }catch(error){status(error.message||'No se pudo preparar el diseño para editarlo.',false);if(editButton)editButton.disabled=false;}
+}
+async function applyCatalogTheme(themeId){
+  if(!themeId||!eventId)return;
+  const applyButton=$('themePreviewApplyBtn');if(applyButton)applyButton.disabled=true;
+  try{
+    status('Aplicando diseño…');
+    let state=await readJson(await api('/api/admin/design/recipe',{cache:'no-store'}),'Estado del diseño');
+    const presentationOverrides=presentationDraftFromForm();
+    let saveResponse=await api('/api/admin/design/recipe',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({catalogRecipeId:themeId,presentationOverrides,expectedRevision:state.state?.draftRevision})});
+    if(saveResponse.status===409){state=await readJson(await api('/api/admin/design/recipe',{cache:'no-store'}),'Actualización del borrador');saveResponse=await api('/api/admin/design/recipe',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({catalogRecipeId:themeId,presentationOverrides,expectedRevision:state.state?.draftRevision})});}
+    const saved=await readJson(saveResponse,'Aplicación de plantilla');
+    let applyResponse=await api('/api/admin/design/apply',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({expectedRevision:saved.state?.draftRevision})});
+    if(applyResponse.status===409){state=await readJson(await api('/api/admin/design/recipe',{cache:'no-store'}),'Actualización del borrador');applyResponse=await api('/api/admin/design/apply',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({expectedRevision:state.state?.draftRevision})});}
+    const applied=await readJson(applyResponse,'Activación del diseño');
+    const fresh=await readJson(await api('/api/admin/settings',{cache:'no-store'}),'Actualización de la invitación');mergeSettingsResponse(fresh);fillSettings();updateDesignProductControls();renderThemes();
+    const pending=applied.pendingEntitlements||[];status(pending.length?`Diseño aplicado. ${pending.length} experiencia(s) requieren derecho comercial antes de mostrarse públicamente.`:'Diseño aplicado a la invitación.');
+    if($('themePreviewDialog')?.open)$('themePreviewDialog').close();
+  }catch(error){status(error.message||'No se pudo aplicar el diseño.',false);}finally{if(applyButton)applyButton.disabled=false;}
+}
 async function openThemePreview(themeId){
   const theme=themes.find(item=>item.id===themeId);const slug=settings._event?.slug;if(!theme||!slug)return;
-  const base=await ensureEventPreviewBaseUrl();
-  const url=previewUrlFromOptions({previewTheme:themeId},base);
+  // La previsualización del catálogo dentro del panel usa la sesión actual.
+  // Así el servidor reconoce el rol de plataforma y no cae en la Recipe ACTIVE
+  // ni depende de crear un preview-link para cada clic.
+  const base=`/e/${encodeURIComponent(slug)}?preview=1`;
+  /* RC40: la Recipe aporta paleta/textura/composición, mientras que la barra
+     «Apertura / Recorrido / Movimiento / Álbum» define la experiencia actual.
+     Así, si el usuario eligió Sobre personalizable, todas las plantillas se
+     previsualizan con sobre sin perder su identidad cromática. */
+  const url=previewUrlFromOptions({previewTheme:themeId,...presentationPreviewOptions()},base);
   if(!url)return status('No se pudo crear una vista previa autorizada.',false);
   if($('themePreviewDialogTitle'))$('themePreviewDialogTitle').textContent=theme.name;
   if($('openFullPreviewBtn'))$('openFullPreviewBtn').href=url;
   const frame=$('themePreviewFrame'),dialog=$('themePreviewDialog');if(!frame||!dialog)return;
-  frame.src=replayablePreviewUrl(url);if(!dialog.open)dialog.showModal();requestAnimationFrame(()=>fitPreviewStage($('themePreviewStage'),'phone'));
+  dialog.dataset.themeId=themeId;
+  if($('themePreviewEditBtn'))$('themePreviewEditBtn').onclick=()=>editCatalogTheme(themeId);
+  if($('themePreviewApplyBtn')){$('themePreviewApplyBtn').disabled=theme.allowed===false&&!['owner','developer'].includes(currentUser?.role);$('themePreviewApplyBtn').title=$('themePreviewApplyBtn').disabled?'Este diseño requiere adquirir el producto o un paquete compatible.':'';$('themePreviewApplyBtn').onclick=()=>applyCatalogTheme(themeId);}
+  frame.src='about:blank';const previewSrc=replayablePreviewUrl(url);requestAnimationFrame(()=>{frame.src=previewSrc;});if(!dialog.open)dialog.showModal();requestAnimationFrame(()=>fitPreviewStage($('themePreviewStage'),'phone'));
   trackConversion('template_previewed',{themeId,eventType:settings._event?.event_type||''});
 }
 async function previewStoreProduct(productId){
@@ -3830,11 +3915,11 @@ $('applyBackupRestoreBtn')?.addEventListener('click',async()=>{
 async function restoreSession(){
   const me=await api('/api/auth/me?optional=1');if(!me.ok){localStorage.removeItem('authToken');authToken='';return;}
   const session=await me.json();if(!session.authenticated){localStorage.removeItem('authToken');authToken='';return;}
-  currentUser=session;if(currentUser.must_change_password&&!(await forcePasswordChange()))return;events=await(await api('/api/admin/events')).json();const savedEventId=Number(localStorage.getItem('eventId'));eventId=events.some(e=>e.id===savedEventId)?savedEventId:events[0]?.id;localStorage.setItem('eventId',String(eventId||''));renderEvents();
+  currentUser=session;if(currentUser.must_change_password&&!(await forcePasswordChange()))return;events=await(await api('/api/admin/events')).json();const requestedId=requestedAdminContext().eventId,savedEventId=Number(localStorage.getItem('eventId'));eventId=events.some(e=>e.id===requestedId)?requestedId:(events.some(e=>e.id===savedEventId)?savedEventId:events[0]?.id);localStorage.setItem('eventId',String(eventId||''));renderEvents();
       applyRoleUI();
       $('loginScreen').classList.add('hidden');
       $('adminApp').classList.remove('hidden');
-      await load();
+      await load();restoreRequestedAdminContext();
 }
 loadPublicPlans().catch(error=>{console.error(error);if($('loginStatus'))$('loginStatus').textContent=error.message||'No se pudo cargar el catálogo de acceso.';});
 restoreSession().catch(error=>{console.error(error);if($('loginStatus'))$('loginStatus').textContent=error.message||'No se pudo restaurar la sesión.';});

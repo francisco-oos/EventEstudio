@@ -12,9 +12,12 @@ EVIDENCE.mkdir(parents=True,exist_ok=True)
 HTML=(PUBLIC/'index.html').read_text(encoding='utf-8')
 CSS=(PUBLIC/'styles.css').read_text(encoding='utf-8')
 STATIONERY_CSS=(PUBLIC/'stationery-engine.css').read_text(encoding='utf-8')
+DESIGN_CSS=(PUBLIC/'design-engine.css').read_text(encoding='utf-8')
 EXPERIENCE_JS=(PUBLIC/'experience-renderers.js').read_text(encoding='utf-8')
 SEAL_JS=(PUBLIC/'seal-renderer.js').read_text(encoding='utf-8')
 ENGINE_JS=(PUBLIC/'stationery-engine.js').read_text(encoding='utf-8')
+COLOR_JS=(PUBLIC/'design-color-engine.js').read_text(encoding='utf-8')
+DESIGN_JS=(PUBLIC/'design-engine.js').read_text(encoding='utf-8')
 APP_JS=(PUBLIC/'app.js').read_text(encoding='utf-8').replace(
     'function slug(){const m=location.pathname.match(/^\\/e\\/([^/]+)/);return m?decodeURIComponent(m[1]):"";}',
     'function slug(){return "qa";}'
@@ -55,9 +58,10 @@ def payload(opening='unified-envelope'):
 def document(settings):
     doc=re.sub(r'<link rel="stylesheet" href="/styles\.css\?v=[^"]+">',lambda _:f'<style>{CSS}</style>',HTML)
     doc=re.sub(r'<link rel="stylesheet" href="/stationery-engine\.css\?v=[^"]+">',lambda _:f'<style>{STATIONERY_CSS}</style>',doc)
+    doc=re.sub(r'<link rel="stylesheet" href="/design-engine\.css\?v=[^"]+">',lambda _:f'<style>{DESIGN_CSS}</style>',doc)
     prelude=f'''<script>window.__qaConfig={json.dumps(settings,ensure_ascii=False)};window.fetch=async(input)=>{{const u=String(input);if(u.includes('/api/config'))return new Response(JSON.stringify(window.__qaConfig),{{status:200,headers:{{'Content-Type':'application/json'}}}});if(u.includes('/api/public/photo-messages'))return new Response('[]',{{status:200,headers:{{'Content-Type':'application/json'}}}});return new Response('{{}}',{{status:404,headers:{{'Content-Type':'application/json'}}}});}};</script>'''
-    scripts=prelude+f'<script>{EXPERIENCE_JS}</script><script>{SEAL_JS}</script><script>{ENGINE_JS}</script><script>{APP_JS}</script>'
-    doc=re.sub(r'<script src="/experience-renderers\.js\?v=[^"]+"></script><script src="/seal-renderer\.js\?v=[^"]+"></script><script src="/stationery-engine\.js\?v=[^"]+"></script><script src="/app\.js\?v=[^"]+"></script>',lambda _:scripts,doc)
+    scripts=prelude+f'<script>{EXPERIENCE_JS}</script><script>{SEAL_JS}</script><script>{ENGINE_JS}</script><script>{COLOR_JS}</script><script>{DESIGN_JS}</script><script>{APP_JS}</script>'
+    doc=re.sub(r'<script src="/experience-renderers\.js\?v=[^"]+"></script><script src="/seal-renderer\.js\?v=[^"]+"></script><script src="/stationery-engine\.js\?v=[^"]+"></script><script src="/design-color-engine\.js\?v=[^"]+"></script><script src="/design-engine\.js\?v=[^"]+"></script><script src="/app\.js\?v=[^"]+"></script>',lambda _:scripts,doc)
     return doc
 
 def run_case(page, opening):

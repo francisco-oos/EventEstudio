@@ -40,3 +40,12 @@ conservan.
 Las migraciones son aditivas. Aun así, una imagen anterior no conoce el
 catálogo comercial ni las reglas nuevas de derechos, por lo que la reversión
 debe usar también la copia de volumen tomada antes de actualizar.
+
+
+## Actualización local por sobrescritura — RC36
+
+No copies una versión nueva encima de una instancia que siga ejecutándose. SQLite puede mantener `wedding.db-wal` y `wedding.db-shm` junto al archivo principal. Un ZIP limpio no contiene esos auxiliares y, por tanto, Windows puede conservar los antiguos al arrastrar archivos.
+
+RC36 detecta este caso durante `INICIAR.bat`: valida el archivo principal de forma aislada y sólo si éste es íntegro mueve los sidecars incompatibles a `backups/local-sidecar-quarantine/`. No se eliminan y no se resembra la base.
+
+La práctica recomendada sigue siendo: detener EventStudio, respaldar `data/`, extraer el código en una carpeta limpia y copiar datos únicamente cuando corresponda.

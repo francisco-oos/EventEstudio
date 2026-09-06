@@ -1,0 +1,756 @@
+{
+  "schema": "eventstudio.asset-manifest.v1",
+  "version": "1.3.0",
+  "pageSize": 24,
+  "assets": [
+    {
+      "id": "wedding.botanical-elegant.frame.001",
+      "name": "Marco botánico elegante",
+      "category": "frames",
+      "tags": [
+        "botánico",
+        "marco",
+        "boda",
+        "elegante"
+      ],
+      "url": "/design-assets/decorations/botanical-elegant-frame.svg",
+      "thumbnailUrl": "/design-assets/decorations/botanical-elegant-frame.svg",
+      "colorizable": true,
+      "status": "approved",
+      "motions": [
+        "none",
+        "float-soft"
+      ],
+      "source": "gemini-batch-001-audited",
+      "aspectRatio": 1.0
+    },
+    {
+      "id": "wedding.botanical-elegant.divider.001",
+      "name": "Divisor botánico elegante",
+      "category": "dividers",
+      "tags": [
+        "botánico",
+        "divisor",
+        "boda",
+        "elegante"
+      ],
+      "url": "/design-assets/decorations/botanical-elegant-divider.svg",
+      "thumbnailUrl": "/design-assets/decorations/botanical-elegant-divider.svg",
+      "colorizable": true,
+      "status": "approved",
+      "motions": [
+        "none",
+        "soft-rise"
+      ],
+      "source": "gemini-batch-001-audited",
+      "aspectRatio": 10.0
+    },
+    {
+      "id": "legacy.daisy-editorial-light",
+      "name": "Daisy Editorial Light",
+      "category": "legacy-artwork",
+      "tags": [
+        "legacy",
+        "eventstudio"
+      ],
+      "url": "/assets/daisy-editorial-light.svg",
+      "thumbnailUrl": "/assets/daisy-editorial-light.svg",
+      "colorizable": false,
+      "status": "approved",
+      "motions": [
+        "none",
+        "float-soft",
+        "sway-soft"
+      ],
+      "source": "eventstudio",
+      "aspectRatio": 0.75
+    },
+    {
+      "id": "legacy.daisy-meadow-air",
+      "name": "Daisy Meadow Air",
+      "category": "legacy-artwork",
+      "tags": [
+        "legacy",
+        "eventstudio"
+      ],
+      "url": "/assets/daisy-meadow-air.svg",
+      "thumbnailUrl": "/assets/daisy-meadow-air.svg",
+      "colorizable": false,
+      "status": "approved",
+      "motions": [
+        "none",
+        "float-soft",
+        "sway-soft"
+      ],
+      "source": "eventstudio",
+      "aspectRatio": 0.75
+    },
+    {
+      "id": "legacy.daisy-paper-orbit",
+      "name": "Daisy Paper Orbit",
+      "category": "legacy-artwork",
+      "tags": [
+        "legacy",
+        "eventstudio"
+      ],
+      "url": "/assets/daisy-paper-orbit.svg",
+      "thumbnailUrl": "/assets/daisy-paper-orbit.svg",
+      "colorizable": false,
+      "status": "approved",
+      "motions": [
+        "none",
+        "float-soft",
+        "sway-soft"
+      ],
+      "source": "eventstudio",
+      "aspectRatio": 0.75
+    },
+    {
+      "id": "legacy.daisy-shadow-studio",
+      "name": "Daisy Shadow Studio",
+      "category": "legacy-artwork",
+      "tags": [
+        "legacy",
+        "eventstudio"
+      ],
+      "url": "/assets/daisy-shadow-studio.svg",
+      "thumbnailUrl": "/assets/daisy-shadow-studio.svg",
+      "colorizable": false,
+      "status": "approved",
+      "motions": [
+        "none",
+        "float-soft",
+        "sway-soft"
+      ],
+      "source": "eventstudio",
+      "aspectRatio": 0.75
+    },
+    {
+      "id": "legacy.varilla_onfalos_elegante",
+      "name": "Varilla_Onfalos_Elegante",
+      "category": "legacy-artwork",
+      "tags": [
+        "legacy",
+        "eventstudio"
+      ],
+      "url": "/assets/varilla_onfalos_elegante.svg",
+      "thumbnailUrl": "/assets/varilla_onfalos_elegante.svg",
+      "colorizable": false,
+      "status": "approved",
+      "motions": [
+        "none",
+        "float-soft",
+        "sway-soft"
+      ],
+      "source": "eventstudio",
+      "aspectRatio": 7.5
+    },
+    {
+      "id": "decor.botanical-sprig",
+      "name": "Botanical Sprig",
+      "category": "botanical",
+      "tags": [
+        "botanical",
+        "sprig"
+      ],
+      "url": "/design-assets/decorations/botanical-sprig.svg",
+      "thumbnailUrl": "/design-assets/decorations/botanical-sprig.svg",
+      "colorizable": true,
+      "status": "approved",
+      "motions": [
+        "none",
+        "float-soft",
+        "sway-soft",
+        "soft-rise",
+        "rotate-slow"
+      ],
+      "source": "eventstudio",
+      "aspectRatio": 1.3333
+    },
+    {
+      "id": "decor.daisy-line",
+      "name": "Daisy Line",
+      "category": "botanical",
+      "tags": [
+        "daisy",
+        "line"
+      ],
+      "url": "/design-assets/decorations/daisy-line.svg",
+      "thumbnailUrl": "/design-assets/decorations/daisy-line.svg",
+      "colorizable": true,
+      "status": "approved",
+      "motions": [
+        "none",
+        "float-soft",
+        "sway-soft",
+        "soft-rise",
+        "rotate-slow"
+      ],
+      "source": "eventstudio",
+      "aspectRatio": 1.0
+    },
+    {
+      "id": "decor.celestial-orbit",
+      "name": "Celestial Orbit",
+      "category": "celestial",
+      "tags": [
+        "celestial",
+        "orbit"
+      ],
+      "url": "/design-assets/decorations/celestial-orbit.svg",
+      "thumbnailUrl": "/design-assets/decorations/celestial-orbit.svg",
+      "colorizable": true,
+      "status": "approved",
+      "motions": [
+        "none",
+        "float-soft",
+        "sway-soft",
+        "soft-rise",
+        "rotate-slow"
+      ],
+      "source": "eventstudio",
+      "aspectRatio": 1.3333
+    },
+    {
+      "id": "decor.editorial-frame",
+      "name": "Editorial Frame",
+      "category": "frames",
+      "tags": [
+        "editorial",
+        "frame"
+      ],
+      "url": "/design-assets/decorations/editorial-frame.svg",
+      "thumbnailUrl": "/design-assets/decorations/editorial-frame.svg",
+      "colorizable": true,
+      "status": "approved",
+      "motions": [
+        "none",
+        "float-soft",
+        "sway-soft",
+        "soft-rise",
+        "rotate-slow"
+      ],
+      "source": "eventstudio",
+      "aspectRatio": 1.3333
+    },
+    {
+      "id": "decor.soft-wave",
+      "name": "Soft Wave",
+      "category": "decorations",
+      "tags": [
+        "soft",
+        "wave"
+      ],
+      "url": "/design-assets/decorations/soft-wave.svg",
+      "thumbnailUrl": "/design-assets/decorations/soft-wave.svg",
+      "colorizable": true,
+      "status": "approved",
+      "motions": [
+        "none",
+        "float-soft",
+        "sway-soft",
+        "soft-rise",
+        "rotate-slow"
+      ],
+      "source": "eventstudio",
+      "aspectRatio": 1.8571
+    },
+    {
+      "id": "decor.confetti-burst",
+      "name": "Confetti Burst",
+      "category": "decorations",
+      "tags": [
+        "confetti",
+        "burst"
+      ],
+      "url": "/design-assets/decorations/confetti-burst.svg",
+      "thumbnailUrl": "/design-assets/decorations/confetti-burst.svg",
+      "colorizable": true,
+      "status": "approved",
+      "motions": [
+        "none",
+        "float-soft",
+        "sway-soft",
+        "soft-rise",
+        "rotate-slow"
+      ],
+      "source": "eventstudio",
+      "aspectRatio": 1.2222
+    },
+    {
+      "id": "decor.paw-trail",
+      "name": "Paw Trail",
+      "category": "kids",
+      "tags": [
+        "paw",
+        "trail"
+      ],
+      "url": "/design-assets/decorations/paw-trail.svg",
+      "thumbnailUrl": "/design-assets/decorations/paw-trail.svg",
+      "colorizable": true,
+      "status": "approved",
+      "motions": [
+        "none",
+        "float-soft",
+        "sway-soft",
+        "soft-rise",
+        "rotate-slow"
+      ],
+      "source": "eventstudio",
+      "aspectRatio": 1.2222
+    },
+    {
+      "id": "decor.double-ring",
+      "name": "Double Ring",
+      "category": "decorations",
+      "tags": [
+        "double",
+        "ring"
+      ],
+      "url": "/design-assets/decorations/double-ring.svg",
+      "thumbnailUrl": "/design-assets/decorations/double-ring.svg",
+      "colorizable": true,
+      "status": "approved",
+      "motions": [
+        "none",
+        "float-soft",
+        "sway-soft",
+        "soft-rise",
+        "rotate-slow"
+      ],
+      "source": "eventstudio",
+      "aspectRatio": 1.0
+    },
+    {
+      "id": "decor.diamond-divider",
+      "name": "Diamond Divider",
+      "category": "dividers",
+      "tags": [
+        "diamond",
+        "divider"
+      ],
+      "url": "/design-assets/decorations/diamond-divider.svg",
+      "thumbnailUrl": "/design-assets/decorations/diamond-divider.svg",
+      "colorizable": true,
+      "status": "approved",
+      "motions": [
+        "none",
+        "float-soft",
+        "sway-soft",
+        "soft-rise",
+        "rotate-slow"
+      ],
+      "source": "eventstudio",
+      "aspectRatio": 5.0
+    },
+    {
+      "id": "decor.corner-flourish",
+      "name": "Corner Flourish",
+      "category": "frames",
+      "tags": [
+        "corner",
+        "flourish"
+      ],
+      "url": "/design-assets/decorations/corner-flourish.svg",
+      "thumbnailUrl": "/design-assets/decorations/corner-flourish.svg",
+      "colorizable": true,
+      "status": "approved",
+      "motions": [
+        "none",
+        "float-soft",
+        "sway-soft",
+        "soft-rise",
+        "rotate-slow"
+      ],
+      "source": "eventstudio",
+      "aspectRatio": 1.0
+    },
+    {
+      "id": "decor.ticket-perf",
+      "name": "Ticket Perf",
+      "category": "decorations",
+      "tags": [
+        "ticket",
+        "perf"
+      ],
+      "url": "/design-assets/decorations/ticket-perf.svg",
+      "thumbnailUrl": "/design-assets/decorations/ticket-perf.svg",
+      "colorizable": true,
+      "status": "approved",
+      "motions": [
+        "none",
+        "float-soft",
+        "sway-soft",
+        "soft-rise",
+        "rotate-slow"
+      ],
+      "source": "eventstudio",
+      "aspectRatio": 2.3333
+    },
+    {
+      "id": "decor.star-spark",
+      "name": "Star Spark",
+      "category": "celestial",
+      "tags": [
+        "star",
+        "spark"
+      ],
+      "url": "/design-assets/decorations/star-spark.svg",
+      "thumbnailUrl": "/design-assets/decorations/star-spark.svg",
+      "colorizable": true,
+      "status": "approved",
+      "motions": [
+        "none",
+        "float-soft",
+        "sway-soft",
+        "soft-rise",
+        "rotate-slow"
+      ],
+      "source": "eventstudio",
+      "aspectRatio": 1.0
+    },
+    {
+      "id": "wedding.art-deco.divider.001",
+      "name": "Divisor Diamante Art Déco",
+      "category": "dividers",
+      "tags": [
+        "wedding.art-deco",
+        "divider",
+        "wedding",
+        "anniversary",
+        "corporate"
+      ],
+      "url": "/design-assets/decorations/wedding-art-deco-divider-001.svg",
+      "thumbnailUrl": "/design-assets/decorations/wedding-art-deco-divider-001.svg",
+      "colorizable": true,
+      "status": "approved",
+      "motions": [
+        "none",
+        "soft-rise"
+      ],
+      "source": "gemini-batch-050-051-audited-static",
+      "eventTypes": [
+        "wedding",
+        "anniversary",
+        "corporate"
+      ],
+      "visualRole": "divider",
+      "printSupport": true,
+      "qrSafe": true,
+      "aspectRatio": 10.0
+    },
+    {
+      "id": "quince.neon-cyber.corner.001",
+      "name": "Esquina HUD Neón",
+      "category": "decorations",
+      "tags": [
+        "quince.neon-cyber",
+        "corner",
+        "quince",
+        "birthday-adult",
+        "social"
+      ],
+      "url": "/design-assets/decorations/quince-neon-cyber-corner-001.svg",
+      "thumbnailUrl": "/design-assets/decorations/quince-neon-cyber-corner-001.svg",
+      "colorizable": true,
+      "status": "approved",
+      "motions": [
+        "none",
+        "soft-rise"
+      ],
+      "source": "gemini-batch-050-051-audited-static",
+      "eventTypes": [
+        "quince",
+        "birthday-adult",
+        "social"
+      ],
+      "visualRole": "corner",
+      "printSupport": false,
+      "qrSafe": true,
+      "aspectRatio": 1.0
+    },
+    {
+      "id": "social.tropical-beach.corner.001",
+      "name": "Esquina Orgánica Monstera",
+      "category": "decorations",
+      "tags": [
+        "social.tropical-beach",
+        "corner",
+        "wedding",
+        "social",
+        "birthday-adult"
+      ],
+      "url": "/design-assets/decorations/social-tropical-beach-corner-001.svg",
+      "thumbnailUrl": "/design-assets/decorations/social-tropical-beach-corner-001.svg",
+      "colorizable": true,
+      "status": "approved",
+      "motions": [
+        "none",
+        "float-soft"
+      ],
+      "source": "gemini-batch-050-051-audited-static",
+      "eventTypes": [
+        "wedding",
+        "social",
+        "birthday-adult"
+      ],
+      "visualRole": "corner",
+      "printSupport": true,
+      "qrSafe": false,
+      "aspectRatio": 1.0
+    },
+    {
+      "id": "wedding.dark-gothic.flourish.001",
+      "name": "Floreos Góticos Obscuros",
+      "category": "decorations",
+      "tags": [
+        "wedding.dark-gothic",
+        "flourish",
+        "wedding",
+        "anniversary"
+      ],
+      "url": "/design-assets/decorations/wedding-dark-gothic-flourish-001.svg",
+      "thumbnailUrl": "/design-assets/decorations/wedding-dark-gothic-flourish-001.svg",
+      "colorizable": true,
+      "status": "approved",
+      "motions": [
+        "none",
+        "soft-rise"
+      ],
+      "source": "gemini-batch-050-051-audited-static",
+      "eventTypes": [
+        "wedding",
+        "anniversary"
+      ],
+      "visualRole": "flourish",
+      "printSupport": true,
+      "qrSafe": true,
+      "aspectRatio": 2.0
+    },
+    {
+      "id": "corporate.minimal-geo.accent.001",
+      "name": "Acento Geométrico Minimalista",
+      "category": "decorations",
+      "tags": [
+        "corporate.minimal-geo",
+        "geometric",
+        "corporate",
+        "generic"
+      ],
+      "url": "/design-assets/decorations/corporate-minimal-geo-accent-001.svg",
+      "thumbnailUrl": "/design-assets/decorations/corporate-minimal-geo-accent-001.svg",
+      "colorizable": true,
+      "status": "approved",
+      "motions": [
+        "none",
+        "float-soft"
+      ],
+      "source": "gemini-batch-050-051-audited-static",
+      "eventTypes": [
+        "corporate",
+        "generic"
+      ],
+      "visualRole": "geometric",
+      "printSupport": true,
+      "qrSafe": true,
+      "aspectRatio": 4.0
+    },
+    {
+      "id": "wedding.floral-geo.diamond.001",
+      "name": "Marco Diamante con Rosas",
+      "category": "frames",
+      "tags": [
+        "wedding.floral-geo",
+        "frame",
+        "wedding",
+        "quince"
+      ],
+      "url": "/design-assets/decorations/wedding-floral-geo-diamond-001.svg",
+      "thumbnailUrl": "/design-assets/decorations/wedding-floral-geo-diamond-001.svg",
+      "colorizable": true,
+      "status": "approved",
+      "motions": [
+        "none",
+        "soft-rise"
+      ],
+      "source": "gemini-batch-050-051-audited-static",
+      "eventTypes": [
+        "wedding",
+        "quince"
+      ],
+      "visualRole": "frame",
+      "printSupport": true,
+      "qrSafe": true,
+      "aspectRatio": 1.0
+    },
+    {
+      "id": "wedding.minimal-line.wreath.001",
+      "name": "Corona Botánica Line-Art",
+      "category": "frames",
+      "tags": [
+        "wedding.minimal-line",
+        "frame",
+        "wedding",
+        "anniversary",
+        "baptism"
+      ],
+      "url": "/design-assets/decorations/wedding-minimal-line-wreath-001.svg",
+      "thumbnailUrl": "/design-assets/decorations/wedding-minimal-line-wreath-001.svg",
+      "colorizable": true,
+      "status": "approved",
+      "motions": [
+        "none",
+        "rotate-slow"
+      ],
+      "source": "gemini-batch-050-051-audited-static",
+      "eventTypes": [
+        "wedding",
+        "anniversary",
+        "baptism"
+      ],
+      "visualRole": "frame",
+      "printSupport": true,
+      "qrSafe": true,
+      "aspectRatio": 1.0
+    },
+    {
+      "id": "wedding.romantic-heart.multiline.001",
+      "name": "Corazón Multi-Línea con Magnolias",
+      "category": "frames",
+      "tags": [
+        "wedding.romantic-heart",
+        "frame",
+        "wedding",
+        "engagement"
+      ],
+      "url": "/design-assets/decorations/wedding-romantic-heart-multiline-001.svg",
+      "thumbnailUrl": "/design-assets/decorations/wedding-romantic-heart-multiline-001.svg",
+      "colorizable": true,
+      "status": "approved",
+      "motions": [
+        "none"
+      ],
+      "source": "gemini-batch-050-051-audited-static",
+      "eventTypes": [
+        "wedding",
+        "engagement"
+      ],
+      "visualRole": "frame",
+      "printSupport": true,
+      "qrSafe": false,
+      "aspectRatio": 1.0
+    },
+    {
+      "id": "wedding.autumn-burgundy.circle.001",
+      "name": "Círculo Borgoña Otoñal",
+      "category": "frames",
+      "tags": [
+        "wedding.autumn-burgundy",
+        "frame",
+        "wedding",
+        "social"
+      ],
+      "url": "/design-assets/decorations/wedding-autumn-burgundy-circle-001.svg",
+      "thumbnailUrl": "/design-assets/decorations/wedding-autumn-burgundy-circle-001.svg",
+      "colorizable": true,
+      "status": "approved",
+      "motions": [
+        "none",
+        "soft-rise"
+      ],
+      "source": "gemini-batch-050-051-audited-static",
+      "eventTypes": [
+        "wedding",
+        "social"
+      ],
+      "visualRole": "frame",
+      "printSupport": true,
+      "qrSafe": true,
+      "aspectRatio": 1.0
+    },
+    {
+      "id": "wedding.succulent-geo.heart.001",
+      "name": "Corazón Geométrico con Suculentas",
+      "category": "frames",
+      "tags": [
+        "wedding.succulent-geo",
+        "frame",
+        "wedding",
+        "quince"
+      ],
+      "url": "/design-assets/decorations/wedding-succulent-geo-heart-001.svg",
+      "thumbnailUrl": "/design-assets/decorations/wedding-succulent-geo-heart-001.svg",
+      "colorizable": true,
+      "status": "approved",
+      "motions": [
+        "none",
+        "float-soft"
+      ],
+      "source": "gemini-batch-050-051-audited-static",
+      "eventTypes": [
+        "wedding",
+        "quince"
+      ],
+      "visualRole": "frame",
+      "printSupport": true,
+      "qrSafe": false,
+      "aspectRatio": 1.0
+    },
+    {
+      "id": "wedding.floral-geo.divider.001",
+      "name": "Divisor Geométrico Floral",
+      "category": "dividers",
+      "tags": [
+        "wedding.floral-geo",
+        "divider",
+        "wedding",
+        "quince"
+      ],
+      "url": "/design-assets/decorations/wedding-floral-geo-divider-001.svg",
+      "thumbnailUrl": "/design-assets/decorations/wedding-floral-geo-divider-001.svg",
+      "colorizable": true,
+      "status": "approved",
+      "motions": [
+        "none",
+        "soft-rise"
+      ],
+      "source": "gemini-batch-050-051-audited-static",
+      "eventTypes": [
+        "wedding",
+        "quince"
+      ],
+      "visualRole": "divider",
+      "printSupport": true,
+      "qrSafe": true,
+      "aspectRatio": 8.0
+    },
+    {
+      "id": "wedding.romantic-heart.corner.001",
+      "name": "Esquina Magnolia",
+      "category": "decorations",
+      "tags": [
+        "wedding.romantic-heart",
+        "corner",
+        "wedding",
+        "baptism"
+      ],
+      "url": "/design-assets/decorations/wedding-romantic-heart-corner-001.svg",
+      "thumbnailUrl": "/design-assets/decorations/wedding-romantic-heart-corner-001.svg",
+      "colorizable": true,
+      "status": "approved",
+      "motions": [
+        "none",
+        "soft-rise"
+      ],
+      "source": "gemini-batch-050-051-audited-static",
+      "eventTypes": [
+        "wedding",
+        "baptism"
+      ],
+      "visualRole": "corner",
+      "printSupport": true,
+      "qrSafe": true,
+      "aspectRatio": 1.0
+    }
+  ]
+}

@@ -17,7 +17,7 @@ const {normalizeStationery,designTokens}=require("../src/stationery-config");
 const {stationeryIsAuthoritative,applyOpeningCoordination}=require("../src/opening-coordination");
 const {loadThemeDesigns,ensureAccessiblePalette,contrastRatio}=require("../src/theme-design");
 
-assert.equal(packageJson.version,"6.14.2-rc.30");
+assert.match(packageJson.version,/^6\.(?:15|16)\.0-rc\.(?:34|35|36|37|38|39|39|40|41)$/);
 assert.equal(stationery.formats.length,4);
 assert.equal(stationery.materials.length,15);
 assert.equal(stationery.presets.length,16);
@@ -59,7 +59,8 @@ assert.match(studioJs,/if\(key==="sealColor"\)sealState=\{\.\.\.sealState,materi
 assert.match(studioJs,/inheritedControl\("Nombres principales",displayName\(\)\)/);
 assert.match(studioJs,/inheritedControl\("Fecha",dateLabel\(\)/);
 assert.match(studioJs,/inheritedControl\("Tipografía de tarjeta",headingLabel\(\)\)/);
-assert.match(studioJs,/body:JSON\.stringify\(\{presentation,stationery:stationeryState,seal:sealState\}\)/);
+assert.match(studioJs,/body:JSON\.stringify\(\{expectedRevision:[^,]+,presentation,stationery:stationeryState,seal:sealState\}\)/);
+assert.match(studioJs,/api\/admin\/design\/stationery-draft/);
 
 assert.match(engineJs,/materialPreviewSvg/);
 assert.match(engineJs,/resourceSvg/);
@@ -68,7 +69,7 @@ assert.match(engineJs,/class="stationery-envelope envelope-container"/);
 assert.match(engineJs,/class="stationery-card envelope-card"/);
 assert.match(engineJs,/class="stationery-top-flap env-flap-top"/);
 assert.match(engineJs,/class="stationery-front-flaps env-front-flaps"/);
-assert.match(engineCss,/transition:transform \.75s cubic-bezier\(\.4,0,\.2,1\)/);
+assert.match(engineCss,/transition:transform \.82s cubic-bezier\(\.17,\.84,\.22,1\)/);
 assert.match(engineCss,/transition:transform \.85s cubic-bezier\(\.2,1,\.3,1\)/);
 assert.match(engineCss,/\.stationery-preview\.is-preview-open \.stationery-top-flap/);
 assert.match(engineCss,/\.stationery-preview\.is-preview-open \.stationery-card/);

@@ -1,0 +1,11 @@
+{
+  "file": "data/wedding.db",
+  "bytes": 647168,
+  "sha256": "f35f21d58552b0578c4e660678a99f76905f235fd4c2b57c3d60c373c0eac51d",
+  "quick_check": "ok",
+  "user_version": 614210,
+  "tables": 43,
+  "users": 4,
+  "events": 2,
+  "result": "PASS"
+}

@@ -1,0 +1,171 @@
+{
+  "version": "6.16.0-rc.38",
+  "generated_on": "2026-09-04",
+  "status": "QA_CANDIDATE",
+  "environment": {
+    "chromium": "/usr/bin/chromium",
+    "server_dependency_install": "BLOCKED_ENV",
+    "block_reason": "runtime DNS cannot resolve registry.npmjs.org; node_modules is intentionally not vendored"
+  },
+  "static_and_contract_tests": {
+    "javascript_syntax": {
+      "files": 98,
+      "result": "PASS"
+    },
+    "structural_audit": {
+      "files_reviewed": 480,
+      "result": "PASS"
+    },
+    "recipes": {
+      "count": 65,
+      "result": "PASS"
+    },
+    "openings_contract": {
+      "count": 14,
+      "result": "PASS"
+    },
+    "presentation_combinations": {
+      "count": 175500,
+      "result": "PASS"
+    },
+    "role_profile_projections": {
+      "count": 1300,
+      "result": "PASS"
+    },
+    "wired_controls": {
+      "count": 139,
+      "result": "PASS"
+    },
+    "legacy_static_contracts": "PASS"
+  },
+  "chromium_tests": {
+    "design_lab_visual": {
+      "result": "PASS",
+      "save_calls": 2,
+      "apply_calls": 1,
+      "palette_calls": 1,
+      "recommend_calls": 3
+    },
+    "recipe_visual": {
+      "recipes": 65,
+      "cases": 130,
+      "failures": 0,
+      "max_overflow": 0
+    },
+    "public_interactions": {
+      "result": "PASS",
+      "coverage": [
+        "opening/skip",
+        "music",
+        "links",
+        "language",
+        "gallery/lightbox",
+        "RSVP"
+      ]
+    },
+    "visual_acceptance": {
+      "template_cases": 128,
+      "template_failures": 0,
+      "opening_cases": 22,
+      "opening_failures": 0,
+      "min_opening_fps": 57.68343331795108,
+      "avg_opening_fps": 59.79357553227001,
+      "max_opening_cls": 0,
+      "max_opening_overflow": 0
+    },
+    "device_matrix": {
+      "viewports": [
+        "320x568",
+        "360x800",
+        "390x844",
+        "412x915",
+        "768x1024",
+        "1440x900"
+      ],
+      "cases": 30,
+      "failures": 0,
+      "max_overflow": 0
+    },
+    "rc38_responsive": {
+      "viewports": [
+        "320x568",
+        "390x844",
+        "1366x768"
+      ],
+      "cases": 9,
+      "failures": 0
+    },
+    "readability": {
+      "recipes": 65,
+      "cases": 130,
+      "failures": 0,
+      "min_paper_contrast": 11.488851533599338,
+      "min_bg_contrast": 10.8878842531796
+    },
+    "color_parity": {
+      "recipes": 65,
+      "cases": 130,
+      "failures": 0,
+      "min_paper_contrast": 11.488851533599338,
+      "min_name_contrast": 11.488851533599338,
+      "min_accent_contrast": 5.9778776001363045,
+      "max_overflow": 0
+    },
+    "feature_matrix": {
+      "patterns": 16,
+      "cases": 32,
+      "failures": 0
+    },
+    "long_content_devices": {
+      "layouts": 8,
+      "devices": 8,
+      "cases": 64,
+      "failures": 0
+    },
+    "album": {
+      "cases": 2,
+      "failures": 0
+    },
+    "stationery": {
+      "cases": 2,
+      "profile_cases": 5,
+      "failures": 0,
+      "min_fps": 59.99414691249629
+    },
+    "public_envelope": {
+      "cases": 2,
+      "failures": 0
+    },
+    "landing": {
+      "cases": 2,
+      "failures": 0
+    }
+  },
+  "database": {
+    "file": "data/wedding.db",
+    "bytes": 647168,
+    "sha256": "f35f21d58552b0578c4e660678a99f76905f235fd4c2b57c3d60c373c0eac51d",
+    "quick_check": "ok",
+    "user_version": 614210,
+    "tables": 43,
+    "users": 4,
+    "events": 2,
+    "result": "PASS"
+  },
+  "blocked_environment_tests": [
+    "server smoke/restore",
+    "dynamic database security and origin/header suites",
+    "dynamic role/permission E2E",
+    "1,200-user server scale test",
+    "payment/WhatsApp/provider server integrations",
+    "production migration E2E",
+    "V5 server/SQLite E2E",
+    "real multipart photo/audio upload persistence through running server"
+  ],
+  "production_gate": [
+    "npm ci",
+    "npm run test:preproduction",
+    "npm audit --audit-level=moderate",
+    "complete docs/checklists/QA_FISICO_FINAL_6.16.0-rc.38.md on real target devices"
+  ]
+}

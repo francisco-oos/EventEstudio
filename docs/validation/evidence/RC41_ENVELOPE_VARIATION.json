@@ -1,0 +1,463 @@
+{
+  "version": "6.16.0-rc.41",
+  "recipes": 65,
+  "uniqueOuterColors": 59,
+  "uniqueIdentities": 65,
+  "rows": [
+    {
+      "id": "romantic-wine",
+      "outerColor": "#dacdcf",
+      "innerColor": "#d0bfc1",
+      "texture": "linen",
+      "material": "cinematic-linen"
+    },
+    {
+      "id": "botanical-ivory",
+      "outerColor": "#d1d6d3",
+      "innerColor": "#c4cbc6",
+      "texture": "wash",
+      "material": "blue-aurora"
+    },
+    {
+      "id": "midnight-gold",
+      "outerColor": "#3f3b33",
+      "innerColor": "#5a554b",
+      "texture": "soft-grain",
+      "material": "ivory-fiber"
+    },
+    {
+      "id": "terracotta-sunset",
+      "outerColor": "#d9d1ce",
+      "innerColor": "#cfc3c0",
+      "texture": "none",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "minimal-pearl",
+      "outerColor": "#d6d4d1",
+      "innerColor": "#cbc8c4",
+      "texture": "none",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "mayan-elegance",
+      "outerColor": "#cfd8d5",
+      "innerColor": "#c1cdc9",
+      "texture": "none",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "rose-garden",
+      "outerColor": "#d8cfd2",
+      "innerColor": "#cdc2c5",
+      "texture": "none",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "ocean-silk",
+      "outerColor": "#ced9da",
+      "innerColor": "#c0ced0",
+      "texture": "wash",
+      "material": "blue-aurora"
+    },
+    {
+      "id": "lavender-dream",
+      "outerColor": "#d3d1d7",
+      "innerColor": "#c7c4cb",
+      "texture": "none",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "black-tie",
+      "outerColor": "#3f3b33",
+      "innerColor": "#5a554b",
+      "texture": "linen",
+      "material": "cinematic-linen"
+    },
+    {
+      "id": "mexican-bougainvillea",
+      "outerColor": "#dbcdd3",
+      "innerColor": "#d1bec6",
+      "texture": "none",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "forest-candlelight",
+      "outerColor": "#d0d7d3",
+      "innerColor": "#c3ccc6",
+      "texture": "soft-grain",
+      "material": "ivory-fiber"
+    },
+    {
+      "id": "editorial-arch",
+      "outerColor": "#ddd7cb",
+      "innerColor": "#d4cdbb",
+      "texture": "linen",
+      "material": "cinematic-linen"
+    },
+    {
+      "id": "lavender-couture",
+      "outerColor": "#d4d0d8",
+      "innerColor": "#c8c3cc",
+      "texture": "none",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "cinematic-vows",
+      "outerColor": "#3f3b32",
+      "innerColor": "#5b554b",
+      "texture": "soft-grain",
+      "material": "ivory-fiber"
+    },
+    {
+      "id": "storybook-seal",
+      "outerColor": "#d9ced0",
+      "innerColor": "#cfc0c2",
+      "texture": "soft-grain",
+      "material": "ivory-fiber"
+    },
+    {
+      "id": "botanical-scroll",
+      "outerColor": "#d1d6d3",
+      "innerColor": "#c4cbc5",
+      "texture": "none",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "welcome-clouds",
+      "outerColor": "#d1d6d4",
+      "innerColor": "#c4cbc7",
+      "texture": "wash",
+      "material": "blue-aurora"
+    },
+    {
+      "id": "rose-blue-surprise",
+      "outerColor": "#d7d0d4",
+      "innerColor": "#ccc3c8",
+      "texture": "none",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "festive-confetti",
+      "outerColor": "#dbcdd1",
+      "innerColor": "#d1bec2",
+      "texture": "none",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "enchanted-letter",
+      "outerColor": "#cfd2d9",
+      "innerColor": "#c1c5ce",
+      "texture": "paper",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "paw-parade",
+      "outerColor": "#cdd4db",
+      "innerColor": "#bdc8d2",
+      "texture": "none",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "dino-expedition",
+      "outerColor": "#d2d8cf",
+      "innerColor": "#c5cdc2",
+      "texture": "none",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "cosmic-adventure",
+      "outerColor": "#d0cbdd",
+      "innerColor": "#c2bbd4",
+      "texture": "soft-grain",
+      "material": "ivory-fiber"
+    },
+    {
+      "id": "undersea-friends",
+      "outerColor": "#cbdadc",
+      "innerColor": "#bbd0d3",
+      "texture": "wash",
+      "material": "blue-aurora"
+    },
+    {
+      "id": "rainbow-playground",
+      "outerColor": "#dccccf",
+      "innerColor": "#d3bcc1",
+      "texture": "none",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "construction-party",
+      "outerColor": "#ddd6cb",
+      "innerColor": "#d4cbbb",
+      "texture": "wash",
+      "material": "blue-aurora"
+    },
+    {
+      "id": "little-racer",
+      "outerColor": "#dbcdcc",
+      "innerColor": "#d2bebd",
+      "texture": "linen",
+      "material": "cinematic-linen"
+    },
+    {
+      "id": "sweet-circus",
+      "outerColor": "#dbcdcf",
+      "innerColor": "#d1bec1",
+      "texture": "none",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "enchanted-woodland",
+      "outerColor": "#d1d6d3",
+      "innerColor": "#c4cbc6",
+      "texture": "soft-grain",
+      "material": "ivory-fiber"
+    },
+    {
+      "id": "pixel-quest",
+      "outerColor": "#d0ccdc",
+      "innerColor": "#c1bcd3",
+      "texture": "none",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "teddy-moon",
+      "outerColor": "#d7d3d0",
+      "innerColor": "#ccc6c3",
+      "texture": "none",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "stork-watercolor",
+      "outerColor": "#d0d6d7",
+      "innerColor": "#c3cacc",
+      "texture": "wash",
+      "material": "blue-aurora"
+    },
+    {
+      "id": "garden-reveal",
+      "outerColor": "#d3d6d1",
+      "innerColor": "#c6cbc4",
+      "texture": "none",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "confetti-reveal",
+      "outerColor": "#daced4",
+      "innerColor": "#cfc0c7",
+      "texture": "none",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "photo-scrapbook",
+      "outerColor": "#d9d2cf",
+      "innerColor": "#cec4c1",
+      "texture": "soft-grain",
+      "material": "ivory-fiber"
+    },
+    {
+      "id": "travel-postcard",
+      "outerColor": "#cfd9d8",
+      "innerColor": "#c1cecd",
+      "texture": "paper",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "cinema-premiere",
+      "outerColor": "#403234",
+      "innerColor": "#5b4a4c",
+      "texture": "soft-grain",
+      "material": "ivory-fiber"
+    },
+    {
+      "id": "magazine-cover",
+      "outerColor": "#ded0d3",
+      "innerColor": "#d3c0c3",
+      "texture": "linen",
+      "material": "cinematic-linen"
+    },
+    {
+      "id": "celestial-blessing",
+      "outerColor": "#d0d3d7",
+      "innerColor": "#c3c6cc",
+      "texture": "soft-grain",
+      "material": "ivory-fiber"
+    },
+    {
+      "id": "linen-cross",
+      "outerColor": "#d6d6d1",
+      "innerColor": "#cbcac4",
+      "texture": "linen",
+      "material": "cinematic-linen"
+    },
+    {
+      "id": "sage-communion",
+      "outerColor": "#d1d6d1",
+      "innerColor": "#c4cbc4",
+      "texture": "none",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "destination-passport",
+      "outerColor": "#cedad7",
+      "innerColor": "#c0cfcc",
+      "texture": "paper",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "eternal-rose",
+      "outerColor": "#d9cfd2",
+      "innerColor": "#cec1c4",
+      "texture": "none",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "cinematic-journey",
+      "outerColor": "#3f3a33",
+      "innerColor": "#5a544b",
+      "texture": "none",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "petal-letter",
+      "outerColor": "#d8d0d2",
+      "innerColor": "#ccc3c5",
+      "texture": "paper",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "achievement-path",
+      "outerColor": "#ced3da",
+      "innerColor": "#c0c6cf",
+      "texture": "none",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "family-memories",
+      "outerColor": "#d1d6d2",
+      "innerColor": "#c4cbc5",
+      "texture": "none",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "daisy-paper-orbit",
+      "outerColor": "#d3d6d1",
+      "innerColor": "#c7cbc4",
+      "texture": "paper",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "daisy-meadow-air",
+      "outerColor": "#d4d6d1",
+      "innerColor": "#c7cbc4",
+      "texture": "wash",
+      "material": "blue-aurora"
+    },
+    {
+      "id": "daisy-editorial-light",
+      "outerColor": "#d3d7d1",
+      "innerColor": "#c7cbc4",
+      "texture": "linen",
+      "material": "cinematic-linen"
+    },
+    {
+      "id": "daisy-shadow-studio",
+      "outerColor": "#d3d6d1",
+      "innerColor": "#c6cbc4",
+      "texture": "linen",
+      "material": "cinematic-linen"
+    },
+    {
+      "id": "wedding-gazette",
+      "outerColor": "#ddd0d1",
+      "innerColor": "#d2c0c1",
+      "texture": "paper",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "vintage-parchment",
+      "outerColor": "#dad2cd",
+      "innerColor": "#d0c4bf",
+      "texture": "paper",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "sage-photo-editorial",
+      "outerColor": "#d5ddd0",
+      "innerColor": "#c6d2c0",
+      "texture": "none",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "olive-universe",
+      "outerColor": "#d5d7d0",
+      "innerColor": "#c9ccc3",
+      "texture": "soft-grain",
+      "material": "ivory-fiber"
+    },
+    {
+      "id": "olive-nectar",
+      "outerColor": "#d6d8d0",
+      "innerColor": "#cbcdc2",
+      "texture": "none",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "blue-breeze-aurora",
+      "outerColor": "#d0d5d7",
+      "innerColor": "#c3c8cc",
+      "texture": "wash",
+      "material": "blue-aurora"
+    },
+    {
+      "id": "botanical-cosmos",
+      "outerColor": "#d0d8d5",
+      "innerColor": "#c2cdca",
+      "texture": "none",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "powder-blue-letter",
+      "outerColor": "#cfd4d9",
+      "innerColor": "#c1c7ce",
+      "texture": "paper",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "gala-marquee",
+      "outerColor": "#3f3332",
+      "innerColor": "#5b4c4b",
+      "texture": "wash",
+      "material": "blue-aurora"
+    },
+    {
+      "id": "celestial-constellation",
+      "outerColor": "#dad6ce",
+      "innerColor": "#d0cbbf",
+      "texture": "soft-grain",
+      "material": "ivory-fiber"
+    },
+    {
+      "id": "blush-heart-letter",
+      "outerColor": "#dacdd1",
+      "innerColor": "#d0bec3",
+      "texture": "paper",
+      "material": "smooth-paper"
+    },
+    {
+      "id": "gran-reserva",
+      "outerColor": "#d8cfd2",
+      "innerColor": "#cdc2c5",
+      "texture": "linen",
+      "material": "cinematic-linen"
+    },
+    {
+      "id": "botanica-elegante-gemini",
+      "outerColor": "#d4dbcf",
+      "innerColor": "#cfd6c8",
+      "texture": "paper",
+      "material": "smooth-paper"
+    }
+  ]
+}

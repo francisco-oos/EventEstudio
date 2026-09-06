@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="100%" height="100%" preserveAspectRatio="xMaxYMin meet">
+  <!-- Efectos de capa HUD / Cyberpunk -->
+  <g fill="none" stroke-linecap="square" stroke-linejoin="miter">
+    <!-- Base exterior gruesa -->
+    <path d="M390,10 L390,200 L370,220 L370,390" stroke="var(--es-color-primary, #333333)" stroke-width="10" />
+    <path d="M390,10 L200,10 L180,30 L10,30" stroke="var(--es-color-primary, #333333)" stroke-width="10" />
+    
+    <!-- Línea de acento neón interior -->
+    <path d="M360,40 L360,180 L340,200 L340,350" stroke="var(--es-color-highlight, #00FFEA)" stroke-width="4" />
+    <path d="M360,40 L220,40 L200,60 L50,60" stroke="var(--es-color-highlight, #00FFEA)" stroke-width="4" />
+    
+    <!-- Detalles HUD -->
+    <polygon points="360,80 340,100 340,80" fill="var(--es-color-highlight, #00FFEA)" />
+    <polygon points="320,40 300,60 320,60" fill="var(--es-color-highlight, #00FFEA)" />
+    
+    <!-- Retícula técnica -->
+    <line x1="370" y1="250" x2="390" y2="250" stroke="var(--es-color-highlight, #00FFEA)" stroke-width="2" />
+    <line x1="370" y1="260" x2="390" y2="260" stroke="var(--es-color-highlight, #00FFEA)" stroke-width="2" />
+    <line x1="370" y1="270" x2="390" y2="270" stroke="var(--es-color-highlight, #00FFEA)" stroke-width="2" />
+    
+    <line x1="150" y1="10" x2="150" y2="30" stroke="var(--es-color-highlight, #00FFEA)" stroke-width="2" />
+    <line x1="140" y1="10" x2="140" y2="30" stroke="var(--es-color-highlight, #00FFEA)" stroke-width="2" />
+    <line x1="130" y1="10" x2="130" y2="30" stroke="var(--es-color-highlight, #00FFEA)" stroke-width="2" />
+  </g>
+</svg>

@@ -1,0 +1,24 @@
+# Checklist de preproducción RC33
+
+- [ ] `npm ci`
+- [ ] `npm run test:preproduction`
+- [ ] `npm audit --audit-level=moderate`
+- [ ] login owner/developer/client
+- [ ] cuenta Cortesía
+- [ ] cuenta/entitlement de pago
+- [ ] checkout sandbox y grant
+- [ ] Design Lab: Recipe + Assets + Color + tipografía + layout + motion + opening
+- [ ] persistencia tras recargar
+- [ ] música real
+- [ ] RSVP real
+- [ ] QR general/mesa/PNG/PDF
+- [ ] invitación física PDF
+- [ ] Stationery/lacre
+- [ ] álbum desde teléfono
+- [ ] Android físico
+- [ ] iOS físico si está disponible
+- [ ] tablet vertical/horizontal
+- [ ] desktop
+- [ ] respaldo previo a producción
+- [ ] despliegue con una sola réplica SQLite
+- [ ] healthcheck producción

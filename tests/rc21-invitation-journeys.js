@@ -55,7 +55,8 @@ async function main(){
   assert.equal(ownerFeatures.data.designAccess.opening["night-flower-original"],true);assert.equal(developerFeatures.data.designAccess.opening["night-flower-original"],true);assert.equal(clientFeatures.data.designAccess.opening["night-flower-original"],false);
 
   const ownerPreview=await previewLink(ownerToken,eventId);
-  for(const opening of experiences.openings.filter(item=>item.id!=="none")){
+  const activeOpenings=experiences.openings.filter(item=>item.id!=="none"&&!item.retired&&!item.hidden);
+  for(const opening of activeOpenings){
     const config=await request(`/api/config/${encodeURIComponent(event.slug)}?previewToken=${encodeURIComponent(ownerPreview)}&previewOpening=${encodeURIComponent(opening.id)}&opening=1&forceMotion=1`);
     assert.equal(config.response.status,200,`${opening.id}: ${JSON.stringify(config.data)}`);assert.equal(config.data.presentation.openingStyle,opening.id,`Owner no pudo probar ${opening.id}.`);
   }
@@ -97,7 +98,7 @@ async function main(){
   const overflow=await request("/api/rsvp",{method:"POST",json:{token:guest.token,attending:true,adults:3,children:1}});assert.equal(overflow.response.status,400);
   const negative=await request("/api/rsvp",{method:"POST",json:{token:guest.token,attending:true,adults:-1,children:0}});assert.equal(negative.response.status,400);
 
-  console.log(`✓ RC21: ${themes.length} plantillas, ${experiences.openings.length-1} aperturas, previews autorizados, registro y RSVP HTTP verificados`);
+  console.log(`✓ RC21: ${themes.length} plantillas, ${activeOpenings.length} aperturas activas, previews autorizados, registro y RSVP HTTP verificados`);
 }
 
 main().catch(error=>{console.error(error);process.exitCode=1;}).finally(async()=>{if(server&&!server.killed){server.kill("SIGTERM");await once(server,"exit").catch(()=>{});}fs.rmSync(storage,{recursive:true,force:true});});

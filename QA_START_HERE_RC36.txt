@@ -1,0 +1,16 @@
+EVENTSTUDIO 6.15.0-rc.36 — INICIO DE QA LOCAL
+
+1. Cierra cualquier EventStudio/Node anterior antes de copiar o extraer archivos.
+2. Recomendado: extrae este ZIP en una carpeta nueva en lugar de arrastrarlo encima de una instalación en ejecución.
+3. Ejecuta INICIAR.bat.
+4. Si existen WAL/SHM antiguos incompatibles y la wedding.db principal está sana, RC36 los moverá automáticamente a:
+   backups\local-sidecar-quarantine\<timestamp>\
+5. RC36 nunca resembra una base existente por un fallo de integridad.
+6. Si el archivo principal aislado no supera quick_check, EventStudio seguirá bloqueando el arranque y mostrará el primer error.
+
+Para el paquete QA, la wedding.db incluida fue validada antes de empaquetar.
+
+Antes de producción:
+  npm ci
+  npm run test:preproduction
+  npm audit --audit-level=moderate

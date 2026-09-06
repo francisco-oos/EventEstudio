@@ -1,0 +1,2491 @@
+{
+  "summary": {
+    "recipes": 65,
+    "cases": 130,
+    "failures": 0,
+    "maxOverflow": 0,
+    "viewports": [
+      [
+        360,
+        800
+      ],
+      [
+        1440,
+        900
+      ]
+    ]
+  },
+  "rows": [
+    {
+      "recipe": "romantic-wine",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "classic",
+      "texture": "linen",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "botanical-ivory",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "botanical",
+      "texture": "wash",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "midnight-gold",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "cinematic",
+      "texture": "soft-grain",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "terracotta-sunset",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "layered",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "minimal-pearl",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "minimal",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "mayan-elegance",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "story-panels",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "rose-garden",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "botanical",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "ocean-silk",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "watercolor",
+      "texture": "wash",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "lavender-dream",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "portrait",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "black-tie",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "editorial",
+      "texture": "linen",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "mexican-bougainvillea",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "reveal",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "forest-candlelight",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "storybook",
+      "texture": "soft-grain",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "editorial-arch",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "editorial",
+      "texture": "linen",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "lavender-couture",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "portrait",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "cinematic-vows",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "cinematic",
+      "texture": "soft-grain",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "storybook-seal",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "storybook",
+      "texture": "soft-grain",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "botanical-scroll",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "botanical",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "welcome-clouds",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "layered",
+      "texture": "wash",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "rose-blue-surprise",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "reveal",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "festive-confetti",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "poster",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "enchanted-letter",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "storybook",
+      "texture": "paper",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "paw-parade",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "story-panels",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "dino-expedition",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "story-panels",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "cosmic-adventure",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "cinematic",
+      "texture": "soft-grain",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "undersea-friends",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "layered",
+      "texture": "wash",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "rainbow-playground",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "poster",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "construction-party",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "poster",
+      "texture": "wash",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "little-racer",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "split",
+      "texture": "linen",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "sweet-circus",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "carousel",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "enchanted-woodland",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "storybook",
+      "texture": "soft-grain",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "pixel-quest",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "pixel",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "teddy-moon",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "portrait",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "stork-watercolor",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "watercolor",
+      "texture": "wash",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "garden-reveal",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "botanical",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "confetti-reveal",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "reveal",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "photo-scrapbook",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "scrapbook",
+      "texture": "soft-grain",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "travel-postcard",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "postcard",
+      "texture": "paper",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "cinema-premiere",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "cinematic",
+      "texture": "soft-grain",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "magazine-cover",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "editorial",
+      "texture": "linen",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "celestial-blessing",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "celestial",
+      "texture": "soft-grain",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "linen-cross",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "minimal",
+      "texture": "linen",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "sage-communion",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "botanical",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "destination-passport",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "passport",
+      "texture": "paper",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "eternal-rose",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "bloom",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "cinematic-journey",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "carousel",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "petal-letter",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "storybook",
+      "texture": "paper",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "achievement-path",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "timeline",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "family-memories",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "family-tree",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "daisy-paper-orbit",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "botanical",
+      "texture": "paper",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "daisy-meadow-air",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "minimal",
+      "texture": "wash",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "daisy-editorial-light",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "editorial",
+      "texture": "linen",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "daisy-shadow-studio",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "split",
+      "texture": "linen",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "wedding-gazette",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "editorial",
+      "texture": "paper",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "vintage-parchment",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "storybook",
+      "texture": "paper",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "sage-photo-editorial",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "portrait",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "olive-universe",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "celestial",
+      "texture": "soft-grain",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "olive-nectar",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "botanical",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "blue-breeze-aurora",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "watercolor",
+      "texture": "wash",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "botanical-cosmos",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "botanical",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "powder-blue-letter",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "editorial",
+      "texture": "paper",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "gala-marquee",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "cinematic",
+      "texture": "wash",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "celestial-constellation",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "celestial",
+      "texture": "soft-grain",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "blush-heart-letter",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "storybook",
+      "texture": "paper",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "gran-reserva",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "editorial",
+      "texture": "linen",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "botanica-elegante-gemini",
+      "viewport": [
+        360,
+        800
+      ],
+      "overflow": 0,
+      "layout": "botanical",
+      "texture": "paper",
+      "timeline": "timeline-botanical-breeze",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "romantic-wine",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "classic",
+      "texture": "linen",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "botanical-ivory",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "botanical",
+      "texture": "wash",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "midnight-gold",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "cinematic",
+      "texture": "soft-grain",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "terracotta-sunset",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "layered",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "minimal-pearl",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "minimal",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "mayan-elegance",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "story-panels",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "rose-garden",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "botanical",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "ocean-silk",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "watercolor",
+      "texture": "wash",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "lavender-dream",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "portrait",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "black-tie",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "editorial",
+      "texture": "linen",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "mexican-bougainvillea",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "reveal",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "forest-candlelight",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "storybook",
+      "texture": "soft-grain",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "editorial-arch",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "editorial",
+      "texture": "linen",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "lavender-couture",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "portrait",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "cinematic-vows",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "cinematic",
+      "texture": "soft-grain",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "storybook-seal",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "storybook",
+      "texture": "soft-grain",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "botanical-scroll",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "botanical",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "welcome-clouds",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "layered",
+      "texture": "wash",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "rose-blue-surprise",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "reveal",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "festive-confetti",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "poster",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "enchanted-letter",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "storybook",
+      "texture": "paper",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "paw-parade",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "story-panels",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "dino-expedition",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "story-panels",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "cosmic-adventure",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "cinematic",
+      "texture": "soft-grain",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "undersea-friends",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "layered",
+      "texture": "wash",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "rainbow-playground",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "poster",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "construction-party",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "poster",
+      "texture": "wash",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "little-racer",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "split",
+      "texture": "linen",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "sweet-circus",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "carousel",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "enchanted-woodland",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "storybook",
+      "texture": "soft-grain",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "pixel-quest",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "pixel",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "teddy-moon",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "portrait",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "stork-watercolor",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "watercolor",
+      "texture": "wash",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "garden-reveal",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "botanical",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "confetti-reveal",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "reveal",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "photo-scrapbook",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "scrapbook",
+      "texture": "soft-grain",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "travel-postcard",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "postcard",
+      "texture": "paper",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "cinema-premiere",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "cinematic",
+      "texture": "soft-grain",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "magazine-cover",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "editorial",
+      "texture": "linen",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "celestial-blessing",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "celestial",
+      "texture": "soft-grain",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "linen-cross",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "minimal",
+      "texture": "linen",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "sage-communion",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "botanical",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "destination-passport",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "passport",
+      "texture": "paper",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "eternal-rose",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "bloom",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "cinematic-journey",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "carousel",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "petal-letter",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "storybook",
+      "texture": "paper",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "achievement-path",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "timeline",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "family-memories",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "family-tree",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "daisy-paper-orbit",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "botanical",
+      "texture": "paper",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "daisy-meadow-air",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "minimal",
+      "texture": "wash",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "daisy-editorial-light",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "editorial",
+      "texture": "linen",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "daisy-shadow-studio",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "split",
+      "texture": "linen",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "wedding-gazette",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "editorial",
+      "texture": "paper",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "vintage-parchment",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "storybook",
+      "texture": "paper",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "sage-photo-editorial",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "portrait",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "olive-universe",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "celestial",
+      "texture": "soft-grain",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "olive-nectar",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "botanical",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "blue-breeze-aurora",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "watercolor",
+      "texture": "wash",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "botanical-cosmos",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "botanical",
+      "texture": "none",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "powder-blue-letter",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "editorial",
+      "texture": "paper",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "gala-marquee",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "cinematic",
+      "texture": "wash",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "celestial-constellation",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "celestial",
+      "texture": "soft-grain",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "blush-heart-letter",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "storybook",
+      "texture": "paper",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "gran-reserva",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "editorial",
+      "texture": "linen",
+      "timeline": "timeline-cinematic-slow",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    },
+    {
+      "recipe": "botanica-elegante-gemini",
+      "viewport": [
+        1440,
+        900
+      ],
+      "overflow": 0,
+      "layout": "botanical",
+      "texture": "paper",
+      "timeline": "timeline-botanical-breeze",
+      "assets": 2,
+      "styled": 13,
+      "musicVisible": true,
+      "failed": false,
+      "expectedAssets": 2,
+      "expectedSections": 12,
+      "errors": [],
+      "ok": true
+    }
+  ],
+  "failures": []
+}

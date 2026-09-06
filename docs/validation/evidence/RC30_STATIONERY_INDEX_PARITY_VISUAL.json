@@ -3,8 +3,8 @@
     "cases": 2,
     "profileCases": 5,
     "failures": 0,
-    "minFps": 59.99414691249629,
-    "avgFps": 59.99414691249629,
+    "minFps": 60.0029269720474,
+    "avgFps": 60.00731828696047,
     "maxP95IntervalMs": 16.700000000000728
   },
   "rows": [
@@ -64,8 +64,8 @@
       "sealSvg": 1,
       "sealMaterial": "theme",
       "fps": {
-        "fps": 59.99414691249629,
-        "p95Interval": 16.700000000000728,
+        "fps": 60.01170960187355,
+        "p95Interval": 16.699999999999818,
         "frames": 41
       },
       "overflow": 0,
@@ -141,7 +141,7 @@
       "sealSvg": 1,
       "sealMaterial": "theme",
       "fps": {
-        "fps": 59.99414691249629,
+        "fps": 60.0029269720474,
         "p95Interval": 16.700000000000728,
         "frames": 41
       },

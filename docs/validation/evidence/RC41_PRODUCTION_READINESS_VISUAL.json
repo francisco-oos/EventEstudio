@@ -1,0 +1,41 @@
+{
+  "cases": {
+    "heroDatasetRecoverable": {
+      "pass": true,
+      "hero": "/uploads/site-media/1788585988969-9695834f-IMG_20250823_101925.jpg",
+      "exactExists": false,
+      "original": "IMG_20250823_101925.jpg",
+      "candidates": [
+        "1788586875269-3241656b-IMG_20250823_101925.jpg"
+      ]
+    },
+    "publicAssetHasBox": {
+      "pass": true,
+      "w": 140,
+      "h": 17.5,
+      "x": 430,
+      "y": 312.640625,
+      "hostW": 45.90625,
+      "hostH": 300,
+      "ratio": "8 / 1",
+      "scrollWidth": 1000,
+      "innerWidth": 1000
+    },
+    "heroDevice-mobile": {
+      "pass": true,
+      "objectPosition": "18% 27%",
+      "objectFit": "contain",
+      "scrollWidth": 390,
+      "innerWidth": 390
+    },
+    "heroDevice-desktop": {
+      "pass": true,
+      "objectPosition": "82% 73%",
+      "objectFit": "cover",
+      "scrollWidth": 1366,
+      "innerWidth": 1366
+    }
+  },
+  "failures": [],
+  "pass": true
+}

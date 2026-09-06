@@ -13,7 +13,9 @@ const featureNames={
   premiumTemplates:'Plantillas Premium'
 };
 let catalog=null;
+let sealCatalogData=null;
 let activeEventType='';
+let heroRecipeIndex=0;
 
 const campaignParams=new URLSearchParams(location.search);
 const campaignSource=(campaignParams.get('utm_source')||campaignParams.get('ref')||'catalogo').slice(0,30);
@@ -57,37 +59,73 @@ function renderEventChips(){
   }));
 }
 
+function recipeCatalogItems(){
+  return Array.isArray(catalog?.recipes)&&catalog.recipes.length?catalog.recipes:(catalog?.themes||[]);
+}
+
 function renderThemes(){
   const search=String($('catalogSearch').value||'').trim().toLocaleLowerCase('es-MX');
   const plan=$('catalogPlanFilter').value;
-  const themes=catalog.themes.filter(theme=>{
-    const haystack=[theme.name,theme.description,...(theme.tags||[])].join(' ').toLocaleLowerCase('es-MX');
+  const recipes=recipeCatalogItems().filter(recipe=>{
+    const haystack=[recipe.name,recipe.description,...(recipe.tags||[])].join(' ').toLocaleLowerCase('es-MX');
     return (!search||haystack.includes(search))
-      &&(!plan||(theme.minPlan||'starter')===plan)
-      &&(!activeEventType||(theme.eventTypes||[]).includes(activeEventType));
+      &&(!plan||(recipe.minPlan||'starter')===plan)
+      &&(!activeEventType||(recipe.eventTypes||[]).includes(activeEventType));
   });
-  $('catalogThemeGrid').innerHTML=themes.map(theme=>{
-    const suggestedEvent=activeEventType||(theme.eventTypes||[])[0]||'custom';
-    const level=theme.minPlan||'starter';
-    return `<article class="catalog-theme-card">
-      <div class="catalog-theme-visual ${esc(theme.className)}" data-layout="${esc(theme.layoutFamily)}" data-photo-style="${esc(theme.photoStyle)}" data-motif="${esc(theme.motif)}"><span>${theme.preview}</span><strong>${esc(theme.name)}</strong><small>${esc(theme.layoutLabel)}</small></div>
+  $('catalogThemeGrid').innerHTML=recipes.map(recipe=>{
+    const suggestedEvent=activeEventType||(recipe.eventTypes||[])[0]||'custom';
+    const level=recipe.minPlan||'starter';
+    const design=recipe.design||{};
+    const typography=design.typography||{};
+    const harmony=design.colorTheory?.harmony||'coherente';
+    const previewUrl=recipe.previewUrl||`/api/public/design/recipes/${encodeURIComponent(recipe.id)}/thumbnail?width=540&height=320`;
+    return `<article class="catalog-theme-card" data-recipe-id="${esc(recipe.id)}">
+      <div class="catalog-theme-visual catalog-recipe-visual">
+        <img loading="lazy" decoding="async" src="${esc(previewUrl)}" alt="Vista previa de ${esc(recipe.name)}">
+      </div>
       <div class="catalog-theme-copy">
-        <div><span class="catalog-plan-pill">${esc(planNames[level]||level)}</span><h3>${esc(theme.name)}</h3></div>
-        <p>${esc(theme.description)}</p>
-        <div class="theme-structure-list"><span>${esc(theme.layoutLabel)}</span><span>${esc(theme.photoStyleLabel)}</span><span>${esc(theme.motionLabel)}</span></div>
-        <div class="theme-tag-list">${(theme.tags||[]).slice(0,4).map(tag=>`<span>${esc(tag)}</span>`).join('')}</div>
+        <div><span class="catalog-plan-pill">${esc(planNames[level]||level)}</span><h3>${esc(recipe.name)}</h3></div>
+        <p>${esc(recipe.description)}</p>
+        <div class="theme-structure-list"><span>${esc(design.layoutFamily||'classic')}</span><span>${esc(typography.heading||'tipografía adaptable')}</span><span>${esc(harmony)}</span></div>
+        <div class="theme-tag-list">${(recipe.tags||[]).slice(0,4).map(tag=>`<span>${esc(tag)}</span>`).join('')}</div>
         <div class="catalog-theme-actions">
-          <a class="secondary-btn" href="${sampleUrl(theme,suggestedEvent)}">Ver muestra animada</a>
-          <a class="primary-btn" href="${registerUrl({theme:theme.id,eventType:suggestedEvent,plan:level})}">${catalog.registrationEnabled?'Elegir':'Ingresar'}</a>
+          <a class="secondary-btn" href="${sampleUrl(recipe,suggestedEvent)}">Ver muestra animada</a>
+          <a class="primary-btn" href="${registerUrl({theme:recipe.id,eventType:suggestedEvent,plan:level})}">${catalog.registrationEnabled?'Personalizar':'Ingresar'}</a>
         </div>
       </div>
     </article>`;
   }).join('')||'<div class="catalog-empty"><strong>No hay diseños con esos filtros.</strong><span>Prueba otra búsqueda o celebración.</span></div>';
   $('catalogThemeGrid').querySelectorAll('.catalog-theme-card').forEach((card,index)=>{
-    const theme=themes[index];if(!theme)return;
-    card.querySelector('.secondary-btn')?.addEventListener('click',()=>trackCatalog('template_previewed',{themeId:theme.id,eventType:activeEventType||((theme.eventTypes||[])[0]||'custom')}));
-    card.querySelector('.primary-btn')?.addEventListener('click',()=>trackCatalog('catalog_view',{themeId:theme.id,eventType:activeEventType||((theme.eventTypes||[])[0]||'custom'),planCode:theme.minPlan||'starter'}));
+    const recipe=recipes[index];if(!recipe)return;
+    card.querySelector('.secondary-btn')?.addEventListener('click',()=>trackCatalog('template_previewed',{themeId:recipe.id,eventType:activeEventType||((recipe.eventTypes||[])[0]||'custom')}));
+    card.querySelector('.primary-btn')?.addEventListener('click',()=>trackCatalog('catalog_view',{themeId:recipe.id,eventType:activeEventType||((recipe.eventTypes||[])[0]||'custom'),planCode:recipe.minPlan||'starter'}));
   });
+}
+
+function renderHeroRecipe(step=0){
+  const items=recipeCatalogItems();
+  if(!items.length)return;
+  heroRecipeIndex=(heroRecipeIndex+step+items.length)%items.length;
+  const recipe=items[heroRecipeIndex];
+  const previewUrl=recipe.previewUrl||`/api/public/design/recipes/${encodeURIComponent(recipe.id)}/thumbnail?width=720&height=480`;
+  const host=$('heroRecipePreview');
+  host.innerHTML=`<img src="${esc(previewUrl)}" alt="Vista previa de ${esc(recipe.name)}" decoding="async" fetchpriority="high">`;
+  $('heroRecipeName').textContent=recipe.name;
+  const design=recipe.design||{};
+  $('heroRecipeMeta').textContent=`${design.layoutFamily||'Layout adaptable'} · ${design.colorTheory?.harmony||'armonía cromática'} · editable`;
+  const activeColor=design.palette?.accent||design.palette?.primary||'#7b4b56';
+  if(/^#[0-9a-f]{6}$/i.test(activeColor))$('landingSealColor').value=activeColor;
+  renderLandingSeal();
+}
+
+function renderLandingSeal(){
+  const host=$('landingSealPreview');
+  if(!host||!globalThis.EventStudioWaxSeal||!sealCatalogData)return;
+  const raw=String($('landingSealInitials')?.value||'ES').trim().replace(/[^\p{L}\p{N}]/gu,'').slice(0,3)||'ES';
+  const first=raw[0]||'E',second=raw.slice(1)||'S';
+  const color=$('landingSealColor')?.value||'#7b4b56';
+  const definition={...(sealCatalogData.defaults||{}),material:'custom',customColor:color,autoMonogram:false,initial1:first,initial2:second,quality:'balanced'};
+  EventStudioWaxSeal.renderInto(host,definition,{displayName:`${first} & ${second}`,themeColor:color,seed:`landing-${raw}`},sealCatalogData);
 }
 
 function renderPlans(){
@@ -134,12 +172,16 @@ function updateBuilderTotal(){
 }
 
 async function loadCatalog(){
-  const response=await fetch('/api/public/catalog',{headers:{Accept:'application/json'},cache:'no-store'});
-  if(!response.ok)throw new Error('No se pudo cargar el catálogo.');
-  catalog=await response.json();
-  if($('catalogThemeCount'))$('catalogThemeCount').textContent=String(catalog.themes.length);
+  const [catalogResponse,sealResponse]=await Promise.all([
+    fetch('/api/public/catalog',{headers:{Accept:'application/json'},cache:'no-store'}),
+    fetch('/api/public/seals',{headers:{Accept:'application/json'},cache:'no-store'})
+  ]);
+  if(!catalogResponse.ok)throw new Error('No se pudo cargar el catálogo.');
+  catalog=await catalogResponse.json();
+  sealCatalogData=sealResponse.ok?await sealResponse.json():null;
+  if($('catalogThemeCount'))$('catalogThemeCount').textContent=String(recipeCatalogItems().length);
   if($('catalogEventCount'))$('catalogEventCount').textContent=String(catalog.eventTypes.length);
-  $('heroTrialCta').textContent='Crea tu diseño ahora';
+  $('heroTrialCta').textContent='Diseñar mi invitación';
   $('heroTrialCta').href='/sandbox.html';
   $('builderTrialNote').textContent=`${catalog.trialDays} días, evento privado y sin cobro automático.`;
   if(!catalog.registrationEnabled){
@@ -154,12 +196,16 @@ async function loadCatalog(){
   $('builderPlan').addEventListener('change',renderBuilder);
   $('catalogSearch').addEventListener('input',renderThemes);
   $('catalogPlanFilter').addEventListener('change',renderThemes);
+  $('heroRecipeNext')?.addEventListener('click',()=>{renderHeroRecipe(1);trackCatalog('catalog_view',{source:'hero-recipe-cycle'});});
+  $('landingSealColor')?.addEventListener('input',renderLandingSeal);
+  $('landingSealInitials')?.addEventListener('input',renderLandingSeal);
   renderEventChips();
   renderThemes();
   renderPlans();
   renderBuilder();
+  renderHeroRecipe(0);
   trackCatalog('landing_view',{source:'catalogo'});
-  trackCatalog('catalog_view',{resultCount:catalog.themes.length,eventType:activeEventType||'all'});
+  trackCatalog('catalog_view',{resultCount:recipeCatalogItems().length,eventType:activeEventType||'all'});
 }
 
 loadCatalog().catch(error=>{

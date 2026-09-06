@@ -1,0 +1,37 @@
+{
+  "quickCheck": "ok",
+  "tables": 42,
+  "counts": {
+    "users": 4,
+    "events": 2,
+    "guests": 26,
+    "photos": 0
+  },
+  "roles": [
+    {
+      "role": "client",
+      "count": 2
+    },
+    {
+      "role": "developer",
+      "count": 1
+    },
+    {
+      "role": "owner",
+      "count": 1
+    }
+  ],
+  "mediaRefs": 6,
+  "missingLocal": [
+    {
+      "eventId": 2,
+      "slug": "ariana-y-francisco",
+      "event": "Ariana y Francisco",
+      "kind": "heroImage",
+      "url": "/uploads/site-media/1788559447969-4e6cf0d9-photo_4945297427510529162_y.jpg",
+      "local": "uploads/site-media/1788559447969-4e6cf0d9-photo_4945297427510529162_y.jpg",
+      "exists": false
+    }
+  ],
+  "presentLocal": 5
+}

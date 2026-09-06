@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300" width="100%" height="100%" preserveAspectRatio="xMidYMid meet">
+  <g fill="none" stroke="var(--es-color-primary, #1A1A1A)" stroke-width="3" stroke-linecap="round">
+    <!-- Espiral Central -->
+    <path d="M300,280 C300,200 250,150 300,100 C350,150 300,200 300,280 Z" fill="var(--es-color-primary, #1A1A1A)" />
+    
+    <!-- Ramas principales Izquierda -->
+    <path d="M300,250 C200,250 100,200 50,100 C30,60 60,30 100,50 C150,80 180,150 250,180" />
+    <path d="M250,180 C200,120 150,100 100,150 C80,170 80,200 120,200 C150,200 180,180 200,150" stroke-width="2" />
+    
+    <!-- Ramas principales Derecha -->
+    <path d="M300,250 C400,250 500,200 550,100 C570,60 540,30 500,50 C450,80 420,150 350,180" />
+    <path d="M350,180 C400,120 450,100 500,150 C520,170 520,200 480,200 C450,200 420,180 400,150" stroke-width="2" />
+    
+    <!-- Adornos de diamante gótico -->
+    <polygon points="300,30 310,60 300,90 290,60" fill="var(--es-color-line, #8B0000)" stroke="none" />
+    <polygon points="100,50 110,65 100,80 90,65" fill="var(--es-color-line, #8B0000)" stroke="none" />
+    <polygon points="500,50 510,65 500,80 490,65" fill="var(--es-color-line, #8B0000)" stroke="none" />
+  </g>
+</svg>

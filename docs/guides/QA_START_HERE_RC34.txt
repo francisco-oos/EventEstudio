@@ -1,0 +1,37 @@
+EVENTSTUDIO 6.15.0-rc.34 — INICIO DE QA
+========================================
+
+RC34 corrige los hallazgos del test físico de RC33:
+- contraste semántico de texto en Recipes;
+- apertura/experiencia como recomendador y override, sin Guardar entrada paralelo;
+- nombres largos sin corte dentro de palabras;
+- protección API al aplicar Recipes comerciales.
+
+ARRANQUE
+-------
+1. npm ci
+2. Copiar .env.example a .env y configurar sólo el entorno local.
+3. En QA_CON_DATOS: NO ejecutar `npm run seed`; iniciar con `npm start`.
+
+PRUEBA OBLIGATORIA ANTES DE PRODUCCIÓN
+--------------------------------------
+npm run test:preproduction
+npm audit --audit-level=moderate
+
+VALIDACIÓN EJECUTADA EN ESTE CANDIDATO
+--------------------------------------
+- RC27–RC34 contratos: PASS.
+- 172,800 combinaciones lógicas de presentación: PASS.
+- 1,280 proyecciones rol/perfil: PASS.
+- 125 botones con wiring verificable: PASS.
+- 64 Recipes / nombres largos: 128/128 PASS, overflow 0.
+- Temas legacy móvil/escritorio: 128/128 PASS, overflow 0.
+- 22 aperturas: PASS, CLS 0, overflow 0, FPS mínimo 59.99 en harness público.
+- Feature toggles: 32/32 PASS.
+- Contenido largo: 64/64 PASS de 320×568 a 4K.
+- Design Lab y controles públicos en Chromium: PASS.
+- Stationery y sobre público: PASS.
+
+LÍMITE
+------
+El entorno de construcción no pudo completar `npm ci`; el E2E real de servidor/BD/checkout debe ejecutarse con `npm run test:preproduction` en tu equipo antes de Railway.

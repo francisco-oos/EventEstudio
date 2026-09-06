@@ -10,7 +10,7 @@ const pkg=require("../package.json");
 const themes=require("../config/themes.json");
 const experiences=require("../config/experiences.json");
 
-const rcNumber=Number((pkg.version.match(/^6\.14\.2-rc\.(\d+)$/)||[])[1]);
+const rcNumber=Number((pkg.version.match(/-rc\.(\d+)$/)||[])[1]);
 assert.ok(rcNumber>=23,"Los AC RC23 deben conservarse en RC23 y candidatas posteriores.");
 
 const server=read("src/server.js");

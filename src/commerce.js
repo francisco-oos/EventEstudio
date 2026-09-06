@@ -12,6 +12,12 @@ const ORIGIN_LABELS={
   promotion:"Promoción",
   legacy:"Migrado de RC9"
 };
+let staticCatalogCache=null;
+const planProductCache=new Map();
+const categoryCache=new Map();
+const profileCache=new Map();
+let globalStateCache=null;
+function invalidateCatalogCache(){staticCatalogCache=null;planProductCache.clear();categoryCache.clear();profileCache.clear();globalStateCache=null;}
 
 function json(value,fallback=[]){
   try{
@@ -35,18 +41,20 @@ function storeCategories(){
 }
 
 function categoriesForProduct(productId){
-  return db.prepare(`
+  if(categoryCache.has(Number(productId)))return categoryCache.get(Number(productId));
+  const rows=db.prepare(`
     SELECT c.id,c.code,c.name,c.icon,l.sort_order
     FROM product_category_links l
     JOIN store_categories c ON c.id=l.category_id
     WHERE l.product_id=? AND c.active=1
     ORDER BY l.sort_order,c.sort_order,c.name
-  `).all(productId);
+  `).all(productId);categoryCache.set(Number(productId),rows);return rows;
 }
 
 
 function profileIdsForProduct(productId){
-  return db.prepare(`SELECT profile_id FROM product_profile_links WHERE product_id=? ORDER BY sort_order,profile_id`).all(productId).map(row=>Number(row.profile_id));
+  if(profileCache.has(Number(productId)))return profileCache.get(Number(productId));
+  const ids=db.prepare(`SELECT profile_id FROM product_profile_links WHERE product_id=? ORDER BY sort_order,profile_id`).all(productId).map(row=>Number(row.profile_id));profileCache.set(Number(productId),ids);return ids;
 }
 
 function productVisibleForProfile(product,profile){
@@ -72,10 +80,11 @@ function productRow(row){
 }
 
 function allProducts(){
-  return db.prepare(`
+  if(staticCatalogCache)return staticCatalogCache;
+  staticCatalogCache=db.prepare(`
     SELECT * FROM product_catalog WHERE active=1
     ORDER BY sort_order,name,id
-  `).all().map(productRow);
+  `).all().map(productRow);return staticCatalogCache;
 }
 
 function productsByCodes(codes){
@@ -98,14 +107,15 @@ function expandProducts(products){
 }
 
 function planProducts(planCode){
-  return db.prepare(`
+  const cacheKey=String(planCode||"");if(planProductCache.has(cacheKey))return planProductCache.get(cacheKey);
+  const products=db.prepare(`
     SELECT pc.*
     FROM plan_products pp
     JOIN plans p ON p.id=pp.plan_id
     JOIN product_catalog pc ON pc.id=pp.product_id
     WHERE p.code=? AND p.active=1 AND pc.active=1
     ORDER BY pc.sort_order,pc.name
-  `).all(planCode).map(productRow);
+  `).all(planCode).map(productRow);planProductCache.set(cacheKey,products);return products;
 }
 
 function activeGrantRows(eventId){
@@ -198,11 +208,12 @@ function accessForEvent(event,entitlement){
 }
 
 function globalFeatureStates(){
+  if(globalStateCache)return globalStateCache;
   const rows=db.prepare(`
     SELECT code,commercial_status FROM product_catalog
     WHERE kind='feature' AND active=1
   `).all();
-  return Object.fromEntries(rows.map(row=>[row.code.replace(/^feature:/,""),row.commercial_status]));
+  globalStateCache=Object.fromEntries(rows.map(row=>[row.code.replace(/^feature:/,""),row.commercial_status]));return globalStateCache;
 }
 
 function featureContext(event,entitlement){
@@ -302,5 +313,5 @@ function consumeLimitedGrant(eventId,featureKey){
 
 module.exports={
   PLAN_RANK,ORIGIN_LABELS,allProducts,productRow,planProducts,accessForEvent,
-  featureContext,themeAllowed,productOwnedForEvent,productOriginForEvent,relevantProducts,consumeLimitedGrant,storeCategories,categoriesForProduct,profileIdsForProduct,productVisibleForProfile
+  featureContext,themeAllowed,productOwnedForEvent,productOriginForEvent,relevantProducts,consumeLimitedGrant,storeCategories,categoriesForProduct,profileIdsForProduct,productVisibleForProfile,invalidateCatalogCache
 };

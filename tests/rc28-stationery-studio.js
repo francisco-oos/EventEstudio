@@ -16,7 +16,7 @@ const {normalizeStationery,designTokens}=require("../src/stationery-config");
 const {coordinationFor,applyOpeningCoordination,stationeryIsAuthoritative}=require("../src/opening-coordination");
 const {loadThemeDesigns,ensureAccessiblePalette,contrastRatio}=require("../src/theme-design");
 
-assert.equal(packageJson.version,"6.14.2-rc.30");
+assert.match(packageJson.version,/^6\.(?:15|16)\.0-rc\.(?:33|34|35|36|37|38|39|39|39|40|41)$/);
 for(const file of ["public/stationery-studio.html","public/stationery-studio.css","public/stationery-studio.js","src/opening-coordination.js"]){
   assert.ok(fs.existsSync(path.join(root,file)),`Falta ${file}.`);
 }
@@ -77,12 +77,17 @@ for(const theme of themes){
   assert.ok(contrastRatio(fullStationery.ink,fullStationery.paper)>=4.5,`${theme.id}: papelería sincronizada sin contraste.`);
 }
 
-const adminHtml=read("public/admin.html"),admin=read("public/admin.js"),studioHtml=read("public/stationery-studio.html"),studio=read("public/stationery-studio.js"),app=read("public/app.js"),server=read("src/server.js");
-for(const id of ["saveOpeningStyleBtn","previewOpeningBtn","stationeryLaunchCard","openStationeryStudioBtn"]){assert.ok(adminHtml.includes(`id="${id}"`),`Falta ${id} en el panel.`);}
+const adminHtml=read("public/admin.html"),admin=read("public/admin.js"),designLab=read("public/design-lab.js"),studioHtml=read("public/stationery-studio.html"),studio=read("public/stationery-studio.js"),app=read("public/app.js"),server=read("src/server.js");
+for(const id of ["previewOpeningBtn","stationeryLaunchCard","openStationeryStudioBtn"]){assert.ok(adminHtml.includes(`id="${id}"`),`Falta ${id} en el panel.`);}
+assert.ok(!adminHtml.includes('id="saveOpeningStyleBtn"'),"RC34 elimina el guardado paralelo de apertura; los ajustes viajan con la Recipe.");
 assert.doesNotMatch(adminHtml,/stationery-engine\.js|stationery-engine\.css|stationeryAdminMount|sealFontSize/,"El panel no debe cargar ni incrustar el editor avanzado.");
 assert.match(admin,/editor\?\.type==='stationery-studio'/);
-assert.match(admin,/new URL\(editor\.path,window\.location\.origin\)/);
-assert.match(admin,/body:JSON\.stringify\(\{presentation:presentationDraftFromForm\(\)\}\)/,"Guardar entrada debe ser independiente del estudio.");
+assert.match(admin,/new URL\('\/design-lab\.html',window\.location\.origin\)/);
+assert.match(admin,/url\.searchParams\.set\('open','stationery'\)/,"Stationery debe abrirse dentro del Design Studio unificado.");
+assert.match(designLab,/api\('\/api\/admin\/design\/recipe',[\s\S]*expectedRevision:draftRevision/,
+  "El Estudio de diseño debe guardar una revisión de borrador antes de aplicar.");
+assert.match(designLab,/api\('\/api\/admin\/design\/apply',[\s\S]*expectedRevision:draftRevision/,
+  "Aplicar debe promover la misma revisión del borrador, no un flujo paralelo.");
 assert.match(admin,/BroadcastChannel\('eventstudio-stationery'\)/);
 assert.match(admin,/reloadStationeryStateFromServer/);
 assert.match(admin,/api\('\/api\/admin\/settings',\{cache:'no-store'\}\)/,"El panel debe volver a leer el estado persistido después de una aplicación externa.");
@@ -93,7 +98,10 @@ for(const tab of ["formats","materials","settings","seals","frames","dividers","
 assert.doesNotMatch(studioHtml,/id="(?:names|date|displayName|dateLabel)"/,"El estudio no debe volver a pedir nombres ni fecha.");
 assert.match(studio,/eventSettings\?\.couple\?\.displayName/);assert.match(studio,/eventSettings\?\.event\?\.dateLabel/);assert.match(studio,/eventSettings\?\.typography\?\.heading/);
 assert.match(studio,/inheritedControl\("Nombres principales",displayName\(\)\)/);assert.match(studio,/inheritedControl\("Fecha",dateLabel\(\)/);
-assert.match(studio,/body:JSON\.stringify\(\{presentation,stationery:stationeryState,seal:sealState\}\)/,"Aplicar debe persistir presentación, papelería y lacre atómicamente.");
+assert.match(studio,/api\/admin\/design\/stationery-draft/,
+  "Stationery debe compartir el borrador del Estudio de diseño.");
+assert.match(studio,/body:JSON\.stringify\(\{expectedRevision:[^,]+,presentation,stationery:stationeryState,seal:sealState\}\)/,
+  "Guardar debe persistir presentación, papelería y lacre atómicamente en el borrador.");
 assert.match(studio,/openingStyle:stationeryCatalog\.openingId/);
 assert.match(studio,/features\?\.role==="owner"\|\|features\?\.role==="developer"\|\|templates\?\.allowed/);
 assert.match(studio,/controlLimit\("textureStrength"/);assert.match(studio,/sealCatalog\.connectorSuggestions/);
@@ -113,4 +121,4 @@ for(const file of ["public/stationery-studio.js","src/opening-coordination.js","
   assert.doesNotMatch(read(file),/[😀-🙏🌀-🫿]/u,`${file} no debe incluir emojis en comentarios técnicos.`);
 }
 
-console.log(`✓ RC28 regresión: estudio avanzado separado, herencia y permisos preservados bajo contrato RC30`);
+console.log(`✓ RC28 regresión: motor Stationery especializado, herencia y permisos preservados dentro del Design Studio unificado`);

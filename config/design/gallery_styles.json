@@ -1,0 +1,104 @@
+[
+  {
+    "id": "gallery-masonry-default",
+    "label": "Masonry Estándar",
+    "moods": [
+      "classic"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "gallery-carousel-row",
+    "label": "Fila tipo Carrusel",
+    "moods": [
+      "modern"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "gallery-filmstrip-row",
+    "label": "Fila de Filmina",
+    "moods": [
+      "cinematic"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "gallery-polaroid-scatter",
+    "label": "Dispersión Polaroid",
+    "moods": [
+      "playful",
+      "romantic"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "gallery-mosaic-grid",
+    "label": "Mosaico Irregular",
+    "moods": [
+      "modern",
+      "editorial"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "gallery-hero-plus-thumbs",
+    "label": "Hero + Miniaturas",
+    "moods": [
+      "editorial"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "gallery-split-duo",
+    "label": "Dúo Dividido",
+    "moods": [
+      "modern"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "gallery-stacked-deck",
+    "label": "Baraja Apilada",
+    "moods": [
+      "playful"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "gallery-contact-grid",
+    "label": "Grilla de Contacto",
+    "moods": [
+      "cinematic",
+      "editorial"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "gallery-magazine-spread",
+    "label": "Doble Página de Revista",
+    "moods": [
+      "editorial",
+      "luxury"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "gallery-full-slider",
+    "label": "Franja a Pantalla Completa",
+    "moods": [
+      "cinematic",
+      "modern"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "gallery-scrapbook-wall",
+    "label": "Pared de Recortes",
+    "moods": [
+      "romantic",
+      "playful"
+    ],
+    "printSupport": false
+  }
+]

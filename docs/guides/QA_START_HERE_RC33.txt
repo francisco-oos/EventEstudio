@@ -1,0 +1,68 @@
+EVENTSTUDIO 6.15.0-rc.33 — INICIO DE QA
+========================================
+
+Este candidato implementa la migración Recipe-first de la capa visual mediante:
+Assets + Components + Recipes + Presentation Engines.
+
+PAQUETES
+--------
+1. RELEASE
+   - Código limpio para versionado/despliegue.
+   - No contiene .env, node_modules ni base de datos real.
+
+2. QA_CON_DATOS
+   - Mismo código.
+   - Incluye data/wedding.db, copia byte-a-byte de la BD preservada para QA.
+   - NO ejecutar `npm run seed` sobre esta BD.
+
+PRIMER ARRANQUE LOCAL
+---------------------
+1. Instalar dependencias:
+   npm ci
+
+2. Crear configuración local desde el ejemplo:
+   copy .env.example .env        (Windows CMD)
+   Copy-Item .env.example .env   (PowerShell)
+   cp .env.example .env          (Linux/macOS)
+
+3. Ajustar únicamente las variables locales necesarias.
+
+4. Para QA_CON_DATOS, iniciar SIN seed:
+   npm start
+
+5. Para una instalación vacía/demo, `npm run seed` sólo se permite sobre una BD descartable.
+
+PUERTA OBLIGATORIA ANTES DE PRODUCCIÓN
+--------------------------------------
+npm ci
+npm run test:preproduction
+npm audit --audit-level=moderate
+
+La prueba `test:preproduction` incluye la suite histórica, el E2E RC33 de comercio/diseño,
+la QA visual y la auditoría estructural.
+
+VALIDACIÓN YA EJECUTADA EN EL CANDIDATO
+---------------------------------------
+- Contratos RC27–RC33: PASS.
+- Design Lab interactivo en Chromium: PASS.
+- 64 Recipes x móvil/escritorio: 128/128 PASS, overflow 0.
+- 22 aperturas: 22/22 PASS, FPS mínimo 59.99, CLS 0.
+- Features RC33: 32/32 casos PASS, módulos deshabilitados fuera del DOM.
+- Contenido largo: 64/64 casos PASS desde 320x568 hasta 3840x2160.
+- Landing RC33 y álbum Recipe-first: PASS.
+- Música: interacción pública archivo/Spotify preservada y probada en el harness público.
+
+LÍMITE DE ESTA GENERACIÓN
+-------------------------
+El entorno usado para construir el candidato no pudo acceder al registro npm para instalar
+Express, better-sqlite3, qrcode, pdfkit y bcrypt. Por esa razón NO se afirma que la suite
+completa de servidor/BD/checkout haya pasado aquí. El E2E RC33 está incluido y debe ejecutarse
+con `npm run test:preproduction` después de `npm ci` antes de producción.
+
+DOCUMENTACIÓN
+-------------
+- docs/indexes/INDEX_DOCUMENTACION_RC33.md
+- docs/validation/VALIDACION_RC33.md
+- docs/checklists/PREPRODUCCION_RC33.md
+- docs/traceability/TRACEABILITY_RC33.md
+- docs/analysis/ADR_DESIGN_ECOSYSTEM_SYNC_RC33.md

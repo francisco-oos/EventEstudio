@@ -1,0 +1,760 @@
+{
+  "patterns": [
+    0,
+    1,
+    2,
+    4,
+    8,
+    16,
+    32,
+    60,
+    64,
+    85,
+    102,
+    128,
+    153,
+    170,
+    195,
+    255
+  ],
+  "cases": 32,
+  "failures": [],
+  "rows": [
+    {
+      "mask": 0,
+      "viewport": [
+        360,
+        800
+      ],
+      "features": {
+        "invitation": true,
+        "locations": false,
+        "program": false,
+        "gallery": false,
+        "dressCode": false,
+        "rsvp": false,
+        "gifts": false,
+        "qrCards": false,
+        "music": false
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 1,
+      "viewport": [
+        360,
+        800
+      ],
+      "features": {
+        "invitation": true,
+        "locations": true,
+        "program": false,
+        "gallery": false,
+        "dressCode": false,
+        "rsvp": false,
+        "gifts": false,
+        "qrCards": false,
+        "music": false
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 2,
+      "viewport": [
+        360,
+        800
+      ],
+      "features": {
+        "invitation": true,
+        "locations": false,
+        "program": true,
+        "gallery": false,
+        "dressCode": false,
+        "rsvp": false,
+        "gifts": false,
+        "qrCards": false,
+        "music": false
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 4,
+      "viewport": [
+        360,
+        800
+      ],
+      "features": {
+        "invitation": true,
+        "locations": false,
+        "program": false,
+        "gallery": true,
+        "dressCode": false,
+        "rsvp": false,
+        "gifts": false,
+        "qrCards": false,
+        "music": false
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 8,
+      "viewport": [
+        360,
+        800
+      ],
+      "features": {
+        "invitation": true,
+        "locations": false,
+        "program": false,
+        "gallery": false,
+        "dressCode": true,
+        "rsvp": false,
+        "gifts": false,
+        "qrCards": false,
+        "music": false
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 16,
+      "viewport": [
+        360,
+        800
+      ],
+      "features": {
+        "invitation": true,
+        "locations": false,
+        "program": false,
+        "gallery": false,
+        "dressCode": false,
+        "rsvp": true,
+        "gifts": false,
+        "qrCards": false,
+        "music": false
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 32,
+      "viewport": [
+        360,
+        800
+      ],
+      "features": {
+        "invitation": true,
+        "locations": false,
+        "program": false,
+        "gallery": false,
+        "dressCode": false,
+        "rsvp": false,
+        "gifts": true,
+        "qrCards": false,
+        "music": false
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 60,
+      "viewport": [
+        360,
+        800
+      ],
+      "features": {
+        "invitation": true,
+        "locations": false,
+        "program": false,
+        "gallery": true,
+        "dressCode": true,
+        "rsvp": true,
+        "gifts": true,
+        "qrCards": false,
+        "music": false
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 64,
+      "viewport": [
+        360,
+        800
+      ],
+      "features": {
+        "invitation": true,
+        "locations": false,
+        "program": false,
+        "gallery": false,
+        "dressCode": false,
+        "rsvp": false,
+        "gifts": false,
+        "qrCards": true,
+        "music": false
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 85,
+      "viewport": [
+        360,
+        800
+      ],
+      "features": {
+        "invitation": true,
+        "locations": true,
+        "program": false,
+        "gallery": true,
+        "dressCode": false,
+        "rsvp": true,
+        "gifts": false,
+        "qrCards": true,
+        "music": false
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 102,
+      "viewport": [
+        360,
+        800
+      ],
+      "features": {
+        "invitation": true,
+        "locations": false,
+        "program": true,
+        "gallery": true,
+        "dressCode": false,
+        "rsvp": false,
+        "gifts": true,
+        "qrCards": true,
+        "music": false
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 128,
+      "viewport": [
+        360,
+        800
+      ],
+      "features": {
+        "invitation": true,
+        "locations": false,
+        "program": false,
+        "gallery": false,
+        "dressCode": false,
+        "rsvp": false,
+        "gifts": false,
+        "qrCards": false,
+        "music": true
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 153,
+      "viewport": [
+        360,
+        800
+      ],
+      "features": {
+        "invitation": true,
+        "locations": true,
+        "program": false,
+        "gallery": false,
+        "dressCode": true,
+        "rsvp": true,
+        "gifts": false,
+        "qrCards": false,
+        "music": true
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 170,
+      "viewport": [
+        360,
+        800
+      ],
+      "features": {
+        "invitation": true,
+        "locations": false,
+        "program": true,
+        "gallery": false,
+        "dressCode": true,
+        "rsvp": false,
+        "gifts": true,
+        "qrCards": false,
+        "music": true
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 195,
+      "viewport": [
+        360,
+        800
+      ],
+      "features": {
+        "invitation": true,
+        "locations": true,
+        "program": true,
+        "gallery": false,
+        "dressCode": false,
+        "rsvp": false,
+        "gifts": false,
+        "qrCards": true,
+        "music": true
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 255,
+      "viewport": [
+        360,
+        800
+      ],
+      "features": {
+        "invitation": true,
+        "locations": true,
+        "program": true,
+        "gallery": true,
+        "dressCode": true,
+        "rsvp": true,
+        "gifts": true,
+        "qrCards": true,
+        "music": true
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 0,
+      "viewport": [
+        1440,
+        900
+      ],
+      "features": {
+        "invitation": true,
+        "locations": false,
+        "program": false,
+        "gallery": false,
+        "dressCode": false,
+        "rsvp": false,
+        "gifts": false,
+        "qrCards": false,
+        "music": false
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 1,
+      "viewport": [
+        1440,
+        900
+      ],
+      "features": {
+        "invitation": true,
+        "locations": true,
+        "program": false,
+        "gallery": false,
+        "dressCode": false,
+        "rsvp": false,
+        "gifts": false,
+        "qrCards": false,
+        "music": false
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 2,
+      "viewport": [
+        1440,
+        900
+      ],
+      "features": {
+        "invitation": true,
+        "locations": false,
+        "program": true,
+        "gallery": false,
+        "dressCode": false,
+        "rsvp": false,
+        "gifts": false,
+        "qrCards": false,
+        "music": false
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 4,
+      "viewport": [
+        1440,
+        900
+      ],
+      "features": {
+        "invitation": true,
+        "locations": false,
+        "program": false,
+        "gallery": true,
+        "dressCode": false,
+        "rsvp": false,
+        "gifts": false,
+        "qrCards": false,
+        "music": false
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 8,
+      "viewport": [
+        1440,
+        900
+      ],
+      "features": {
+        "invitation": true,
+        "locations": false,
+        "program": false,
+        "gallery": false,
+        "dressCode": true,
+        "rsvp": false,
+        "gifts": false,
+        "qrCards": false,
+        "music": false
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 16,
+      "viewport": [
+        1440,
+        900
+      ],
+      "features": {
+        "invitation": true,
+        "locations": false,
+        "program": false,
+        "gallery": false,
+        "dressCode": false,
+        "rsvp": true,
+        "gifts": false,
+        "qrCards": false,
+        "music": false
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 32,
+      "viewport": [
+        1440,
+        900
+      ],
+      "features": {
+        "invitation": true,
+        "locations": false,
+        "program": false,
+        "gallery": false,
+        "dressCode": false,
+        "rsvp": false,
+        "gifts": true,
+        "qrCards": false,
+        "music": false
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 60,
+      "viewport": [
+        1440,
+        900
+      ],
+      "features": {
+        "invitation": true,
+        "locations": false,
+        "program": false,
+        "gallery": true,
+        "dressCode": true,
+        "rsvp": true,
+        "gifts": true,
+        "qrCards": false,
+        "music": false
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 64,
+      "viewport": [
+        1440,
+        900
+      ],
+      "features": {
+        "invitation": true,
+        "locations": false,
+        "program": false,
+        "gallery": false,
+        "dressCode": false,
+        "rsvp": false,
+        "gifts": false,
+        "qrCards": true,
+        "music": false
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 85,
+      "viewport": [
+        1440,
+        900
+      ],
+      "features": {
+        "invitation": true,
+        "locations": true,
+        "program": false,
+        "gallery": true,
+        "dressCode": false,
+        "rsvp": true,
+        "gifts": false,
+        "qrCards": true,
+        "music": false
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 102,
+      "viewport": [
+        1440,
+        900
+      ],
+      "features": {
+        "invitation": true,
+        "locations": false,
+        "program": true,
+        "gallery": true,
+        "dressCode": false,
+        "rsvp": false,
+        "gifts": true,
+        "qrCards": true,
+        "music": false
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 128,
+      "viewport": [
+        1440,
+        900
+      ],
+      "features": {
+        "invitation": true,
+        "locations": false,
+        "program": false,
+        "gallery": false,
+        "dressCode": false,
+        "rsvp": false,
+        "gifts": false,
+        "qrCards": false,
+        "music": true
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 153,
+      "viewport": [
+        1440,
+        900
+      ],
+      "features": {
+        "invitation": true,
+        "locations": true,
+        "program": false,
+        "gallery": false,
+        "dressCode": true,
+        "rsvp": true,
+        "gifts": false,
+        "qrCards": false,
+        "music": true
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 170,
+      "viewport": [
+        1440,
+        900
+      ],
+      "features": {
+        "invitation": true,
+        "locations": false,
+        "program": true,
+        "gallery": false,
+        "dressCode": true,
+        "rsvp": false,
+        "gifts": true,
+        "qrCards": false,
+        "music": true
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 195,
+      "viewport": [
+        1440,
+        900
+      ],
+      "features": {
+        "invitation": true,
+        "locations": true,
+        "program": true,
+        "gallery": false,
+        "dressCode": false,
+        "rsvp": false,
+        "gifts": false,
+        "qrCards": true,
+        "music": true
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    },
+    {
+      "mask": 255,
+      "viewport": [
+        1440,
+        900
+      ],
+      "features": {
+        "invitation": true,
+        "locations": true,
+        "program": true,
+        "gallery": true,
+        "dressCode": true,
+        "rsvp": true,
+        "gifts": true,
+        "qrCards": true,
+        "music": true
+      },
+      "overflow": 0,
+      "residualHiddenNodes": 0,
+      "forbiddenStillInDom": [],
+      "errors": [],
+      "ok": true
+    }
+  ]
+}

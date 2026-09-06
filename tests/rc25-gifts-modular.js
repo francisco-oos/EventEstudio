@@ -18,7 +18,7 @@ const {
   publicGiftProjection
 }=require("../src/gift-settings");
 
-const rcNumber=Number((pkg.version.match(/^6\.14\.2-rc\.(\d+)$/)||[])[1]);
+const rcNumber=Number((pkg.version.match(/-rc\.(\d+)$/)||[])[1]);
 assert.ok(rcNumber>=25,"RC25 y candidatas posteriores deben conservar la arquitectura modular de regalos.");
 
 assert.equal(defaults.gifts.methods.cashEnvelopes.enabled,true);

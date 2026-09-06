@@ -18,7 +18,7 @@ const showcase=read("public/showcase.js");
 const renderers=read("public/experience-renderers.js");
 const catalog=read("public/catalogo.js");
 
-assert.match(pkg.version,/^6\.14\.2-rc\.\d+(?:\.\d+)?$/);
+assert.match(pkg.version,/^6\.(?:14\.2|15\.0|16\.0)-rc\.\d+(?:\.\d+)?$/);
 assert.ok(pkg.scripts["test:rc15"].includes("rc15-regressions"));
 
 // Login móvil: una interfaz oculta no puede reaparecer por el !important del layout responsive.

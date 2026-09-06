@@ -1,0 +1,68 @@
+{
+  "cases": {
+    "heroDesktop-split-left": {
+      "pass": true,
+      "scrollWidth": 1366,
+      "innerWidth": 1366,
+      "left": 54.640625,
+      "right": 683,
+      "contentLeft": 720.703125,
+      "contentRight": 1273.65625,
+      "heroLeft": 54.640625,
+      "heroRight": 1311.359375,
+      "imgSrc": "data:image/svg+xml,%3Csvg xmlns=http://www.w3.org/2000/svg width=800 height=900%3E%3Crect width=800 height=900 fill=%235a745e/%3E%3Ccircle cx=400 cy=360 r=210 fill=%23e9d9b9/%3E%3C/svg%3E",
+      "classes": "es-hero-has-media es-hero-media-split es-hero-media-split-left"
+    },
+    "heroDesktop-split-right": {
+      "pass": true,
+      "scrollWidth": 1366,
+      "innerWidth": 1366,
+      "left": 683,
+      "right": 1311.359375,
+      "contentLeft": 92.34375,
+      "contentRight": 645.296875,
+      "heroLeft": 54.640625,
+      "heroRight": 1311.359375,
+      "imgSrc": "data:image/svg+xml,%3Csvg xmlns=http://www.w3.org/2000/svg width=800 height=900%3E%3Crect width=800 height=900 fill=%235a745e/%3E%3Ccircle cx=400 cy=360 r=210 fill=%23e9d9b9/%3E%3C/svg%3E",
+      "classes": "es-hero-has-media es-hero-media-split es-hero-media-split-right"
+    },
+    "heroMobileStack": {
+      "pass": true,
+      "innerWidth": 390,
+      "scrollWidth": 390,
+      "panel": {
+        "x": 28.015625,
+        "y": 0,
+        "w": 333.96875,
+        "h": 489.515625
+      },
+      "content": {
+        "x": 28.015625,
+        "y": 564.296875,
+        "w": 333.96875,
+        "h": 204.90625
+      }
+    },
+    "heroDeferredUntilOpening": {
+      "pass": true,
+      "before": {
+        "attr": null,
+        "deferred": "data:image/svg+xml,%3Csvg xmlns=http://www.w3.org/2000/svg width=800 height=900%3E%3Crect width=800 height=900 fill=%235a745e/%3E%3Ccircle cx=400 cy=360 r=210 fill=%23e9d9b9/%3E%3C/svg%3E"
+      },
+      "after": {
+        "attr": "data:image/svg+xml,%3Csvg xmlns=http://www.w3.org/2000/svg width=800 height=900%3E%3Crect width=800 height=900 fill=%235a745e/%3E%3Ccircle cx=400 cy=360 r=210 fill=%23e9d9b9/%3E%3C/svg%3E",
+        "deferred": ""
+      }
+    },
+    "independentDesktopScroll": {
+      "pass": true,
+      "body": 0,
+      "left": 400,
+      "right": 250,
+      "stage": 700,
+      "bodyOverflow": "hidden"
+    }
+  },
+  "failures": [],
+  "pass": true
+}

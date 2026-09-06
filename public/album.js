@@ -45,13 +45,46 @@ function albumPresentedName(value,settings){
   return String(value||'');
 }
 
+function applyAlbumDesignAssets(settings){
+  document.querySelectorAll('.album-design-asset').forEach(node=>node.remove());
+  const recipe=settings?._designRecipe;
+  const manifest=new Map((settings?._assetManifest?.assets||[]).map(asset=>[asset.id,asset]));
+  if(!recipe||!manifest.size)return;
+  const hosts={hero:document.getElementById('albumHero'),gallery:document.querySelector('.album-upload-card'),footer:document.querySelector('.album-upload-card')};
+  const toneVars={primary:'--accent',accent:'--accent',gold:'--gold',ink:'--ink',muted:'--muted',paper:'--paper'};
+  let rendered=0;
+  for(const instance of recipe.assets||[]){
+    if(rendered>=8)break;
+    const asset=manifest.get(instance.assetId),host=hosts[instance.anchor];
+    if(!asset||!host)continue;
+    const node=document.createElement(asset.colorizable?'span':'img');
+    node.className=`album-design-asset ${asset.colorizable?'is-colorizable':''}`;
+    node.setAttribute('aria-hidden','true');
+    if(asset.colorizable){
+      const url=String(asset.url||'').replace(/["\\]/g,'');
+      if(!url.startsWith('/'))continue;
+      node.style.setProperty('--album-asset-url',`url("${url}")`);
+    }else{
+      if(!String(asset.url||'').startsWith('/'))continue;
+      node.src=asset.url;node.alt='';node.loading='lazy';node.decoding='async';
+    }
+    node.style.left=`${Math.max(0,Math.min(100,Number(instance.x)||50))}%`;
+    node.style.top=`${Math.max(0,Math.min(100,Number(instance.y)||50))}%`;
+    node.style.setProperty('--album-asset-scale',String(Math.max(.2,Math.min(3,Number(instance.scale)||1))));
+    node.style.setProperty('--album-asset-rotation',`${Math.max(-360,Math.min(360,Number(instance.rotation)||0))}deg`);
+    node.style.opacity=String(Math.min(.28,Math.max(.06,Number(instance.opacity??1)*.28)));
+    node.style.color=`var(${toneVars[instance.tone]||'--accent'})`;
+    host.appendChild(node);rendered++;
+  }
+}
+
 async function loadAlbumTheme(){
   if(!eventSlug)return;
   try{
     const response=await fetch(`/api/config/${encodeURIComponent(eventSlug)}`);
     if(!response.ok)return;
     const settings=await response.json();
-    document.body.className=`simple-page album-page theme-${settings.themeId||'romantic-wine'}`;
+    const recipe=settings._designRecipe||null;const layout=String(recipe?.design?.layoutFamily||'classic').replace(/[^a-z0-9-]/gi,'-');document.body.className=`simple-page album-page theme-recipe es-layout-${layout}`;document.body.dataset.designRecipe=recipe?.id||'legacy';document.body.dataset.layout=layout;
     const palette=settings._palette||{};
     ['bg','paper','ink','muted','accent','accentText','gold','line','accentContrast'].forEach(key=>{
       const value=palette[key];
@@ -62,6 +95,7 @@ async function loadAlbumTheme(){
     document.documentElement.style.setProperty('--font-heading',fontMap[settings.typography?.heading]||fontMap.georgia);
     document.documentElement.style.setProperty('--font-body',fontMap[settings.typography?.body]||fontMap.system);
     document.body.style.fontFamily='var(--font-body)';
+    applyAlbumDesignAssets(settings);
     const eventName=albumPresentedName(settings.couple?.displayName||settings.event?.title||'Evento',settings);
     document.title=`Fotos · ${eventName}`;
     document.getElementById('albumEventName').textContent=eventName||'Nuestro evento';

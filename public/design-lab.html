@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Estudio de diseño · EventStudio</title>
+<link rel="stylesheet" href="/design-lab.css?v=6.16.0-rc.41">
+<link rel="stylesheet" href="/design-engine.css?v=6.16.0-rc.41">
+</head>
+<body>
+<header class="lab-topbar">
+  <div class="lab-brand"><strong>Estudio de diseño</strong><small id="eventLabel">Cargando evento…</small></div>
+  <div class="lab-actions" aria-label="Acciones del estudio">
+    <button id="backToAdminBtn" type="button">Plantillas</button>
+    <div class="lab-history-actions" role="group" aria-label="Historial"><button id="undoBtn" type="button" title="Deshacer">Deshacer</button><button id="redoBtn" type="button" title="Rehacer">Rehacer</button></div>
+    <button id="previewBtn" type="button">Vista previa</button><button id="applyBtn" class="primary" type="button">Aplicar cambios</button>
+    <details class="lab-more-menu"><summary aria-label="Más acciones">Más ···</summary><div class="lab-more-popover">
+      <button id="discardDraftBtn" type="button" hidden>Descartar borrador</button>
+      <button id="saveTemplateBtn" type="button" hidden>Guardar como plantilla</button><button id="publishCatalogBtn" type="button" hidden>Publicar en catálogo</button>
+    </div></details>
+  </div>
+</header>
+<main class="lab-shell">
+  <nav class="lab-nav" aria-label="Herramientas de diseño">
+    <button class="active" data-panel="recipes" type="button">Plantillas</button>
+    <button data-panel="assets" type="button">Elementos</button>
+    <button data-panel="sections" type="button">Bloques</button>
+    <button data-panel="opening" type="button">Apertura</button>
+    <button data-panel="presentation" type="button">Diseño</button>
+    <button data-panel="colors" type="button">Color</button>
+  </nav>
+  <aside class="lab-panel">
+    <section data-pane="recipes"><h2>Diseños</h2><p>Elige un punto de partida editable. Los datos reales del evento no se reemplazan.</p><div class="search-assist"><input id="recipeSearch" type="search" autocomplete="off" placeholder="Buscar diseño, estilo o etiqueta" aria-autocomplete="list" aria-controls="recipeSuggestions"><div id="recipeSuggestions" class="search-suggestions" role="listbox" hidden></div></div><div id="recipeGrid" class="resource-grid"></div><button id="moreRecipesBtn" type="button">Mostrar más</button></section>
+    <section data-pane="assets" hidden><h2>Biblioteca de elementos</h2><p>Busca, filtra y añade elementos. Cada archivo se carga sólo cuando el diseño lo utiliza.</p><input id="assetSearch" type="search" placeholder="Buscar elemento"><select id="assetCategory"><option value="">Todas las categorías</option></select><div id="assetGrid" class="resource-grid"></div><button id="moreAssetsBtn" type="button">Mostrar más</button></section>
+    <section data-pane="sections" hidden><h2>Bloques</h2><p>El borrador puede conservar servicios no contratados; al publicar se filtran según los permisos del evento.</p><div id="sectionList"></div></section>
+    <section data-pane="opening" hidden><h2>Apertura</h2><p>La selección se guarda en el borrador. Las aperturas comerciales se pueden probar y sólo se activan si el evento tiene derecho.</p><select id="openingSelect"></select><div id="openingInlineControls" class="opening-inline-controls"></div><div id="openingAccessState" class="qa-status"></div><div class="opening-actions"><button id="previewOpeningLabBtn" type="button">Probar apertura</button><button id="openStationeryBtn" class="panel-link" type="button" hidden>Personalizar sobre y lacre</button></div><p id="openingEditorHint" class="panel-hint">Selecciona una apertura. Los controles avanzados aparecen sólo cuando son necesarios.</p></section>
+    <section data-pane="presentation" hidden>
+      <h2>Diseño</h2><p>Composición, tipografía, textura, fotografía y movimiento forman parte del mismo borrador.</p>
+      <label>Composición<select id="layoutFamilySelect"></select></label>
+      <label>Fuente de títulos<select id="headingFontSelect"></select></label>
+      <label>Fuente de texto<select id="bodyFontSelect"></select></label>
+      <label>Escala tipográfica<select id="typographyScaleSelect"><option value="compact">Compacta</option><option value="comfortable">Cómoda</option><option value="large">Amplia</option></select></label>
+      <label>Presentación de nombres<select id="nameCaseSelect"><option value="preserve">Como fue capturado</option><option value="title">Mayúsculas y minúsculas</option><option value="uppercase">Todo en mayúsculas</option><option value="small-caps">Versalitas</option></select></label>
+      <label>Textura<select id="textureSelect"><option value="none">Sin textura</option><option value="paper">Papel fino</option><option value="linen">Lino sutil</option><option value="soft-grain">Grano suave</option><option value="wash">Lavado acuarela</option></select></label>
+      <label>Nivel de movimiento<select id="motionPresetSelect"><option value="still">Sin movimiento</option><option value="subtle">Sutil</option><option value="balanced">Equilibrado</option><option value="dynamic">Dinámico</option></select></label>
+      <label>Secuencia de movimiento<select id="motionTimelineSelect"></select></label>
+      <label>Presentación fotográfica<select id="photoPresentationSelect"></select></label>
+      <fieldset class="media-presentation-fieldset"><legend>Portada</legend>
+        <label class="checkbox-control"><input id="heroMediaEnabled" type="checkbox" checked> Mostrar fotografía de portada en este diseño</label>
+        <label>Reemplazar portada (opcional)<input id="heroImageFile" type="file" accept="image/*"></label>
+        <small id="heroImageStatus">La imagen pertenece a los datos del evento; el diseño guarda únicamente cómo presentarla.</small>
+        <label>Presentación<select id="heroMediaLayout"><option value="background">Fondo completo</option><option value="split-left">Foto a la izquierda</option><option value="split-right">Foto a la derecha</option></select></label>
+        <label>Ajuste<select id="heroMediaFit"><option value="cover">Cubrir</option><option value="contain">Contener completa</option></select></label>
+        <label>Posición horizontal <input id="heroMediaX" type="range" min="0" max="100" step="1"></label>
+        <label>Posición vertical <input id="heroMediaY" type="range" min="0" max="100" step="1"></label>
+        <label>Oscurecimiento <input id="heroMediaOverlay" type="range" min="0" max="0.8" step="0.05"></label>
+        <small id="heroMediaDeviceHint">Los ajustes de encuadre se guardan por separado para móvil y escritorio. También puedes arrastrar la fotografía directamente en el lienzo.</small>
+      </fieldset>
+    </section>
+    <section data-pane="colors" hidden>
+      <h2>Estudio de color</h2><p>Genera armonías desde un color base y sincroniza colores semánticos para invitación, QR y papelería.</p>
+      <label>Color base<input id="colorTheorySeed" type="color" value="#7b4b56"></label>
+      <label>Armonía<select id="colorHarmonySelect"><option value="monochromatic">Monocromática</option><option value="analogous">Análoga</option><option value="complementary">Complementaria</option><option value="split-complementary">Complementaria dividida</option><option value="triadic">Triádica</option><option value="tetradic">Tetrádica</option><option value="luxury">Elegante</option><option value="dark-luxury">Elegante oscura</option><option value="pastel">Pastel</option><option value="high-contrast">Alto contraste</option></select></label>
+      <button id="generatePaletteBtn" type="button">Generar armonía</button>
+      <div id="colorControls"></div><div id="contrastReport" class="qa-status" role="status"></div><button id="autoAdjustPaletteBtn" type="button" hidden>Ajustar colores automáticamente</button>
+    </section>
+  </aside>
+  <section class="lab-stage-wrap">
+    <div class="lab-stage-toolbar"><button data-device="phone" class="active" type="button">Móvil</button><button data-device="desktop" type="button">Escritorio</button><span id="publicationState" class="state-badge">Sitio activo sin cambios</span><span id="saveState" role="status" aria-live="polite">Borrador guardado</span></div>
+    <div class="lab-stage"><article id="designCanvas" class="design-canvas phone"></article></div>
+  </section>
+  <aside class="lab-inspector">
+    <h2>Propiedades</h2>
+    <div id="inspectorEmpty"><p>Selecciona un elemento o bloque en el lienzo.</p></div>
+    <form id="assetInspector" hidden>
+      <strong id="assetInspectorName"></strong>
+      <label>X <input id="assetX" type="range" min="0" max="100" step="0.5"></label>
+      <label>Y <input id="assetY" type="range" min="0" max="100" step="0.5"></label>
+      <label>Escala <input id="assetScale" type="range" min="0.1" max="4" step="0.05"></label>
+      <label>Rotación <input id="assetRotation" type="range" min="-180" max="180" step="1"></label>
+      <label>Capa <input id="assetZ" type="number" min="-5" max="40" step="1"></label>
+      <label>Opacidad <input id="assetOpacity" type="range" min="0.05" max="1" step="0.05"></label>
+      <label>Tono <select id="assetTone"><option value="accent">Acento</option><option value="gold">Dorado</option><option value="ink">Tinta</option><option value="muted">Secundario</option><option value="paper">Papel</option></select></label>
+      <label>Movimiento <select id="assetMotion"><option value="none">Ninguno</option><option value="float-soft">Flotar suave</option><option value="sway-soft">Balanceo suave</option><option value="soft-rise">Ascenso suave</option><option value="rotate-slow">Rotación lenta</option></select></label>
+      <div class="inspector-actions"><button id="duplicateAssetBtn" type="button">Duplicar elemento</button><button id="removeAssetBtn" class="danger" type="button">Eliminar elemento</button></div>
+    </form>
+    <form id="sectionInspector" hidden>
+      <strong id="sectionInspectorName"></strong>
+      <label>Alineación<select id="sectionTextAlign"><option value="left">Izquierda</option><option value="center">Centro</option><option value="right">Derecha</option></select></label>
+      <label>Espaciado <input id="sectionSpacing" type="range" min="12" max="120" step="2"></label>
+      <label>Ancho <input id="sectionWidth" type="range" min="40" max="100" step="1"></label>
+      <label>Tamaño de títulos <input id="sectionHeadingSize" type="range" min="0.75" max="3" step="0.05"></label>
+      <label>Tamaño de texto <input id="sectionBodySize" type="range" min="0.75" max="2" step="0.05"></label>
+      <label>Peso de títulos <select id="sectionHeadingWeight"><option value="400">Regular</option><option value="500">Medio</option><option value="600">Seminegrita</option><option value="700">Negrita</option><option value="800">Extra negrita</option></select></label>
+      <label>Peso de texto <select id="sectionBodyWeight"><option value="400">Regular</option><option value="500">Medio</option><option value="600">Seminegrita</option><option value="700">Negrita</option></select></label>
+      <label>Interlineado <input id="sectionLineHeight" type="range" min="1" max="2.2" step="0.05"></label>
+      <label>Espaciado de letras <input id="sectionLetterSpacing" type="range" min="-0.05" max="0.2" step="0.01"></label>
+      <label>Color de títulos<select id="sectionHeadingTone"><option value="heading">Título global</option><option value="ink">Tinta</option><option value="accent">Acento</option><option value="gold">Dorado</option><option value="paper">Papel</option></select></label>
+      <div class="direct-color-control"><label>Color personalizado de títulos<div class="direct-color-pair"><input id="sectionHeadingColor" type="color" value="#2d2925" aria-label="Paleta de color de títulos"><input id="sectionHeadingHex" type="text" inputmode="text" maxlength="7" value="#2d2925" pattern="#[0-9A-Fa-f]{6}" aria-label="Color HEX de títulos"></div></label><button id="clearSectionHeadingColor" type="button">Usar tono</button><small id="sectionHeadingColorStatus">Heredando el tono seleccionado.</small></div>
+      <label>Color de texto<select id="sectionBodyTone"><option value="body">Texto global</option><option value="ink">Tinta</option><option value="muted">Secundario</option><option value="accent">Acento</option><option value="paper">Papel</option></select></label>
+      <div class="direct-color-control"><label>Color personalizado de texto<div class="direct-color-pair"><input id="sectionBodyColor" type="color" value="#746e66" aria-label="Paleta de color de texto"><input id="sectionBodyHex" type="text" inputmode="text" maxlength="7" value="#746e66" pattern="#[0-9A-Fa-f]{6}" aria-label="Color HEX de texto"></div></label><button id="clearSectionBodyColor" type="button">Usar tono</button><small id="sectionBodyColorStatus">Heredando el tono seleccionado.</small></div>
+      <label>Mayúsculas<select id="sectionHeadingCase"><option value="inherit">Heredar</option><option value="uppercase">Mayúsculas</option><option value="lowercase">Minúsculas</option><option value="capitalize">Iniciales</option></select></label>
+      <label>Superficie<select id="sectionSurface"><option value="paper">Papel</option><option value="transparent">Transparente</option><option value="accent-soft">Acento suave</option></select></label>
+    </form>
+    <div class="live-thumb"><h3>Miniatura reactiva</h3><img id="liveThumbnail" alt="Miniatura del diseño"></div>
+    <div id="packageRecommendation" class="qa-status package-recommendation"></div><div id="qaStatus" class="qa-status"></div>
+  </aside>
+</main>
+<section id="stationeryWorkspace" class="lab-embedded-workspace" hidden aria-label="Estudio integrado de sobres y lacre">
+  <div class="embedded-workspace-bar">
+    <div><strong>Sobre y lacre</strong><small id="stationeryWorkspaceStatus">Editando el mismo borrador del Estudio de diseño.</small></div>
+    <button id="closeStationeryBtn" type="button">Volver al Estudio de diseño</button>
+  </div>
+  <iframe id="stationeryFrame" title="Editor integrado de sobre y lacre" loading="eager"></iframe>
+</section>
+<section id="previewWorkspace" class="lab-embedded-workspace" hidden aria-label="Previsualización del borrador">
+  <div class="embedded-workspace-bar"><div><strong>Previsualización del borrador</strong><small>Esta vista no modifica el sitio activo.</small></div><button id="closePreviewBtn" type="button">Volver al Estudio de diseño</button></div>
+  <iframe id="previewFrame" title="Previsualización interna del borrador" loading="eager"></iframe>
+</section>
+<script src="/design-color-engine.js?v=6.16.0-rc.41"></script><script src="/design-lab.js?v=6.16.0-rc.41"></script>
+</body>
+</html>

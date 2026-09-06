@@ -141,6 +141,9 @@ async function main(){
     {name:"premium-cross",run:()=>request("/api/admin/settings",{token:premium.token,eventId:starterEvent.id}),status:403},
     {name:"starter-cross",run:()=>request("/api/admin/settings",{token:starter.token,eventId:premiumEvent.id}),status:403}
   ];
+  if(process.env.EVENTSTUDIO_PERF_DIAGNOSTICS==="true"){
+    for(const scenario of scenarios){const samples=[];for(let index=0;index<3;index++)samples.push((await scenario.run()).elapsedMs);console.log(`  RC23 secuencial ${scenario.name}: ${(samples.reduce((sum,value)=>sum+value,0)/samples.length).toFixed(1)} ms`);}
+  }
   const rounds=Math.max(4,Math.min(40,Number(process.env.EVENTSTUDIO_CONCURRENT_ROUNDS)||12));
   const jobs=[];
   for(let round=0;round<rounds;round++)for(const scenario of scenarios)jobs.push((async()=>({scenario,...await scenario.run()}))());
@@ -149,6 +152,8 @@ async function main(){
   const successfulDurations=results.filter(result=>result.response.status<400).map(result=>result.elapsedMs);
   const p95=percentile(successfulDurations,.95);
   const maxAllowed=Math.max(500,Number(process.env.EVENTSTUDIO_CONCURRENT_P95_LIMIT_MS)||1500);
+  const performanceByScenario=scenarios.map(scenario=>{const values=results.filter(item=>item.scenario===scenario).map(item=>item.elapsedMs);return `${scenario.name}: p95 ${percentile(values,.95).toFixed(1)} ms`;});
+  console.log(`  RC23 detalle concurrente · ${performanceByScenario.join(" · ")}`);
   assert.ok(p95<maxAllowed,`p95 concurrente ${p95.toFixed(1)} ms excede ${maxAllowed} ms.`);
 
   /* Relectura posterior: ninguna ráfaga debe modificar pertenencia ni layout. */

@@ -5,6 +5,8 @@ const cp=require("child_process");
 const root=path.join(__dirname,"..");
 const pkg=require(path.join(root,"package.json"));
 const failures=[];const notes=[];
+const packageProfile=String(process.env.EVENTSTUDIO_PACKAGE_PROFILE||((fs.existsSync(path.join(root,"data","wedding.db"))||fs.existsSync(path.join(root,".env")))?"qa":"release")).toLowerCase();
+if(!["qa","release"].includes(packageProfile))failures.push("EVENTSTUDIO_PACKAGE_PROFILE debe ser qa o release.");
 const walk=dir=>fs.readdirSync(dir,{withFileTypes:true}).flatMap(entry=>entry.name==="node_modules"||entry.name===".git"?[]:(entry.isDirectory()?walk(path.join(dir,entry.name)):[path.join(dir,entry.name)]));
 const files=walk(root);const rel=file=>path.relative(root,file).replace(/\\/g,"/");
 const read=relative=>fs.readFileSync(path.join(root,relative),"utf8");
@@ -28,7 +30,7 @@ for(const file of files.filter(f=>f.endsWith(".html"))){
 for(const file of files.filter(f=>/\.json$/i.test(f))){
   try{JSON.parse(fs.readFileSync(file,"utf8"));}catch(error){failures.push(`JSON inválido ${rel(file)}: ${error.message}`);}
 }
-const forbidden=files.filter(f=>/(^|\/)(\.env|node_modules)(\/|$)|\.(db|sqlite|sqlite3|log|zip)$/i.test(rel(f))||(/^uploads\/.+/.test(rel(f))&&!/\.gitkeep$/.test(f)));
+const forbidden=files.filter(f=>/(^|\/)(node_modules)(\/|$)/.test(rel(f))||(packageProfile==="release"&&(/(^|\/)\.env$|\.(db|sqlite|sqlite3|log|zip)$/i.test(rel(f))||(/^uploads\/.+/.test(rel(f))&&!/\.gitkeep$/.test(f)))));
 if(forbidden.length)failures.push(`Artefactos/secretos persistentes: ${forbidden.map(rel).join(", ")}`);
 const markdownOutside=files.filter(f=>f.endsWith(".md")&&!rel(f).startsWith("docs/")&&rel(f)!=="README.md");
 if(markdownOutside.length)failures.push(`Documentación fuera de docs/: ${markdownOutside.map(rel).join(", ")}`);
@@ -109,6 +111,7 @@ const publicSizes=["public/admin.js","public/styles.css","public/app.js","public
 notes.push(`Archivos revisados: ${files.length}`);
 notes.push(`JavaScript verificado: ${files.filter(f=>f.endsWith(".js")).length}`);
 notes.push(`Versión: ${pkg.version}`);
+notes.push(`Perfil de paquete: ${packageProfile.toUpperCase()}`);
 notes.push(`Payload fuente principal: ${publicSizes.map(item=>`${item.file.replace("public/","")} ${(item.bytes/1024).toFixed(1)} KiB`).join(" · ")}`);
 if(failures.length){console.error(failures.join("\n"));process.exit(1);}
 console.log(`✓ Auditoría estructural ${require("../package.json").version}`);notes.forEach(n=>console.log(`  - ${n}`));

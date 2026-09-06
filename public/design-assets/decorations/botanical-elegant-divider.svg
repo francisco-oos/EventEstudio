@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 80" width="100%" height="100%" preserveAspectRatio="xMidYMid meet" role="img" aria-label="Divisor botánico elegante">
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <line x1="40" y1="40" x2="350" y2="40" stroke="var(--es-color-line, #D3D3D3)" stroke-width="1.5" />
+    <line x1="450" y1="40" x2="760" y2="40" stroke="var(--es-color-line, #D3D3D3)" stroke-width="1.5" />
+    <g stroke="var(--es-color-accent, #556B2F)" stroke-width="2">
+      <path d="M370,40 C380,25 390,55 400,40 C410,25 420,55 430,40" />
+    </g>
+    <path d="M385,32 Q400,20 415,32 Q400,44 385,32 Z" fill="var(--es-color-accent, #556B2F)" opacity="0.8" stroke="none" />
+    <circle cx="360" cy="40" r="3" fill="var(--es-color-line, #D3D3D3)" stroke="none" />
+    <circle cx="440" cy="40" r="3" fill="var(--es-color-line, #D3D3D3)" stroke="none" />
+  </g>
+</svg>

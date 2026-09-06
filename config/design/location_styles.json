@@ -1,0 +1,95 @@
+[
+  {
+    "id": "location-dual-cta",
+    "label": "Tarjeta Dual + Mapa",
+    "primitive": "dual-card",
+    "moods": [
+      "classic"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "location-compass-badge",
+    "label": "Insignia de Brújula",
+    "primitive": "compass-badge",
+    "moods": [
+      "travel",
+      "modern"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "location-ticket-stub",
+    "label": "Talón de Boleto",
+    "primitive": "ticket-stub",
+    "moods": [
+      "travel"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "location-postcard",
+    "label": "Postal de Destino",
+    "primitive": "postcard",
+    "moods": [
+      "travel",
+      "vintage"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "location-minimal-address",
+    "label": "Dirección Minimalista",
+    "primitive": "minimal-address",
+    "moods": [
+      "minimal"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "location-botanical-frame",
+    "label": "Marco Botánico",
+    "primitive": "dual-card",
+    "moods": [
+      "botanical"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "location-split-map",
+    "label": "Panel Dividido",
+    "primitive": "dual-card",
+    "moods": [
+      "modern",
+      "editorial"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "location-passport-stamp",
+    "label": "Sello de Pasaporte",
+    "primitive": "ticket-stub",
+    "moods": [
+      "travel"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "location-editorial-block",
+    "label": "Bloque Editorial",
+    "primitive": "minimal-address",
+    "moods": [
+      "editorial"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "location-celestial-map",
+    "label": "Mapa Celestial",
+    "primitive": "compass-badge",
+    "moods": [
+      "celestial"
+    ],
+    "printSupport": true
+  }
+]

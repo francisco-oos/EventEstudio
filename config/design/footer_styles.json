@@ -1,0 +1,74 @@
+[
+  {
+    "id": "footer-monogram",
+    "label": "Monograma Ceremonial",
+    "primitive": "centered",
+    "moods": [
+      "classic"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "footer-minimal-signoff",
+    "label": "Cierre Minimalista",
+    "primitive": "centered",
+    "moods": [
+      "minimal"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "footer-botanical-close",
+    "label": "Cierre Botánico",
+    "primitive": "centered",
+    "moods": [
+      "botanical"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "footer-editorial-colophon",
+    "label": "Colofón Editorial",
+    "primitive": "colophon",
+    "moods": [
+      "editorial"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "footer-passport-exit",
+    "label": "Sello de Salida",
+    "primitive": "colophon",
+    "moods": [
+      "travel"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "footer-celebration-confetti",
+    "label": "Confeti de Celebración",
+    "primitive": "centered",
+    "moods": [
+      "playful"
+    ],
+    "printSupport": false
+  },
+  {
+    "id": "footer-wine-label",
+    "label": "Etiqueta de Vino",
+    "primitive": "colophon",
+    "moods": [
+      "wine"
+    ],
+    "printSupport": true
+  },
+  {
+    "id": "footer-celestial",
+    "label": "Cierre Celestial",
+    "primitive": "centered",
+    "moods": [
+      "celestial"
+    ],
+    "printSupport": true
+  }
+]

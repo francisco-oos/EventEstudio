@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,minimum-scale=1,viewport-fit=cover,interactive-widget=resizes-content" name="viewport"/><title>EventStudio</title><link href="/styles.css?v=6.14.2-rc.30" rel="stylesheet"/></head><body class="admin-page">
+<html lang="es"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,minimum-scale=1,viewport-fit=cover,interactive-widget=resizes-content" name="viewport"/><title>EventStudio</title><link href="/styles.css?v=6.16.0-rc.41" rel="stylesheet"/></head><body class="admin-page">
 <section class="login-screen" id="loginScreen">
 <div class="login-visual">
 <div class="login-brand-mark">ES</div>
@@ -313,24 +313,25 @@
 <section class="tab-panel hidden" id="tab-templates">
 <section class="admin-card template-experience-card">
 <div class="section-heading">
-<div><p class="eyebrow">Presentación</p><h2>Apertura y experiencia</h2><p class="muted">La vista completa de cada plantilla se abre en una ventana flotante con los datos del evento; no ocupa espacio permanente en el panel.</p></div>
+<div><p class="eyebrow">Presentación</p><h2>Apertura y experiencia</h2><p class="muted">Elige primero la apertura y los ajustes de presentación. EventStudio ordenará los diseños que mejor combinan con tu selección; al aplicar uno, estos ajustes sustituyen sus valores predeterminados sin crear una plantilla nueva.</p></div>
 </div>
 <div class="opening-style-control">
-<div><strong>Apertura animada</strong><small>El sobre usa los nombres, fecha e invitado reales del enlace.</small></div>
+<div class="opening-style-copy"><strong>Apertura animada</strong><small>Selecciona una experiencia para recomendar diseños afines. Si eliges un sobre, puedes usarlo tal cual o abrir su estudio avanzado.</small></div>
 <select id="openingStyleSelect"></select><label class="hidden" id="rosePetalColorField">Color de pétalos<input id="rosePetalColor" type="color"/></label><label class="hidden" id="floralPetalColorField">Color de pétalos florales<input id="floralPetalColor" type="color"/></label><label class="hidden" id="floralCenterColorField">Color del centro floral<input id="floralCenterColor" type="color"/></label>
 <label>Recorrido<select id="experienceModeSelect"><option value="auto">Recomendado por la plantilla</option><option value="classic">Página clásica</option><option value="story">Escenas animadas</option><option value="poster">Cartel dinámico</option><option value="gallery">Galería fotográfica</option></select></label>
 <label>Movimiento<select id="motionLevelSelect"></select></label>
 <label>Estilo del álbum<select id="galleryStyleSelect"></select></label>
-<div class="opening-style-actions"><button class="primary-btn" id="saveOpeningStyleBtn" type="button">Guardar entrada</button><button class="secondary-btn" id="previewOpeningBtn" type="button">Probar apertura</button></div>
+<div class="opening-style-actions"><button class="secondary-btn" id="previewOpeningBtn" type="button">Probar apertura</button></div>
+<p class="muted" id="openingCompatibilitySummary">Los ajustes se aplicarán cuando elijas un diseño de la biblioteca.</p>
 </div>
 <section class="stationery-launch-card hidden" id="stationeryLaunchCard" aria-live="polite">
-<div class="section-heading stationery-launch-heading"><div><p class="eyebrow">Sobre personalizable</p><h2>Estudio avanzado de sobres y lacre</h2><p class="muted">El editor completo se abre aparte del panel y sólo se carga cuando lo necesitas. Hereda nombres, fecha y tipografía del evento y guarda sobre, tarjeta, lacre y sincronización como una sola configuración.</p></div><span class="status-pill confirmed" id="stationeryLaunchState">Listo para editar</span></div>
+<div class="section-heading stationery-launch-heading"><div><p class="eyebrow">Sobre personalizable</p><h2>Estudio avanzado de sobres y lacre</h2><p class="muted">El editor completo se integra dentro del mismo Estudio de diseño y sólo se carga cuando lo necesitas. Hereda nombres, fecha y tipografía del evento y guarda sobre, tarjeta, lacre y sincronización como una sola configuración.</p></div><span class="status-pill confirmed" id="stationeryLaunchState">Listo para editar</span></div>
 <div class="stationery-launch-grid">
 <dl class="stationery-inherited-data"><div><dt>Nombres</dt><dd id="stationeryLaunchNames">—</dd></div><div><dt>Fecha</dt><dd id="stationeryLaunchDate">—</dd></div><div><dt>Tipografía</dt><dd id="stationeryLaunchFont">—</dd></div><div><dt>Diseño aplicado</dt><dd id="stationeryLaunchPreset">—</dd></div></dl>
-<div class="stationery-launch-actions"><a class="primary-btn" id="openStationeryStudioBtn" target="_blank" rel="noopener">Abrir estudio avanzado</a><p class="muted" id="stationeryLaunchHint">Los cambios se aplican desde el estudio y el panel vuelve a leer el estado persistido del servidor.</p></div>
+<div class="stationery-launch-actions"><a class="primary-btn" id="openStationeryStudioBtn" >Abrir estudio avanzado</a><p class="muted" id="stationeryLaunchHint">Los cambios se guardan dentro del mismo Estudio de diseño y regresan al punto anterior sin abrir otra pestaña.</p></div>
 </div>
 </section>
-<p class="muted opening-motion-hint" id="openingMotionHint">La prueba se abre encima del panel y puede reproducirse sin guardar primero la selección.</p>
+<p class="muted opening-motion-hint" id="openingMotionHint">La prueba se abre encima del panel. No guarda cambios ni concede derechos comerciales.</p>
 </section>
 <section class="admin-card creative-brief-studio" id="creativeBriefStudio">
 <div class="section-heading">
@@ -355,10 +356,11 @@
 </section>
 <section class="admin-card">
 <div class="section-heading">
-<div><p class="eyebrow">Diseño</p><h2>Biblioteca de plantillas</h2>
-<p>La información y los invitados permanecen intactos; sólo cambia la presentación.</p></div>
+<div><p class="eyebrow">Diseño</p><h2>Biblioteca de diseños</h2>
+<p>Las opciones del catálogo son diseños del mismo constructor. Los datos del evento y los servicios permanecen independientes.</p></div>
+<div class="inline-actions"><a class="primary-btn" id="openDesignLabBtn" >Abrir constructor avanzado</a></div>
 </div>
-<div class="template-context-row"><div><strong id="themeContextTitle">Diseños para este evento</strong><small id="themeContextHelp">Puedes probar cualquier diseño compatible. Los no incluidos muestran su precio antes de agregarlos.</small></div><label>Buscar por estilo<input id="themeSearch" placeholder="Ej. floral, elegante, perritos" type="search"/></label></div>
+<div class="template-context-row"><div><strong id="themeContextTitle">Diseños para este evento</strong><small id="themeContextHelp">Puedes probar cualquier diseño compatible. Los no incluidos muestran su precio antes de agregarlos.</small></div><label class="theme-search-assist">Buscar por estilo<input id="themeSearch" autocomplete="off" aria-autocomplete="list" aria-controls="themeSearchSuggestions" placeholder="Ej. floral, elegante, perritos" type="search"/><div id="themeSearchSuggestions" class="theme-search-suggestions" role="listbox" hidden></div></label></div>
 <div class="theme-grid" id="themeGrid"></div>
 </section>
 </section>
@@ -810,7 +812,7 @@
 <label>Precio MXN<input id="commerceProductPrice" min="0" step="1" type="number"/></label>
 <label>Estado comercial<select id="commerceProductState"><option value="available">Disponible</option><option value="experimental">Experimental</option><option value="hidden">Oculto</option><option value="disabled">Deshabilitado</option></select></label>
 <label>Estado técnico<select id="commerceProductReadiness"><option value="draft">Borrador</option><option value="lab">Laboratorio</option><option value="qa">QA</option><option value="approved">Aprobado</option><option value="retired">Retirado</option></select><small>Sólo un producto aprobado puede publicarse.</small></label>
-<label>Versión aprobada<input id="commerceProductRelease" maxlength="80" placeholder="Ej. 6.14.2-rc.30"/></label>
+<label>Versión aprobada<input id="commerceProductRelease" maxlength="80" placeholder="Ej. 6.16.0-rc.41"/></label>
 <label>Ranura de presentación<select id="commerceProductSlot"><option value="feature">Función</option><option value="theme">Tema</option><option value="opening">Apertura</option><option value="gallery">Galería</option><option value="print">Impreso</option><option value="storage">Almacenamiento</option></select></label>
 <label>Estrategia de preview<select id="commerceProductPreviewStrategy"><option value="none">Sin preview</option><option value="theme">Tema</option><option value="experience">Experiencia</option><option value="feature">Función</option></select></label>
 <label>Almacenamiento MB<input id="commerceProductStorage" min="0" step="1" type="number" value="0"/></label>
@@ -847,7 +849,7 @@
 <form class="admin-card" id="newEventForm" method="dialog">
 <div class="row-between"><div><p class="eyebrow">Nuevo evento</p><h2>Crea el espacio inicial</h2></div><button class="mini-btn dialog-close" type="button">Cerrar</button></div>
 <label>Tipo de evento<select id="newEventType" required=""></select></label>
-<label>Nombre del evento<input id="newEventName" maxlength="160" placeholder="Ej. Ariana y Francisco" required=""/></label>
+<label>Nombre del evento<input id="newEventName" maxlength="160" placeholder="Ej. Nombre del evento" required=""/></label>
 <button class="primary-btn" type="submit">Crear evento</button>
 </form>
 </dialog>
@@ -867,7 +869,7 @@
 </section>
 </dialog>
 <dialog class="experience-preview-dialog" id="themePreviewDialog">
-<div class="experience-preview-toolbar"><div><small>Vista previa de plantilla</small><strong id="themePreviewDialogTitle">Plantilla</strong></div><div class="preview-toolbar-actions"><a class="secondary-btn" id="openFullPreviewBtn" rel="noopener" target="_blank">Abrir aparte</a><button class="mini-btn" id="closeThemePreviewBtn" type="button">Cerrar</button></div></div>
+<div class="experience-preview-toolbar"><div><small>Vista previa de plantilla</small><strong id="themePreviewDialogTitle">Plantilla</strong></div><div class="preview-toolbar-actions"><button class="secondary-btn" id="themePreviewEditBtn" type="button">Editar</button><button class="primary-btn" id="themePreviewApplyBtn" type="button">Aplicar</button><a class="secondary-btn" id="openFullPreviewBtn" rel="noopener" target="_blank">Abrir aparte</a><button class="mini-btn" id="closeThemePreviewBtn" type="button">Cerrar</button></div></div>
 <div class="responsive-preview-stage phone" id="themePreviewStage"><iframe id="themePreviewFrame" title="Vista previa completa de la plantilla"></iframe></div>
 </dialog>
 <dialog class="experience-preview-dialog store-preview-dialog" id="storePreviewDialog">
@@ -890,4 +892,4 @@
 <div class="photo-viewer-caption"><strong id="adminPhotoViewerTitle"></strong><p id="adminPhotoViewerMessage"></p><small id="adminPhotoViewerCounter"></small></div>
 </div>
 </dialog>
-<script src="/admin.js?v=6.14.2-rc.30"></script></body></html>
+<script src="/admin.js?v=6.16.0-rc.41"></script></body></html>

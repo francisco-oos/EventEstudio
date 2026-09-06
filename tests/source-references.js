@@ -12,7 +12,8 @@ for(const [htmlFile,jsFile] of [
   ["public/index.html","public/app.js"],
   ["public/album.html","public/album.js"],
   ["public/catalogo.html","public/catalogo.js"],
-  ["public/muestra.html","public/muestra.js"]
+  ["public/muestra.html","public/muestra.js"],
+  ["public/design-lab.html","public/design-lab.js"]
 ]){
   const html=read(htmlFile);
   const js=read(jsFile);
