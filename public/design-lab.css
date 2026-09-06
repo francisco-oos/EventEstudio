@@ -214,3 +214,6 @@
 .hero-media-drag-target.dragging{cursor:grabbing}
 .media-presentation-fieldset small{display:block;color:var(--muted);font-size:.64rem;line-height:1.45;margin:-2px 0 8px}
 .canvas-asset{--lab-asset-ratio:1;min-height:18px}
+/* RC42: feedback visual mientras se aplica la selección de una plantilla, para
+   que un segundo clic mientras carga la primera no parezca "no hacer nada". */
+#recipeGrid.is-loading{opacity:.55;pointer-events:none;filter:grayscale(.3)}
