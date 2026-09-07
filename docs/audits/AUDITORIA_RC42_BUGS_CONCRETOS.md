@@ -90,7 +90,53 @@ enabled: design.heroMedia?.enabled!==undefined ? design.heroMedia.enabled!==fals
 
 ---
 
-## 5. Áreas probadas a fondo sin encontrar un bug real
+## 5. Segunda ronda — bugs reportados por el usuario al probar el ZIP en vivo
+
+**Fecha:** 2026-09-07.
+**Contexto:** el usuario probó el ZIP de la primera ronda en su propia red y reportó, con capturas de pantalla y logs del servidor, varios hallazgos nuevos. Se investigó cada uno con el mismo método: reproducir contra el servidor real, diagnosticar la causa exacta, corregir sólo si hay un bug real, verificar en vivo, y ser honesto cuando algo no se pudo reproducir o no es en realidad un defecto.
+
+### 5.1 Vista previa de plantilla mostraba colores equivocados la primera vez — CORREGIDO
+
+**Commit:** `3372959`
+**Archivo:** `src/server.js` (bloque de preview de apertura dentro de `publicConfig()`)
+
+**Síntoma:** en el panel admin, al abrir "Vista previa de plantilla" sobre una Recipe cuyo sobre nativo es distinto al "Sobre personalizable" forzado por el filtro superior (ej. "Constelación eterna"), el lacre/sello del sobre se mostraba con el color de la Recipe activa anterior, no con el de la Recipe que se estaba previsualizando. Al aplicar la plantilla y volver a abrirla, sí se veía correctamente — el bug sólo afectaba la primera previsualización antes de aplicar.
+
+**Causa raíz (confirmada con trazas de depuración en vivo contra el servidor real, no sólo lectura de código):** `synchronizeStationeryFromRecipe()` tiene su propio guard interno que compara `recipe.design.openingId` (el sobre NATIVO de la Recipe) contra `stationeryCatalog.openingId` ("unified-envelope"). Ese guard está pensado para los otros dos lugares donde se llama a esta función, que sólo la invocan cuando la Recipe YA trae ese sobre nativo. Pero en el bloque de preview, cuando el filtro superior fuerza "Sobre personalizable" SOBRE una Recipe cuyo sobre nativo es otro, se le pasaba `settings.designRecipe` tal cual (con su `openingId` nativo, ej. `"constellation-veil"`) — el guard interno lo rechazaba en silencio y la función devolvía el Stationery viejo sin tocarlo. El primer diagnóstico (gating comercial/PREMIUM bloqueando el preview) se descartó con una traza que mostró `platformPreview:true` y el gate pasando correctamente; hubo que bajar un nivel más para encontrar la causa real.
+
+**Corrección:** en ese bloque específico se construye una copia de la Recipe (`recipeAsUnifiedEnvelope`) con `design.openingId` forzado al del sobre unificado antes de llamar a `synchronizeStationeryFromRecipe()`/`synchronizeSealFromRecipe()`, para que la función la trate como el sobre unificado que en efecto es en ese contexto de preview.
+
+**Verificación:** con trazas `console.error` temporales confirmé en vivo que, tras el fix, `newSealColor` pasa a coincidir con el acento de la Recipe previsualizada en vez de arrastrar el color anterior; las trazas se retiraron por completo antes del commit (`grep -n "QA_DEBUG" src/server.js` vacío, `node --check src/server.js` sin errores).
+
+**Regresión:** `tests/rc40-production-polish.js` tenía una aserción que comprobaba literalmente la firma de llamada ANTIGUA (con el bug); se actualizó para reflejar el código nuevo y sigue en verde. El resto de la suite relacionada (`project-integrity`, `rc38-design-studio-hardening`, `rc39-design-parity`, `rc41-production-readiness`, `rc35-unified-design-studio`) también en verde.
+
+### 5.2 "El servidor se colgó al cambiar el color del lacre" — investigado, no reproducido como cuelgue real
+
+El usuario reportó que, tras cambiar el color del lacre desde el Estudio de sobrería, la invitación pública por IP de LAN dejó de responder (`ERR_CONNECTION_TIMED_OUT`) y tuvo que reiniciar el servidor con Ctrl+C. Se investigó en dos frentes:
+
+- **Guardados en el cliente:** `public/stationery-studio.js` ya aplica un debounce de 900ms antes de guardar el borrador (`setSealKey()` → `setDirty(true)` → autoguardado con retraso), igual que el patrón de 950ms ya usado en `design-lab.js`. No hay evidencia de que arrastrar el slider dispare un PUT por cada paso.
+- **Costo real de cada guardado:** se midió en vivo el tiempo de respuesta de guardados individuales del borrador de Stationery — 10–13ms cada uno — descartando que la generación del SVG del lacre sea costosa o bloqueante de forma síncrona en el servidor.
+
+**Conclusión honesta:** no se logró reproducir un cuelgue real de Node con evidencia (ni con guardados repetidos ni revisando el costo de cada request). La hipótesis más probable, dado que el problema fue específicamente accediendo por la IP de LAN (`192.168.49.57`) y no por `localhost`, es un corte de red/Wi-Fi momentáneo — no un bug de código. Si vuelve a ocurrir, lo más útil sería que el usuario lo reproduzca con el servidor corriendo en primer plano (para ver la consola en tiempo real) y confirme si `localhost:3000` en la misma laptop también deja de responder durante el incidente (eso descartaría definitivamente la hipótesis de red).
+
+### 5.3 Miniatura del álbum no coincide con las fotos reales de la invitación — no es un bug
+
+La miniatura pequeña de cada tarjeta de plantilla (`thumbnailSvg()`) es un SVG generado estáticamente para representar el estilo de galería, y por diseño no puede mostrar fotos reales del evento. La vista previa real y la invitación pública sí usan `media.gallery`/`media.heroImage` del evento correctamente — se verificó subiendo una foto de prueba y confirmando que aparece en la vista previa real, no en la miniatura de la tarjeta (que nunca muestra fotos de ningún evento). Es un comportamiento esperado, no un defecto; si el usuario quiere que la miniatura refleje fotos reales sería un cambio de diseño de esa tarjeta, no una corrección.
+
+### 5.4 Tamaño del lacre en el sobre de apertura público — gap de feature confirmado, no implementado
+
+El usuario pidió poder ajustar el TAMAÑO del lacre tal como se ve en la animación de apertura del sobre público (no sólo personalizarlo en el generador). Se investigó a fondo:
+
+- `public/seal-renderer.js` genera siempre un `<svg viewBox="0 0 500 500">` sin atributos `width`/`height` propios — el tamaño visual final en pantalla lo determina únicamente el contenedor CSS donde se monta.
+- `public/styles.css` fija el tamaño de `.opening-seal` con valores en píxeles **hardcodeados por cada estilo de apertura** (`width:54px;height:54px` por defecto, y variantes de 46px/56px/58px/60px/62px según el `opening-*` activo) — no hay ninguna variable CSS ni campo de configuración que controle este tamaño.
+- El único control numérico del lacre que suena a "tamaño", `fontSize`, sólo cambia el tamaño del monograma DENTRO del sello (que siempre ocupa el mismo espacio fijo en pantalla), no el tamaño del sello como objeto.
+- `src/seal-config.js` (`normalizeSeal()`) es la lista blanca autoritativa de campos que el servidor acepta para el lacre: `enabled, customized, autoMonogram, initial1, initial2, connector, topText, bottomText, font, fontSize, kerning, verticalOffset, borderStyle, ornament, material, customColor, reliefDepth, reliefMode, specular, quality`. No existe ningún campo de escala/tamaño general, así que aunque el cliente intentara enviarlo, el servidor lo descartaría silenciosamente.
+
+**Conclusión:** esto no es un bug de sincronización (no hay ningún dato que se esté ignorando) sino una funcionalidad que nunca existió. Implementarla de forma mínima y consistente con el patrón actual requeriría: (1) un campo nuevo (ej. `scale`) en `config/seals.json` (defaults + rango de control) y en la lista blanca de `src/seal-config.js`; (2) aplicarlo como `transform:scale()` o variable CSS en el contenedor (`.opening-seal`/`#heroWaxSeal`) desde `public/app.js`, sin tocar el SVG interno; (3) un control deslizante más en el editor de `public/stationery-studio.js`, siguiendo exactamente el mismo patrón que los 5 controles numéricos que ya existen. Es un cambio pequeño y de bajo riesgo, pero es una feature nueva — no se implementó en esta pasada por estar fuera del alcance que el usuario pidió ("sólo bugs concretos"); queda documentado aquí con el diseño técnico listo para cuando el usuario decida priorizarlo.
+
+---
+
+## 6. Áreas probadas a fondo sin encontrar un bug real
 
 No se declara nada "PASS" sin haberlo ejecutado de extremo a extremo contra el servidor real. Para cada una se usó un evento/invitado/foto **marcado explícitamente como dato de prueba** (`is_test=1` en invitados, nombres `qa-test-*`/`qa-guest-*` en archivos) y se eliminó al terminar.
 
@@ -105,7 +151,7 @@ No se declara nada "PASS" sin haberlo ejecutado de extremo a extremo contra el s
 
 ---
 
-## 6. Archivos modificados en esta sesión
+## 7. Archivos modificados en esta sesión
 
 | Archivo | Cambio | Commit |
 |---|---|---|
@@ -114,11 +160,15 @@ No se declara nada "PASS" sin haberlo ejecutado de extremo a extremo contra el s
 | `src/server.js` | `normalizeDesignRecipeIntent()` aplica los mismos campos nuevos de overrides | `c1fcfe9` |
 | `public/design-lab.css` | Estado visual `.is-loading` para la grilla de plantillas | `21637de` |
 | `public/app.js` | `openInvitationBtn` usa `focus({preventScroll:true})` en vez de `scrollIntoView()` | `fccfe0f` |
+| `src/server.js` | Preview de plantilla: se fuerza `openingId` unificado antes de sincronizar Stationery/lacre, para que el guard interno de `synchronizeStationeryFromRecipe()` no vete la sincronización | `3372959` |
+| `tests/rc40-production-polish.js` | Aserciones actualizadas para reflejar la firma de llamada corregida (antes comprobaban literalmente el código con el bug) | `3372959` |
 
-## 7. Pendientes reales (fuera de esta pasada, por decisión del usuario)
+## 8. Pendientes reales (fuera de esta pasada, por decisión del usuario)
 
 - Estudio de QR / invitación física editables (como el de sobre y lacre) — feature nueva, no bug.
 - Editor tipo Canva (arrastrar, capas, handles) — feature nueva de varias semanas, no bug (ver respuesta dada al usuario sobre por qué no requiere otro agente de IA, sólo tiempo/alcance).
+- Control de tamaño del lacre en el sobre público — feature nueva confirmada (§5.4), diseño técnico ya documentado, lista para implementar cuando el usuario la priorice.
+- Más opciones de acomodo de portada (hoy: fondo completo / foto izquierda / foto derecha) — feature nueva, no bug; el usuario también notó que la vista previa del editor no siempre coincide 1:1 con la invitación real del invitado (paridad editor/público) — vale la pena revisarlo junto con esto en una sesión futura.
 - Auditoría completa de traducciones — deprioritizada.
 - Pentesting con Strix — deprioritizado, requiere Docker + credenciales propias.
-- `rc23-acceptance-contracts`: prueba pre-existente que falla por una aserción de texto fuente desactualizada sobre la visibilidad de RSVP; el comportamiento real de RSVP se verificó funcionando correctamente. Vale la pena actualizar la aserción en una sesión futura, pero no se tocó aquí por no estar relacionada con ninguno de los 4 bugs corregidos.
+- `rc23-acceptance-contracts`: prueba pre-existente que falla por una aserción de texto fuente desactualizada sobre la visibilidad de RSVP; el comportamiento real de RSVP se verificó funcionando correctamente. Vale la pena actualizar la aserción en una sesión futura, pero no se tocó aquí por no estar relacionada con ninguno de los bugs corregidos.
