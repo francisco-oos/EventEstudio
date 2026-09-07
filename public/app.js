@@ -1257,7 +1257,16 @@ $('backgroundMusic').addEventListener('pause',()=>{
 
 $('openInvitationBtn').onclick=async()=>{
   document.body.classList.add('invitation-open');
-  $('invitation').scrollIntoView({behavior:'smooth'});
+  /* RC42: #hero (portada a pantalla completa) vive fuera de #invitation y
+     antecede al resto de las secciones. scrollIntoView() alineaba el borde
+     superior de #invitation con el viewport, saltándose la portada entera
+     y dejando al invitado con la sensación de que la página "se baja hasta
+     la mitad" justo al abrir. El flujo de apertura con sobre no tiene este
+     problema porque enfoca #invitation con preventScroll en vez de
+     desplazar la página; replicamos ese mismo comportamiento aquí para que
+     ambos caminos abran siempre mostrando la portada desde su inicio. */
+  $('invitation')?.setAttribute('tabindex','-1');
+  $('invitation')?.focus?.({preventScroll:true});
   try{
     if(settings.media?.musicSource==='upload')await playUploadedMusic();
     if(settings.media?.musicSource==='spotify')requestSpotifyPlayback();
