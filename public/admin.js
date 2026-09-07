@@ -1437,7 +1437,12 @@ function renderPhotos(){
   if($('downloadPhotosZip')){
     const params=new URLSearchParams({eventId:String(eventId),status:moderation||'approved'});if(table)params.set('table',table);
     $('downloadPhotosZip').href=`/api/admin/photos-export.zip?${params}`;
-    $('downloadPhotosZip').textContent=moderation?`Descargar ${photoModerationLabel(moderation).toLowerCase()}`:'Descargar aprobadas';
+    /* El ZIP respeta el filtro de mesa activo además del de moderación; si no
+       se refleja en el texto del botón, "Descargar aprobadas" parece traer
+       todas las fotos aprobadas del evento cuando en realidad sólo trae las
+       de la mesa filtrada, dando la falsa impresión de que faltan fotos. */
+    const label=moderation?`Descargar ${photoModerationLabel(moderation).toLowerCase()}`:'Descargar aprobadas';
+    $('downloadPhotosZip').textContent=table?`${label} · ${table}`:label;
   }
   $('photoGrid').innerHTML=photoViewerItems.map((p,index)=>`<figure class="photo-card moderation-${esc(p.moderation_status||'pending')}">
     <button class="photo-open" type="button" data-photo-index="${index}" aria-label="Ampliar fotografía de ${esc(p.uploaded_by||'invitado')}"><img src="${p.url}" loading="lazy" decoding="async" alt="Fotografía de ${esc(p.uploaded_by||'invitado')}"></button>
