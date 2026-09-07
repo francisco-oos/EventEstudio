@@ -4173,10 +4173,23 @@ function publicConfig(event,{preview=false,platformPreview=false,catalogPreview=
       settings.presentation={...(settings.presentation||{}),...previewColors};
       /* RC40: si el filtro superior fuerza Sobre personalizable sobre una
          Recipe cuyo opening nativo era otro, el sobre debe heredar la paleta y
-         textura de ESA Recipe, no arrastrar el último sobre del evento. */
+         textura de ESA Recipe, no arrastrar el último sobre del evento.
+         RC42: synchronizeStationeryFromRecipe() se niega a sí misma si
+         recipe.design.openingId no es exactamente stationeryCatalog.openingId
+         (su propio guard interno, pensado para los otros dos llamadores, que
+         sólo invocan la función cuando la Recipe YA trae ese opening nativo).
+         Aquí estamos forzando el sobre unificado SOBRE una Recipe cuyo opening
+         nativo es otro (p. ej. "constellation-veil") — exactamente el caso que
+         el comentario de arriba describe — así que ese guard interno vetaba
+         en silencio la sincronización y el lacre se quedaba con el color de
+         la Recipe activa anterior en vez de heredar el de la Recipe
+         previsualizada. Se le pasa una copia con openingId ya forzado para
+         que la función la trate como el sobre unificado que en efecto es en
+         este contexto de preview. */
       if(String(opening)===String(stationeryCatalog.openingId||"")&&settings.designRecipe){
-        settings.stationery=synchronizeStationeryFromRecipe(settings.stationery||{},settings.designRecipe,{resetPreset:true});
-        settings.seal=synchronizeSealFromRecipe(settings.seal||{},settings.designRecipe);
+        const recipeAsUnifiedEnvelope={...settings.designRecipe,design:{...settings.designRecipe.design,openingId:stationeryCatalog.openingId}};
+        settings.stationery=synchronizeStationeryFromRecipe(settings.stationery||{},recipeAsUnifiedEnvelope,{resetPreset:true});
+        settings.seal=synchronizeSealFromRecipe(settings.seal||{},recipeAsUnifiedEnvelope);
       }
       openingPreviewApplied=true;
     }

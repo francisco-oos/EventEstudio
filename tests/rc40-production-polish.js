@@ -39,9 +39,17 @@ assert.match(lab,/catalogRecipeId:id,presentationOverrides:currentPresentationOv
 
 // 2) Forzar Sobre personalizable en preview también sincroniza el sobre con la
 // paleta de la Recipe, en vez de arrastrar Stationery de una plantilla anterior.
+// RC42: synchronizeStationeryFromRecipe() se niega a sí misma si
+// recipe.design.openingId no es exactamente stationeryCatalog.openingId, así
+// que pasarle settings.designRecipe tal cual (con su opening nativo, p. ej.
+// "constellation-veil") la hacía devolver el Stationery viejo sin tocarlo —
+// el lacre se quedaba con el color de la Recipe activa anterior en vez de la
+// previsualizada. Ahora se le pasa una copia con openingId forzado al del
+// sobre unificado para que sí aplique la sincronización.
 assert.match(server,/if\(String\(opening\)===String\(stationeryCatalog\.openingId\|\|""\)&&settings\.designRecipe\)/);
-assert.match(server,/synchronizeStationeryFromRecipe\(settings\.stationery\|\|\{\},settings\.designRecipe,\{resetPreset:true\}\)/);
-assert.match(server,/settings\.seal=synchronizeSealFromRecipe/);
+assert.match(server,/recipeAsUnifiedEnvelope=\{\.\.\.settings\.designRecipe,design:\{\.\.\.settings\.designRecipe\.design,openingId:stationeryCatalog\.openingId\}\}/);
+assert.match(server,/synchronizeStationeryFromRecipe\(settings\.stationery\|\|\{\},recipeAsUnifiedEnvelope,\{resetPreset:true\}\)/);
+assert.match(server,/settings\.seal=synchronizeSealFromRecipe\(settings\.seal\|\|\{\},recipeAsUnifiedEnvelope\)/);
 assert.match(server,/presentationOverrides/);
 
 // 3) Portada: existe control explícito y soporta fondo, izquierda o derecha.
