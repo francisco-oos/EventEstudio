@@ -6,9 +6,14 @@
 - `../analysis/ADR_PRESENTATION_OVERRIDES_HERO_ASSETS_RC40.md`
 - `../analysis/ADR_DESIGN_PARITY_DATA_AUTOSAVE_RC39.md`
 
+## Operación local
+
+- `../guides/GUIA_ARRANQUE_LOCAL_WINDOWS_RC41.md`
+
 ## Auditoría y QA
 
 - `../audits/AUDITORIA_6.16.0-rc.41.md`
+- `../audits/AUDITORIA_HOTFIX_ARRANQUE_LOCAL_RC41.md`
 - `../validation/VALIDACION_6.16.0-rc.41.md`
 - `../traceability/TEST_COVERAGE_MATRIX_6.16.0-rc.41.md`
 - `../checklists/QA_FISICO_FINAL_6.16.0-rc.41.md`

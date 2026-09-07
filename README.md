@@ -1,8 +1,8 @@
-# EventStudio 6.16.0-rc.40
+# EventStudio 6.16.0-rc.41
 
-## RC40 — Experiencia coherente y portada reutilizable
+## RC41 — Fidelidad de preview, portada recuperable y Apply atómico
 
-Las Recipes conservan paleta/textura/composición, mientras Apertura/Recorrido/Movimiento/Álbum seleccionados en el panel gobiernan la experiencia. Se añade portada como fondo o panel lateral, scroll independiente y 12 Assets estáticos auditados. Ver `docs/release-notes/RELEASE_NOTES_6.16.0-rc.40.md`.
+RC41 consolida la paridad entre Design Studio, Preview, apertura, Stationery e invitación pública; reutiliza la portada existente del evento, separa el encuadre móvil/escritorio y corrige Assets decorativos que desaparecían al aplicar. Ver `docs/release-notes/RELEASE_NOTES_6.16.0-rc.41.md`.
 
 ## RC37 — V5 Fluidez integral
 
@@ -10,8 +10,8 @@ Esta candidata separa DRAFT/ACTIVE/CATALOG y convierte Panel, Estudio de diseño
 
 Estado: **candidata QA**. Las suites Node ejecutables pasan; la matriz Playwright, touch real, lector de pantalla, QR impreso y PDF físico permanece `NOT_RUN` y debe completarse antes de cualquier promoción.
 
-Documentación vigente: `docs/indexes/INDEX_DOCUMENTACION_6.16.0-rc.40.md`.
-Inicio de QA: `QA_START_HERE_V6_16_0_RC40.txt`.
+Documentación vigente: `docs/indexes/INDEX_DOCUMENTACION_6.16.0-rc.41.md`.
+Inicio de QA: `QA_START_HERE_V6_16_0_RC41.txt`.
 Puerta automatizada disponible: `npm run test:v5`, `npm run test:security`, `npm run test:rc33:e2e` y auditoría con el perfil del paquete.
 
 ## RC33 — Design Ecosystem
@@ -181,17 +181,15 @@ En Windows PowerShell, usa `npm.cmd` si la política impide ejecutar `npm.ps1`.
 - Para Mercado Pago: `PAYMENT_PROVIDER=mercadopago`, `MERCADOPAGO_ACCESS_TOKEN` y `MERCADOPAGO_WEBHOOK_SECRET`; configurar el webhook HTTPS `/api/payments/mercadopago/webhook`.
 - Para WhatsApp Cloud, completar las variables `WHATSAPP_*` descritas en `.env.example`; una configuración parcial permanece bloqueada.
 
-## Validación 6.16.0-rc.39
+## Validación 6.16.0-rc.41
 
-RC39 cierra los hallazgos visuales y de sincronización detectados durante la prueba manual de RC38. Se validaron 65 Recipes, 130 renders Recipe, 130 casos de legibilidad, 130 casos de paridad cromática, 65 vistas del catálogo del Design Lab, 175,500 combinaciones lógicas de presentación, 1,300 proyecciones rol/perfil, 139 controles con wiring verificable, 64 casos de contenido largo, 32 casos de visibilidad por feature y pruebas focales de responsive, Stationery, álbum y apertura pública. En las matrices cubiertas se obtuvo overflow 0.
+RC41 consolida la fidelidad entre Design Studio, Preview, apertura, Stationery e invitación pública. La portada del evento se reutiliza sin exigir una nueva carga, el encuadre móvil/escritorio es independiente y los Assets decorativos conservan dimensiones públicas para no desaparecer al aplicar. Apply espera el flush/autosave del borrador y las escrituras idénticas no incrementan revisiones innecesariamente.
 
-RC39 añade paridad Recipe↔apertura↔Stationery, autosave transparente del sobre/lacre antes de Apply, retorno determinista desde Preview, reutilización de datos reales del evento en el canvas, filtrado de referencias multimedia borradas, reutilización de portada existente, colapso real de servicios ocultos, controles tipográficos visibles y Color Studio sobre la paleta efectiva del DRAFT. El propietario/desarrollador puede validar experiencias Store sin conceder derechos comerciales al cliente.
+La evidencia automatizada disponible cubre 65 Recipes, 31 Assets, 103 skins, 175,500 combinaciones lógicas de presentación, 1,300 proyecciones rol/perfil, 139 controles y matrices visuales responsive. La promoción a producción sigue exigiendo el gate E2E en una PC con dependencias instalables y el checklist físico RC41. Ver `docs/validation/VALIDACION_6.16.0-rc.41.md`.
 
-La BD QA incluida pasó `quick_check=ok` y conserva 4 usuarios, 2 eventos y 43 tablas sin ejecutar `seed`. La suite que exige servidor Express real y dependencias npm **no se marca como PASS** en este paquete porque este runtime no dispone de `better-sqlite3` y no pudo completar `npm ci`. Antes de producción ejecutar `npm ci`, `npm run test:preproduction`, `npm audit --audit-level=moderate` y completar el checklist físico RC39. Ver `docs/validation/VALIDACION_6.16.0-rc.39.md`.
+### Histórico: RC40 / RC39 / RC38
 
-### Histórico: Validación RC38
-
-RC38 endureció el Estudio de diseño y la primera paridad amplia entre catálogo, borrador, apertura, invitación pública y Stationery. Sus evidencias se conservan como antecedente; ante discrepancias, prevalecen los documentos RC39.
+RC40, RC39 y RC38 se conservan como antecedentes de presentación, paridad y responsive. Cuando un documento histórico contradiga RC41, prevalecen el índice, ADR, auditoría y validación RC41.
 
 ### Histórico: Validación RC33
 
@@ -203,20 +201,20 @@ La línea RC21 conserva pruebas de autenticación, aislamiento, 1,200 usuarios, 
 
 ## Documentación
 
-Índice vigente: [`docs/indexes/INDEX_DOCUMENTACION_6.16.0-rc.39.md`](docs/indexes/INDEX_DOCUMENTACION_6.16.0-rc.39.md)
+Índice vigente: [`docs/indexes/INDEX_DOCUMENTACION_6.16.0-rc.41.md`](docs/indexes/INDEX_DOCUMENTACION_6.16.0-rc.41.md)
 
 Documentos clave:
 
-- `docs/analysis/ADR_DESIGN_PARITY_DATA_AUTOSAVE_RC39.md`
-- `docs/audits/AUDITORIA_6.16.0-rc.39.md`
-- `docs/validation/VALIDACION_6.16.0-rc.39.md`
-- `docs/traceability/TEST_COVERAGE_MATRIX_6.16.0-rc.39.md`
-- `docs/checklists/QA_FISICO_FINAL_6.16.0-rc.39.md`
-- `docs/release-notes/RELEASE_NOTES_6.16.0-rc.39.md`
-- `docs/validation/evidence/RC39_AUTOMATED_QA_SUMMARY.json`
-- `docs/validation/evidence/RC39_DB_INTEGRITY.json`
-- `docs/validation/evidence/RC39_DESIGN_PARITY_VISUAL.json`
-- `docs/validation/evidence/RC39_DESIGN_LAB_CATALOG_VISUAL.json`
+- `docs/analysis/ADR_PREVIEW_STATIONERY_MEDIA_ASSETS_RC41.md`
+- `docs/audits/AUDITORIA_6.16.0-rc.41.md`
+- `docs/validation/VALIDACION_6.16.0-rc.41.md`
+- `docs/traceability/TEST_COVERAGE_MATRIX_6.16.0-rc.41.md`
+- `docs/checklists/QA_FISICO_FINAL_6.16.0-rc.41.md`
+- `docs/release-notes/RELEASE_NOTES_6.16.0-rc.41.md`
+- `docs/guides/GUIA_ARRANQUE_LOCAL_WINDOWS_RC41.md`
+- `docs/validation/evidence/RC41_PRODUCTION_READINESS_VISUAL.json`
+- `docs/validation/evidence/RC41_AUTOMATED_QA_SUMMARY.json`
+- `docs/validation/evidence/RC41_DB_MEDIA_INTEGRITY.json`
 
 El historial anterior permanece bajo `docs/` y conserva su valor como antecedente.
 

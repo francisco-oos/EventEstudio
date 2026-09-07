@@ -9,6 +9,8 @@ EVENTSTUDIO 6.16.0-rc.41 — INICIO DE QA
 7) Assets: 31 aprobados; ahora tienen aspect ratio público para que las máscaras no desaparezcan al aplicar.
 8) Cache busting: 6.16.0-rc.41.
 9) `npm ci` no pudo completar en este runtime por timeout; E2E Express sigue BLOCKED_ENV.
+10) Arranque Windows: el launcher reutiliza node_modules si coincide exactamente con package-lock.json; evita npm ci destructivo cuando sólo falta el marcador.
+11) Si npm ci reporta EPERM/unlink sobre better_sqlite3.node, cierra la otra instancia de Node/EventStudio que use esta copia y reintenta; NO borres la BD.
 
 GATE EN TU PC / FUTURO ALEYON EXECUTION LAB:
   npm ci

@@ -9,6 +9,7 @@ const {
   chooseLanIp,
   resolvePort,
   localUrls,
+  lockedDependencyVersions,
   npmInvocation
 }=require("../scripts/iniciar-local");
 
@@ -35,6 +36,11 @@ assert.deepEqual(localUrls("192.168.10.24",3000),{
   computer:"http://localhost:3000/admin.html",
   phone:"http://192.168.10.24:3000/admin.html"
 });
+
+const locked=lockedDependencyVersions();
+assert.equal(locked["better-sqlite3"],"12.11.1");
+assert.equal(locked.express,"4.22.2");
+assert.equal(Object.keys(locked).length,Object.keys(require("../package.json").dependencies).length);
 
 const windowsNode="C:\\Program Files\\nodejs\\node.exe";
 const windowsNpmCli=path.win32.join(

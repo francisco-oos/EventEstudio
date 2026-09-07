@@ -75,13 +75,43 @@ function lockDigest(){
   return crypto.createHash("sha256").update(fs.readFileSync(lockPath)).digest("hex");
 }
 
+function lockedDependencyVersions(){
+  const lock=JSON.parse(fs.readFileSync(lockPath,"utf8"));
+  const result={};
+  for(const name of Object.keys(packageJson.dependencies||{})){
+    const locked=lock.packages?.[`node_modules/${name}`]?.version;
+    if(locked)result[name]=locked;
+  }
+  return result;
+}
+
+function installedDependenciesMatchLock(){
+  try{
+    const expected=lockedDependencyVersions();
+    const names=Object.keys(packageJson.dependencies||{});
+    if(!names.length||Object.keys(expected).length!==names.length)return false;
+    for(const name of names){
+      // Leer package.json por ruta evita depender de `exports` de cada paquete;
+      // algunos módulos no permiten resolver `paquete/package.json` con require.
+      const packagePath=path.join(root,"node_modules",...name.split("/"),"package.json");
+      const installed=JSON.parse(fs.readFileSync(packagePath,"utf8")).version;
+      if(installed!==expected[name])return false;
+    }
+    // No se hace require() de better-sqlite3 antes de un posible npm ci:
+    // cargar su .node en Windows bloquearía el mismo archivo que npm necesita
+    // sustituir. Comprobamos su presencia física sin cargar el binario.
+    const nativePath=path.join(root,"node_modules","better-sqlite3","build","Release","better_sqlite3.node");
+    return fs.existsSync(nativePath);
+  }catch{
+    return false;
+  }
+}
+
 function dependenciesReady(){
   try{
     const expected=lockDigest();
     const installed=fs.readFileSync(installMarker,"utf8").trim();
-    require.resolve("express",{paths:[root]});
-    require.resolve("better-sqlite3",{paths:[root]});
-    return expected===installed;
+    return expected===installed&&installedDependenciesMatchLock();
   }catch{
     return false;
   }
@@ -128,6 +158,19 @@ function npmInvocation({
 
 function ensureDependencies(){
   if(dependenciesReady())return;
+
+  // Un ZIP actualizado puede conservar node_modules de una ejecución anterior
+  // pero no el marcador privado del launcher. Si las dependencias directas
+  // instaladas coinciden exactamente con package-lock.json, no ejecutamos
+  // npm ci: en Windows ese comando intenta borrar node_modules y falla con
+  // EPERM cuando otra instancia de Node mantiene cargado better_sqlite3.node.
+  if(installedDependenciesMatchLock()){
+    fs.mkdirSync(path.dirname(installMarker),{recursive:true});
+    fs.writeFileSync(installMarker,`${lockDigest()}\n`);
+    console.log("Dependencias existentes verificadas contra package-lock.json; no es necesario reinstalarlas.");
+    return;
+  }
+
   console.log("\nPreparando dependencias exactas de EventStudio...");
   const cachePath=path.join(os.tmpdir(),"eventstudio-npm-cache");
   fs.mkdirSync(cachePath,{recursive:true});
@@ -139,7 +182,13 @@ function ensureDependencies(){
     windowsHide:false
   });
   if(result.error)throw new Error(`No se pudo ejecutar npm: ${result.error.message}`);
-  if(result.status!==0)throw new Error("npm ci no terminó correctamente.");
+  if(result.status!==0){
+    const nativePath=path.join(root,"node_modules","better-sqlite3","build","Release","better_sqlite3.node");
+    const windowsHint=process.platform==="win32"&&fs.existsSync(nativePath)
+      ? " En Windows, si el primer error es EPERM/unlink sobre better_sqlite3.node, otra instancia de Node/EventStudio o un proceso de seguridad mantiene ese binario abierto. Cierra únicamente esa instancia/proceso y vuelve a iniciar; no borres la base de datos."
+      : "";
+    throw new Error(`npm ci no terminó correctamente.${windowsHint}`);
+  }
   fs.writeFileSync(installMarker,`${lockDigest()}\n`);
 }
 
@@ -519,6 +568,9 @@ module.exports={
   quarantineDatabaseSidecars,
   tryRecoverLocalSidecarCollision,
   databaseNeedsDemo,
+  lockedDependencyVersions,
+  installedDependenciesMatchLock,
+  dependenciesReady,
   npmInvocation,
   requestRuntimeAsset,
   verifyRuntimeAssets

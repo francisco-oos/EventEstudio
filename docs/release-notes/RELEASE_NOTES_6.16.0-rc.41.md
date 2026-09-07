@@ -44,3 +44,11 @@ Estado: **candidata QA avanzada; requiere gate E2E de servidor en entorno con de
 ## Limitación de entorno
 
 Se intentó `npm ci`, pero el proceso no pudo completar en este runtime y terminó por timeout de transporte. Como `node_modules` no forma parte del paquete, las pruebas que necesitan levantar Express con `better-sqlite3`/`bcryptjs` permanecen **BLOCKED_ENV**, no PASS. El gate local sigue siendo obligatorio antes de promover a producción.
+
+## Hotfix de arranque local — 2026-09-07
+
+- El launcher evita `npm ci` cuando `node_modules` ya coincide exactamente con las versiones fijadas por `package-lock.json`, aunque falte el marcador privado del launcher.
+- Se evita cargar `better-sqlite3` antes de una posible reinstalación, para no bloquear el propio binario nativo en Windows.
+- Un fallo `EPERM/unlink` sobre `better_sqlite3.node` recibe diagnóstico específico sin sugerir borrar o resembrar la base.
+- `iniciar_linux.sh` se normaliza a finales de línea LF para mantener sintaxis portable.
+- README e índice documental quedan alineados con RC41.
