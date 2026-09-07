@@ -1447,7 +1447,7 @@ function renderPhotos(){
   $('photoGrid').innerHTML=photoViewerItems.map((p,index)=>`<figure class="photo-card moderation-${esc(p.moderation_status||'pending')}">
     <button class="photo-open" type="button" data-photo-index="${index}" aria-label="Ampliar fotografía de ${esc(p.uploaded_by||'invitado')}"><img src="${p.url}" loading="lazy" decoding="async" alt="Fotografía de ${esc(p.uploaded_by||'invitado')}"></button>
     <figcaption><strong>${esc(p.table_name||'Sin mesa')} · ${esc(p.uploaded_by||'Invitado')}</strong>
-      ${p.message?`<p>${esc(p.message)}</p>`:''}<small>Estado: ${esc(photoModerationLabel(p.moderation_status||'pending'))}</small>
+      ${p.message?`<blockquote class="guest-note"><p>${esc(p.message)}</p></blockquote>`:''}<small>Estado: ${esc(photoModerationLabel(p.moderation_status||'pending'))}</small>
       <div class="inline-actions">
         ${p.batch_id&&p.moderation_status!=='approved'?`<button class="mini-btn photo-moderate" data-batch="${p.batch_id}" data-status="approved">Aprobar</button>`:''}
         ${p.batch_id&&p.moderation_status!=='pending'?`<button class="mini-btn photo-moderate" data-batch="${p.batch_id}" data-status="pending">Volver a pendiente</button>`:''}

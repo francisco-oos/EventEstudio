@@ -288,6 +288,14 @@ th { font-size: .8rem; text-transform: uppercase; letter-spacing: .05em; }
 .qr-image { width: min(360px, 100%); margin-top: 1.5rem; }
 .photo-card, .gallery-admin-item { margin: 0; }
 .photo-card figcaption { font-size: .78rem; color: var(--muted); margin-top: .35rem; }
+/* El mensaje del invitado vivía en un <p> plano dentro de un contenedor de un
+   solo color; se le da el mismo lenguaje visual (papel cálido, tipografía
+   editorial, comilla ornamental) que la tarjeta del sobre (.stationery-card),
+   sin reutilizar ese componente entero (pensado para nombres+fecha dentro de
+   la animación del sobre) ni ninguna animación — sólo una nota estática. */
+.guest-note{position:relative;margin:.55rem 0;padding:1rem 1.1rem .85rem 1.85rem;background:var(--paper);border:1px solid color-mix(in srgb,var(--gold) 38%,transparent);border-radius:10px;box-shadow:0 6px 16px color-mix(in srgb,var(--ink) 10%,transparent)}
+.guest-note:before{content:"\201C";position:absolute;left:.55rem;top:-.3rem;font:italic 700 2.3rem/1 var(--font-heading,Georgia,serif);color:color-mix(in srgb,var(--gold) 65%,var(--accent) 35%)}
+.guest-note p{margin:0;font:italic 400 .92rem/1.5 var(--font-heading,Georgia,serif);color:var(--ink)}
 .gallery-admin-item { position: relative; }
 .gallery-admin-item button { position: absolute; bottom: .5rem; left: .5rem; }
 
