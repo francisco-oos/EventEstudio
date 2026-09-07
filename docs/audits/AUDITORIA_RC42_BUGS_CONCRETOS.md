@@ -136,6 +136,28 @@ El usuario pidió poder ajustar el TAMAÑO del lacre tal como se ve en la animac
 
 ---
 
+## 5b. Tercera ronda — el usuario probó álbum QR, exportación y Estudio de diseño
+
+**Fecha:** 2026-09-07 (tarde).
+
+### 5b.1 Arranque en Windows: `npm ci` destructivo cuando sólo faltaba el marcador propio — CORREGIDO
+
+**Commit:** `12e0ae7`. Trabajo ya terminado y verificado en una parte anterior de esta misma sesión (antes de un cierre inesperado de la app) que quedó sin comitear; se retomó, se re-verificó (`node tests/local-network.js`, `node --check scripts/iniciar-local.js`) y se comiteó. Ver `docs/audits/AUDITORIA_HOTFIX_ARRANQUE_LOCAL_RC41.md` para el detalle completo: el launcher confundía "dependencias desfasadas" con "sólo falta mi marcador privado", y terminaba corriendo `npm ci` (destructivo) incluso cuando `node_modules` ya coincidía exactamente con `package-lock.json` — en Windows eso podía chocar con `better_sqlite3.node` bloqueado por otra instancia y abortar con EPERM antes de levantar el servidor.
+
+### 5b.2 "Descargar aprobadas" del álbum sólo trajo 1 de 2 fotos — CORREGIDO
+
+**Commit:** `f532d86`. El usuario probó el álbum vía QR (2 mesas, 1 foto cada una, ambas aprobadas) y al exportar el ZIP sólo obtuvo 1 foto. Reproducido: el endpoint `/api/admin/photos-export.zip` en sí funciona correctamente (verificado pidiéndolo directamente sin filtro — trae ambas fotos, 2,099,230 bytes sin comprimir, íntegro). La causa real es que el botón "Descargar aprobadas" del admin ya arrastraba silenciosamente el filtro de mesa activo en la vista de galería (`renderPhotos()` en `admin.js`) sin decirlo en su propio texto — sólo reflejaba el filtro de estado de moderación, nunca el de mesa. Si se aprobó/revisó mientras la vista estaba filtrada a una mesa específica, el ZIP sale correctamente scoped a esa mesa, pero el botón sigue diciendo genéricamente "Descargar aprobadas", dando la falsa impresión de pérdida de datos. Corrección: el texto del botón ahora añade la mesa activa (`Descargar aprobadas · Mesa 2`) cuando hay un filtro de mesa puesto. Verificado en vivo contra los datos reales del evento (fotos de las mesas "7" y "Mesa 2").
+
+### 5b.3 "Composición" en el Estudio de diseño no cambiaba nada visible — CORREGIDO
+
+**Commit:** `cf4c4e3`. El usuario probó los 21 valores de "Composición" (editorial, cinematic, poster, etc.) y reportó que el lienzo sólo parecía fluctuar entre dos vistas. Reproducido en vivo: cambiar Composición entre "editorial"/"cinematic"/"poster" producía un lienzo pixel-idéntico cada vez, mientras que la Vista previa real (que sí aplica `es-layout-<familia>` a `document.body` vía `design-engine.js`) sí cambiaba correctamente — confirmado inspeccionando las clases del `<body>` dentro del iframe de previsualización. Causa raíz: `design-lab.css` ya trae un set completo de reglas `[data-layout="X"]` construidas específicamente para este lienzo (coincidiendo con su estructura `.canvas-section.hero`), y `renderCanvas()` ya refleja como `dataset` todas las demás dimensiones de diseño (`surfaceTexture`, `designMotion`, `designTimeline`, `esPhoto`) — sólo `layoutFamily` nunca se reflejaba como `canvas.dataset.layout`, así que esas reglas nunca podían activarse sin importar la opción elegida. Corrección de una línea: `canvas.dataset.layout=recipe.design?.layoutFamily||'classic'`. Verificado con estilos computados tras el fix (`.canvas-section.hero` adquiere `border-left`/`align-items` de "editorial" en cuanto cambia el selector).
+
+### 5b.4 Miniaturas de fotos junto al mensaje del invitado en el álbum — feature sugerida, no implementada
+
+El usuario sugirió, tras ver el álbum funcionando bien vía QR, mostrar 1-2 miniaturas de las fotos aprobadas junto al mensaje del invitado (reutilizando algún componente de tarjeta ya existente), en vez de sólo texto. Hoy el álbum de invitados es de sólo-subida y moderación (confirmado en §6 de este documento): no existe ningún muro público donde se muestren fotos+mensajes de invitados. Construir esto es una feature nueva (no una corrección), y antes de implementarla hace falta decidir con el usuario dónde debe vivir esa vista (¿pública para todos los invitados? ¿sólo para los novios en el panel?) — queda pendiente de alcance, no implementada en esta pasada.
+
+---
+
 ## 6. Áreas probadas a fondo sin encontrar un bug real
 
 No se declara nada "PASS" sin haberlo ejecutado de extremo a extremo contra el servidor real. Para cada una se usó un evento/invitado/foto **marcado explícitamente como dato de prueba** (`is_test=1` en invitados, nombres `qa-test-*`/`qa-guest-*` en archivos) y se eliminó al terminar.
