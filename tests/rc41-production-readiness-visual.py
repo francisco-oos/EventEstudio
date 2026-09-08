@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """RC41 visual QA sin servidor: asset público visible + portada móvil/escritorio + dataset real recuperable."""
 from __future__ import annotations
-import json, re, sqlite3, urllib.parse
+import json, os, re, sqlite3, urllib.parse
 from pathlib import Path
 from playwright.sync_api import sync_playwright
 ROOT=Path(__file__).resolve().parents[1]
@@ -15,23 +15,55 @@ def record(name,ok,details):
     if not ok: results['failures'].append(name)
 
 # Confirma el caso concreto que motivó la reconciliación: la BD apunta a un JPG
-# faltante, pero el ZIP contiene un único JPG con el mismo nombre original.
+# faltante, pero existe un único JPG con el mismo nombre original.
+#
+# En un paquete release la BD real se excluye deliberadamente. En ese caso,
+# se valida el mismo contrato con nombres sintéticos, sin introducir datos privados.
 try:
-    con=sqlite3.connect(ROOT/'data/wedding.db')
-    row=con.execute('select settings_json from events where id=2').fetchone(); con.close()
-    st=json.loads(row[0]) if row else {}
-    hero=str(st.get('media',{}).get('heroImage',''))
+    db_path=ROOT/'data/wedding.db'
+    if db_path.exists():
+        con=sqlite3.connect(db_path)
+        row=con.execute('select settings_json from events where id=2').fetchone(); con.close()
+        st=json.loads(row[0]) if row else {}
+        hero=str(st.get('media',{}).get('heroImage',''))
+        folder=ROOT/'uploads/site-media'
+    elif os.environ.get('EVENTSTUDIO_PACKAGE_PROFILE')=='release':
+        hero='/uploads/site-media/1700000000000-abcdef-portada.jpg'
+        folder=None
+    else:
+        raise FileNotFoundError(f'BD de QA no encontrada: {db_path}')
+
     base=urllib.parse.unquote(Path(hero).name)
     m=re.match(r'^\d{10,}-[0-9a-f]{6,}-(.+)$',base,re.I)
     original=m.group(1) if m else ''
-    folder=ROOT/'uploads/site-media'
+
     candidates=[]
-    if original and folder.exists():
-        for f in folder.iterdir():
-            mm=re.match(r'^\d{10,}-[0-9a-f]{6,}-(.+)$',f.name,re.I)
-            if f.is_file() and mm and mm.group(1).lower()==original.lower(): candidates.append(f.name)
-    exact=(ROOT/hero.lstrip('/')).exists() if hero.startswith('/uploads/') else False
-    record('heroDatasetRecoverable',bool(hero and not exact and len(candidates)==1),{'hero':hero,'exactExists':exact,'original':original,'candidates':candidates})
+    if folder is None:
+        synthetic=['1800000000000-123abc-portada.jpg']
+        for name in synthetic:
+            mm=re.match(r'^\d{10,}-[0-9a-f]{6,}-(.+)$',name,re.I)
+            if mm and mm.group(1).lower()==original.lower():
+                candidates.append(name)
+        exact=False
+    else:
+        if original and folder.exists():
+            for f in folder.iterdir():
+                mm=re.match(r'^\d{10,}-[0-9a-f]{6,}-(.+)$',f.name,re.I)
+                if f.is_file() and mm and mm.group(1).lower()==original.lower():
+                    candidates.append(f.name)
+        exact=(ROOT/hero.lstrip('/')).exists() if hero.startswith('/uploads/') else False
+
+    record(
+        'heroDatasetRecoverable',
+        bool(hero and not exact and len(candidates)==1),
+        {
+            'hero':hero,
+            'exactExists':exact,
+            'original':original,
+            'candidates':candidates,
+            'fixture':folder is None,
+        }
+    )
 except Exception as exc:
     record('heroDatasetRecoverable',False,{'error':str(exc)})
 
