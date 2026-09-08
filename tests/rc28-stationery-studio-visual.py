@@ -21,7 +21,10 @@ STUDIO_CSS=(PUBLIC/"stationery-studio.css").read_text(encoding="utf-8")
 SEAL_JS=(PUBLIC/"seal-renderer.js").read_text(encoding="utf-8")
 ENGINE_JS=(PUBLIC/"stationery-engine.js").read_text(encoding="utf-8")
 STUDIO_JS=(PUBLIC/"stationery-studio.js").read_text(encoding="utf-8")
-STUDIO_JS_TEST=STUDIO_JS.replace('const requestedEventId=Number(query.get("eventId")||localStorage.getItem("eventId")||0);','const requestedEventId=7;')
+REQUESTED_EVENT_SOURCE='const requestedEventId=Number(query.get("eventId")||localStorage.getItem("eventId")||0);'
+if REQUESTED_EVENT_SOURCE not in STUDIO_JS:
+    raise RuntimeError("RC28 QA: no se pudo localizar requestedEventId en stationery-studio.js")
+STUDIO_JS_TEST=STUDIO_JS.replace(REQUESTED_EVENT_SOURCE,'const requestedEventId=7;',1)
 STATIONERY=json.loads((ROOT/"config"/"stationery.json").read_text(encoding="utf-8"))
 SEALS=json.loads((ROOT/"config"/"seals.json").read_text(encoding="utf-8"))
 DEFAULTS=json.loads((ROOT/"config"/"default-settings.json").read_text(encoding="utf-8"))
@@ -77,7 +80,12 @@ def sample_fps(page,milliseconds=700):
 def load(page,html):
     page.set_content(html,wait_until="load",timeout=10000)
     page.locator("#stationeryStudioMount .stationery-envelope").wait_for(state="visible",timeout=5000)
-    page.wait_for_function("document.querySelector('#contextEvent')?.textContent.includes('Andrea')",timeout=5000)
+    # Web-first wait: mantiene la misma aserción funcional sin depender
+    # del polling por requestAnimationFrame de wait_for_function en CI.
+    page.locator("#contextEvent").filter(has_text="Andrea").wait_for(
+        state="visible",
+        timeout=15000,
+    )
 
 
 def inherited_values(page):
