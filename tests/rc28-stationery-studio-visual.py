@@ -55,14 +55,15 @@ def document_html(*,role="owner",templates=True):
     window.__qaSeals={json.dumps(SEALS,ensure_ascii=False)};
     window.fetch=async(input,options={{}})=>{{
       const url=String(input),method=String(options.method||'GET').toUpperCase();
+      const isSettings=url.includes('/api/admin/settings')||url.includes('/api/admin/design/stationery-draft');
       const respond=value=>new Response(JSON.stringify(value),{{status:200,headers:{{'Content-Type':'application/json'}}}});
       if(url.includes('/api/public/stationery'))return respond(window.__qaStationery);
       if(url.includes('/api/public/seals'))return respond(window.__qaSeals);
       if(url.includes('/api/admin/features'))return respond(window.__qaFeatures);
-      if(url.includes('/api/admin/settings')&&method==='PUT'){{
+      if(isSettings&&method==='PUT'){{
         const body=JSON.parse(options.body||'{{}}');window.__qaPuts.push(body);window.__qaSettings={{...window.__qaSettings,...body,_event:window.__qaSettings._event,_stationeryCatalog:window.__qaStationery,_sealCatalog:window.__qaSeals}};return respond({{ok:true,settings:window.__qaSettings}});
       }}
-      if(url.includes('/api/admin/settings'))return respond(window.__qaSettings);
+      if(isSettings)return respond(window.__qaSettings);
       return new Response(JSON.stringify({{error:'QA route not found'}}),{{status:404,headers:{{'Content-Type':'application/json'}}}});
     }};
     </script>"""
