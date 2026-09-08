@@ -1,5 +1,11 @@
 # EventStudio 6.16.0-rc.41
 
+## Auditoría final de preproducción — 7 de septiembre de 2026
+
+Estado: **GO CONDICIONADO**. Node 22, smoke funcional, seguridad, concurrencia, perfiles, migraciones, auditoría estructural y dependencias pasan; `npm audit --omit=dev` reporta cero vulnerabilidades. Antes de Railway deben quedar verdes los jobs de CI y completarse el snapshot del volumen, variables, una sola réplica y smoke con datos reales.
+
+Consulta `docs/audits/AUDITORIA_FINAL_PRODUCCION_2026-09-07.md`, `docs/guides/GUIA_DESPLIEGUE_RAILWAY_CONSERVAR_DATOS_2026-09-07.md` y `docs/checklists/CHECKLIST_GO_LIVE_RAILWAY_2026-09-07.md`.
+
 ## RC41 — Fidelidad de preview, portada recuperable y Apply atómico
 
 RC41 consolida la paridad entre Design Studio, Preview, apertura, Stationery e invitación pública; reutiliza la portada existente del evento, separa el encuadre móvil/escritorio y corrige Assets decorativos que desaparecían al aplicar. Ver `docs/release-notes/RELEASE_NOTES_6.16.0-rc.41.md`.

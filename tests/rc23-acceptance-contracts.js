@@ -56,7 +56,8 @@ assert.doesNotMatch(publicRoute,/guest|rsvp|token/i,"La ruta pública general no
 const publicUrlRoute=server.slice(server.indexOf('app.get("/api/admin/events/:id/public-url"'),server.indexOf('function cookiesOf'));
 assert.match(publicUrlRoute,/publicInvitationUrl\(req\.event\)/,"El panel debe obtener la URL inmediatamente desde el evento.");
 assert.match(app,/const hasPersonalInvitation=Boolean\(new URLSearchParams\(location\.search\)\.get\('i'\)\)/,"La personalización por invitado debe ser opcional.");
-assert.match(app,/settings\.rsvp\?\.enabled===false\|\|!hasPersonalInvitation/,"El formulario RSVP no debe bloquear la invitación general.");
+assert.match(app,/const rsvpAvailable=settings\.features\?\.rsvp!==false&&settings\.rsvp\?\.enabled!==false/,"RSVP debe respetar feature y configuración del evento.");
+assert.match(app,/if\(!rsvpAvailable\|\|\(!hasPersonalInvitation&&!designPreviewWithoutGuest\)\)/,"El formulario RSVP no debe bloquear la invitación general.");
 
 /* AC4 / DoD: documentos y tests de la candidata son parte del release. */
 for(const file of [

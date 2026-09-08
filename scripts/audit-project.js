@@ -95,10 +95,12 @@ const settingsHtmlMatch=adminHtml.match(/<section[^>]*id="tab-settings"[\s\S]*?(
 if(settingsHtmlMatch){
   const settingsTexts=[...settingsHtmlMatch[0].matchAll(/>([^<>]+)</g)].map(m=>m[1].replace(/&[^;]+;/g,' ').replace(/\s+/g,' ').trim()).filter(t=>t&&/[A-Za-zÁÉÍÓÚÑáéíóúñ]/.test(t)&&!/^\{/.test(t));
   const unique=[...new Set(settingsTexts)];
-  const staticBlock=(admin.match(/const STATIC_I18N=\{[\s\S]*?\n\};\nfunction canonicalStaticSpanish/)||[])[0]||'';
+  // Los paquetes locales suelen conservar CRLF de Windows y CI usa LF.
+  // El auditor debe medir el mismo bloque en ambos entornos.
+  const staticBlock=(admin.match(/const STATIC_I18N=\{[\s\S]*?\r?\nfunction canonicalStaticSpanish/)||[])[0]||'';
   const missing=unique.filter(text=>!staticBlock.includes(text));
-  // Algunas cadenas son valores dinámicos/inputs y no requieren mapa literal. Reportamos sólo como nota.
   notes.push(`Textos estáticos detectados en Configuración: ${unique.length}; sin clave literal: ${missing.length}`);
+  if(missing.length)failures.push(`Configuración contiene textos estáticos sin traducción EN/PT: ${missing.join(" | ")}`);
 }
 
 const plans=JSON.parse(read("config/commercial-plans.json"));

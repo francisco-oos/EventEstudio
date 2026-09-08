@@ -44,7 +44,11 @@ assert.equal(settings.gifts.openpay.enabled,false);
 
 const server=read("src/server.js"),app=read("public/app.js"),admin=read("public/admin.js"),adminHtml=read("public/admin.html"),index=read("public/index.html"),openpay=read("src/openpay-gifts.js");
 assert.match(server,/eventSettings\.rsvp\?\.enabled===false/);
-assert.match(app,/settings\.rsvp\?\.enabled===false\|\|!hasPersonalInvitation/);
+// El refactor de preview mantiene el contrato original y añade una excepción
+// sólo para el laboratorio de diseño: en público, RSVP exige que la función
+// esté disponible y que exista una invitación personal.
+assert.match(app,/const rsvpAvailable=settings\.features\?\.rsvp!==false&&settings\.rsvp\?\.enabled!==false/);
+assert.match(app,/if\(!rsvpAvailable\|\|\(!hasPersonalInvitation&&!designPreviewWithoutGuest\)\)/);
 assert.match(adminHtml,/id="rsvpEnabled"/);
 assert.match(adminHtml,/id="publicEventUrl"/);assert.match(admin,/copyPublicEventUrlBtn/);assert.match(server,/publicInvitationUrl\(event\)/);
 assert.match(app,/bankTransfer/);assert.match(index,/id="bankInfoWrap" class="gift-bank-info hidden"/);

@@ -1,30 +1,85 @@
-name: Verificación EventStudio
+name: EventStudio CI
 
 on:
   push:
-    branches: [main, "release/**"]
   pull_request:
 
 permissions:
   contents: read
 
+concurrency:
+  group: eventstudio-ci-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 jobs:
-  test:
+  preproduction:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 45
+
     steps:
-      - name: Descargar código
+      - name: Checkout
         uses: actions/checkout@v4
-      - name: Preparar Node.js
+
+      - name: Node.js 22
         uses: actions/setup-node@v4
         with:
-          node-version: 22
+          node-version: 22.x
           cache: npm
-      - name: Instalar dependencias exactas
+
+      - name: Install exact dependencies
         run: npm ci
-      - name: Ejecutar pruebas funcionales y restauración
-        run: npm test
-      - name: Auditar dependencias
-        run: npm audit --audit-level=moderate
-      - name: Construir imagen de producción
-        run: docker build --tag eventstudio-ci .
+
+      - name: Install visual QA dependencies
+        run: |
+          python3 -m pip install --requirement requirements-qa.txt
+          python3 -m playwright install --with-deps chromium
+
+      - name: Run preproduction gate
+        env:
+          EVENTSTUDIO_PACKAGE_PROFILE: release
+        run: npm run test:preproduction
+
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=moderate
+
+  node20-compatibility:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20.x
+          cache: npm
+
+      - name: Install exact dependencies
+        run: npm ci
+
+      - name: Run compatibility gate
+        env:
+          EVENTSTUDIO_PACKAGE_PROFILE: release
+        run: |
+          npm run test:security
+          node tests/smoke.js
+          node tests/rc23-concurrent-e2e.js
+          node tests/rc33-commerce-design-e2e.js
+          node tests/rc41-production-readiness.js
+          npm run audit
+
+      - name: Audit production dependencies
+        run: npm audit --omit=dev --audit-level=moderate
+
+  container:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build production image
+        run: docker build --pull --tag eventstudio:ci .

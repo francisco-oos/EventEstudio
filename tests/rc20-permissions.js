@@ -76,8 +76,14 @@ async function main(){
   assert.equal(developerFeatures.data.designAccess.opening["luminous-garden"],true,"Developer debe ver Jardín luminoso.");
   const ownerSettings=await request("/api/admin/settings",{token:ownerToken,eventId:eventA.data.id});
   const developerSettings=await request("/api/admin/settings",{token:developer.token,eventId:eventA.data.id});
-  assert.equal(ownerSettings.data._designAccess.opening["luminous-garden"],true);
-  assert.equal(developerSettings.data._designAccess.opening["luminous-garden"],true);
+  // Desde RC38 el payload distingue el derecho comercial real del evento
+  // (_designAccess) del permiso de plataforma para previsualizar productos
+  // (_designPreviewAccess). Owner y developer pueden diseñar/probar sin que
+  // eso simule una compra ni altere los derechos que verá el cliente.
+  assert.equal(ownerSettings.data._designAccess.opening["luminous-garden"],false);
+  assert.equal(developerSettings.data._designAccess.opening["luminous-garden"],false);
+  assert.equal(ownerSettings.data._designPreviewAccess.opening["luminous-garden"],true);
+  assert.equal(developerSettings.data._designPreviewAccess.opening["luminous-garden"],true);
 
   const clientAFeatures=await request("/api/admin/features",{token:clientA.token,eventId:eventA.data.id});
   const clientBFeatures=await request("/api/admin/features",{token:clientB.token,eventId:eventB.data.id});

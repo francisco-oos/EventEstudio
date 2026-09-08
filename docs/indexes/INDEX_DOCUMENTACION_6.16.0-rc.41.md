@@ -12,11 +12,17 @@
 
 ## Auditoría y QA
 
+- `../audits/AUDITORIA_FINAL_PRODUCCION_2026-09-07.md`
 - `../audits/AUDITORIA_6.16.0-rc.41.md`
 - `../audits/AUDITORIA_HOTFIX_ARRANQUE_LOCAL_RC41.md`
 - `../validation/VALIDACION_6.16.0-rc.41.md`
 - `../traceability/TEST_COVERAGE_MATRIX_6.16.0-rc.41.md`
 - `../checklists/QA_FISICO_FINAL_6.16.0-rc.41.md`
+- `../checklists/CHECKLIST_GO_LIVE_RAILWAY_2026-09-07.md`
+
+## Despliegue productivo
+
+- `../guides/GUIA_DESPLIEGUE_RAILWAY_CONSERVAR_DATOS_2026-09-07.md`
 
 ## Evidencia RC41
 
