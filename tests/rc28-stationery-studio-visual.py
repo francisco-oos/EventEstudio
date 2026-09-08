@@ -83,9 +83,12 @@ def load(page,html):
     page.locator("#stationeryStudioMount .stationery-envelope").wait_for(state="visible",timeout=5000)
     # Web-first wait: mantiene la misma aserción funcional sin depender
     # del polling por requestAnimationFrame de wait_for_function en CI.
-    page.locator("#contextEvent").filter(has_text="Andrea").wait_for(
-        state="visible",
-        timeout=15000,
+    # El chip de contexto puede estar oculto en móvil. Validamos los datos
+    # cargados contra el propio fixture, no su visibilidad ni un nombre fijo.
+    page.wait_for_function(
+        "() => document.querySelector('#contextEvent')?.textContent.trim() === String(window.__qaSettings?._event?.name || '').trim()",
+        polling=100,
+        timeout=10000,
     )
 
 
